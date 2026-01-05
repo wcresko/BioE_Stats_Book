@@ -33,6 +33,36 @@ A probability distribution describes how likely each value in the sample space i
 
 One fundamental rule: the probabilities across the entire sample space must sum (or integrate) to 1. Something from the sample space must happen.
 
+## Distribution Moments and Parameters
+
+Probability distributions can be characterized by their **moments**—metrics that describe the shape of the distribution. The first four moments correspond to important properties:
+
+1. **Mean** ($\mu$) - the center or expected value
+2. **Variance** ($\sigma^2$) - the spread or dispersion
+3. **Skewness** - the asymmetry of the distribution
+4. **Kurtosis** - the "tailedness" or peakedness
+
+For a discrete random variable X, the **expected value** (mean) is:
+
+$$E[X] = \sum_{\text{all } x} x \cdot P(X = x) = \mu$$
+
+The **variance** measures dispersion around the mean:
+
+$$\text{Var}(X) = E[(X - \mu)^2] = \sigma^2$$
+
+These parameters are crucial because they describe real properties of the systems we study. In biology, for example, the mean height of a population tells us about the typical value, while the variance tells us about the diversity of heights among individuals.
+
+## Populations and Samples
+
+In statistics, we distinguish between **populations** and **samples**:
+
+- A **population** is the complete collection of all individuals or observations of interest
+- A **sample** is a subset drawn from the population
+
+We rarely observe entire populations. Instead, we take samples and use them to estimate population parameters. The mean of our sample ($\bar{x}$) estimates the true population mean ($\mu$). The sample variance ($s^2$) estimates the population variance ($\sigma^2$).
+
+The process of statistical inference involves using sample statistics to draw conclusions about population parameters—while quantifying the uncertainty in those conclusions.
+
 ## The Bernoulli Distribution
 
 The simplest probability distribution describes a single event with two possible outcomes—success or failure, yes or no, heads or tails. This is the Bernoulli distribution.
@@ -51,6 +81,26 @@ $$p + (1-p) = 1$$
 $$p + q = 1$$
 
 This same framework applies to any binary outcome: whether a patient responds to treatment, whether an electronic component fails, whether an allele is inherited from a parent.
+
+We can estimate the Bernoulli distribution empirically by flipping a coin many times:
+
+```{r}
+#| fig-width: 4
+#| fig-height: 4
+#| fig-align: center
+# Flip a coin 1000 times
+set.seed(42)
+flips <- rbinom(1000, 1, 0.5)
+
+barplot(table(flips) / 1000,
+        names.arg = c("Heads", "Tails"),
+        ylab = "Probability",
+        ylim = c(0, 0.75),
+        col = "steelblue",
+        main = "Estimated Bernoulli Distribution")
+```
+
+The observed proportions are very close to the theoretical probability of 0.5 for a fair coin.
 
 ## Probability Rules
 
@@ -169,3 +219,8 @@ These concepts will become central when we discuss regression and other methods 
 ## Looking Ahead
 
 This chapter introduced the language of probability—random variables, sample spaces, probability distributions, and rules for combining probabilities. In the following chapters, we will explore specific probability distributions that arise frequently in practice, both discrete (binomial, Poisson) and continuous (normal, exponential). Understanding these distributions provides the foundation for statistical inference.
+
+## Additional Resources
+
+- @irizarry2019introduction - A gitbook by a statistician with excellent introductions to key topics in statistical inference
+- @logan2010biostatistical - A comprehensive introduction to R for statistical analysis

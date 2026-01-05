@@ -104,6 +104,20 @@ legend("topright",
 
 The normal distribution is symmetric around its mean. The mean, median, and mode are all equal. About 68% of the distribution falls within one standard deviation of the mean, 95% within two standard deviations, and 99.7% within three standard deviations (the "68-95-99.7 rule").
 
+![The 68-95-99.7 rule for the normal distribution.](../images/week_2.010.jpeg){#fig-normal-rule fig-align="center"}
+
+### Estimating Normal Parameters
+
+The mean of a sample provides an estimate of the population mean:
+
+$$\bar{x} = \frac{1}{n}\sum_{i=1}^{n}x_i$$
+
+The sample variance estimates the population variance:
+
+$$s^2 = \frac{1}{n-1}\sum_{i=1}^{n}(x_i - \bar{x})^2$$
+
+Note the $n-1$ in the denominator (called Bessel's correction), which provides an unbiased estimate of the population variance.
+
 ### The Standard Normal Distribution
 
 When $\mu = 0$ and $\sigma = 1$, we have the standard normal distribution. Any normal variable can be converted to standard normal by subtracting the mean and dividing by the standard deviation:
@@ -125,6 +139,26 @@ qnorm(0.975)
 ```
 
 The values 1.96 and -1.96 are particularly important because they bound the middle 95% of the standard normal distribution, forming the basis for 95% confidence intervals.
+
+### Z-Scores
+
+A z-score is a standardized value that tells us how many standard deviations an observation is from the mean:
+
+$$z_i = \frac{x_i - \bar{x}}{s}$$
+
+Z-scores allow us to compare values from different normal distributions on a common scale. This is particularly useful when comparing measurements that have different units or very different magnitudes—for example, comparing the relative leg length of mice versus elephants.
+
+### Why the Normal Distribution is Special in Biology
+
+The normal distribution appears throughout biology because many biological traits are influenced by numerous factors, each contributing a small effect. This is particularly evident in quantitative genetics.
+
+![The genetic model of complex traits explains why many biological measurements are normally distributed.](../images/week_2.017.jpeg){#fig-genetic-model fig-align="center"}
+
+Consider a trait influenced by multiple genes. If we have many loci, each with a small additive effect, the distribution of trait values in a population will approximate a normal distribution—even if the contribution at each locus follows a simple Mendelian pattern.
+
+![The distribution of genotypes in an F2 cross approaches normality as the number of contributing loci increases.](../images/week_2.018.jpeg){#fig-f2-distribution fig-align="center"}
+
+This connection between many small independent effects and the normal distribution is formalized by the Central Limit Theorem, which we explore below.
 
 ### Checking Normality
 
@@ -200,3 +234,8 @@ R provides consistent functions for all distributions:
 | Gamma | `dgamma` | `pgamma` | `qgamma` | `rgamma` |
 
 Understanding these distributions and their properties prepares you for statistical inference, where we use sampling distributions to make probabilistic statements about population parameters.
+
+## Additional Resources
+
+- @irizarry2019introduction - Excellent chapters on probability distributions and the Central Limit Theorem
+- @logan2010biostatistical - Comprehensive treatment of distributions in the context of biological statistics
