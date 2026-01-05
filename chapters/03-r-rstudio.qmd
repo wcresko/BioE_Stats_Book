@@ -9,6 +9,10 @@ theme_set(theme_minimal())
 
 ![](../images/RStudio_Screenshot.png){fig-align="center"}
 
+## What is R?
+
+R is a computer programming language and environment especially useful for graphic visualization and statistical analysis of data. It is an offshoot of a language developed in 1976 at Bell Laboratories called S. R is an interpreted language, meaning that every time code is run it must be translated to machine language by the R interpreter, as opposed to being compiled prior to running. R is the premier computational platform for statistical analysis thanks to its GNU open-source status and countless packages contributed by diverse members of the scientific community.
+
 ## Why R?
 
 R is a programming language designed specifically for statistical computing and graphics. Created in the early 1990s as an open-source implementation of the S language, R has become the lingua franca of statistical analysis in academia and is widely used in industry as well.
@@ -49,7 +53,18 @@ y <- x * 3
 y - 2
 ```
 
-Variable names must begin with a letter but can contain letters, numbers, periods, and underscores after the first character. R is case-sensitive, so `myVariable`, `MyVariable`, and `myvariable` are three different names. Choose descriptive names that make your code readable.
+Variable names must begin with a letter but can contain letters, numbers, periods, and underscores after the first character. R is case-sensitive, so `myVariable`, `MyVariable`, and `myvariable` are three different names. Choose descriptive names that make your code readable. It is good practice to avoid periods in variable names, as they have other functionality in related programming languages like Python.
+
+::: {.callout-warning}
+## Invalid Variable Names
+Variable names cannot begin with numbers or contain operators. The following will produce errors:
+
+```{r}
+#| eval: false
+3y <- 3    # cannot start with a number
+3*y <- 3   # cannot include operators
+```
+:::
 
 Note that when you assign a value to a variable, R does not print anything. To see a variable's value, type its name alone or use the `print()` function.
 
@@ -282,3 +297,372 @@ example(plot)
 Beyond R's built-in help, the internet offers vast resources. Stack Overflow has answers to almost any R question you can imagine. Package vignettes provide tutorials for specific packages. The RStudio community forums are welcoming to beginners.
 
 When asking for help online, provide a minimal reproducible example—the smallest piece of code that demonstrates your problem, including sample data. This makes it much easier for others to understand and solve your issue.
+
+## Data Types in R
+
+R has several fundamental data types that you will work with frequently.
+
+### Character Strings
+
+Assignments and operations can be performed on characters as well as numbers. Characters need to be set off by quotation marks to differentiate them from numeric objects or variable names.
+
+```{r}
+x <- "I Love"
+print(x)
+
+y <- "Biostatistics"
+print(y)
+
+# Combine strings using c()
+z <- c(x, y)
+print(z)
+```
+
+The variable `z` is now a vector of character objects. Note that we are overwriting our previous numeric assignments—a good general rule is to use descriptive, unique names for each variable.
+
+### Factors
+
+Sometimes we would like to treat character objects as if they were categorical units for subsequent calculations. These are called factors, and we can convert a character vector to factor class.
+
+```{r}
+z_factor <- as.factor(z)
+print(z_factor)
+class(z_factor)
+```
+
+Note that factor levels are reported alphabetically. The `class()` function tells us what type of object we are working with—it is one of the most important diagnostic tools in R. Often you can debug your code simply by checking and changing the class of an object.
+
+Factors are especially important for statistical analyses where we might want to calculate the mean or variance for different experimental treatments. In that case, the treatments would be coded as different levels of a factor.
+
+### Missing Values (NA)
+
+R uses special values to represent missing or undefined data. The most common is `NA`, which stands for "Not Available."
+
+```{r}
+class(NA)
+```
+
+`NA` is a logical data type and is distinct from the character string "NA", the numeric 0, or an empty string. It is also a reserved word and cannot be used as a variable name.
+
+Any instance of a blank entry in your data file will be read into R as `NA`. Many functions in R will not work by default if passed any `NA` values:
+
+```{r}
+num <- c(0, 1, 2, NA, 4)
+mean(num)
+
+# Use na.rm = TRUE to ignore missing values
+mean(num, na.rm = TRUE)
+
+# Check for missing values
+is.na(num)
+```
+
+## More on Vectors
+
+### Indexing Vectors
+
+Isolating specific elements from vectors is called indexing. R uses 1-based indexing with square brackets `[]`.
+
+```{r}
+x <- c(10, 20, 30, 40, 50, 100, 200)
+
+# First element
+x[1]
+
+# Third element
+x[3]
+
+# Series of consecutive elements
+x[1:4]
+
+# Last four elements
+x[4:7]
+
+# Non-consecutive elements using c()
+x[c(1:3, 5)]
+
+# All elements EXCEPT the first two
+x[-c(1:2)]
+```
+
+### Useful Functions for Vectors
+
+**Functions that provide information about vectors:**
+
+- `head()`: returns the first elements of an object
+- `tail()`: returns the last elements of an object
+- `length()`: returns the number of elements in a vector
+- `class()`: returns the class of elements in a vector
+
+**Functions that modify or generate vectors:**
+
+- `sort()`: returns a sorted vector
+- `seq()`: creates a sequence of values
+- `rep()`: repeats values
+
+```{r}
+rep(1, 5)
+rep("treatment", 5)
+```
+
+**Functions for random sampling:**
+
+- `sample()`: randomly selects elements from a vector
+- `rnorm()`: draws values from a normal distribution
+- `rbinom()`: draws values from a binomial distribution
+- `set.seed()`: sets the random number generator seed for reproducibility
+
+**Functions to change data types:**
+
+- `as.numeric()`: converts to numeric class
+- `as.factor()`: converts to factor class
+- `as.character()`: converts to character class
+
+## Lists
+
+Lists in R are aggregates of different objects that can be mixed types and different lengths.
+
+```{r}
+vec1 <- c(10, 20, 30, 40, 50, 100, 200)
+vec2 <- c("happy", "sad", "grumpy")
+vec3 <- factor(c("high", "low"))
+
+mylist <- list(vec1, vec2, vec3)
+print(mylist)
+
+class(mylist)
+str(mylist)
+```
+
+Elements of lists are indexed with double square brackets `[[]]`. To access the second element of `mylist`:
+
+```{r}
+mylist[[2]]
+
+# The second item of the second element
+mylist[[2]][2]
+```
+
+The `str()` function (for "structure") is extremely useful for understanding complex R objects.
+
+## Matrices
+
+Matrices in R are two-dimensional arrays where all elements must be the same type. They are indexed by `[row, column]`.
+
+```{r}
+# Create a 3x3 matrix
+matrix(1:9, nrow = 3, ncol = 3)
+```
+
+Useful matrix functions include:
+
+- `dim()`: returns the dimensions (rows and columns)
+- `t()`: transposes a matrix (swaps rows and columns)
+- `cbind()`: combines columns
+- `rbind()`: combines rows
+
+## Installing and Using Packages
+
+Base R includes many useful functions, but the real power comes from packages—collections of functions contributed by the community. Packages are distributed via the Comprehensive R Archive Network (CRAN).
+
+```{r}
+#| eval: false
+# Install a package (only need to do once)
+install.packages("name_of_package")
+
+# Check if package is installed
+installed.packages("name_of_package")
+
+# Load package for use (needed each session)
+library(name_of_package)
+```
+
+Note that `install.packages()` requires the package name in quotation marks, while `library()` does not.
+
+## The Split-Apply-Combine Approach
+
+A common pattern in data analysis is to split data by groups, apply a function to each group, and combine the results. R provides several functions for this workflow.
+
+### The replicate() Function
+
+Repeats an expression multiple times and collects the results:
+
+```{r}
+# Shuffle integers 1-10 five times
+replicate(5, sample(1:10, size = 10, replace = FALSE))
+```
+
+### The apply() Family
+
+The `apply()` function applies a function to rows or columns of a matrix or data frame:
+
+```{r}
+# Create sample matrix
+m <- matrix(1:12, nrow = 3, ncol = 4)
+m
+
+# Sum across rows (MARGIN = 1)
+apply(m, 1, sum)
+
+# Sum across columns (MARGIN = 2)
+apply(m, 2, sum)
+```
+
+### The tapply() Function
+
+Applies a function to subsets of a vector, grouped by a factor:
+
+```{r}
+# Find maximum petal length for each species
+tapply(iris$Petal.Length, iris$Species, max)
+```
+
+### The aggregate() Function
+
+Summarizes multiple variables by groups:
+
+```{r}
+#| warning: false
+# Mean of each variable by species
+aggregate(iris[, 1:4], by = list(Species = iris$Species), FUN = mean)
+```
+
+## Conditional Statements with ifelse()
+
+The `ifelse()` function provides vectorized conditional logic. The first argument is a logical test, the second is the value if TRUE, and the third is the value if FALSE.
+
+```{r}
+# Create a character vector
+treatment <- c(rep("treatment", 5), rep("control", 3),
+               rep("treatment", 4), rep("control", 6))
+
+# Assign colors based on treatment
+colors <- ifelse(treatment == "treatment", "red", "blue")
+print(colors)
+```
+
+## For Loops
+
+For loops iterate through a sequence, executing code for each value. However, R is vectorized, so many operations that would require loops in other languages can be done more efficiently without them.
+
+When loops are necessary, pre-allocate output objects for better performance:
+
+```{r}
+# Pre-allocate a numeric vector
+results <- numeric(5)
+
+for (i in 1:5) {
+  results[i] <- i^2
+}
+results
+```
+
+::: {.callout-tip}
+## Avoiding Loops
+Before writing a loop, consider whether the task can be accomplished with vectorized operations or the apply family of functions. These approaches are often faster and more readable.
+:::
+
+## More on Plotting
+
+### Customizing Plots with par()
+
+Many plotting parameters are controlled by the `par()` function. Understanding `par()` dramatically increases your plotting capabilities.
+
+```{r}
+#| fig-width: 8
+#| fig-height: 4
+# Create multiple panels
+par(mfrow = c(1, 2))  # 1 row, 2 columns
+
+seq_1 <- seq(0, 10, by = 0.1)
+seq_2 <- seq(10, 0, by = -0.1)
+
+plot(seq_1, xlab = "Index", ylab = "Value", type = "p", col = "red",
+     main = "Increasing Sequence")
+plot(seq_2, xlab = "Index", ylab = "Value", type = "l", col = "blue",
+     main = "Decreasing Sequence")
+```
+
+### Vectorized Graphical Parameters
+
+Graphical parameters like `col`, `pch` (point character), and `cex` (character expansion) are vectorized:
+
+```{r}
+#| fig-width: 6
+#| fig-height: 5
+seq_1 <- seq(0, 10, by = 0.1)
+seq_2 <- seq(10, 0, by = -0.1)
+
+# First 10 points blue, rest red
+colors <- c(rep("blue", 10), rep("red", 91))
+
+plot(seq_1, seq_2, xlab = "Sequence 1", ylab = "Sequence 2",
+     col = colors, pch = 19,
+     main = "Two-Color Scatterplot")
+```
+
+### Useful Plotting Arguments
+
+Key arguments for `plot()` and related functions:
+
+- `main`: plot title
+- `xlab`, `ylab`: axis labels
+- `xlim`, `ylim`: axis limits
+- `col`: color
+- `pch`: point character (0-25)
+- `cex`: character/point size multiplier
+- `lwd`: line width
+- `type`: "p" for points, "l" for lines, "b" for both
+
+## Introduction to R Markdown
+
+R Markdown combines R code with formatted text to create reproducible documents. Files have the `.Rmd` extension and can be rendered ("knitted") to HTML, PDF, or Word.
+
+### Getting Started
+
+Install the `rmarkdown` package, then in RStudio: File → New File → R Markdown.
+
+### Basic Formatting
+
+```
+## Section Header
+### Subsection Header
+
+Text can be *italicized* or **bolded** or ***both***.
+
+Links: [Link Text](https://example.com)
+```
+
+### Code Chunks
+
+R code is placed in code chunks delimited by three backticks:
+
+````
+```{{r}}
+seq(1, 10, 1)
+```
+````
+
+Chunk options control whether code is evaluated (`eval`), displayed (`echo`), and more:
+
+````
+```{{r, eval = TRUE, echo = TRUE}}
+seq(1, 10, 1)
+```
+````
+
+### Knitting
+
+Click the "Knit" button in RStudio to render your document. Start with HTML output, which has the fewest dependencies.
+
+::: {.callout-note}
+## Learning More
+For comprehensive R Markdown documentation, see the [R Markdown introduction](https://rmarkdown.rstudio.com/articles_intro.html) and [R Markdown cheat sheet](https://rmarkdown.rstudio.com/lesson-15.html).
+:::
+
+## Additional Resources
+
+- @logan2010biostatistical - A comprehensive introduction to R for statistical analysis
+- [A Primer for Computational Biology](http://library.open.oregonstate.edu/computationalbiology/) - Free online textbook by S.T. O'Neil
+- [R Colors Reference](http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf) - Visual guide to R colors
+- [Introduction to Colors in R](https://www.stat.ubc.ca/~jenny/STAT545A/block14_colors.html) - Tutorial on using colors effectively
