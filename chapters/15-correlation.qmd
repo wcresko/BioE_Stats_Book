@@ -19,6 +19,44 @@ The **covariance** measures how two variables vary together. If X and Y tend to 
 
 $$Cov(X, Y) = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{n-1}$$
 
+### Understanding Covariance Visually
+
+The covariance formula involves products of deviations from the mean. Consider each point in a scatterplot:
+
+- If a point is in the **upper-right quadrant** (both X and Y above their means), the product of deviations is positive
+- If a point is in the **lower-left quadrant** (both below their means), the product is also positive
+- If a point is in the **upper-left** or **lower-right** (one above, one below), the product is negative
+
+```{r}
+#| fig-width: 7
+#| fig-height: 6
+# Visualizing covariance with quadrants
+set.seed(42)
+x <- rnorm(50, mean = 10, sd = 2)
+y <- 0.8 * x + rnorm(50, sd = 1.5)
+
+# Calculate means
+mean_x <- mean(x)
+mean_y <- mean(y)
+
+# Plot with quadrants
+plot(x, y, pch = 19, col = "steelblue",
+     xlab = "X", ylab = "Y",
+     main = "Covariance: Products of Deviations from Means")
+abline(v = mean_x, h = mean_y, col = "red", lty = 2, lwd = 2)
+
+# Add quadrant labels
+text(max(x) - 0.5, max(y) - 0.5, "(+)(+) = +", col = "darkgreen", cex = 0.9)
+text(min(x) + 0.5, min(y) + 0.5, "(-)(−) = +", col = "darkgreen", cex = 0.9)
+text(max(x) - 0.5, min(y) + 0.5, "(+)(−) = −", col = "darkred", cex = 0.9)
+text(min(x) + 0.5, max(y) - 0.5, "(−)(+) = −", col = "darkred", cex = 0.9)
+
+# Report covariance
+cat("Covariance:", round(cov(x, y), 3), "\n")
+```
+
+When points cluster in the positive quadrants (upper-right and lower-left), the covariance is positive. When points cluster in the negative quadrants, the covariance is negative. When points are evenly distributed, covariance is near zero.
+
 The problem with covariance is that its magnitude depends on the scales of X and Y, making it hard to interpret. Is a covariance of 100 strong or weak? It depends entirely on the units of measurement.
 
 ## Pearson's Correlation Coefficient
@@ -113,3 +151,89 @@ cat("Kendall:", round(cor(x, y, method = "kendall"), 3), "\n")
 A correlation between X and Y might arise because X causes Y, because Y causes X, because a third variable Z causes both, or simply by chance. Correlation alone cannot distinguish these possibilities.
 
 To establish causation, you need experimental manipulation (changing X and observing Y), temporal precedence (X occurs before Y), and ruling out confounding variables. Observational correlations are valuable for generating hypotheses but insufficient for establishing causal relationships.
+
+## Interpreting Correlation Magnitude
+
+While there are no universal standards, these guidelines provide rough interpretation:
+
+| |r| | Interpretation |
+|:--|:--|
+| 0.00 - 0.19 | Negligible |
+| 0.20 - 0.39 | Weak |
+| 0.40 - 0.59 | Moderate |
+| 0.60 - 0.79 | Strong |
+| 0.80 - 1.00 | Very strong |
+
+Context matters greatly. In physics, correlations below 0.99 might be disappointing. In psychology or ecology, correlations of 0.3 can be considered meaningful.
+
+### Coefficient of Determination
+
+The square of the correlation coefficient, $r^2$, is called the **coefficient of determination**. It represents the proportion of variance in one variable that is explained by its linear relationship with the other.
+
+If $r = 0.7$, then $r^2 = 0.49$, meaning about 49% of the variance in Y is explained by its relationship with X. This leaves 51% unexplained—due to other factors, measurement error, or the relationship not being perfectly linear.
+
+```{r}
+# Visualize explained vs unexplained variance
+set.seed(123)
+x <- 1:50
+y <- 2 * x + rnorm(50, sd = 15)
+
+r <- cor(x, y)
+r_squared <- r^2
+
+cat("Correlation (r):", round(r, 3), "\n")
+cat("R-squared (r²):", round(r_squared, 3), "\n")
+cat("Variance explained:", round(r_squared * 100, 1), "%\n")
+```
+
+## Common Pitfalls with Correlation
+
+::: {.callout-warning}
+## Watch Out For These Mistakes
+
+1. **Restricted range**: If you only sample part of the range of X or Y, correlation will appear weaker than it truly is
+2. **Outliers**: A single extreme point can dramatically inflate or deflate the correlation
+3. **Non-linearity**: Correlation only measures linear relationships; a perfect curved relationship can have r ≈ 0
+4. **Aggregation effects**: Correlations computed on grouped data (e.g., country averages) are often much stronger than correlations on individual data (ecological fallacy)
+5. **Confounding**: A third variable may create a spurious correlation between X and Y
+:::
+
+```{r}
+#| fig-width: 8
+#| fig-height: 4
+# Demonstrating the effect of outliers
+set.seed(42)
+x_base <- rnorm(30)
+y_base <- rnorm(30)
+
+par(mfrow = c(1, 2))
+
+# Without outlier
+plot(x_base, y_base, pch = 19, col = "blue",
+     main = paste("Without outlier: r =", round(cor(x_base, y_base), 3)),
+     xlab = "X", ylab = "Y", xlim = c(-3, 5), ylim = c(-3, 5))
+
+# With outlier
+x_out <- c(x_base, 4)
+y_out <- c(y_base, 4)
+plot(x_out, y_out, pch = 19, col = c(rep("blue", 30), "red"),
+     main = paste("With outlier: r =", round(cor(x_out, y_out), 3)),
+     xlab = "X", ylab = "Y", xlim = c(-3, 5), ylim = c(-3, 5))
+```
+
+A single outlier has shifted the correlation from near zero to moderately positive. Always visualize your data and consider robust alternatives like Spearman's correlation when outliers are present.
+
+## Summary
+
+Correlation quantifies the strength and direction of linear relationships between variables:
+
+- Covariance measures how variables move together, but depends on units
+- Pearson's r standardizes covariance to range from -1 to +1
+- Spearman and Kendall provide robust rank-based alternatives
+- Correlation does not imply causation
+- Always visualize data and check for non-linearity and outliers
+
+## Additional Resources
+
+- @logan2010biostatistical - Detailed coverage of correlation with biological examples
+- @james2023islr - Excellent discussion of correlation in the context of statistical learning

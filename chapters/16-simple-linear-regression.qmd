@@ -115,4 +115,119 @@ Linear regression assumptions include:
 3. **Normality**: Residuals are normally distributed
 4. **Homoscedasticity**: Residuals have constant variance across X
 
-These assumptions should be checked through residual analysis, which we cover in the next chapter.
+These assumptions should be checked through residual analysis.
+
+## Residual Analysis
+
+**Residuals** are the differences between observed and fitted values: $e_i = y_i - \hat{y}_i$. Examining residuals reveals whether model assumptions are satisfied.
+
+```{r}
+#| fig-width: 8
+#| fig-height: 8
+# Residual diagnostic plots
+par(mfrow = c(2, 2))
+plot(fish_lm)
+```
+
+Key diagnostic plots:
+
+1. **Residuals vs Fitted**: Should show random scatter around zero. Patterns suggest non-linearity or heteroscedasticity.
+
+2. **Q-Q Plot**: Residuals should fall along the diagonal line if normally distributed. Deviations at the tails indicate non-normality.
+
+3. **Scale-Location**: Should show constant spread. A funnel shape indicates heteroscedasticity.
+
+4. **Residuals vs Leverage**: Identifies influential points. Points with high leverage and large residuals may unduly influence the fit.
+
+```{r}
+#| fig-width: 8
+#| fig-height: 4
+# Example of problematic residuals
+set.seed(123)
+x_prob <- seq(1, 10, length.out = 50)
+y_prob <- x_prob^2 + rnorm(50, sd = 5)  # Quadratic relationship
+
+lm_prob <- lm(y_prob ~ x_prob)
+
+par(mfrow = c(1, 2))
+plot(x_prob, y_prob, pch = 19, main = "Data with Non-linear Pattern")
+abline(lm_prob, col = "red", lwd = 2)
+
+plot(fitted(lm_prob), residuals(lm_prob), pch = 19,
+     xlab = "Fitted values", ylab = "Residuals",
+     main = "Residuals Show Clear Pattern")
+abline(h = 0, col = "red", lty = 2)
+```
+
+The curved pattern in the residuals reveals that a linear model is inappropriate—the true relationship is non-linear.
+
+## Model I vs Model II Regression
+
+Standard OLS regression (Model I) assumes X is measured without error and minimizes vertical distances to the line. This is appropriate when:
+
+- X is fixed by the experimenter (controlled variable)
+- X is measured with negligible error compared to Y
+- The goal is prediction of Y from X
+
+When both variables are measured with error (common in observational studies), **Model II regression** may be more appropriate. Model II methods include:
+
+- **Major Axis (MA) regression**: Minimizes perpendicular distances to the line
+- **Reduced Major Axis (RMA)**: Often preferred when both variables have similar measurement error
+
+```{r}
+# Model I slope estimate
+slope_model1 <- coef(fish_lm)[2]
+
+# Reduced Major Axis slope estimate (ratio of standard deviations)
+slope_rma <- sd(weight_mg) / sd(length_cm) * sign(cor(length_cm, weight_mg))
+
+cat("Model I (OLS) slope:", round(slope_model1, 3), "\n")
+cat("Model II (RMA) slope:", round(slope_rma, 3), "\n")
+```
+
+::: {.callout-note}
+## When to Use Model II Regression
+
+Use Model II regression when:
+- Both X and Y are random variables measured with error
+- You want to describe the relationship rather than predict Y from X
+- You need to compare slopes across groups (e.g., allometric scaling)
+
+The `lmodel2` package in R provides Model II regression methods.
+:::
+
+## Extrapolation Warning
+
+Regression models should only be used to make predictions within the range of observed X values. **Extrapolation**—predicting beyond this range—is risky because the linear relationship may not hold.
+
+```{r}
+#| fig-width: 7
+#| fig-height: 5
+# Danger of extrapolation
+plot(length_cm, weight_mg, pch = 19, col = "blue",
+     xlim = c(0, 6), ylim = c(-50, 600),
+     xlab = "Length (cm)", ylab = "Weight (mg)",
+     main = "Extrapolation Risk")
+abline(fish_lm, col = "red", lwd = 2)
+abline(v = c(min(length_cm), max(length_cm)), col = "gray", lty = 2)
+
+# Mark extrapolation zone
+rect(max(length_cm), -50, 6, 600, col = rgb(1, 0, 0, 0.1), border = NA)
+text(5, 100, "Extrapolation\nzone", col = "red")
+```
+
+## Summary
+
+Simple linear regression models the relationship between a predictor and response variable:
+
+- OLS finds the line minimizing squared residuals
+- The slope indicates how Y changes per unit change in X
+- R-squared measures proportion of variance explained
+- Residual analysis checks model assumptions
+- Model II regression is appropriate when both variables have measurement error
+- Avoid extrapolating beyond the range of observed data
+
+## Additional Resources
+
+- @james2023islr - Excellent introduction to regression in the context of statistical learning
+- @logan2010biostatistical - Detailed coverage of regression with biological applications
