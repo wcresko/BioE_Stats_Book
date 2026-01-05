@@ -142,6 +142,196 @@ t.test(sample_data)$conf.int
 
 ![](../images/week_2.028.jpeg){fig-align="center"}
 
+## The Central Limit Theorem in Practice
+
+The Central Limit Theorem (CLT) is one of the most remarkable results in statistics. It states that the sampling distribution of the mean approaches a normal distribution as sample size increases, regardless of the shape of the underlying population distribution.
+
+This is why confidence intervals work. This is why the normal distribution appears everywhere in statistics. And understanding the CLT in practice—through examples like polling and surveys—builds deep intuition for statistical inference.
+
+### The CLT Demonstrated
+
+Let's see the CLT in action with a highly non-normal distribution. We'll sample from an exponential distribution (heavily right-skewed) and watch how the sampling distribution of the mean becomes normal:
+
+```{r}
+#| fig-width: 9
+#| fig-height: 7
+set.seed(42)
+
+# Exponential distribution (very skewed)
+rate <- 0.5
+pop_mean <- 1/rate  # True mean = 2
+
+par(mfrow = c(2, 2))
+
+# Original population
+x <- rexp(10000, rate = rate)
+hist(x, breaks = 50, main = "Original Distribution (Exponential)",
+     xlab = "Value", col = "gray80", probability = TRUE)
+curve(dexp(x, rate = rate), add = TRUE, col = "red", lwd = 2)
+
+# Sample means for different n
+for (n in c(5, 30, 100)) {
+  sample_means <- replicate(5000, mean(rexp(n, rate = rate)))
+  hist(sample_means, breaks = 50, probability = TRUE,
+       main = paste("Sampling Distribution (n =", n, ")"),
+       xlab = "Sample Mean", col = "steelblue")
+
+  # Overlay normal curve with theoretical SE
+  theoretical_se <- (1/rate) / sqrt(n)
+  curve(dnorm(x, mean = pop_mean, sd = theoretical_se),
+        add = TRUE, col = "red", lwd = 2)
+}
+```
+
+Even with n = 30, the sampling distribution of the mean is remarkably close to normal, despite the exponential distribution being extremely skewed. By n = 100, the approximation is nearly perfect.
+
+### Margin of Error: Quantifying Precision
+
+The **margin of error** (MOE) is a practical expression of sampling uncertainty. For a confidence interval around a proportion or mean, the margin of error is the half-width of the interval:
+
+$$\text{Margin of Error} = z^* \times SE$$
+
+For a 95% confidence interval, $z^* \approx 1.96 \approx 2$, giving us the approximation:
+
+$$\text{95% MOE} \approx 2 \times SE$$
+
+For proportions, the standard error is $SE = \sqrt{\frac{p(1-p)}{n}}$, so:
+
+$$\text{95% MOE} \approx 2 \times \sqrt{\frac{p(1-p)}{n}}$$
+
+The maximum standard error for a proportion occurs when $p = 0.5$, giving the conservative formula used in sample size planning:
+
+$$\text{Maximum 95% MOE} \approx \frac{1}{\sqrt{n}}$$
+
+### Polling as a Statistical Inference Problem
+
+Political polling provides an excellent practical example of sampling and the CLT. When a poll reports "48% of voters support Candidate A, with a margin of error of ±3%," they are making a statistical inference from a sample to a population.
+
+Let's simulate an election poll:
+
+```{r}
+#| fig-width: 8
+#| fig-height: 5
+set.seed(123)
+
+# True population proportion (unknown in real life)
+true_proportion <- 0.52  # 52% actually support the candidate
+
+# Simulate a poll of 1000 likely voters
+n <- 1000
+poll_sample <- rbinom(1, size = n, prob = true_proportion) / n
+
+# Calculate margin of error
+se <- sqrt(poll_sample * (1 - poll_sample) / n)
+moe <- 1.96 * se
+
+cat("Poll result:", round(poll_sample * 100, 1), "%\n")
+cat("Margin of error: ±", round(moe * 100, 1), "%\n")
+cat("95% CI: [", round((poll_sample - moe) * 100, 1), "%, ",
+    round((poll_sample + moe) * 100, 1), "%]\n")
+cat("True proportion:", true_proportion * 100, "%\n")
+```
+
+### How Sample Size Affects Margin of Error
+
+The margin of error is inversely proportional to $\sqrt{n}$. This has important practical implications:
+
+```{r}
+#| fig-width: 7
+#| fig-height: 5
+# Margin of error as a function of sample size
+sample_sizes <- c(100, 400, 1000, 2000, 4000, 10000)
+p <- 0.5  # Conservative estimate
+
+moe_values <- 1.96 * sqrt(p * (1 - p) / sample_sizes) * 100
+
+plot(sample_sizes, moe_values, type = "b", pch = 19,
+     xlab = "Sample Size", ylab = "Margin of Error (%)",
+     main = "95% Margin of Error vs. Sample Size",
+     log = "x", col = "steelblue", lwd = 2)
+grid()
+
+# Add labels
+text(sample_sizes, moe_values + 0.5,
+     paste0("±", round(moe_values, 1), "%"),
+     cex = 0.8)
+```
+
+Notice the diminishing returns: going from n = 100 to n = 400 cuts the margin of error in half (from ±10% to ±5%). But to halve it again (to ±2.5%), you need n = 1,600—four times as many respondents. This is why most national polls use samples of 1,000–2,000: it provides reasonable precision (±2-3%) at manageable cost.
+
+### Interpreting Polls: Uncertainty in Action
+
+When two candidates are within the margin of error of each other, the poll results are consistent with either candidate leading. This is not a flaw of polling—it reflects genuine uncertainty.
+
+```{r}
+#| fig-width: 8
+#| fig-height: 5
+set.seed(456)
+
+# Simulate many polls from the same population
+true_p <- 0.48  # Candidate A's true support
+n_poll <- 1000
+n_polls <- 100
+
+polls <- replicate(n_polls, {
+  sample_p <- rbinom(1, n_poll, true_p) / n_poll
+  se <- sqrt(sample_p * (1 - sample_p) / n_poll)
+  c(estimate = sample_p, lower = sample_p - 1.96*se, upper = sample_p + 1.96*se)
+})
+
+polls_df <- data.frame(
+  poll = 1:n_polls,
+  estimate = polls["estimate", ],
+  lower = polls["lower", ],
+  upper = polls["upper", ]
+)
+
+# How many CIs contain the true value?
+coverage <- mean(polls_df$lower <= true_p & polls_df$upper >= true_p)
+
+# Plot first 30 polls
+ggplot(polls_df[1:30, ], aes(x = poll, y = estimate)) +
+  geom_hline(yintercept = true_p, color = "red", linetype = "dashed", linewidth = 1) +
+  geom_hline(yintercept = 0.5, color = "gray50", linetype = "dotted") +
+  geom_errorbar(aes(ymin = lower, ymax = upper), width = 0.3, alpha = 0.6) +
+  geom_point(size = 2) +
+  labs(
+    title = "95% Confidence Intervals from 30 Polls",
+    subtitle = paste0("True proportion = ", true_p*100, "% | ", round(coverage*100),
+                     "% of all CIs contain true value"),
+    x = "Poll Number",
+    y = "Estimated Proportion"
+  ) +
+  scale_y_continuous(labels = scales::percent_format()) +
+  theme_minimal()
+```
+
+In repeated sampling, approximately 95% of confidence intervals contain the true value—but any single interval either does or does not contain it. This is the frequentist interpretation of confidence intervals.
+
+### The Practical Value of Margin of Error
+
+Understanding margin of error helps you:
+
+1. **Interpret reported results**: A poll showing 52% vs. 48% with ±3% MOE does not clearly favor either candidate
+2. **Plan studies**: Use $n \approx \frac{1}{\text{MOE}^2}$ for proportions near 0.5 to achieve a desired margin of error
+3. **Communicate uncertainty**: Always report intervals, not just point estimates
+4. **Make decisions**: Consider whether differences are within or beyond the margin of error
+
+For sample size planning, if you want a specific margin of error:
+
+```{r}
+# Required sample size for different margins of error (95% CI)
+desired_moe <- c(0.10, 0.05, 0.03, 0.02, 0.01)
+required_n <- ceiling((1.96 / desired_moe)^2 * 0.25)  # 0.25 = p(1-p) at p=0.5
+
+data.frame(
+  `Margin of Error` = paste0("±", desired_moe * 100, "%"),
+  `Required n` = required_n
+)
+```
+
+These calculations assume simple random sampling. Real-world surveys often use complex sampling designs that affect the effective sample size.
+
 ## Coefficient of Variation
 
 When comparing variability across groups with different means, the standard deviation alone can be misleading. The **coefficient of variation** (CV) standardizes variability relative to the mean:
