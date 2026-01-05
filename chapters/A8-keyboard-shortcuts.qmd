@@ -1,0 +1,383 @@
+# Keyboard Shortcuts Reference {#sec-keyboard-shortcuts}
+
+This appendix provides essential keyboard shortcuts for the tools commonly used in biostatistics and data science workflows.
+
+## Bash/Terminal Shortcuts
+
+### Navigation and Editing
+
+| Shortcut | Description |
+|:---------|:------------|
+| `Ctrl + A` | Move cursor to beginning of line |
+| `Ctrl + E` | Move cursor to end of line |
+| `Ctrl + B` | Move cursor back one character |
+| `Ctrl + F` | Move cursor forward one character |
+| `Alt + B` | Move cursor back one word |
+| `Alt + F` | Move cursor forward one word |
+| `Ctrl + U` | Delete from cursor to beginning of line |
+| `Ctrl + K` | Delete from cursor to end of line |
+| `Ctrl + W` | Delete word before cursor |
+| `Alt + D` | Delete word after cursor |
+| `Ctrl + Y` | Paste (yank) deleted text |
+| `Ctrl + _` | Undo last edit |
+
+### History and Search
+
+| Shortcut | Description |
+|:---------|:------------|
+| `Ctrl + R` | Search command history (reverse) |
+| `Ctrl + S` | Search command history (forward) |
+| `Ctrl + G` | Cancel history search |
+| `Ctrl + P` or `Up` | Previous command in history |
+| `Ctrl + N` or `Down` | Next command in history |
+| `!!` | Repeat last command |
+| `!$` | Last argument of previous command |
+| `!n` | Execute command number n from history |
+| `!string` | Execute last command starting with string |
+
+### Process Control
+
+| Shortcut | Description |
+|:---------|:------------|
+| `Ctrl + C` | Interrupt/kill current process |
+| `Ctrl + Z` | Suspend current process (use `fg` to resume) |
+| `Ctrl + D` | Exit shell / End of input |
+| `Ctrl + L` | Clear screen |
+| `Ctrl + S` | Pause terminal output |
+| `Ctrl + Q` | Resume terminal output |
+
+## Vim Shortcuts
+
+### Modes
+
+| Key | Description |
+|:----|:------------|
+| `i` | Enter Insert mode (before cursor) |
+| `a` | Enter Insert mode (after cursor) |
+| `I` | Insert at beginning of line |
+| `A` | Insert at end of line |
+| `o` | Open new line below |
+| `O` | Open new line above |
+| `v` | Enter Visual mode (character) |
+| `V` | Enter Visual mode (line) |
+| `Ctrl + V` | Enter Visual Block mode |
+| `Esc` | Return to Normal mode |
+| `:` | Enter Command mode |
+
+### Navigation (Normal Mode)
+
+| Key | Description |
+|:----|:------------|
+| `h`, `j`, `k`, `l` | Left, down, up, right |
+| `w` | Move to next word |
+| `b` | Move to previous word |
+| `e` | Move to end of word |
+| `0` | Move to beginning of line |
+| `$` | Move to end of line |
+| `^` | Move to first non-blank character |
+| `gg` | Go to first line |
+| `G` | Go to last line |
+| `nG` or `:n` | Go to line n |
+| `Ctrl + F` | Page down |
+| `Ctrl + B` | Page up |
+| `Ctrl + D` | Half page down |
+| `Ctrl + U` | Half page up |
+| `%` | Jump to matching bracket |
+| `{` | Jump to previous paragraph |
+| `}` | Jump to next paragraph |
+
+### Editing (Normal Mode)
+
+| Key | Description |
+|:----|:------------|
+| `x` | Delete character under cursor |
+| `X` | Delete character before cursor |
+| `dd` | Delete entire line |
+| `dw` | Delete word |
+| `d$` or `D` | Delete to end of line |
+| `d0` | Delete to beginning of line |
+| `yy` | Yank (copy) entire line |
+| `yw` | Yank word |
+| `p` | Paste after cursor |
+| `P` | Paste before cursor |
+| `r` | Replace single character |
+| `R` | Enter Replace mode |
+| `cc` | Change entire line |
+| `cw` | Change word |
+| `c$` or `C` | Change to end of line |
+| `u` | Undo |
+| `Ctrl + R` | Redo |
+| `.` | Repeat last command |
+| `~` | Toggle case |
+| `>>` | Indent line |
+| `<<` | Unindent line |
+
+### Search and Replace
+
+| Command | Description |
+|:--------|:------------|
+| `/pattern` | Search forward for pattern |
+| `?pattern` | Search backward for pattern |
+| `n` | Find next occurrence |
+| `N` | Find previous occurrence |
+| `*` | Search for word under cursor |
+| `:%s/old/new/g` | Replace all occurrences in file |
+| `:s/old/new/g` | Replace all occurrences in line |
+| `:%s/old/new/gc` | Replace with confirmation |
+
+### File Operations
+
+| Command | Description |
+|:--------|:------------|
+| `:w` | Save file |
+| `:w filename` | Save as filename |
+| `:q` | Quit |
+| `:q!` | Quit without saving |
+| `:wq` or `:x` | Save and quit |
+| `ZZ` | Save and quit (Normal mode) |
+| `:e filename` | Open file |
+| `:r filename` | Insert file contents |
+
+## RStudio Shortcuts
+
+### Console
+
+| Shortcut | Description |
+|:---------|:------------|
+| `Ctrl + Enter` | Run current line/selection |
+| `Ctrl + Shift + Enter` | Run entire script |
+| `Ctrl + Alt + R` | Run from beginning to current line |
+| `Ctrl + Alt + E` | Run from current line to end |
+| `Ctrl + Alt + B` | Run from beginning to cursor |
+| `Ctrl + L` | Clear console |
+| `Esc` | Interrupt R |
+| `Tab` | Autocomplete |
+| `Ctrl + Up` | Command history popup |
+
+### Editor
+
+| Shortcut | Description |
+|:---------|:------------|
+| `Ctrl + S` | Save current file |
+| `Ctrl + Shift + S` | Save all open files |
+| `Ctrl + Z` | Undo |
+| `Ctrl + Shift + Z` | Redo |
+| `Ctrl + F` | Find |
+| `Ctrl + H` | Find and replace |
+| `Ctrl + Shift + F` | Find in files |
+| `Ctrl + D` | Delete line |
+| `Ctrl + Shift + D` | Duplicate line |
+| `Alt + Up/Down` | Move line up/down |
+| `Ctrl + Shift + C` | Comment/uncomment line |
+| `Ctrl + Shift + /` | Reflow comment |
+| `Ctrl + I` | Reindent lines |
+| `Ctrl + Shift + A` | Reformat code |
+| `Ctrl + Shift + M` | Insert pipe (`%>%` or `|>`) |
+| `Alt + -` | Insert assignment (`<-`) |
+| `Ctrl + Shift + R` | Insert code section |
+
+### Navigation
+
+| Shortcut | Description |
+|:---------|:------------|
+| `Ctrl + .` | Go to file/function |
+| `F1` | Help on selected function |
+| `F2` | Go to function definition |
+| `Ctrl + Shift + O` | Document outline |
+| `Ctrl + Tab` | Switch between open files |
+| `Ctrl + Shift + Tab` | Switch to previous file |
+| `Ctrl + 1` | Focus on Source editor |
+| `Ctrl + 2` | Focus on Console |
+| `Ctrl + 3` | Focus on Help |
+| `Ctrl + 4` | Focus on History |
+| `Ctrl + 5` | Focus on Files |
+| `Ctrl + 6` | Focus on Plots |
+| `Ctrl + 7` | Focus on Packages |
+| `Ctrl + 8` | Focus on Environment |
+| `Ctrl + 9` | Focus on Viewer |
+
+### Projects and Sessions
+
+| Shortcut | Description |
+|:---------|:------------|
+| `Ctrl + Shift + N` | New file |
+| `Ctrl + O` | Open file |
+| `Ctrl + Shift + P` | Command palette |
+| `Ctrl + Shift + F10` | Restart R session |
+| `Ctrl + Q` | Quit RStudio |
+
+## Jupyter Notebook Shortcuts
+
+### Command Mode (Blue Border)
+
+Press `Esc` to enter Command mode.
+
+| Key | Description |
+|:----|:------------|
+| `Enter` | Enter Edit mode |
+| `H` | Show keyboard shortcuts |
+| `A` | Insert cell above |
+| `B` | Insert cell below |
+| `X` | Cut selected cells |
+| `C` | Copy selected cells |
+| `V` | Paste cells below |
+| `Shift + V` | Paste cells above |
+| `D, D` | Delete selected cells |
+| `Z` | Undo cell deletion |
+| `Y` | Change cell to Code |
+| `M` | Change cell to Markdown |
+| `R` | Change cell to Raw |
+| `1-6` | Change to heading level 1-6 |
+| `Up/K` | Select cell above |
+| `Down/J` | Select cell below |
+| `Shift + Up/K` | Extend selection above |
+| `Shift + Down/J` | Extend selection below |
+| `Shift + M` | Merge selected cells |
+| `O` | Toggle output |
+| `Shift + O` | Toggle output scrolling |
+| `I, I` | Interrupt kernel |
+| `0, 0` | Restart kernel |
+| `S` or `Ctrl + S` | Save notebook |
+| `L` | Toggle line numbers |
+
+### Edit Mode (Green Border)
+
+Press `Enter` to enter Edit mode.
+
+| Shortcut | Description |
+|:---------|:------------|
+| `Esc` | Enter Command mode |
+| `Ctrl + Enter` | Run cell |
+| `Shift + Enter` | Run cell, select below |
+| `Alt + Enter` | Run cell, insert below |
+| `Ctrl + Shift + -` | Split cell at cursor |
+| `Tab` | Code completion |
+| `Shift + Tab` | Tooltip/documentation |
+| `Ctrl + ]` | Indent |
+| `Ctrl + [` | Dedent |
+| `Ctrl + A` | Select all |
+| `Ctrl + Z` | Undo |
+| `Ctrl + Shift + Z` | Redo |
+| `Ctrl + D` | Delete whole line |
+| `Ctrl + /` | Comment/uncomment |
+| `Ctrl + Home` | Go to cell start |
+| `Ctrl + End` | Go to cell end |
+
+## VS Code Shortcuts
+
+### General
+
+| Shortcut | Description |
+|:---------|:------------|
+| `Ctrl + Shift + P` | Command palette |
+| `Ctrl + P` | Quick open file |
+| `Ctrl + Shift + N` | New window |
+| `Ctrl + W` | Close editor |
+| `Ctrl + ,` | Open settings |
+| `Ctrl + K Ctrl + S` | Keyboard shortcuts |
+| `Ctrl + `` ` | Toggle integrated terminal |
+| `F11` | Toggle full screen |
+| `Ctrl + B` | Toggle sidebar |
+| `Ctrl + Shift + E` | Explorer focus |
+| `Ctrl + Shift + F` | Search across files |
+| `Ctrl + Shift + G` | Source control |
+| `Ctrl + Shift + D` | Debug |
+| `Ctrl + Shift + X` | Extensions |
+
+### Editing
+
+| Shortcut | Description |
+|:---------|:------------|
+| `Ctrl + X` | Cut line (empty selection) |
+| `Ctrl + C` | Copy line (empty selection) |
+| `Ctrl + V` | Paste |
+| `Ctrl + Shift + K` | Delete line |
+| `Ctrl + Enter` | Insert line below |
+| `Ctrl + Shift + Enter` | Insert line above |
+| `Alt + Up/Down` | Move line up/down |
+| `Shift + Alt + Up/Down` | Copy line up/down |
+| `Ctrl + D` | Select word (repeat for next) |
+| `Ctrl + Shift + L` | Select all occurrences |
+| `Ctrl + L` | Select current line |
+| `Ctrl + /` | Toggle line comment |
+| `Shift + Alt + A` | Toggle block comment |
+| `Ctrl + ]` | Indent line |
+| `Ctrl + [` | Outdent line |
+| `Ctrl + Shift + \` | Jump to matching bracket |
+| `Ctrl + Z` | Undo |
+| `Ctrl + Shift + Z` | Redo |
+
+### Navigation
+
+| Shortcut | Description |
+|:---------|:------------|
+| `Ctrl + G` | Go to line |
+| `Ctrl + P` | Go to file |
+| `Ctrl + Shift + O` | Go to symbol |
+| `F12` | Go to definition |
+| `Alt + F12` | Peek definition |
+| `Ctrl + Shift + \` | Go to matching bracket |
+| `Ctrl + Home` | Go to beginning of file |
+| `Ctrl + End` | Go to end of file |
+| `Ctrl + Tab` | Switch between open editors |
+| `Alt + Left/Right` | Go back/forward |
+| `Ctrl + K Ctrl + Q` | Go to last edit location |
+
+### Multi-Cursor and Selection
+
+| Shortcut | Description |
+|:---------|:------------|
+| `Alt + Click` | Insert cursor |
+| `Ctrl + Alt + Up/Down` | Insert cursor above/below |
+| `Ctrl + U` | Undo cursor operation |
+| `Shift + Alt + I` | Insert cursor at end of each line |
+| `Ctrl + Shift + L` | Select all occurrences of selection |
+| `Ctrl + F2` | Select all occurrences of word |
+| `Shift + Alt + Drag` | Column selection |
+| `Ctrl + Shift + Alt + Arrow` | Column selection |
+
+### Search and Replace
+
+| Shortcut | Description |
+|:---------|:------------|
+| `Ctrl + F` | Find |
+| `Ctrl + H` | Replace |
+| `F3` / `Shift + F3` | Find next/previous |
+| `Alt + Enter` | Select all occurrences of find match |
+| `Ctrl + D` | Add selection to next find match |
+| `Ctrl + K Ctrl + D` | Move last selection to next find match |
+
+### Integrated Terminal
+
+| Shortcut | Description |
+|:---------|:------------|
+| `Ctrl + `` ` | Toggle terminal |
+| `Ctrl + Shift + `` ` | Create new terminal |
+| `Ctrl + Shift + 5` | Split terminal |
+| `Ctrl + PageUp/Down` | Scroll terminal |
+| `Shift + PageUp/Down` | Scroll terminal by page |
+
+::: {.callout-tip}
+## Customizing Shortcuts
+
+Most applications allow you to customize keyboard shortcuts:
+
+- **RStudio**: Tools → Modify Keyboard Shortcuts
+- **VS Code**: File → Preferences → Keyboard Shortcuts (or `Ctrl + K Ctrl + S`)
+- **Jupyter**: Help → Edit Keyboard Shortcuts
+- **Bash**: Edit `~/.inputrc` for readline customizations
+
+Learning the default shortcuts first helps when working on different machines, but customization can boost your personal productivity significantly.
+:::
+
+## Platform Differences
+
+Most shortcuts in this appendix use `Ctrl` as the modifier key (Windows/Linux). On macOS:
+
+| Windows/Linux | macOS |
+|:--------------|:------|
+| `Ctrl` | `Cmd` (⌘) |
+| `Alt` | `Option` (⌥) |
+| `Ctrl + Alt` | `Cmd + Option` |
+
+Some applications maintain the `Ctrl` key on macOS for terminal-related shortcuts (Bash, Vim).
