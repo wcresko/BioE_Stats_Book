@@ -283,6 +283,59 @@ c & d
 
 Quarto and R Markdown extend Markdown by allowing you to embed executable code chunks. When the document is rendered, the code runs and its output—whether text, tables, or figures—is automatically included in the final document.
 
+### Document Structure
+
+A Quarto document has three main parts:
+
+1. **YAML Header**: Document metadata and settings (enclosed by `---`)
+2. **Markdown Content**: Text and formatting
+3. **Code Chunks**: Executable code blocks
+
+### YAML Header
+
+The YAML header appears at the top of the document and configures how it will be rendered:
+
+```yaml
+---
+title: "My Analysis Report"
+author: "Your Name"
+date: today
+format: html
+---
+```
+
+Common YAML options include:
+
+| Option | Description |
+|:-------|:------------|
+| `title` | Document title |
+| `author` | Author name(s) |
+| `date` | Publication date (`today` for current date) |
+| `format` | Output format: `html`, `pdf`, `docx` |
+| `toc` | Include table of contents (`true`/`false`) |
+| `code-fold` | Collapse code by default |
+| `execute` | Global code execution options |
+
+A more complete header might look like:
+
+```yaml
+---
+title: "Genomic Analysis Report"
+author: "Jane Scientist"
+date: today
+format:
+  html:
+    theme: cosmo
+    toc: true
+    code-fold: true
+execute:
+  echo: true
+  warning: false
+---
+```
+
+### Code Chunks
+
 A code chunk in Quarto looks like this:
 
 ````markdown
@@ -299,16 +352,97 @@ x <- rnorm(100)
 mean(x)
 ```
 
-Chunk options control how code is displayed and executed. Common options include `echo` (whether to show the code), `eval` (whether to run the code), and `fig-width` and `fig-height` (figure dimensions).
+### Chunk Options
+
+Chunk options control how code is displayed and executed. In Quarto, options are specified with `#|` comments at the start of the chunk:
 
 ````markdown
 ```{{r}}
+#| label: my-analysis
 #| echo: false
 #| fig-width: 6
 #| fig-height: 4
 hist(rnorm(1000))
 ```
 ````
+
+Essential chunk options:
+
+| Option | Description | Default |
+|:-------|:------------|:--------|
+| `echo` | Show code in output | `true` |
+| `eval` | Execute the code | `true` |
+| `include` | Include chunk in output | `true` |
+| `warning` | Show warnings | `true` |
+| `message` | Show messages | `true` |
+| `fig-cap` | Figure caption | none |
+| `fig-width` | Figure width (inches) | 7 |
+| `fig-height` | Figure height (inches) | 5 |
+
+### Callout Blocks
+
+Quarto provides special callout blocks for highlighting information:
+
+```markdown
+::: {.callout-note}
+This is a note with additional information.
+:::
+
+::: {.callout-warning}
+This warns readers about potential issues.
+:::
+
+::: {.callout-tip}
+This provides helpful tips.
+:::
+```
+
+These render as visually distinct boxes that draw attention to important content.
+
+::: {.callout-note}
+This is an example of a callout note—useful for supplementary information.
+:::
+
+::: {.callout-warning}
+This is a warning callout—use for potential pitfalls or important cautions.
+:::
+
+### Cross-References
+
+Quarto supports cross-references to figures, tables, and sections. Label items and reference them with `@`:
+
+````markdown
+```{{r}}
+#| label: fig-scatter
+#| fig-cap: "Relationship between x and y"
+plot(x, y)
+```
+
+See @fig-scatter for the scatter plot.
+````
+
+For sections, add a label after the header:
+
+```markdown
+## Methods {#sec-methods}
+
+As described in @sec-methods, we used...
+```
+
+### Rendering Documents
+
+To render a Quarto document:
+
+- **In RStudio**: Click the "Render" button or press `Ctrl+Shift+K` (Windows/Linux) or `Cmd+Shift+K` (Mac)
+- **Command line**: Run `quarto render document.qmd`
+
+You can render to multiple formats:
+
+```bash
+quarto render document.qmd --to html
+quarto render document.qmd --to pdf
+quarto render document.qmd --to docx
+```
 
 ## Why This Matters
 

@@ -66,6 +66,37 @@ Variable names cannot begin with numbers or contain operators. The following wil
 ```
 :::
 
+### Reserved Words
+
+R has **reserved words** that cannot be used as variable names because they have special meaning in the language:
+
+| Reserved Words | Purpose |
+|:---------------|:--------|
+| `if`, `else` | Conditional statements |
+| `for`, `while`, `repeat` | Loops |
+| `function` | Function definition |
+| `in`, `next`, `break` | Loop control |
+| `TRUE`, `FALSE` | Logical constants |
+| `NULL`, `NA`, `NaN`, `Inf` | Special values |
+
+R also has **semi-reserved names**—built-in functions and constants that you can technically overwrite but should avoid:
+
+```{r}
+#| eval: false
+# These work but are dangerous:
+T <- 5       # Overwrites TRUE abbreviation
+c <- "text"  # Shadows the c() function
+mean <- 42   # Shadows mean()
+
+# If you accidentally overwrite something, remove it:
+rm(c)        # Restores access to c()
+```
+
+::: {.callout-warning}
+## Avoid Common Name Collisions
+Never name variables `T`, `F` (abbreviations for `TRUE`/`FALSE`), `c`, `t`, `mean`, `sum`, `data`, or `df`. These are commonly used R functions, and shadowing them leads to confusing errors.
+:::
+
 Note that when you assign a value to a variable, R does not print anything. To see a variable's value, type its name alone or use the `print()` function.
 
 ```{r}
@@ -73,6 +104,38 @@ z <- 100
 z
 print(z)
 ```
+
+## Understanding R Objects
+
+A fundamental principle of R is that **everything is an object**. Numbers, text, datasets, functions—all are stored as objects with specific properties. Understanding this helps you debug problems and write better code.
+
+Every object has a **class** (which determines how functions treat it) and a **type** (its underlying storage mode). Use `class()` and `typeof()` to examine objects:
+
+```{r}
+# Numbers are objects
+x <- 42
+class(x)
+typeof(x)
+
+# Text strings are objects
+name <- "Gene Expression"
+class(name)
+
+# Even functions are objects!
+class(mean)
+```
+
+The `str()` function (**str**ucture) provides a compact display of any object's structure—it is one of the most useful diagnostic tools in R:
+
+```{r}
+# Examine a vector
+str(c(1, 2, 3, 4, 5))
+
+# Examine a data frame
+str(head(iris))
+```
+
+When functions produce errors or unexpected results, checking the class of your objects is often the first step toward understanding what went wrong.
 
 ## Functions
 
@@ -357,6 +420,43 @@ mean(num, na.rm = TRUE)
 is.na(num)
 ```
 
+### Floating-Point Precision
+
+A common source of confusion involves floating-point arithmetic. Computers represent decimal numbers with limited precision, which can lead to unexpected results:
+
+```{r}
+# This seems wrong, but is due to how computers store decimals
+0.1 + 0.2 == 0.3
+
+# The actual values differ slightly
+print(0.1 + 0.2, digits = 20)
+print(0.3, digits = 20)
+```
+
+Never use `==` to compare floating-point numbers directly. Instead, use `all.equal()` which checks if values are "nearly equal" within a small tolerance:
+
+```{r}
+# Safe comparison for floating-point numbers
+all.equal(0.1 + 0.2, 0.3)
+
+# Use isTRUE() if you need a logical result
+isTRUE(all.equal(0.1 + 0.2, 0.3))
+```
+
+The tidyverse provides `dplyr::near()` as a convenient alternative, especially when filtering data frames:
+
+```{r}
+#| eval: false
+# Works well in filter operations
+library(dplyr)
+data |> filter(near(value, target_value))
+```
+
+::: {.callout-warning}
+## Floating-Point Comparisons
+Always use `all.equal()` or `near()` instead of `==` when comparing decimal calculations. This is a common source of bugs in data analysis code.
+:::
+
 ## More on Vectors
 
 ### Indexing Vectors
@@ -478,6 +578,43 @@ library(name_of_package)
 ```
 
 Note that `install.packages()` requires the package name in quotation marks, while `library()` does not.
+
+### Namespace Conflicts
+
+When you load multiple packages, function names can collide. If two packages define a function with the same name, the most recently loaded package "wins," and its version masks the earlier one. R warns you when this happens:
+
+```{r}
+#| eval: false
+library(dplyr)
+# Attaching package: 'dplyr'
+# The following objects are masked from 'package:stats':
+#     filter, lag
+```
+
+This message indicates that dplyr's `filter()` and `lag()` functions are now masking the base R functions with those names. If you need the masked version, use the package prefix:
+
+```{r}
+#| eval: false
+# Use dplyr's filter (now the default after loading dplyr)
+data |> filter(x > 5)
+
+# Explicitly use base R's filter
+stats::filter(x, method = "convolution")
+
+# You can use the prefix even without loading a package
+stringr::str_detect(text, "pattern")
+```
+
+Common conflicts occur between:
+
+- `dplyr::filter()` and `stats::filter()`
+- `dplyr::lag()` and `stats::lag()`
+- `dplyr::select()` and `MASS::select()`
+
+::: {.callout-tip}
+## Avoiding Conflicts
+The `::` notation explicitly specifies which package's function to use. When writing scripts, it is good practice to use `package::function()` for functions that commonly conflict, making your code's behavior explicit and predictable.
+:::
 
 ## The Split-Apply-Combine Approach
 

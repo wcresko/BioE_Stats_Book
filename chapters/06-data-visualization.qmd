@@ -7,6 +7,56 @@ library(tidyverse)
 theme_set(theme_minimal())
 ```
 
+## Why Visualize Data?
+
+Before diving into the mechanics of creating plots, consider why visualization matters. The human visual system excels at detecting patterns, spotting outliers, and perceiving relationships—abilities that summary statistics cannot replace.
+
+Consider **Anscombe's Quartet**—four datasets with nearly identical summary statistics (same mean, variance, and correlation) but completely different patterns:
+
+```{r}
+#| label: fig-anscombes
+#| fig-cap: "Anscombe's Quartet: Four datasets with identical summary statistics but very different patterns"
+#| fig-height: 5
+#| fig-width: 8
+
+# Reshape Anscombe's built-in dataset
+anscombe_long <- anscombe |>
+  pivot_longer(everything(),
+               names_to = c(".value", "set"),
+               names_pattern = "(.)(.)")
+
+ggplot(anscombe_long, aes(x = x, y = y)) +
+  geom_point(size = 2, color = "steelblue") +
+  geom_smooth(method = "lm", se = FALSE, color = "coral") +
+  facet_wrap(~set, ncol = 2) +
+  labs(title = "Same Mean, Variance, and Correlation—Different Stories") +
+  theme_minimal()
+```
+
+All four datasets have nearly identical statistical summaries, yet they represent fundamentally different phenomena: a linear relationship, a curved relationship, an outlier-driven relationship, and a vertical cluster with one outlier. Summary statistics alone would suggest these datasets are equivalent—only visualization reveals the truth.
+
+::: {.callout-important}
+## Always Visualize Your Data
+Never trust summary statistics alone. Before running statistical tests, visualize your data to check assumptions, identify outliers, and understand the underlying patterns.
+:::
+
+## Choosing the Right Chart Type
+
+Different questions call for different visualizations. Matching your question to the right chart type is the first step toward effective communication:
+
+| Question | Chart Type | Why |
+|:---------|:-----------|:----|
+| How are values distributed? | Histogram, density plot | Shows shape, center, spread |
+| How do groups compare? | Box plot, bar chart | Side-by-side comparison |
+| How do two variables relate? | Scatter plot | Shows correlation, patterns |
+| How does a value change over time? | Line plot | Connects sequential observations |
+| What is the composition? | Stacked bar chart | Shows parts of a whole |
+
+::: {.callout-tip}
+## Start with the Question
+Before creating any visualization, ask yourself: "What question am I trying to answer?" The chart type should emerge from the question, not the other way around.
+:::
+
 ## The Grammar of Graphics
 
 Data visualization is both an art and a science. A well-designed graphic can reveal patterns, communicate findings, and guide analysis in ways that tables of numbers cannot. The `ggplot2` package implements a coherent system for creating graphics based on Leland Wilkinson's "Grammar of Graphics"—a framework that describes the fundamental components from which all statistical graphics can be built.
@@ -203,6 +253,58 @@ Key principles include:
 **Minimize clutter.** Remove unnecessary grid lines, borders, and decorations. Every element should serve a purpose.
 
 **Make displays easy to interpret.** Use clear labels, appropriate colors, and logical organization.
+
+### Order Categories Meaningfully
+
+By default, R orders categorical variables alphabetically, which is rarely the most informative arrangement. Use `reorder()` to order categories by a meaningful value:
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+
+# Create sample data
+sample_data <- tibble(
+  treatment = c("Control", "Low Dose", "Medium Dose", "High Dose"),
+  response = c(12, 18, 25, 31)
+)
+
+# Default alphabetical order (not ideal)
+ggplot(sample_data, aes(x = treatment, y = response)) +
+  geom_col(fill = "steelblue") +
+  labs(title = "Default Order (Alphabetical)",
+       x = "Treatment", y = "Response") +
+  theme_minimal()
+```
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+
+# Order by response value (more meaningful)
+sample_data |>
+  mutate(treatment = reorder(treatment, response)) |>
+  ggplot(aes(x = treatment, y = response)) +
+  geom_col(fill = "steelblue") +
+  labs(title = "Ordered by Value (More Meaningful)",
+       x = "Treatment", y = "Response") +
+  theme_minimal()
+```
+
+The `reorder()` function takes a categorical variable and a numeric variable, reordering the categories by the numeric values. For horizontal bar charts (which are often easier to read), add `coord_flip()`:
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+
+sample_data |>
+  mutate(treatment = reorder(treatment, response)) |>
+  ggplot(aes(x = treatment, y = response)) +
+  geom_col(fill = "steelblue") +
+  coord_flip() +
+  labs(title = "Horizontal Bars (Good for Long Labels)",
+       x = NULL, y = "Response") +
+  theme_minimal()
+```
 
 ## Visual Encoding: How We Perceive Data
 

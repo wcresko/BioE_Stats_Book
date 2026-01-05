@@ -358,6 +358,232 @@ grep "^>" sequences.fasta | cut -d":" -f1 | sort | uniq -c
 These tools have many more capabilities than we can cover here. The `man` pages provide comprehensive documentation, and online resources like the GNU Awk User's Guide offer in-depth tutorials. With practice, you will develop intuition for which tool to use for different tasks.
 :::
 
+## Wildcards and Pattern Matching
+
+One of Unix's most powerful features is **wildcards**—special characters that match multiple files at once. Instead of typing each filename individually, you can specify patterns that match many files simultaneously.
+
+The asterisk `*` matches any number of any characters (including zero characters):
+
+```bash
+ls *.csv              # all CSV files
+ls data*              # all files starting with "data"
+ls *.txt *.md         # all text and markdown files
+rm temp*              # remove all files starting with "temp"
+```
+
+The question mark `?` matches exactly one character:
+
+```bash
+ls sample?.txt        # sample1.txt, sample2.txt, etc. (but not sample10.txt)
+ls data_??.csv        # data_01.csv, data_AB.csv, etc.
+```
+
+Square brackets `[]` match any single character from a set:
+
+```bash
+ls sample[123].txt    # sample1.txt, sample2.txt, or sample3.txt
+ls data_[0-9].csv     # data_0.csv through data_9.csv
+ls file[A-Z].txt      # fileA.txt through fileZ.txt
+```
+
+::: {.callout-warning}
+## Wildcard Safety
+Combining `rm` with wildcards can be dangerous. The command `rm *` deletes everything in the current directory without confirmation. Always use `ls` first to see what a wildcard pattern matches before using it with `rm`. Consider using `rm -i` for interactive confirmation when removing files with wildcards.
+:::
+
+Wildcards are expanded by the shell before the command runs, so they work with any command:
+
+```bash
+# Count lines in all CSV files
+wc -l *.csv
+
+# Copy all R scripts to a backup folder
+cp *.R backup/
+
+# Search for "gene" in all text files
+grep "gene" *.txt
+```
+
+## Environment Variables
+
+Unix maintains settings called **environment variables** that affect how the shell and programs behave. These variables store information about your user session, system configuration, and program preferences. Environment variables are distinguished by a `$` prefix when you reference them.
+
+Several important environment variables are set automatically:
+
+```bash
+# Your home directory
+echo $HOME
+/home/wcresko
+
+# Your username
+echo $USER
+wcresko
+
+# Your current shell program
+echo $SHELL
+/bin/bash
+
+# Where Unix looks for executable programs
+echo $PATH
+/usr/local/bin:/usr/bin:/bin:/home/wcresko/bin
+
+# Your current working directory
+echo $PWD
+/home/wcresko/projects
+```
+
+The `PATH` variable is particularly important—it contains a colon-separated list of directories where Unix searches for programs. When you type a command like `ls` or `python`, Unix looks through each directory in your `PATH` until it finds a matching executable. You can find where a program is located using `which`:
+
+```bash
+which python
+/usr/bin/python
+
+which R
+/usr/local/bin/R
+```
+
+You can set your own environment variables and use them in commands:
+
+```bash
+# Set a variable
+PROJECT_DIR=~/projects/analysis
+
+# Use it (note the $)
+cd $PROJECT_DIR
+ls $PROJECT_DIR/data
+```
+
+To make environment variables available to subprocesses (programs you launch), use `export`:
+
+```bash
+export PROJECT_DIR=~/projects/analysis
+```
+
+To see all environment variables currently set, use `env` or `printenv`:
+
+```bash
+env | head -20       # Show first 20 environment variables
+```
+
+### Shell Configuration Files
+
+Your shell can be customized through configuration files that run when you open a terminal. For Bash, the main configuration files are `~/.bashrc` (for interactive shells) and `~/.bash_profile` (for login shells). For zsh (the default on modern macOS), use `~/.zshrc`.
+
+Common customizations include:
+
+```bash
+# Add a directory to your PATH
+export PATH="$HOME/bin:$PATH"
+
+# Create an alias (shortcut) for a common command
+alias ll='ls -la'
+alias rm='rm -i'    # Always ask before deleting
+
+# Set default options for programs
+export R_LIBS_USER="$HOME/R/library"
+```
+
+After editing configuration files, apply the changes by either starting a new terminal or running:
+
+```bash
+source ~/.bashrc
+```
+
+## File Permissions
+
+Unix is a multi-user system, and every file has permissions controlling who can read, write, or execute it. Understanding permissions is essential for security and for running scripts on shared computing clusters.
+
+When you run `ls -l`, you see permission strings at the beginning of each line:
+
+```bash
+ls -l
+-rwxr-xr-x 1 wcresko staff 2048 Jan 15 10:30 analysis.sh
+drwxr-xr-x 3 wcresko staff   96 Jan 15 09:00 data
+```
+
+The permission string `-rwxr-xr-x` encodes three sets of permissions:
+
+| Position | Meaning |
+|:---------|:--------|
+| 1st character | Type: `-` (file), `d` (directory), `l` (link) |
+| Characters 2-4 | **Owner** permissions |
+| Characters 5-7 | **Group** permissions |
+| Characters 8-10 | **Others** (everyone else) permissions |
+
+Within each set, the three characters represent:
+
+- `r` (read): View file contents or list directory contents
+- `w` (write): Modify file or add/remove files in directory
+- `x` (execute): Run file as program or enter directory
+- `-` (dash): Permission denied for that operation
+
+So `-rwxr-xr-x` means: this is a regular file; the owner can read, write, and execute; the group can read and execute; others can read and execute.
+
+### Changing Permissions with chmod
+
+The `chmod` command changes file permissions. You can use symbolic notation or numeric (octal) notation.
+
+**Symbolic notation** uses letters and operators:
+
+```bash
+# Add execute permission for the owner
+chmod u+x script.sh
+
+# Remove write permission for group and others
+chmod go-w data.csv
+
+# Set exact permissions
+chmod u=rwx,g=rx,o=rx script.sh
+```
+
+The letters are: `u` (user/owner), `g` (group), `o` (others), `a` (all). The operators are: `+` (add), `-` (remove), `=` (set exactly).
+
+**Octal notation** uses numbers where each permission has a value:
+
+| Permission | Value |
+|:-----------|:------|
+| read (r)   | 4     |
+| write (w)  | 2     |
+| execute (x)| 1     |
+
+Add the values for each set. For example, `rwx` = 4+2+1 = 7, and `r-x` = 4+0+1 = 5.
+
+```bash
+chmod 755 script.sh    # rwxr-xr-x (executable script)
+chmod 644 data.csv     # rw-r--r-- (readable data file)
+chmod 700 private/     # rwx------ (private directory)
+```
+
+Common permission patterns:
+
+- `755`: Executable scripts (owner can modify, everyone can run)
+- `644`: Data files (owner can modify, everyone can read)
+- `700`: Private directories (only owner has access)
+- `600`: Private files (only owner can read/write)
+
+### Making Scripts Executable
+
+When you write a shell script, you need to make it executable before you can run it directly:
+
+```bash
+# Create a simple script
+echo '#!/bin/bash' > myscript.sh
+echo 'echo "Hello, World!"' >> myscript.sh
+
+# Try to run it (will fail)
+./myscript.sh
+# bash: ./myscript.sh: Permission denied
+
+# Make it executable
+chmod +x myscript.sh
+
+# Now it works
+./myscript.sh
+# Hello, World!
+```
+
+The `#!/bin/bash` line at the top of the script (called a "shebang") tells Unix which program should interpret the script.
+
 ## Connecting to Remote Systems
 
 The `ssh` command (secure shell) lets you connect to remote computers.
