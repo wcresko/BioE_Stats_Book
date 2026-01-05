@@ -25,6 +25,103 @@ The term "regression" comes from Francis Galton's studies of heredity in the 188
 
 ![](../images/images_4b.002.jpeg){fig-align="center"}
 
+## The Regression Fallacy
+
+Understanding regression to the mean is crucial because ignoring it leads to a common error in reasoning called the **regression fallacy**. This occurs when we attribute regression to the mean to some other cause—typically claiming credit for improvement that was simply statistical regression.
+
+The most famous example is the "Sophomore Slump" in baseball. The player who wins Rookie of the Year typically performs worse in their second season. Sportswriters often blame this on pressure, complacency, or teams "figuring out" the player. But much of this decline is simply regression to the mean.
+
+Consider why: to win Rookie of the Year, a player typically needs exceptional performance—often their personal best. This outstanding season likely involved skill plus some good luck (favorable conditions, timely hits, etc.). In the following season, luck averages out, and performance regresses toward the player's true ability level.
+
+```{r}
+#| fig-width: 8
+#| fig-height: 5
+# Simulating the Sophomore Slump
+set.seed(42)
+n_players <- 500
+
+# True talent level for each player (varies between players)
+true_talent <- rnorm(n_players, mean = 0.265, sd = 0.020)
+
+# Season 1: observed performance = true talent + luck
+luck_season1 <- rnorm(n_players, mean = 0, sd = 0.025)
+batting_avg_yr1 <- true_talent + luck_season1
+
+# Season 2: observed performance = same true talent + different luck
+luck_season2 <- rnorm(n_players, mean = 0, sd = 0.025)
+batting_avg_yr2 <- true_talent + luck_season2
+
+# Find the "Rookie of the Year" - best performer in year 1
+roy_idx <- which.max(batting_avg_yr1)
+
+# Look at top 10 performers in year 1
+top_10 <- order(batting_avg_yr1, decreasing = TRUE)[1:10]
+
+cat("Top 10 performers in Year 1 vs Year 2:\n")
+cat("========================================\n")
+for (i in 1:10) {
+  idx <- top_10[i]
+  change <- batting_avg_yr2[idx] - batting_avg_yr1[idx]
+  cat(sprintf("Player %d: Yr1 = %.3f, Yr2 = %.3f, Change = %+.3f\n",
+              i, batting_avg_yr1[idx], batting_avg_yr2[idx], change))
+}
+
+# How many of top 10 declined?
+declines <- sum(batting_avg_yr2[top_10] < batting_avg_yr1[top_10])
+cat(sprintf("\n%d of top 10 performers showed a decline (the 'slump')\n", declines))
+```
+
+Notice that nearly all of the top performers declined—not because of anything about being a sophomore, but because extreme initial performance tends to be followed by more average performance.
+
+```{r}
+#| fig-width: 8
+#| fig-height: 6
+# Visualize regression to the mean
+plot(batting_avg_yr1, batting_avg_yr2,
+     pch = 19, col = rgb(0, 0, 0, 0.3),
+     xlab = "Year 1 Batting Average",
+     ylab = "Year 2 Batting Average",
+     main = "Regression to the Mean: The Sophomore Slump",
+     xlim = c(0.20, 0.35), ylim = c(0.20, 0.35))
+
+# Add y = x line (what we'd see with no regression)
+abline(a = 0, b = 1, col = "gray", lty = 2, lwd = 2)
+
+# Add regression line
+reg_line <- lm(batting_avg_yr2 ~ batting_avg_yr1)
+abline(reg_line, col = "red", lwd = 2)
+
+# Highlight top performers
+points(batting_avg_yr1[top_10], batting_avg_yr2[top_10],
+       pch = 19, col = "blue", cex = 1.5)
+
+# Mark the "Rookie of the Year"
+points(batting_avg_yr1[roy_idx], batting_avg_yr2[roy_idx],
+       pch = 17, col = "red", cex = 2)
+
+legend("topleft",
+       legend = c("All players", "Top 10 Year 1", "Best performer",
+                  "No regression (y=x)", "Regression line"),
+       pch = c(19, 19, 17, NA, NA),
+       lty = c(NA, NA, NA, 2, 1),
+       col = c(rgb(0,0,0,0.3), "blue", "red", "gray", "red"),
+       lwd = c(NA, NA, NA, 2, 2))
+```
+
+The dashed line shows what we would see if Year 1 perfectly predicted Year 2 (no regression to the mean). The red regression line shows reality—it's flatter, meaning extreme Year 1 performers tend to move toward the center in Year 2.
+
+::: {.callout-warning}
+## Avoiding the Regression Fallacy
+
+The regression fallacy appears in many contexts:
+
+- **Medical treatments**: Patients seek treatment when symptoms are worst; subsequent improvement may be regression, not treatment effect
+- **Performance management**: Workers reprimanded for poor performance often improve; those praised for good performance often decline—both may be regression
+- **Educational interventions**: Students identified as struggling (tested at their worst) often improve regardless of intervention
+
+When evaluating any intervention applied to extreme cases, always consider whether observed changes might simply be regression to the mean.
+:::
+
 ## Fitting the Model: Ordinary Least Squares
 
 The most common method for fitting a regression line is **ordinary least squares (OLS)**. OLS finds the line that minimizes the sum of squared residuals—the squared vertical distances between observed points and the fitted line.
