@@ -93,6 +93,23 @@ mkdir -p analysis/results/figures  # create nested directories
 
 The `-p` flag tells `mkdir` to create parent directories as needed, which is useful for creating nested folder structures in one command.
 
+To remove an empty directory, use `rmdir`.
+
+```bash
+rmdir empty_folder                 # remove an empty directory
+```
+
+Note that `rmdir` only works on empty directories. For directories with contents, you need `rm -r` (discussed below).
+
+Creating a new, empty file uses the `touch` command.
+
+```bash
+touch newfile.txt                  # create an empty file
+touch notes.md data.csv            # create multiple files
+```
+
+The `touch` command is also useful for updating the modification timestamp of existing files without changing their contents.
+
 Moving and renaming files uses the `mv` command.
 
 ```bash
@@ -115,6 +132,11 @@ rm unwanted_file.txt               # remove a file
 rm -r unwanted_folder/             # remove a directory and contents
 rm -i file.txt                     # ask for confirmation before removing
 ```
+
+::: {.callout-tip}
+## Interrupting Commands
+If you need to stop a running command—perhaps you started a process that is taking too long or realize you made a mistake—press `Ctrl-C`. This sends an interrupt signal that terminates most running processes and returns you to the command prompt.
+:::
 
 ## Viewing File Contents
 
@@ -192,6 +214,150 @@ sort -n numbers.txt                     # sort numerically
 cut -f1,3 data.tsv                      # extract columns 1 and 3 from tab-separated file
 ```
 
+## Advanced Text Processing
+
+The basic commands above are just the beginning. Unix provides powerful tools for searching, manipulating, and transforming text files—skills that are invaluable when working with biological data.
+
+### Pattern Matching with grep
+
+The `grep` command becomes even more powerful when you use special characters to define patterns. These patterns, called regular expressions, allow you to search for complex text structures.
+
+Common special characters in `grep` patterns:
+
+- `^` matches the beginning of a line
+- `$` matches the end of a line
+- `.` matches any single character (except newline)
+- `*` matches zero or more of the preceding character
+- `\s` matches any whitespace character
+
+```bash
+grep "^embryo" data.tsv          # lines starting with "embryo"
+grep "gene$" data.tsv            # lines ending with "gene"
+grep "sample.*control" data.tsv  # lines with "sample" followed by anything then "control"
+grep "^embryo_10\s" data.tsv     # lines starting with "embryo_10" followed by whitespace
+```
+
+Useful `grep` flags include:
+
+- `-c` counts matching lines instead of displaying them
+- `-v` returns lines that do NOT match the pattern (inverse match)
+- `-n` includes line numbers in the output
+- `-i` performs case-insensitive matching
+
+```bash
+grep -v "^#" data.tsv            # exclude comment lines starting with #
+grep -n "error" logfile.txt      # show line numbers for matches
+grep -c "ATCG" sequences.fasta   # count lines containing this sequence
+```
+
+### Search and Replace with sed
+
+The `sed` (stream editor) command is commonly used for search-and-replace operations. The basic syntax uses slashes to separate the pattern, replacement, and flags:
+
+```bash
+sed 's/old/new/' file.txt        # replace first occurrence on each line
+sed 's/old/new/g' file.txt       # replace all occurrences (global)
+sed 's/\t/,/g' file.tsv          # convert tabs to commas
+sed 's/^/prefix_/' file.txt      # add prefix to beginning of each line
+```
+
+By default, `sed` prints the modified text to the terminal. To modify a file in place, use the `-i` flag (use with caution):
+
+```bash
+sed -i 's/old/new/g' file.txt    # modify file in place
+```
+
+A safer approach is to redirect output to a new file:
+
+```bash
+sed 's/old/new/g' input.txt > output.txt
+```
+
+### Column Operations with cut and join
+
+The `cut` command extracts specific columns from delimited files. By default, it assumes tab-delimited data.
+
+```bash
+cut -f1,2 data.tsv               # extract columns 1 and 2 (tab-delimited)
+cut -f1,3 -d"," data.csv         # extract columns 1 and 3 (comma-delimited)
+cut -f2-5 data.tsv               # extract columns 2 through 5
+```
+
+The `join` command combines two files based on a common field, similar to a database join. Both files should be sorted on the join field.
+
+```bash
+join file1.txt file2.txt         # join on first field
+join -1 2 -2 1 file1.txt file2.txt  # join file1's column 2 with file2's column 1
+```
+
+### Sorting with Advanced Options
+
+The `sort` command has many options for controlling how data is sorted.
+
+```bash
+sort -n data.txt                 # sort numerically
+sort -r data.txt                 # sort in reverse order
+sort -k2,2 data.tsv              # sort by second column
+sort -k2,2 -n data.tsv           # sort by second column numerically
+sort -k2,2 -nr data.tsv          # sort by second column, numerically, in reverse
+sort -u data.txt                 # sort and remove duplicate lines
+sort -t"," -k3,3 data.csv        # sort comma-separated file by third column
+```
+
+### Flexible Text Processing with awk
+
+The `awk` command is an extremely powerful tool for processing structured text. It treats each line as a record and each column as a field, making it ideal for tabular data. Fields are referenced using `$1`, `$2`, etc., where `$0` represents the entire line.
+
+```bash
+awk '{print $1}' data.tsv                    # print first column
+awk '{print $1, $3}' data.tsv                # print columns 1 and 3
+awk -F"," '{print $1, $2}' data.csv          # specify comma as delimiter
+awk '{print NR, $0}' data.txt                # print line numbers with each line
+```
+
+One of `awk`'s strengths is its ability to filter rows based on conditions:
+
+```bash
+awk '$3 > 100 {print $1, $3}' data.tsv       # print columns 1 and 3 where column 3 > 100
+awk '$2 == "control" {print $0}' data.tsv    # print lines where column 2 is "control"
+awk 'NR > 1 {print $0}' data.tsv             # skip header (print from line 2 onward)
+awk '$4 >= 0.05 {print $1}' results.tsv      # extract IDs where p-value >= 0.05
+```
+
+You can also perform calculations:
+
+```bash
+awk '{sum += $2} END {print sum}' data.tsv           # sum of column 2
+awk '{sum += $2} END {print sum/NR}' data.tsv        # average of column 2
+awk '{print $1, $2 * 1000}' data.tsv                 # multiply column 2 by 1000
+```
+
+### Combining Commands in Pipelines
+
+The real power of Unix text processing comes from combining these tools. Here are some examples relevant to biological data analysis:
+
+```bash
+# Count unique gene names in column 1 (skipping header)
+tail -n +2 data.tsv | cut -f1 | sort | uniq | wc -l
+
+# Extract rows with significant p-values and sort by effect size
+awk '$5 < 0.05' results.tsv | sort -k3,3 -nr | head -20
+
+# Convert a file from comma to tab-delimited and extract specific columns
+sed 's/,/\t/g' data.csv | cut -f1,3,5 > subset.tsv
+
+# Find all unique values in column 2 and count occurrences
+cut -f2 data.tsv | sort | uniq -c | sort -nr
+
+# Process a FASTA file to count sequences per chromosome
+grep "^>" sequences.fasta | cut -d":" -f1 | sort | uniq -c
+```
+
+::: {.callout-note}
+## Learning More
+These tools have many more capabilities than we can cover here. The `man` pages provide comprehensive documentation, and online resources like the GNU Awk User's Guide offer in-depth tutorials. With practice, you will develop intuition for which tool to use for different tasks.
+:::
+
 ## Connecting to Remote Systems
 
 The `ssh` command (secure shell) lets you connect to remote computers.
@@ -209,8 +375,41 @@ scp local_file.txt username@server.edu:~/destination/
 scp username@server.edu:~/remote_file.txt ./local_copy.txt
 ```
 
+## Data File Best Practices
+
+When working with data files, following consistent practices will save you time and prevent errors. These guidelines apply whether you are using Unix tools, R, or any other analysis software.
+
+### Do
+
+- **Store data in plain text formats** such as tab-separated (.tsv) or comma-separated (.csv) files. These nonproprietary formats can be read by any software and will remain accessible for years to come.
+- **Keep an unedited copy of original data files.** Even when your analysis requires modifications, preserve the raw data separately.
+- **Use descriptive, consistent names** for files and variables. A name like `experiment1_control_measurements.tsv` is far more useful than `data2.txt`.
+- **Maintain metadata** that documents what each variable means, how data were collected, and any processing steps applied.
+- **Add new observations as rows** and new variables as columns to maintain a consistent rectangular structure.
+
+### Don't
+
+- **Don't mix data types within a column.** If a column contains numbers, every entry should be a number (or explicitly missing).
+- **Don't use special characters in file or directory names.** Stick to letters, numbers, underscores, and hyphens. Avoid spaces, which can cause problems with command-line tools.
+- **Don't use delimiter characters in data values.** If your file is comma-delimited, don't use commas within data entries. For example, use `2024-03-08` rather than `March 8, 2024` for dates.
+- **Don't copy data from formatted documents** like Microsoft Word directly into data files. Hidden formatting characters can corrupt your data.
+- **Don't edit data files in spreadsheet programs** that might silently convert values (for example, Excel's tendency to convert gene names like SEPT1 to dates).
+
+::: {.callout-warning}
+## Preserving Raw Data
+Perhaps the most important principle is to never modify your original raw data files. Keep them in a separate directory with restricted write permissions if possible. All data cleaning and transformation should be done programmatically (in scripts that can be re-run), with outputs saved to new files.
+:::
+
 ## Practice Exercises
 
 The best way to learn command-line skills is through practice. Create a project folder structure for organizing your course work. Navigate through the file system and examine the contents of various directories. Create some text files and practice viewing, copying, moving, and removing them.
 
 Try combining commands with pipes. For example, you might list all files in a directory, filter for those with a particular extension, and count how many there are. Start simple and gradually build more complex pipelines as you become comfortable with the individual commands.
+
+## Additional Resources
+
+- [Unix/Linux Command Reference](http://mally.stanford.edu/~sr/computing/basic-unix.html) - A comprehensive cheat sheet of common commands
+- [Unix and Perl Primer for Biologists](http://korflab.ucdavis.edu/Unix_and_Perl/) - An outstanding tutorial by Keith Bradnam and Ian Korf, specifically designed for life scientists
+- [Introduction to Shell for Data Science](https://www.datacamp.com/courses/introduction-to-shell-for-data-science) - DataCamp's interactive tutorial
+- [The GNU Awk User's Guide](https://www.gnu.org/software/gawk/manual/gawk.html) - Comprehensive documentation for mastering `awk`
+- [Software Carpentry Shell Lessons](https://swcarpentry.github.io/shell-novice/) - Excellent tutorials designed for researchers
