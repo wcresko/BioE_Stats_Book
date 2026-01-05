@@ -125,6 +125,114 @@ cor.test(length, weight)
 
 The null hypothesis is that the population correlation is zero ($H_0: \rho = 0$). A small p-value indicates evidence of a non-zero correlation.
 
+## Sample Correlation as a Random Variable
+
+Just like the sample mean, the sample correlation coefficient is a **random variable**—it varies from sample to sample. If we could repeatedly draw samples from the same population and compute r for each, we would get a distribution of r values centered around the true population correlation $\rho$.
+
+This sampling variability has important implications for interpretation. A sample correlation of r = 0.3 from a small study might arise even when the true correlation is zero (or is actually 0.5). Understanding this uncertainty is essential for proper inference.
+
+```{r}
+#| fig-width: 9
+#| fig-height: 6
+# Demonstrate sampling variability of correlation
+set.seed(42)
+
+# True population parameters
+rho_true <- 0.5  # True population correlation
+n_small <- 20
+n_large <- 100
+n_reps <- 1000
+
+# Function to generate correlated data
+generate_correlated_data <- function(n, rho) {
+  x <- rnorm(n)
+  y <- rho * x + sqrt(1 - rho^2) * rnorm(n)
+  return(cor(x, y))
+}
+
+# Generate sampling distributions for different sample sizes
+r_small <- replicate(n_reps, generate_correlated_data(n_small, rho_true))
+r_large <- replicate(n_reps, generate_correlated_data(n_large, rho_true))
+
+# Plot sampling distributions
+par(mfrow = c(1, 2))
+
+hist(r_small, breaks = 30, col = "lightblue",
+     main = paste("Sampling Distribution of r\n(n =", n_small, ")"),
+     xlab = "Sample Correlation", xlim = c(-0.2, 1))
+abline(v = rho_true, col = "red", lwd = 2, lty = 2)
+abline(v = mean(r_small), col = "blue", lwd = 2)
+legend("topleft", legend = c(paste("True ρ =", rho_true),
+                              paste("Mean r =", round(mean(r_small), 3))),
+       col = c("red", "blue"), lty = c(2, 1), lwd = 2, cex = 0.8)
+
+hist(r_large, breaks = 30, col = "lightgreen",
+     main = paste("Sampling Distribution of r\n(n =", n_large, ")"),
+     xlab = "Sample Correlation", xlim = c(-0.2, 1))
+abline(v = rho_true, col = "red", lwd = 2, lty = 2)
+abline(v = mean(r_large), col = "blue", lwd = 2)
+legend("topleft", legend = c(paste("True ρ =", rho_true),
+                              paste("Mean r =", round(mean(r_large), 3))),
+       col = c("red", "blue"), lty = c(2, 1), lwd = 2, cex = 0.8)
+```
+
+Notice the dramatic difference in variability. With n = 20, sample correlations range widely around the true value—sometimes even appearing negative when the true correlation is 0.5! With n = 100, the distribution is much tighter, and our sample r is a more reliable estimate of $\rho$.
+
+```{r}
+# Quantify the variability
+cat("True population correlation: ρ =", rho_true, "\n\n")
+
+cat("With n =", n_small, ":\n")
+cat("  Mean of sample r:", round(mean(r_small), 3), "\n")
+cat("  SD of sample r:", round(sd(r_small), 3), "\n")
+cat("  95% of samples give r between", round(quantile(r_small, 0.025), 3),
+    "and", round(quantile(r_small, 0.975), 3), "\n\n")
+
+cat("With n =", n_large, ":\n")
+cat("  Mean of sample r:", round(mean(r_large), 3), "\n")
+cat("  SD of sample r:", round(sd(r_large), 3), "\n")
+cat("  95% of samples give r between", round(quantile(r_large, 0.025), 3),
+    "and", round(quantile(r_large, 0.975), 3), "\n")
+```
+
+::: {.callout-tip}
+## Practical Implications
+
+1. **Small samples yield unreliable correlations**: With n < 30, sample r can differ substantially from $\rho$
+2. **Confidence intervals are essential**: Report CIs to communicate uncertainty, not just the point estimate
+3. **Replication matters**: A single study with r = 0.4 (n = 25) is consistent with true correlations anywhere from near-zero to quite strong
+4. **Publication bias distorts the literature**: Studies with "significant" correlations are more likely to be published, inflating effect sizes in the literature
+:::
+
+### Fisher's Z-Transformation
+
+The sampling distribution of r is not symmetric, especially when $\rho$ is far from zero. Fisher's z-transformation stabilizes the variance and makes the distribution approximately normal:
+
+$$z = \frac{1}{2} \ln\left(\frac{1 + r}{1 - r}\right) = \text{arctanh}(r)$$
+
+The standard error of z is approximately $\frac{1}{\sqrt{n-3}}$, which depends only on sample size—not on the true correlation. This transformation is used to construct confidence intervals for correlation and to compare correlations across groups.
+
+```{r}
+# Fisher's z-transformation for confidence interval
+r_observed <- 0.6
+n <- 50
+
+# Transform to z
+z <- atanh(r_observed)  # Same as 0.5 * log((1 + r) / (1 - r))
+se_z <- 1 / sqrt(n - 3)
+
+# 95% CI in z scale
+z_lower <- z - 1.96 * se_z
+z_upper <- z + 1.96 * se_z
+
+# Transform back to r scale
+r_lower <- tanh(z_lower)
+r_upper <- tanh(z_upper)
+
+cat("Observed r:", r_observed, "with n =", n, "\n")
+cat("95% CI for ρ: [", round(r_lower, 3), ",", round(r_upper, 3), "]\n")
+```
+
 ## Parametric Assumptions
 
 Pearson's correlation assumes that both variables are normally distributed (or at least that the relationship is linear and homoscedastic). When these assumptions are violated, nonparametric alternatives may be more appropriate.
