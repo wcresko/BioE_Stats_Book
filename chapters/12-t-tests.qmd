@@ -381,6 +381,15 @@ The t-test family provides essential tools for comparing means:
 
 Always visualize your data, check assumptions, and report effect sizes alongside p-values. A statistically significant result is only meaningful if the underlying assumptions are reasonable and the effect size is practically relevant.
 
+## Practice Exercises
+
+For hands-on practice with t-tests and hypothesis testing, see @sec-ex-hypothesis in the Practice Exercises appendix. The exercises include:
+
+- Performing one-sample and two-sample t-tests
+- Exploring the effects of sample size on statistical power
+- Chi-square tests for categorical data
+- Testing for Hardy-Weinberg equilibrium
+
 ## Additional Resources
 
 - @logan2010biostatistical - Detailed coverage of t-tests with biological examples

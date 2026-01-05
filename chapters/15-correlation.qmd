@@ -341,6 +341,15 @@ Correlation quantifies the strength and direction of linear relationships betwee
 - Correlation does not imply causation
 - Always visualize data and check for non-linearity and outliers
 
+## Practice Exercises
+
+For hands-on practice with correlation and linear models, see @sec-ex-linear in the Practice Exercises appendix. The exercises include:
+
+- Calculating and interpreting correlation coefficients
+- Creating scatterplots with trend lines
+- Understanding the effect of outliers on correlation
+- Simple linear regression analysis
+
 ## Additional Resources
 
 - @logan2010biostatistical - Detailed coverage of correlation with biological examples

@@ -1,0 +1,1013 @@
+# Practice Exercises {#sec-exercises}
+
+```{r}
+#| echo: false
+#| message: false
+library(tidyverse)
+theme_set(theme_minimal())
+```
+
+This appendix contains practice exercises organized by chapter. Working through these exercises will help reinforce the concepts covered in the main text and develop your practical skills in data analysis. Each section corresponds to a chapter in the book, with cross-references to help you review relevant material.
+
+::: {.callout-tip}
+## Learning by Doing
+The best way to learn programming and statistics is through hands-on practice. Don't just read these exercises—work through them at your computer. When you get stuck, refer back to the corresponding chapter, consult the help documentation, and experiment with different approaches.
+:::
+
+## Unix and Command Line Exercises {#sec-ex-unix}
+
+These exercises correspond to @sec-unix. Save a digital record of your work so that you can study it later if you need to.
+
+### Exercise U.1: Basic Navigation and File Operations
+
+Open up a terminal and execute the following using Unix commands:
+
+1. Print your working directory using `pwd`
+2. Navigate to a directory somewhere below your home directory where you want to practice writing files
+3. Make 5 directories called `dir_1`, `dir_2`, `dir_3`, `dir_4`, and `dir_5` using `mkdir`
+4. Within each of those directories, create files called `file_1.txt`, `file_2.txt`, and `file_3.txt` using `touch`
+5. Open `file_1.txt` in `dir_1` using a plain text editor (such as `nano` or `vim`), type a few words, and save it
+6. Print `file_1.txt` in `dir_1` to the terminal using `cat`
+7. Delete all files in `dir_3` using `rm`
+8. List all of the contents of your current directory line-by-line using `ls -l`
+9. Delete `dir_3` using `rmdir`
+
+### Exercise U.2: Working with Data Files
+
+For this exercise, create a sample tab-separated file or download a GFF file from a genomics database.
+
+1. Navigate to `dir_1`
+2. Copy a data file (using its absolute path) to your current directory
+3. Delete the copy that is in your current directory, then copy it again using a relative path this time
+4. Use at least 3 different Unix commands to examine all or parts of your data file (try `cat`, `head`, `tail`, `less`, and `wc`)
+5. What is the file size? Use `ls -lh` to find out
+6. How many lines does the file have? Use `wc -l`
+7. How many lines begin with a specific pattern (like a chromosome name)? Use `grep -c "^pattern"`
+8. How many unique entries are there in a specific column? Use `cut` and `sort -u | wc -l`
+9. Sort the file based on reverse numeric order in a specific field using `sort -k -nr`
+10. Capture specific fields and write to a new file using `cut` and redirection
+11. Replace all instances of one string with another using `sed 's/old/new/g'`
+
+### Exercise U.3: Building Pipelines
+
+Practice combining commands with pipes to answer questions about your data:
+
+1. Count the number of unique values in the third column of a tab-separated file:
+   ```bash
+   cut -f3 data.tsv | sort | uniq | wc -l
+   ```
+
+2. Find all lines containing a pattern, extract specific columns, and sort the results:
+   ```bash
+   grep "pattern" data.tsv | cut -f1,2,5 | sort -k3,3 -n
+   ```
+
+3. Create a pipeline that filters rows based on a condition, extracts columns, and saves to a new file
+
+4. Use `awk` to filter rows where a numeric column exceeds a threshold:
+   ```bash
+   awk '$5 > 1000 {print $1, $2, $5}' data.tsv
+   ```
+
+### Exercise U.4: File Permissions and Scripts
+
+1. Create a simple shell script that prints "Hello, World!" and the current date
+2. Try to run the script—what error do you get?
+3. Make the script executable using `chmod +x`
+4. Run the script and verify it works
+5. Examine the permissions of various files in your system using `ls -l`
+6. Practice changing permissions using both symbolic notation (`chmod u+x`) and octal notation (`chmod 755`)
+
+---
+
+## R and RStudio Exercises {#sec-ex-r}
+
+These exercises correspond to @sec-r-rstudio.
+
+### Exercise R.1: Exploring RStudio
+
+Take a few minutes to familiarize yourself with the RStudio environment:
+
+1. Locate the four main panes:
+   - The code editor (top left)
+   - The workspace and history (top right)
+   - The plots and files window (bottom right)
+   - The R console (bottom left)
+
+2. In the plots and files window, click on the Packages and Help tabs to see what they offer
+
+3. See what types of new files can be made in RStudio by clicking File → New File
+
+4. Open a new R script and a new R Markdown file to see the difference
+
+### Exercise R.2: Basic Mathematics in R
+
+Insert a code chunk and complete the following tasks:
+
+1. Add and subtract numbers
+2. Multiply and divide numbers
+3. Raise a number to a power using the `^` symbol
+4. Create a more complex equation involving all of these operations to convince yourself that R follows the normal priority of mathematical evaluation (PEMDAS)
+
+```{r}
+#| eval: false
+# Example:
+(4 + 3 * 2^2) / 5 - 1
+```
+
+### Exercise R.3: Assigning Variables and Functions
+
+1. Assign three variables using basic mathematical operations
+2. Take the log of your three variables using `log()`
+3. Use the `print()` function to display your most complex variable
+4. Use the `c()` (concatenate) function combined with `paste()` to create and print a sentence
+
+```{r}
+#| eval: false
+# Example:
+x <- 10
+y <- x * 2
+z <- sqrt(x + y)
+print(paste("The value of z is", z))
+```
+
+### Exercise R.4: Vectors and Factors
+
+1. Create a numeric vector using the `c()` function with at least 5 elements
+2. Create a character vector and convert it to a factor using `as.factor()`
+
+```{r}
+# Example:
+vec1 <- c("control", "treatment", "control", "treatment", "control")
+fac1 <- as.factor(vec1)
+print(fac1)
+levels(fac1)
+```
+
+3. Use `str()` and `class()` to evaluate your variables
+4. What is the difference between a character vector and a factor?
+
+### Exercise R.5: Basic Statistics
+
+1. Create a numeric vector with at least 10 elements
+2. Calculate the `mean()`, `sd()`, `sum()`, `length()`, and `var()` of your vector
+3. Use the `log()` and `sqrt()` functions on your vector
+4. What happens when you try to apply `mean()` to a factor? Try it and explain the result
+
+```{r}
+#| eval: false
+# Example:
+my_vector <- c(12, 15, 18, 22, 25, 28, 31, 35, 38, 42)
+mean(my_vector)
+sd(my_vector)
+```
+
+### Exercise R.6: Creating Sequences and Random Sampling
+
+Set the random seed for reproducibility, then:
+
+```{r}
+set.seed(42)
+```
+
+1. Create a vector with 100 elements using `seq()` and calculate the mean and standard deviation
+2. Create a variable and `sample()` it with equal probability—experiment with the `size` and `replace` arguments
+3. Create a normally distributed variable of 10000 elements using `rnorm()`, then sample that distribution with and without replacement
+4. Use `hist()` to plot your normally distributed variable
+
+### Exercise R.7: Basic Visualization
+
+Create visualizations with proper axis labels and colors:
+
+1. Create a sequence variable using `seq()` and make two different plots by changing the `type` argument (`"p"` for points, `"l"` for lines, `"b"` for both)
+
+2. Create a normally distributed variable using `rnorm()` and make histograms with different `breaks` values—what does `breaks` control?
+
+3. Use `par(mfrow = c(2, 2))` to create a 2×2 grid of plots
+
+```{r}
+#| fig-width: 8
+#| fig-height: 6
+#| eval: false
+par(mfrow = c(2, 2))
+x <- seq(1, 100, by = 1)
+plot(x, type = "p", main = "Points", col = "blue")
+plot(x, type = "l", main = "Lines", col = "red")
+y <- rnorm(1000)
+hist(y, breaks = 10, main = "10 Breaks", col = "lightblue")
+hist(y, breaks = 50, main = "50 Breaks", col = "lightgreen")
+```
+
+### Exercise R.8: Creating Data Frames
+
+1. Create a data frame with at least three columns: one character/factor, one numeric, and one logical
+2. Assign row names to your data frame using `rownames()`
+3. Examine your data frame structure using `str()`
+4. Calculate the mean of each numeric variable
+5. Use `head()` and `tail()` to view portions of your data frame
+
+```{r}
+#| eval: false
+# Example:
+treatment <- c("control", "low", "medium", "high", "control", "low")
+response <- c(12.3, 15.6, 18.9, 24.2, 11.8, 16.1)
+significant <- c(FALSE, TRUE, TRUE, TRUE, FALSE, TRUE)
+my_data <- data.frame(treatment, response, significant)
+str(my_data)
+```
+
+### Exercise R.9: Data Import and Indexing
+
+1. Create a simple CSV file or use a built-in dataset like `iris`
+2. Use `read.csv()` to read in your file (or access `iris` directly)
+3. Use `str()` and `head()` to examine the data structure
+4. Use `$` and `[ ]` operators to select different parts of the data frame
+5. Create a plot of two numeric variables
+6. Use `tapply()` to calculate summary statistics grouped by a categorical variable
+7. Export your data frame using `write.csv()`
+
+```{r}
+#| eval: false
+# Example with iris:
+data(iris)
+str(iris)
+head(iris)
+iris$Sepal.Length[1:5]  # First 5 sepal lengths
+iris[1:3, ]  # First 3 rows
+plot(iris$Sepal.Length, iris$Petal.Length, col = iris$Species)
+tapply(iris$Sepal.Length, iris$Species, mean)
+```
+
+### Exercise R.10: Understanding Object Types
+
+Explore how R handles different data types:
+
+1. Create variables of different classes: numeric, character, logical, and factor
+2. What happens when you try to perform arithmetic on character data?
+3. Experiment with type coercion using `as.numeric()`, `as.character()`, and `as.factor()`
+4. What happens when you add a character element to a numeric vector?
+
+---
+
+## Markdown and LaTeX Exercises {#sec-ex-markdown}
+
+These exercises correspond to @sec-markdown.
+
+### Exercise M.1: R Markdown Basics
+
+Create a new R Markdown document and practice:
+
+1. Creating headers at different levels using `#`, `##`, and `###`
+2. Making text *italic* and **bold**
+3. Creating ordered and unordered lists
+4. Inserting a hyperlink
+5. Creating a code chunk that generates output
+6. Knitting the document to HTML
+
+### Exercise M.2: Code Chunk Options
+
+Experiment with code chunk options:
+
+1. Create a code chunk with `echo=TRUE` and `eval=TRUE` (default behavior)
+2. Create the same code chunk with `echo=FALSE`—what happens?
+3. Try `eval=FALSE`—what happens?
+4. Use `fig.width` and `fig.height` to control plot dimensions
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-width: 6
+#| fig-height: 4
+# Example chunk with options
+x <- rnorm(100)
+hist(x, col = "steelblue", main = "Random Normal Data")
+```
+
+### Exercise M.3: LaTeX Mathematical Notation
+
+Practice writing equations in LaTeX:
+
+1. Write the equation for the mean: $\bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i$
+2. Write the equation for variance
+3. Write the normal distribution probability density function
+4. Use both inline math (`$...$`) and display math (`$$...$$`)
+
+### Exercise M.4: Tables in Markdown
+
+Create tables using:
+
+1. Basic Markdown table syntax
+2. The `kable()` function from the `knitr` package
+
+```{r}
+#| eval: false
+library(knitr)
+kable(head(iris, 5))
+```
+
+---
+
+## Tidy Data and Data Wrangling Exercises {#sec-ex-tidy}
+
+These exercises correspond to @sec-tidy-data.
+
+### Exercise T.1: Tidyverse Basics
+
+Load the tidyverse and practice with a dataset:
+
+```{r}
+#| eval: false
+library(tidyverse)
+data(mpg)
+```
+
+1. Convert the `mpg` data frame to a tibble using `as_tibble()`
+2. What differences do you notice in how it prints?
+3. Use `glimpse()` to get an overview of the data
+
+### Exercise T.2: The Five dplyr Verbs
+
+Using the `mpg` dataset, practice each core verb:
+
+1. **filter()**: Select only cars with highway mpg greater than 30
+2. **select()**: Choose only the manufacturer, model, and highway mpg columns
+3. **arrange()**: Sort by highway mpg in descending order
+4. **mutate()**: Create a new column that calculates the ratio of highway to city mpg
+5. **summarize()**: Calculate the mean highway mpg for the entire dataset
+
+```{r}
+#| eval: false
+# Example solutions:
+mpg |> filter(hwy > 30)
+mpg |> select(manufacturer, model, hwy)
+mpg |> arrange(desc(hwy))
+mpg |> mutate(hwy_city_ratio = hwy / cty)
+mpg |> summarize(mean_hwy = mean(hwy))
+```
+
+### Exercise T.3: Grouping and Summarizing
+
+1. Group the `mpg` data by manufacturer and calculate the mean highway mpg for each
+2. Find the manufacturer with the highest average highway mpg
+3. Count how many models each manufacturer has in the dataset
+4. Calculate both mean and standard deviation of highway mpg by vehicle class
+
+```{r}
+#| eval: false
+mpg |>
+  group_by(manufacturer) |>
+  summarize(
+    mean_hwy = mean(hwy),
+    n_models = n()
+  ) |>
+  arrange(desc(mean_hwy))
+```
+
+### Exercise T.4: Data Wrangling Pipeline
+
+Construct a pipeline that:
+
+1. Filters for a subset of manufacturers (e.g., "audi", "toyota", "honda")
+2. Selects relevant columns
+3. Creates a new calculated column
+4. Groups by a categorical variable
+5. Summarizes with multiple statistics
+
+```{r}
+#| eval: false
+mpg |>
+  filter(manufacturer %in% c("audi", "toyota", "honda")) |>
+  select(manufacturer, model, year, cty, hwy) |>
+  mutate(avg_mpg = (cty + hwy) / 2) |>
+  group_by(manufacturer) |>
+  summarize(
+    mean_mpg = mean(avg_mpg),
+    sd_mpg = sd(avg_mpg),
+    n = n()
+  )
+```
+
+### Exercise T.5: Reshaping Data
+
+Practice with `pivot_longer()` and `pivot_wider()`:
+
+1. Create a wide dataset with measurements across multiple time points
+2. Convert it to long format using `pivot_longer()`
+3. Convert it back to wide format using `pivot_wider()`
+
+```{r}
+# Example wide data
+wide_data <- tibble(
+  sample = c("A", "B", "C"),
+  time_0 = c(10, 12, 8),
+  time_1 = c(15, 18, 12),
+  time_2 = c(22, 25, 18)
+)
+
+# Convert to long format
+long_data <- wide_data |>
+  pivot_longer(
+    cols = starts_with("time"),
+    names_to = "timepoint",
+    values_to = "measurement"
+  )
+print(long_data)
+```
+
+### Exercise T.6: Joining Data
+
+Create two related tibbles and practice joins:
+
+```{r}
+# Sample data
+experiments <- tibble(
+  sample_id = c("S1", "S2", "S3", "S4"),
+  treatment = c("control", "low", "medium", "high")
+)
+
+measurements <- tibble(
+  sample_id = c("S1", "S1", "S2", "S3"),
+  replicate = c(1, 2, 1, 1),
+  value = c(10.2, 9.8, 15.3, 18.7)
+)
+```
+
+1. Perform a `left_join()` to add treatment information to measurements
+2. Use `anti_join()` to find samples that have no measurements
+3. Explain the difference between `inner_join()` and `full_join()`
+
+---
+
+## Data Visualization Exercises {#sec-ex-viz}
+
+These exercises correspond to @sec-visualization.
+
+### Exercise V.1: Basic ggplot2
+
+Create your first ggplot visualizations:
+
+```{r}
+#| eval: false
+library(ggplot2)
+data(mpg)
+
+# Basic scatterplot
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point()
+```
+
+1. Create a scatterplot of engine displacement vs. highway mpg
+2. Add color based on vehicle class
+3. Add appropriate axis labels and a title
+4. Try different themes (`theme_minimal()`, `theme_classic()`, `theme_bw()`)
+
+### Exercise V.2: Geometric Objects
+
+Practice with different geoms:
+
+1. Create a histogram of highway mpg using `geom_histogram()`
+2. Create a boxplot of highway mpg by vehicle class using `geom_boxplot()`
+3. Create a bar chart showing the count of vehicles by manufacturer using `geom_bar()`
+4. Create a line plot (use a time series dataset or create synthetic data)
+
+### Exercise V.3: Aesthetic Mappings
+
+Explore different aesthetic mappings:
+
+1. Map a continuous variable to color in a scatterplot
+2. Map a categorical variable to shape
+3. Set fixed aesthetics (like `size = 3`) outside of `aes()`
+4. What is the difference between mapping a variable to an aesthetic inside `aes()` versus setting a fixed value outside?
+
+```{r}
+#| fig-width: 8
+#| fig-height: 5
+#| eval: false
+# Mapped aesthetic (variable determines color)
+ggplot(mpg, aes(x = displ, y = hwy, color = class)) +
+  geom_point(size = 3)
+
+# Fixed aesthetic (all points same color)
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point(color = "steelblue", size = 3)
+```
+
+### Exercise V.4: Faceting
+
+Practice creating small multiples:
+
+1. Create a scatterplot faceted by vehicle class using `facet_wrap()`
+2. Create a grid of plots using `facet_grid()` with two variables
+3. Experiment with the `scales` argument to allow different axis scales per facet
+
+```{r}
+#| fig-width: 9
+#| fig-height: 6
+#| eval: false
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point() +
+  facet_wrap(~ class, nrow = 2)
+```
+
+### Exercise V.5: Combining Layers
+
+Build complex visualizations by layering:
+
+1. Create a scatterplot with a smoothed trend line
+2. Add both points and a regression line
+3. Use different colors for points and the trend line
+
+```{r}
+#| fig-width: 7
+#| fig-height: 5
+#| eval: false
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point(aes(color = class), alpha = 0.7) +
+  geom_smooth(method = "lm", color = "black", se = TRUE) +
+  labs(
+    title = "Engine Size vs. Fuel Efficiency",
+    x = "Engine Displacement (L)",
+    y = "Highway MPG",
+    color = "Vehicle Class"
+  ) +
+  theme_minimal()
+```
+
+### Exercise V.6: Publication-Quality Figures
+
+Create a polished figure suitable for publication:
+
+1. Choose an appropriate chart type for your data
+2. Add informative labels (title, subtitle, caption, axis labels)
+3. Use an appropriate color palette
+4. Adjust theme elements for clarity
+5. Save the figure using `ggsave()` with appropriate dimensions and resolution
+
+---
+
+## Probability Exercises {#sec-ex-prob}
+
+These exercises correspond to @sec-probability.
+
+### Exercise P.1: Simulating Coin Flips
+
+Use R to simulate coin flips:
+
+```{r}
+set.seed(123)
+```
+
+1. Simulate 100 fair coin flips using `rbinom()` or `sample()`
+2. Calculate the proportion of heads
+3. Repeat with 1000 and 10000 flips—how does the proportion change?
+4. Create a histogram of results from many simulations
+
+```{r}
+#| eval: false
+# Simulate coin flips
+n_flips <- 1000
+flips <- rbinom(n_flips, size = 1, prob = 0.5)
+mean(flips)  # Proportion of heads (1s)
+
+# Or using sample
+flips <- sample(c("H", "T"), n_flips, replace = TRUE)
+mean(flips == "H")
+```
+
+### Exercise P.2: Binomial Distribution
+
+Explore the binomial distribution:
+
+1. Use `rbinom()` to simulate 1000 experiments, each with 20 coin flips
+2. Create a histogram of the number of heads per experiment
+3. What is the most common outcome? Does this match your expectation?
+4. Change the probability to simulate an unfair coin
+5. How does the distribution change with 200 or 2000 flips per experiment?
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+# 1000 experiments, 20 flips each, fair coin
+set.seed(42)
+results <- rbinom(1000, size = 20, prob = 0.5)
+hist(results, breaks = 20, col = "steelblue",
+     main = "Number of Heads in 20 Flips",
+     xlab = "Number of Heads")
+```
+
+### Exercise P.3: The Birthday Problem
+
+Use Monte Carlo simulation to explore the birthday problem:
+
+1. Write a function that simulates whether any two people in a group share a birthday
+2. Estimate the probability for groups of size 10, 23, and 50
+3. Plot the probability as a function of group size
+4. At what group size does the probability exceed 50%?
+
+```{r}
+#| eval: false
+# Birthday simulation function
+same_birthday <- function(n, B = 10000) {
+  matches <- replicate(B, {
+    birthdays <- sample(1:365, n, replace = TRUE)
+    any(duplicated(birthdays))
+  })
+  mean(matches)
+}
+
+# Test for different group sizes
+sizes <- 2:50
+probs <- sapply(sizes, same_birthday)
+plot(sizes, probs, type = "l",
+     xlab = "Group Size", ylab = "Probability of Shared Birthday")
+abline(h = 0.5, col = "red", lty = 2)
+```
+
+### Exercise P.4: Conditional Probability
+
+Explore conditional probability with card simulations:
+
+1. Create a virtual deck of 52 cards
+2. Calculate the probability of drawing a King
+3. Given that the first card drawn is a King, what is the probability the second card is also a King?
+4. Use simulation to verify your calculation
+
+### Exercise P.5: The Monty Hall Problem
+
+Simulate the Monty Hall problem:
+
+1. Write a function that simulates one round of the game
+2. Compare the win rate when you stick versus when you switch
+3. Run 10,000 simulations for each strategy
+4. Does switching really double your chances?
+
+---
+
+## Discrete Distributions Exercises {#sec-ex-discrete}
+
+These exercises correspond to @sec-discrete-distributions.
+
+### Exercise D.1: Binomial Distribution Properties
+
+1. For n = 20 and p = 0.3, calculate the probability of exactly 5 successes using `dbinom()`
+2. Calculate the probability of 5 or fewer successes using `pbinom()`
+3. Generate 1000 random values from this distribution using `rbinom()`
+4. Compare your simulated mean and variance to the theoretical values (np and np(1-p))
+
+```{r}
+#| eval: false
+n <- 20
+p <- 0.3
+
+# Exact probability of 5 successes
+dbinom(5, size = n, prob = p)
+
+# Cumulative probability (≤5)
+pbinom(5, size = n, prob = p)
+
+# Simulation
+set.seed(42)
+samples <- rbinom(1000, size = n, prob = p)
+mean(samples)  # Compare to n*p
+var(samples)   # Compare to n*p*(1-p)
+```
+
+### Exercise D.2: Poisson Distribution
+
+The Poisson distribution models counts of rare events:
+
+1. If a hospital averages 4 emergency admissions per hour, what is the probability of exactly 6 admissions in one hour?
+2. What is the probability of 10 or more admissions?
+3. Simulate 1000 hours and plot the distribution
+4. How does the distribution change when λ is small (0.5) versus large (20)?
+
+### Exercise D.3: Comparing Distributions
+
+Generate samples from binomial and Poisson distributions with similar means and compare:
+
+1. Create histograms side by side
+2. When does the Poisson approximate the binomial well?
+3. What happens as n increases and p decreases while np stays constant?
+
+---
+
+## Continuous Distributions Exercises {#sec-ex-continuous}
+
+These exercises correspond to @sec-continuous-distributions.
+
+### Exercise C.1: Normal Distribution
+
+Explore the normal distribution:
+
+1. Generate 10,000 values from a normal distribution with μ = 100 and σ = 15
+2. Calculate the sample mean and standard deviation—how close are they to the parameters?
+3. What proportion of values fall within 1, 2, and 3 standard deviations of the mean?
+4. Compare to the theoretical values (68-95-99.7 rule)
+
+```{r}
+#| fig-width: 7
+#| fig-height: 5
+set.seed(42)
+x <- rnorm(10000, mean = 100, sd = 15)
+
+# Sample statistics
+mean(x)
+sd(x)
+
+# Proportions within SDs
+mean(abs(x - mean(x)) < 1*sd(x))  # Within 1 SD
+mean(abs(x - mean(x)) < 2*sd(x))  # Within 2 SDs
+mean(abs(x - mean(x)) < 3*sd(x))  # Within 3 SDs
+
+# Visualize
+hist(x, breaks = 50, freq = FALSE, col = "lightblue",
+     main = "Normal Distribution (μ=100, σ=15)")
+curve(dnorm(x, mean = 100, sd = 15), add = TRUE, col = "red", lwd = 2)
+```
+
+### Exercise C.2: Standard Normal and Z-Scores
+
+1. Convert a set of raw scores to z-scores
+2. Use `pnorm()` to find the proportion of values below a given z-score
+3. Use `qnorm()` to find the z-score corresponding to a given percentile
+4. What z-score corresponds to the 95th percentile?
+
+### Exercise C.3: Log-Normal Distribution
+
+Many biological measurements follow a log-normal distribution:
+
+1. Generate data from a log-normal distribution using `rlnorm()`
+2. Plot the original data—notice the right skew
+3. Take the log and plot again—it should appear normal
+4. When might you encounter log-normal data in biology?
+
+---
+
+## Hypothesis Testing Exercises {#sec-ex-hypothesis}
+
+These exercises correspond to @sec-hypothesis-testing and @sec-t-tests.
+
+### Exercise H.1: One-Sample t-test
+
+1. Generate a sample of 30 observations from a normal distribution with mean 105 and SD 15
+2. Test whether the mean differs significantly from 100
+3. Interpret the p-value and confidence interval
+4. What happens to the p-value when you increase the sample size?
+
+```{r}
+#| eval: false
+set.seed(42)
+sample_data <- rnorm(30, mean = 105, sd = 15)
+t.test(sample_data, mu = 100)
+```
+
+### Exercise H.2: Two-Sample t-test
+
+Create a dummy dataset with one continuous and one categorical variable:
+
+1. Draw samples of 100 observations from two normal distributions with slightly different means but equal standard deviations
+2. Perform a two-sample t-test
+3. Visualize the data with a boxplot
+4. Repeat with sample sizes of 10, 100, and 1000—how does sample size affect the results?
+5. What happens when you make the means more different?
+
+```{r}
+#| eval: false
+set.seed(42)
+group_a <- rnorm(100, mean = 10, sd = 2)
+group_b <- rnorm(100, mean = 11, sd = 2)
+
+# Combine into data frame
+data <- data.frame(
+  value = c(group_a, group_b),
+  group = rep(c("A", "B"), each = 100)
+)
+
+# t-test
+t.test(value ~ group, data = data)
+
+# Visualization
+boxplot(value ~ group, data = data)
+```
+
+### Exercise H.3: Chi-Square Test
+
+Test for Hardy-Weinberg equilibrium:
+
+```{r}
+# Observed genotype counts
+AA_counts <- 50
+Aa_counts <- 40
+aa_counts <- 10
+
+# Calculate allele frequencies
+total <- AA_counts + Aa_counts + aa_counts
+p <- (2*AA_counts + Aa_counts) / (2*total)
+q <- 1 - p
+
+# Expected counts under HWE
+expected <- c(p^2, 2*p*q, q^2) * total
+
+# Chi-square test
+observed <- c(AA_counts, Aa_counts, aa_counts)
+chisq.test(observed, p = c(p^2, 2*p*q, q^2))
+```
+
+1. Modify the observed counts and see how it affects the test result
+2. What genotype frequencies would indicate strong departure from HWE?
+
+---
+
+## Linear Models Exercises {#sec-ex-linear}
+
+These exercises correspond to @sec-correlation, @sec-regression, and @sec-anova.
+
+### Exercise L.1: Correlation
+
+1. Create two correlated variables using simulation
+2. Calculate the Pearson correlation coefficient
+3. Create a scatterplot and add the correlation value
+4. What happens to the correlation when you add outliers?
+
+```{r}
+#| fig-width: 6
+#| fig-height: 5
+set.seed(42)
+x <- rnorm(50)
+y <- 0.7*x + rnorm(50, sd = 0.5)  # Correlated with x
+
+cor(x, y)
+plot(x, y, main = paste("Correlation:", round(cor(x, y), 2)))
+abline(lm(y ~ x), col = "red")
+```
+
+### Exercise L.2: Simple Linear Regression
+
+1. Using a dataset of your choice, fit a linear model with `lm()`
+2. Examine the model summary
+3. Create a scatterplot with the regression line
+4. Plot the residuals—do they appear randomly distributed?
+
+```{r}
+#| eval: false
+# Example with built-in data
+data(mtcars)
+model <- lm(mpg ~ wt, data = mtcars)
+summary(model)
+
+# Regression plot
+plot(mpg ~ wt, data = mtcars)
+abline(model, col = "red")
+
+# Residual plot
+plot(model$fitted.values, model$residuals)
+abline(h = 0, col = "red", lty = 2)
+```
+
+### Exercise L.3: ANOVA
+
+Perform a one-way ANOVA:
+
+1. Using the `iris` dataset, test whether sepal length differs among species
+2. Examine the ANOVA table
+3. If significant, which pairs of species differ? Use a post-hoc test
+4. Visualize the differences with boxplots
+
+```{r}
+#| eval: false
+# One-way ANOVA
+model <- aov(Sepal.Length ~ Species, data = iris)
+summary(model)
+
+# Post-hoc test
+TukeyHSD(model)
+
+# Visualization
+boxplot(Sepal.Length ~ Species, data = iris)
+```
+
+### Exercise L.4: Two-Way Factorial ANOVA
+
+For a dataset with two categorical predictors:
+
+1. Fit a factorial model including the interaction
+2. Interpret the main effects and interaction
+3. Create an interaction plot
+4. What does a significant interaction mean biologically?
+
+---
+
+## Advanced Topics Exercises {#sec-ex-advanced}
+
+### Exercise A.1: Principal Component Analysis
+
+Using a multivariate dataset:
+
+1. Standardize the variables
+2. Perform PCA using `prcomp()`
+3. Examine the proportion of variance explained by each component
+4. Create a biplot showing samples and variable loadings
+5. How many components would you retain?
+
+```{r}
+#| eval: false
+# PCA on iris data (excluding species)
+iris_numeric <- iris[, 1:4]
+pca <- prcomp(iris_numeric, scale. = TRUE)
+
+# Variance explained
+summary(pca)
+
+# Biplot
+biplot(pca)
+```
+
+### Exercise A.2: Logistic Regression
+
+Fit a logistic regression model:
+
+1. Create or load a dataset with a binary outcome
+2. Fit a logistic regression model using `glm()` with `family = binomial`
+3. Interpret the coefficients in terms of odds ratios
+4. Calculate predicted probabilities for new observations
+
+### Exercise A.3: Bootstrapping
+
+Estimate confidence intervals using bootstrapping:
+
+1. Draw a sample of 50 observations
+2. Create 1000 bootstrap samples
+3. Calculate the mean for each bootstrap sample
+4. Construct a 95% confidence interval from the bootstrap distribution
+5. Compare to the theoretical confidence interval
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+set.seed(42)
+original_sample <- rnorm(50, mean = 100, sd = 15)
+
+# Bootstrap
+n_bootstrap <- 1000
+bootstrap_means <- replicate(n_bootstrap, {
+  boot_sample <- sample(original_sample, replace = TRUE)
+  mean(boot_sample)
+})
+
+# Confidence interval
+quantile(bootstrap_means, c(0.025, 0.975))
+
+# Compare to theoretical
+t.test(original_sample)$conf.int
+
+# Visualize
+hist(bootstrap_means, breaks = 30, main = "Bootstrap Distribution of Means",
+     col = "lightblue")
+abline(v = mean(original_sample), col = "red", lwd = 2)
+```
+
+---
+
+## Version Control with Git {#sec-ex-git}
+
+### Exercise G.1: Git Basics
+
+Practice basic Git operations:
+
+1. Create a new directory and initialize a Git repository with `git init`
+2. Create a new file and check the status with `git status`
+3. Stage the file with `git add`
+4. Create a commit with `git commit -m "message"`
+5. Make changes and commit again
+6. View the commit history with `git log`
+
+### Exercise G.2: Working with GitHub
+
+1. Create a GitHub account if you don't have one
+2. Create a new repository on GitHub
+3. Clone it to your local machine with `git clone`
+4. Make changes, commit, and push with `git push`
+5. Practice the pull-commit-push workflow
+
+### Exercise G.3: Collaboration
+
+If working with a partner:
+
+1. Clone your partner's repository
+2. Make a change and push it
+3. Have your partner pull the changes
+4. Practice resolving a merge conflict
+
+---
+
+## Summary
+
+These exercises cover the core topics in statistical analysis and data science. As you work through them, remember:
+
+- **Practice regularly**: Skills improve with consistent practice
+- **Experiment**: Try variations on the exercises to deepen understanding
+- **Consult documentation**: Use `?function_name` and online resources
+- **Debug systematically**: When code doesn't work, check each step
+- **Collaborate**: Discuss problems with classmates and colleagues
+
+The exercises are designed to build skills progressively. Return to earlier exercises as you learn new techniques—you may find more elegant solutions with your growing knowledge.

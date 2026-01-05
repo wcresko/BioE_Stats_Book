@@ -478,6 +478,16 @@ This chapter introduced the language of probability:
 
 Understanding these foundations is essential for all statistical inference that follows.
 
+## Practice Exercises
+
+For hands-on practice with probability concepts, see @sec-ex-prob in the Practice Exercises appendix. The exercises include:
+
+- Simulating coin flips and exploring the law of large numbers
+- Working with the binomial distribution
+- Exploring the birthday problem through Monte Carlo simulation
+- Understanding conditional probability with card simulations
+- Simulating the Monty Hall problem
+
 ## Additional Resources
 
 - @irizarry2019introduction - A gitbook by a statistician with excellent introductions to key topics in statistical inference

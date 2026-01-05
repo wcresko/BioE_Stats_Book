@@ -797,6 +797,16 @@ Click the "Knit" button in RStudio to render your document. Start with HTML outp
 For comprehensive R Markdown documentation, see the [R Markdown introduction](https://rmarkdown.rstudio.com/articles_intro.html) and [R Markdown cheat sheet](https://rmarkdown.rstudio.com/lesson-15.html).
 :::
 
+## Practice Exercises
+
+For hands-on practice with the concepts covered in this chapter, see @sec-ex-r in the Practice Exercises appendix. The exercises include:
+
+- Exploring the RStudio environment
+- Basic mathematics and variable assignment
+- Working with vectors, factors, and data frames
+- Creating visualizations
+- Data import and export
+
 ## Additional Resources
 
 - @logan2010biostatistical - A comprehensive introduction to R for statistical analysis
