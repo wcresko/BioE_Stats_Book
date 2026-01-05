@@ -65,6 +65,7 @@ book:
         - chapters/A2-r-reference.qmd
         - chapters/A3-probability-distributions.qmd
         - chapters/A4-greek-letters.qmd
+        - chapters/A5-sampling-distributions.qmd
     
     - references.qmd
 

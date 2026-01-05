@@ -13,6 +13,156 @@ Standard linear regression assumes that the response variable is continuous and 
 
 Generalized Linear Models (GLMs) extend linear regression to handle these situations. They provide a unified framework for modeling responses that follow different distributions from the exponential family.
 
+## Frequency Analysis: Categorical Response Variables
+
+Before diving into GLMs, it's important to understand how we analyze categorical response variables. When observations fall into categories rather than being measured on a continuous scale, we count the frequency in each category and compare observed frequencies to expected values.
+
+### Chi-Square Goodness of Fit Test
+
+The **goodness of fit test** asks whether observed frequencies match a hypothesized distribution. The classic example comes from Mendelian genetics.
+
+```{r}
+# Mendel's pea experiment - F2 phenotype ratios
+# Expected: 9:3:3:1 for Yellow-Smooth:Yellow-Wrinkled:Green-Smooth:Green-Wrinkled
+observed <- c(315, 101, 108, 32)  # Mendel's actual data
+expected_ratios <- c(9/16, 3/16, 3/16, 1/16)
+
+# Perform chi-square test
+chisq.test(observed, p = expected_ratios)
+```
+
+The test statistic measures deviation from expected:
+
+$$\chi^2 = \sum \frac{(O_i - E_i)^2}{E_i}$$
+
+where $O_i$ are observed and $E_i$ are expected counts. Under the null hypothesis (observed frequencies match expected), this follows a chi-square distribution with $df = k - 1$ where $k$ is the number of categories.
+
+::: {.callout-warning}
+## Chi-Square Assumptions
+
+1. **Independence**: Observations must be independent
+2. **Expected counts**: No more than 20% of expected counts should be < 5
+3. **Sample size**: Total sample should be reasonably large
+
+Check expected values before interpreting results:
+```{r}
+n <- sum(observed)
+expected <- n * expected_ratios
+cat("Expected counts:", round(expected, 1))
+```
+:::
+
+### Contingency Table Analysis
+
+When we have two categorical variables, we use a **contingency table** to examine their association. The null hypothesis is that the variables are independent.
+
+```{r}
+# Example: Hair color and eye color association
+# Data from 1000 students
+hair_eye <- matrix(c(347, 191,    # Blue eyes: blonde, brunette
+                     177, 329),   # Brown eyes: blonde, brunette
+                   nrow = 2, byrow = TRUE)
+rownames(hair_eye) <- c("Blue_eyes", "Brown_eyes")
+colnames(hair_eye) <- c("Blonde", "Brunette")
+
+# View the contingency table
+hair_eye
+
+# Chi-square test of independence
+chisq.test(hair_eye)
+```
+
+For contingency tables, $df = (r-1)(c-1)$ where $r$ and $c$ are the number of rows and columns.
+
+```{r}
+#| fig-width: 7
+#| fig-height: 5
+# Visualize with a mosaic plot
+mosaicplot(hair_eye, main = "Hair and Eye Color Association",
+           color = c("gold", "brown"), shade = FALSE)
+```
+
+### Standardized Residuals
+
+To understand where associations are strongest, examine **standardized residuals**:
+
+```{r}
+# Which cells deviate most from independence?
+test_result <- chisq.test(hair_eye)
+test_result$residuals
+```
+
+Residuals > 2 or < -2 indicate cells contributing substantially to the association. Positive residuals mean more observations than expected under independence; negative means fewer.
+
+### G-Test (Log-Likelihood Ratio Test)
+
+The **G-test** is an alternative to chi-square based on likelihood ratios:
+
+$$G = 2 \sum O_i \ln\left(\frac{O_i}{E_i}\right)$$
+
+The G-test and chi-square give similar results for large samples, but G-tests are preferred when:
+- Sample sizes are small
+- Differences between observed and expected are small
+- You want to decompose complex tables
+
+```{r}
+# Manual G-test calculation
+observed_flat <- as.vector(hair_eye)
+expected_flat <- as.vector(test_result$expected)
+G <- 2 * sum(observed_flat * log(observed_flat / expected_flat))
+p_value <- 1 - pchisq(G, df = 1)
+
+cat("G statistic:", round(G, 3), "\n")
+cat("p-value:", format(p_value, scientific = TRUE), "\n")
+```
+
+### Odds Ratios: Measuring Effect Size
+
+The chi-square test tells us *whether* variables are associated, but not the **strength** of association. For 2×2 tables, the **odds ratio** quantifies effect size.
+
+The odds of an event are $\frac{p}{1-p}$. The odds ratio compares odds between groups:
+
+$$OR = \frac{odds_1}{odds_2} = \frac{a/b}{c/d} = \frac{ad}{bc}$$
+
+```{r}
+# Odds ratio for hair/eye color data
+a <- hair_eye[1,1]  # Blue eyes, Blonde
+b <- hair_eye[1,2]  # Blue eyes, Brunette
+c <- hair_eye[2,1]  # Brown eyes, Blonde
+d <- hair_eye[2,2]  # Brown eyes, Brunette
+
+odds_ratio <- (a * d) / (b * c)
+cat("Odds Ratio:", round(odds_ratio, 2), "\n")
+```
+
+An OR of `r round(odds_ratio, 2)` means blue-eyed individuals have about `r round(odds_ratio, 1)` times the odds of being blonde compared to brown-eyed individuals.
+
+- OR = 1: No association
+- OR > 1: Positive association
+- OR < 1: Negative association
+
+```{r}
+# Confidence interval for odds ratio (using log transform)
+log_OR <- log(odds_ratio)
+se_log_OR <- sqrt(1/a + 1/b + 1/c + 1/d)
+ci_log <- log_OR + c(-1.96, 1.96) * se_log_OR
+ci_OR <- exp(ci_log)
+
+cat("95% CI for OR: [", round(ci_OR[1], 2), ",", round(ci_OR[2], 2), "]\n")
+```
+
+### Fisher's Exact Test
+
+For small sample sizes (expected counts < 5), **Fisher's exact test** is more appropriate. It calculates exact probabilities rather than relying on the chi-square approximation.
+
+```{r}
+# Small sample example
+small_table <- matrix(c(3, 1, 1, 3), nrow = 2)
+fisher.test(small_table)
+```
+
+Fisher's test is preferred for 2×2 tables with small samples and provides a confidence interval for the odds ratio.
+
 ## Components of a GLM
 
 GLMs have three components:
@@ -88,6 +238,34 @@ predict(logit_model, newdata = new_data, type = "response")
 
 The `type = "response"` argument returns probabilities rather than log-odds.
 
+## Multiple Logistic Regression
+
+Like linear regression, logistic regression can include multiple predictors. This allows us to:
+
+- Control for confounding variables
+- Examine how multiple factors together predict the outcome
+- Test for interactions between predictors
+
+```{r}
+# Multiple logistic regression: am ~ mpg + wt + hp
+multi_logit <- glm(am ~ mpg + wt + hp, data = mtcars, family = binomial)
+summary(multi_logit)
+```
+
+```{r}
+# Odds ratios for all predictors
+exp(coef(multi_logit))
+```
+
+Notice how coefficients change compared to the simple model—this is the effect of controlling for other variables.
+
+```{r}
+# Compare models with likelihood ratio test
+anova(logit_model, multi_logit, test = "Chisq")
+```
+
+The likelihood ratio test compares nested models. A significant p-value indicates the fuller model fits significantly better.
+
 ## Poisson Regression
 
 Poisson regression models count data—the number of events in a fixed period or area. The response must be non-negative integers, and we assume events occur independently at a constant rate.
@@ -106,18 +284,59 @@ summary(pois_model)
 
 ## Overdispersion
 
-A key assumption of Poisson regression is that the mean equals the variance. When variance exceeds the mean (overdispersion), standard errors are underestimated and p-values too small.
-
-Solutions include:
-- Quasi-Poisson (estimates dispersion from data)
-- Negative binomial regression
-- Zero-inflated models (for excess zeros)
+A key assumption of Poisson regression is that the mean equals the variance. When variance exceeds the mean (**overdispersion**), standard errors are underestimated and p-values become too small.
 
 ```{r}
 # Check for overdispersion
 # Ratio of residual deviance to df should be near 1
-pois_model$deviance / pois_model$df.residual
+dispersion_ratio <- pois_model$deviance / pois_model$df.residual
+cat("Dispersion ratio:", round(dispersion_ratio, 3), "\n")
+cat("Values > 1.5 suggest overdispersion\n")
 ```
+
+### Handling Overdispersion
+
+**Quasi-Poisson** estimates the dispersion parameter from the data rather than assuming it equals 1:
+
+```{r}
+# Create overdispersed data for demonstration
+set.seed(42)
+n <- 100
+x <- runif(n, 1, 10)
+# Generate overdispersed counts (negative binomial acts like overdispersed Poisson)
+y_overdispersed <- rnbinom(n, size = 2, mu = exp(0.5 + 0.3 * x))
+
+# Standard Poisson (ignores overdispersion)
+pois_fit <- glm(y_overdispersed ~ x, family = poisson)
+
+# Quasi-Poisson (accounts for overdispersion)
+quasi_fit <- glm(y_overdispersed ~ x, family = quasipoisson)
+
+# Compare standard errors
+cat("Poisson SE:", round(summary(pois_fit)$coefficients[2, 2], 4), "\n")
+cat("Quasi-Poisson SE:", round(summary(quasi_fit)$coefficients[2, 2], 4), "\n")
+cat("SE inflation factor:", round(summary(quasi_fit)$coefficients[2, 2] /
+                                   summary(pois_fit)$coefficients[2, 2], 2), "\n")
+```
+
+Similarly, **quasibinomial** handles overdispersion in binomial data:
+
+```{r}
+# Quasibinomial example
+# family = quasibinomial adjusts for extra-binomial variation
+```
+
+::: {.callout-tip}
+## When to Use Quasi-Likelihood
+
+Use `quasipoisson` or `quasibinomial` when:
+
+- Dispersion ratio is substantially > 1 (overdispersion)
+- You don't need AIC for model comparison (quasi-models don't have AIC)
+- The basic model structure is correct but variance assumptions are violated
+
+For severe overdispersion, consider **negative binomial regression** (package `MASS`) which models overdispersion explicitly.
+:::
 
 ## Model Assessment
 
