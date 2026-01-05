@@ -124,7 +124,7 @@ AIC(model1, model2, model3)
 
 Higher-degree polynomials fit better but risk overfitting. The principle of parsimony suggests using the simplest adequate model.
 
-![](../images/images_5b.010.jpeg){fig-align="center"}
+![](../images/Images_5b.010.jpeg){fig-align="center"}
 
 ## Assumptions
 
