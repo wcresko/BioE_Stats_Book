@@ -55,7 +55,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -299,6 +319,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Bootstrapping</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/14b-what-are-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">What are Models?</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -313,25 +339,25 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/15-correlation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Correlation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Correlation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/16-simple-linear-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Simple Linear Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Simple Linear Regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/17-residual-analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Residual Analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Residual Analysis</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/18-statistical-power.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Statistical Power</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Statistical Power</span></span></a>
   </div>
 </li>
       </ul>
@@ -348,31 +374,37 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/19-anova.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Analysis of Variance</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Analysis of Variance</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/20-multiple-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Multiple Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Multiple Regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/21-glm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/22-statistical-learning.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Statistical Learning</span></span></a>
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Statistical Learning</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/23-high-performance-computing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">High Performance Computing</span></span></a>
+  <a href="../chapters/23-dimensionality-reduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Dimensionality Reduction and Multivariate Methods</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/24-high-performance-computing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">High Performance Computing</span></span></a>
   </div>
 </li>
       </ul>
@@ -380,7 +412,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
- <span class="menu-text">Appendices</span></a>
+ <span class="menu-text">Scientific Communication</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -388,14 +420,73 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../chapters/25-presenting-results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Presenting Statistical Results</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../chapters/A1-eugenics-history.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">The Eugenics History of Statistics</span></span></a>
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">The Eugenics History of Statistics</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/A2-r-reference.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">R Quick Reference</span></span></a>
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">R Command Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A3-probability-distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Common Probability Distributions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A4-greek-letters.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Greek Letters in Mathematics and Statistics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A5-sampling-distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Sampling Distributions in Hypothesis Testing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A6-unix-reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Unix Command Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A7-latex-reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">LaTeX Command Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A8-keyboard-shortcuts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Keyboard Shortcuts Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A9-exercises.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Practice Exercises</span></span></a>
   </div>
 </li>
       </ul>
@@ -419,18 +510,44 @@ window.Quarto = {
   <li><a href="#why-probability-matters" id="toc-why-probability-matters" class="nav-link active" data-scroll-target="#why-probability-matters"><span class="header-section-number">7.1</span> Why Probability Matters</a></li>
   <li><a href="#two-interpretations-of-probability" id="toc-two-interpretations-of-probability" class="nav-link" data-scroll-target="#two-interpretations-of-probability"><span class="header-section-number">7.2</span> Two Interpretations of Probability</a></li>
   <li><a href="#random-variables-and-sample-spaces" id="toc-random-variables-and-sample-spaces" class="nav-link" data-scroll-target="#random-variables-and-sample-spaces"><span class="header-section-number">7.3</span> Random Variables and Sample Spaces</a></li>
-  <li><a href="#the-bernoulli-distribution" id="toc-the-bernoulli-distribution" class="nav-link" data-scroll-target="#the-bernoulli-distribution"><span class="header-section-number">7.4</span> The Bernoulli Distribution</a></li>
-  <li><a href="#probability-rules" id="toc-probability-rules" class="nav-link" data-scroll-target="#probability-rules"><span class="header-section-number">7.5</span> Probability Rules</a>
+  <li><a href="#discrete-probability" id="toc-discrete-probability" class="nav-link" data-scroll-target="#discrete-probability"><span class="header-section-number">7.4</span> Discrete Probability</a>
   <ul class="collapse">
-  <li><a href="#the-and-rule-multiplication" id="toc-the-and-rule-multiplication" class="nav-link" data-scroll-target="#the-and-rule-multiplication"><span class="header-section-number">7.5.1</span> The AND Rule (Multiplication)</a></li>
-  <li><a href="#the-or-rule-addition" id="toc-the-or-rule-addition" class="nav-link" data-scroll-target="#the-or-rule-addition"><span class="header-section-number">7.5.2</span> The OR Rule (Addition)</a></li>
+  <li><a href="#relative-frequency" id="toc-relative-frequency" class="nav-link" data-scroll-target="#relative-frequency"><span class="header-section-number">7.4.1</span> Relative Frequency</a></li>
+  <li><a href="#notation" id="toc-notation" class="nav-link" data-scroll-target="#notation"><span class="header-section-number">7.4.2</span> Notation</a></li>
+  <li><a href="#probability-distributions-for-categorical-data" id="toc-probability-distributions-for-categorical-data" class="nav-link" data-scroll-target="#probability-distributions-for-categorical-data"><span class="header-section-number">7.4.3</span> Probability Distributions for Categorical Data</a></li>
   </ul></li>
-  <li><a href="#simulating-coin-flips-in-r" id="toc-simulating-coin-flips-in-r" class="nav-link" data-scroll-target="#simulating-coin-flips-in-r"><span class="header-section-number">7.6</span> Simulating Coin Flips in R</a></li>
-  <li><a href="#joint-and-conditional-probability" id="toc-joint-and-conditional-probability" class="nav-link" data-scroll-target="#joint-and-conditional-probability"><span class="header-section-number">7.7</span> Joint and Conditional Probability</a></li>
-  <li><a href="#bayes-theorem" id="toc-bayes-theorem" class="nav-link" data-scroll-target="#bayes-theorem"><span class="header-section-number">7.8</span> Bayes’ Theorem</a></li>
-  <li><a href="#likelihood-vs.-probability" id="toc-likelihood-vs.-probability" class="nav-link" data-scroll-target="#likelihood-vs.-probability"><span class="header-section-number">7.9</span> Likelihood vs.&nbsp;Probability</a></li>
-  <li><a href="#covariance-and-correlation" id="toc-covariance-and-correlation" class="nav-link" data-scroll-target="#covariance-and-correlation"><span class="header-section-number">7.10</span> Covariance and Correlation</a></li>
-  <li><a href="#looking-ahead" id="toc-looking-ahead" class="nav-link" data-scroll-target="#looking-ahead"><span class="header-section-number">7.11</span> Looking Ahead</a></li>
+  <li><a href="#distribution-moments-and-parameters" id="toc-distribution-moments-and-parameters" class="nav-link" data-scroll-target="#distribution-moments-and-parameters"><span class="header-section-number">7.5</span> Distribution Moments and Parameters</a></li>
+  <li><a href="#monte-carlo-simulations" id="toc-monte-carlo-simulations" class="nav-link" data-scroll-target="#monte-carlo-simulations"><span class="header-section-number">7.6</span> Monte Carlo Simulations</a>
+  <ul class="collapse">
+  <li><a href="#with-and-without-replacement" id="toc-with-and-without-replacement" class="nav-link" data-scroll-target="#with-and-without-replacement"><span class="header-section-number">7.6.1</span> With and Without Replacement</a></li>
+  </ul></li>
+  <li><a href="#the-bernoulli-distribution" id="toc-the-bernoulli-distribution" class="nav-link" data-scroll-target="#the-bernoulli-distribution"><span class="header-section-number">7.7</span> The Bernoulli Distribution</a></li>
+  <li><a href="#probability-rules" id="toc-probability-rules" class="nav-link" data-scroll-target="#probability-rules"><span class="header-section-number">7.8</span> Probability Rules</a>
+  <ul class="collapse">
+  <li><a href="#the-and-rule-multiplication" id="toc-the-and-rule-multiplication" class="nav-link" data-scroll-target="#the-and-rule-multiplication"><span class="header-section-number">7.8.1</span> The AND Rule (Multiplication)</a></li>
+  <li><a href="#the-or-rule-addition" id="toc-the-or-rule-addition" class="nav-link" data-scroll-target="#the-or-rule-addition"><span class="header-section-number">7.8.2</span> The OR Rule (Addition)</a></li>
+  <li><a href="#multiplication-rule-under-independence" id="toc-multiplication-rule-under-independence" class="nav-link" data-scroll-target="#multiplication-rule-under-independence"><span class="header-section-number">7.8.3</span> Multiplication Rule Under Independence</a></li>
+  </ul></li>
+  <li><a href="#independence" id="toc-independence" class="nav-link" data-scroll-target="#independence"><span class="header-section-number">7.9</span> Independence</a></li>
+  <li><a href="#conditional-probabilities" id="toc-conditional-probabilities" class="nav-link" data-scroll-target="#conditional-probabilities"><span class="header-section-number">7.10</span> Conditional Probabilities</a></li>
+  <li><a href="#bayes-theorem" id="toc-bayes-theorem" class="nav-link" data-scroll-target="#bayes-theorem"><span class="header-section-number">7.11</span> Bayes’ Theorem</a></li>
+  <li><a href="#likelihood-vs.-probability" id="toc-likelihood-vs.-probability" class="nav-link" data-scroll-target="#likelihood-vs.-probability"><span class="header-section-number">7.12</span> Likelihood vs.&nbsp;Probability</a></li>
+  <li><a href="#combinations-and-permutations" id="toc-combinations-and-permutations" class="nav-link" data-scroll-target="#combinations-and-permutations"><span class="header-section-number">7.13</span> Combinations and Permutations</a>
+  <ul class="collapse">
+  <li><a href="#permutations-order-matters" id="toc-permutations-order-matters" class="nav-link" data-scroll-target="#permutations-order-matters"><span class="header-section-number">7.13.1</span> Permutations (Order Matters)</a></li>
+  <li><a href="#combinations-order-doesnt-matter" id="toc-combinations-order-doesnt-matter" class="nav-link" data-scroll-target="#combinations-order-doesnt-matter"><span class="header-section-number">7.13.2</span> Combinations (Order Doesn’t Matter)</a></li>
+  <li><a href="#example-blackjack" id="toc-example-blackjack" class="nav-link" data-scroll-target="#example-blackjack"><span class="header-section-number">7.13.3</span> Example: Blackjack</a></li>
+  </ul></li>
+  <li><a href="#classic-examples" id="toc-classic-examples" class="nav-link" data-scroll-target="#classic-examples"><span class="header-section-number">7.14</span> Classic Examples</a>
+  <ul class="collapse">
+  <li><a href="#the-monty-hall-problem" id="toc-the-monty-hall-problem" class="nav-link" data-scroll-target="#the-monty-hall-problem"><span class="header-section-number">7.14.1</span> The Monty Hall Problem</a></li>
+  <li><a href="#the-birthday-problem" id="toc-the-birthday-problem" class="nav-link" data-scroll-target="#the-birthday-problem"><span class="header-section-number">7.14.2</span> The Birthday Problem</a></li>
+  </ul></li>
+  <li><a href="#covariance-and-correlation" id="toc-covariance-and-correlation" class="nav-link" data-scroll-target="#covariance-and-correlation"><span class="header-section-number">7.15</span> Covariance and Correlation</a></li>
+  <li><a href="#how-large-is-large-enough-for-monte-carlo" id="toc-how-large-is-large-enough-for-monte-carlo" class="nav-link" data-scroll-target="#how-large-is-large-enough-for-monte-carlo"><span class="header-section-number">7.16</span> How Large is “Large Enough” for Monte Carlo?</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">7.17</span> Summary</a></li>
+  <li><a href="#practice-exercises" id="toc-practice-exercises" class="nav-link" data-scroll-target="#practice-exercises"><span class="header-section-number">7.18</span> Practice Exercises</a></li>
+  <li><a href="#additional-resources" id="toc-additional-resources" class="nav-link" data-scroll-target="#additional-resources"><span class="header-section-number">7.19</span> Additional Resources</a></li>
   </ul>
 </nav>
     </div>
@@ -458,133 +575,567 @@ window.Quarto = {
 
 <section id="why-probability-matters" class="level2" data-number="7.1">
 <h2 data-number="7.1" class="anchored" data-anchor-id="why-probability-matters"><span class="header-section-number">7.1</span> Why Probability Matters</h2>
-<p>Statistics is fundamentally about quantifying and managing uncertainty. We rarely know the world perfectly, yet we need to draw conclusions and make decisions. Probability provides the mathematical language for reasoning about uncertainty.</p>
-<p>When you take a sample from a population, the values you obtain are subject to random variation. When you run an experiment, the outcomes vary even under identical conditions. Probability theory tells us what to expect from this variation and provides the foundation for statistical inference.</p>
+<p>In games of chance, probability has a very intuitive definition. We know what it means that the chance of a pair of dice coming up seven is 1 in 6. However, probability is used much more broadly today, with the word commonly appearing in everyday language. Google’s auto-complete of “What are the chances of” gives us: “having twins”, “rain today”, “getting struck by lightning”, and “getting cancer”. One goal of this chapter is to help us understand how probability is useful to understand and describe real-world events when performing data analysis.</p>
+<p>Because knowing how to compute probabilities gives you an edge in games of chance, throughout history many smart individuals—including famous mathematicians such as Cardano, Fermat, and Pascal—spent time and energy thinking through the math of these games. As a result, Probability Theory was born. Probability continues to be highly useful in modern games of chance. For example, in poker, we can compute the probability of winning a hand based on the cards on the table. Casinos rely on probability theory to develop games that almost certainly guarantee a profit.</p>
+<p>Probability theory is useful in many other contexts and, in particular, in areas that depend on data affected by chance in some way. All of the other chapters in this part build upon probability theory. Knowledge of probability is therefore indispensable for data science.</p>
 </section>
 <section id="two-interpretations-of-probability" class="level2" data-number="7.2">
 <h2 data-number="7.2" class="anchored" data-anchor-id="two-interpretations-of-probability"><span class="header-section-number">7.2</span> Two Interpretations of Probability</h2>
 <p>There are two main ways to think about what probability means.</p>
-<p>The <strong>frequentist interpretation</strong> views probabilities as long-run relative frequencies. If we say the probability of heads when flipping a fair coin is 0.5, we mean that if we flipped the coin many, many times, about half the flips would come up heads. This interpretation grounds probability in observable, repeatable phenomena.</p>
-<p>The <strong>subjective (Bayesian) interpretation</strong> views probability as a measure of belief or uncertainty. A probability statement expresses how confident someone is that an event will occur, given their current information. This interpretation allows us to assign probabilities to one-time events and to update beliefs as we gather evidence.</p>
+<p>The <strong>frequentist interpretation</strong> views probability as mathematically convenient approximations to long-run relative frequencies. If we say the probability of heads when flipping a fair coin is 0.5, we mean that if we flipped the coin many, many times, about half the flips would come up heads. This interpretation grounds probability in observable, repeatable phenomena.</p>
+<p>The <strong>subjective (Bayesian) interpretation</strong> views probability as a measure of belief or uncertainty. A probability statement expresses the opinion of some individual regarding how certain an event is to occur, given their current information. This interpretation allows us to assign probabilities to one-time events and to update beliefs as we gather evidence.</p>
 <p>Both interpretations have their uses, and modern statistics draws on both perspectives. For now, the frequentist interpretation provides good intuition for the concepts we will develop.</p>
 </section>
 <section id="random-variables-and-sample-spaces" class="level2" data-number="7.3">
 <h2 data-number="7.3" class="anchored" data-anchor-id="random-variables-and-sample-spaces"><span class="header-section-number">7.3</span> Random Variables and Sample Spaces</h2>
-<p>A <strong>random variable</strong> is a quantity that can take different values with different probabilities. The outcome of a coin flip, the number of bacterial colonies on a plate, and the expression level of a gene are all random variables.</p>
+<p>A <strong>random variable</strong> is a quantity that can take on different values with different probabilities. The outcome of a coin flip, the number of bacterial colonies on a plate, and the expression level of a gene are all random variables.</p>
 <p>The <strong>sample space</strong> of a random variable is the set of all possible values it can take. For a coin flip, the sample space is {Heads, Tails}. For a die roll, it is {1, 2, 3, 4, 5, 6}. For the concentration of a protein, it might be any non-negative real number.</p>
-<p>A probability distribution describes how likely each value in the sample space is. For discrete random variables (those that take distinct values), we use a <strong>probability mass function</strong> that gives the probability of each possible value. For continuous random variables (those that can take any value in a range), we use a <strong>probability density function</strong> from which probabilities are calculated by integration.</p>
+<p>A <strong>probability distribution</strong> describes how likely each value in the sample space is:</p>
+<ul>
+<li>For discrete random variables (those that take distinct values), we use a <strong>probability mass function</strong> that gives the probability of each possible value</li>
+<li>For continuous random variables (those that can take any value in a range), we use a <strong>probability density function</strong> from which probabilities are calculated by integration</li>
+</ul>
 <p>One fundamental rule: the probabilities across the entire sample space must sum (or integrate) to 1. Something from the sample space must happen.</p>
 </section>
-<section id="the-bernoulli-distribution" class="level2" data-number="7.4">
-<h2 data-number="7.4" class="anchored" data-anchor-id="the-bernoulli-distribution"><span class="header-section-number">7.4</span> The Bernoulli Distribution</h2>
-<p>The simplest probability distribution describes a single event with two possible outcomes—success or failure, yes or no, heads or tails. This is the Bernoulli distribution.</p>
-<p>Consider flipping a fair coin once. The probability of heads is:</p>
+<section id="discrete-probability" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="discrete-probability"><span class="header-section-number">7.4</span> Discrete Probability</h2>
+<p>We start by covering some basic principles related to categorical data. This subset of probability is referred to as <em>discrete probability</em>. It will help us understand the probability theory we will later introduce for numeric and continuous data, which is much more common in data science applications.</p>
+<section id="relative-frequency" class="level3" data-number="7.4.1">
+<h3 data-number="7.4.1" class="anchored" data-anchor-id="relative-frequency"><span class="header-section-number">7.4.1</span> Relative Frequency</h3>
+<p>A precise definition of probability can be given by noting all possible outcomes and counting how many satisfy the condition for our event. For example, if we have 2 red beads and 3 blue beads inside an urn and we pick one at random, what is the probability of picking a red one?</p>
+<p>Our intuition tells us that the answer is 2/5 or 40%. There are five possible outcomes, of which two satisfy the condition necessary for the event “pick a red bead”. Since each of the five outcomes has the same chance of occurring, we conclude that the probability is 0.4 for red and 0.6 for blue.</p>
+<p>A more tangible way to think about the probability of an event is as the proportion of times the event occurs when we repeat the experiment an infinite number of times, independently, and under the same conditions.</p>
+</section>
+<section id="notation" class="level3" data-number="7.4.2">
+<h3 data-number="7.4.2" class="anchored" data-anchor-id="notation"><span class="header-section-number">7.4.2</span> Notation</h3>
+<p>We use the notation <span class="math inline">\(\mbox{Pr}(A)\)</span> to denote the probability of event <span class="math inline">\(A\)</span> happening. We use the very general term <em>event</em> to refer to things that can happen when something occurs by chance. In our previous example, the event was “picking a red bead”. In a political poll in which we call 100 likely voters at random, an example of an event is “calling 48 Democrats and 52 Republicans”.</p>
+<p>In data science applications, we will often deal with continuous variables. These events will often be things like “is this person taller than 6 feet”. In this case, we write events in a more mathematical form: <span class="math inline">\(X \geq 6\)</span>.</p>
+</section>
+<section id="probability-distributions-for-categorical-data" class="level3" data-number="7.4.3">
+<h3 data-number="7.4.3" class="anchored" data-anchor-id="probability-distributions-for-categorical-data"><span class="header-section-number">7.4.3</span> Probability Distributions for Categorical Data</h3>
+<p>If we know the relative frequency of the different categories, defining a distribution for categorical outcomes is straightforward. We simply assign a probability to each category. In cases that can be thought of as beads in an urn, for each bead type, their proportion defines the distribution.</p>
+<p>If we are randomly calling likely voters from a population that is 44% Democrat, 44% Republican, 10% undecided, and 2% Green Party, these proportions define the probability for each group:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Group</th>
+<th style="text-align: left;">Probability</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Republican</td>
+<td style="text-align: left;">0.44</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Democrat</td>
+<td style="text-align: left;">0.44</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Undecided</td>
+<td style="text-align: left;">0.10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Green</td>
+<td style="text-align: left;">0.02</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="distribution-moments-and-parameters" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="distribution-moments-and-parameters"><span class="header-section-number">7.5</span> Distribution Moments and Parameters</h2>
+<p>Probability distributions can be characterized by their <strong>moments</strong>—metrics that describe the shape of the distribution. The first four moments correspond to important properties:</p>
+<ol type="1">
+<li><strong>Mean</strong> (<span class="math inline">\(\mu\)</span>) - the center or expected value</li>
+<li><strong>Variance</strong> (<span class="math inline">\(\sigma^2\)</span>) - the spread or dispersion</li>
+<li><strong>Skewness</strong> - the asymmetry of the distribution</li>
+<li><strong>Kurtosis</strong> - the “tailedness” or peakedness</li>
+</ol>
+<p>For a discrete random variable X, the <strong>expected value</strong> (mean) is:</p>
+<p><span class="math display">\[E[X] = \sum_{\text{all } x} x \cdot P(X = x) = \mu\]</span></p>
+<p>The <strong>variance</strong> measures dispersion around the mean:</p>
+<p><span class="math display">\[\text{Var}(X) = E[(X - \mu)^2] = \sigma^2\]</span></p>
+<p>These parameters are crucial because they describe real properties of the systems we study. In biology, for example, the mean height of a population tells us about the typical value, while the variance tells us about the diversity of heights among individuals.</p>
+</section>
+<section id="monte-carlo-simulations" class="level2" data-number="7.6">
+<h2 data-number="7.6" class="anchored" data-anchor-id="monte-carlo-simulations"><span class="header-section-number">7.6</span> Monte Carlo Simulations</h2>
+<p>Computers provide a way to actually perform random experiments. Random number generators permit us to mimic the process of picking at random. An example is the <code>sample</code> function in R.</p>
+<p>First, we use the function <code>rep</code> to generate the urn:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>beads <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"blue"</span>), <span class="at">times =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>))</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>beads</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "red"  "red"  "blue" "blue" "blue"</code></pre>
+</div>
+</div>
+<p>Then use <code>sample</code> to pick a bead at random:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(beads, <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "red"</code></pre>
+</div>
+</div>
+<p>This line of code produces one random outcome. We want to repeat this experiment a large enough number of times to make the results practically equivalent to repeating forever. <strong>This is an example of a Monte Carlo simulation</strong>.</p>
+<p>To perform our first Monte Carlo simulation, we use the <code>replicate</code> function, which permits us to repeat the same task any number of times. Here, we repeat the random event B = 10,000 times:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1986</span>)  <span class="co"># For reproducibility</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>events <span class="ot">&lt;-</span> <span class="fu">replicate</span>(B, <span class="fu">sample</span>(beads, <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>We can now see if our definition actually agrees with this Monte Carlo simulation approximation:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> <span class="fu">table</span>(events)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(tab)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>events
+  blue    red 
+0.6014 0.3986 </code></pre>
+</div>
+</div>
+<p>The numbers above are the estimated probabilities provided by this Monte Carlo simulation. Statistical theory tells us that as <span class="math inline">\(B\)</span> gets larger, the estimates get closer to 3/5 = 0.6 and 2/5 = 0.4.</p>
+<section id="with-and-without-replacement" class="level3" data-number="7.6.1">
+<h3 data-number="7.6.1" class="anchored" data-anchor-id="with-and-without-replacement"><span class="header-section-number">7.6.1</span> With and Without Replacement</h3>
+<p>The function <code>sample</code> has an argument that permits us to pick more than one element from the urn. By default, this selection occurs <em>without replacement</em>: after a bead is selected, it is not put back in the bag.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(beads, <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "blue" "red"  "blue" "red"  "blue"</code></pre>
+</div>
+</div>
+<p>This results in rearrangements that always have three blue and two red beads because we can’t select more beads than exist.</p>
+<p>However, we can sample <em>with replacement</em>: return the bead back to the urn after selecting it:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>events <span class="ot">&lt;-</span> <span class="fu">sample</span>(beads, B, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(events))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>events
+ blue   red 
+0.601 0.399 </code></pre>
+</div>
+</div>
+<p>Not surprisingly, we get results very similar to those previously obtained with <code>replicate</code>.</p>
+</section>
+</section>
+<section id="the-bernoulli-distribution" class="level2" data-number="7.7">
+<h2 data-number="7.7" class="anchored" data-anchor-id="the-bernoulli-distribution"><span class="header-section-number">7.7</span> The Bernoulli Distribution</h2>
+<p>The simplest probability distribution describes a single event with two possible outcomes—success or failure, yes or no, heads or tails. This is the <strong>Bernoulli distribution</strong>.</p>
+<p>Consider flipping a fair coin once:</p>
 <p><span class="math display">\[P(X = \text{Head}) = \frac{1}{2} = 0.5 = p\]</span></p>
 <p>And the probability of tails is:</p>
 <p><span class="math display">\[P(X = \text{Tail}) = \frac{1}{2} = 0.5 = 1 - p = q\]</span></p>
 <p>If the coin is not fair, <span class="math inline">\(p\)</span> might differ from 0.5, but the probabilities still sum to 1:</p>
-<p><span class="math display">\[p + (1-p) = 1\]</span> <span class="math display">\[p + q = 1\]</span></p>
-<p>This same framework applies to any binary outcome: whether a patient responds to treatment, whether an electronic component fails, whether an allele is inherited from a parent.</p>
+<p><span class="math display">\[p + (1-p) = 1\]</span></p>
+<p>This same framework applies to any binary outcome: whether a patient responds to treatment, whether an allele is inherited from a parent, or whether a product passes quality control.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Flip a coin 1000 times</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>flips <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">1000</span>, <span class="dv">1</span>, <span class="fl">0.5</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(flips) <span class="sc">/</span> <span class="dv">1000</span>,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">names.arg =</span> <span class="fu">c</span>(<span class="st">"Tails"</span>, <span class="st">"Heads"</span>),</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"Probability"</span>,</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.75</span>),</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> <span class="st">"steelblue"</span>,</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">"Estimated Bernoulli Distribution"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="07-probability-foundations_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="480"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
-<section id="probability-rules" class="level2" data-number="7.5">
-<h2 data-number="7.5" class="anchored" data-anchor-id="probability-rules"><span class="header-section-number">7.5</span> Probability Rules</h2>
-<p>Two fundamental rules govern how probabilities combine.</p>
-<section id="the-and-rule-multiplication" class="level3" data-number="7.5.1">
-<h3 data-number="7.5.1" class="anchored" data-anchor-id="the-and-rule-multiplication"><span class="header-section-number">7.5.1</span> The AND Rule (Multiplication)</h3>
+<section id="probability-rules" class="level2" data-number="7.8">
+<h2 data-number="7.8" class="anchored" data-anchor-id="probability-rules"><span class="header-section-number">7.8</span> Probability Rules</h2>
+<p>Two fundamental rules govern how probabilities combine. Most probability distributions can be built up from these simple rules.</p>
+<section id="the-and-rule-multiplication" class="level3" data-number="7.8.1">
+<h3 data-number="7.8.1" class="anchored" data-anchor-id="the-and-rule-multiplication"><span class="header-section-number">7.8.1</span> The AND Rule (Multiplication)</h3>
 <p>The probability that two independent events both occur is the product of their individual probabilities. If you flip a coin twice:</p>
 <p><span class="math display">\[P(\text{First = Head AND Second = Head}) = p \times p = p^2\]</span></p>
 <p>More generally, for independent events A and B:</p>
 <p><span class="math display">\[P(A \text{ and } B) = P(A) \times P(B)\]</span></p>
 <p>For a fair coin with <span class="math inline">\(p = 0.5\)</span>:</p>
-<p><span class="math display">\[P(\text{HH}) = 0.5 \times 0.5 = 0.25\]</span> <span class="math display">\[P(\text{HT}) = 0.5 \times 0.5 = 0.25\]</span> <span class="math display">\[P(\text{TH}) = 0.5 \times 0.5 = 0.25\]</span> <span class="math display">\[P(\text{TT}) = 0.5 \times 0.5 = 0.25\]</span></p>
+<ul>
+<li><span class="math inline">\(P(\text{HH}) = 0.5 \times 0.5 = 0.25\)</span></li>
+<li><span class="math inline">\(P(\text{HT}) = 0.5 \times 0.5 = 0.25\)</span></li>
+<li><span class="math inline">\(P(\text{TH}) = 0.5 \times 0.5 = 0.25\)</span></li>
+<li><span class="math inline">\(P(\text{TT}) = 0.5 \times 0.5 = 0.25\)</span></li>
+</ul>
 </section>
-<section id="the-or-rule-addition" class="level3" data-number="7.5.2">
-<h3 data-number="7.5.2" class="anchored" data-anchor-id="the-or-rule-addition"><span class="header-section-number">7.5.2</span> The OR Rule (Addition)</h3>
-<p>The probability that at least one of two mutually exclusive events occurs is the sum of their probabilities. The probability of getting heads or tails on a single flip:</p>
-<p><span class="math display">\[P(\text{Head OR Tail}) = p + q = 1\]</span></p>
+<section id="the-or-rule-addition" class="level3" data-number="7.8.2">
+<h3 data-number="7.8.2" class="anchored" data-anchor-id="the-or-rule-addition"><span class="header-section-number">7.8.2</span> The OR Rule (Addition)</h3>
+<p>The probability that at least one of two mutually exclusive events occurs is the sum of their probabilities:</p>
+<p><span class="math display">\[P(A \text{ or } B) = P(A) + P(B) - P(A \text{ and } B)\]</span></p>
+<p>For mutually exclusive events (those that cannot both occur), the intersection is empty:</p>
+<p><span class="math display">\[P(A \text{ or } B) = P(A) + P(B)\]</span></p>
 <p>The probability of getting exactly one head in two flips (either HT or TH):</p>
 <p><span class="math display">\[P(\text{one head}) = P(\text{HT}) + P(\text{TH}) = 0.25 + 0.25 = 0.5\]</span></p>
-<p>For mutually exclusive events A and B:</p>
-<p><span class="math display">\[P(A \text{ or } B) = P(A) + P(B)\]</span></p>
-<p>These simple rules—AND means multiply, OR means add—underlie most probability calculations. Complex probability distributions can be built up from these basic principles.</p>
+</section>
+<section id="multiplication-rule-under-independence" class="level3" data-number="7.8.3">
+<h3 data-number="7.8.3" class="anchored" data-anchor-id="multiplication-rule-under-independence"><span class="header-section-number">7.8.3</span> Multiplication Rule Under Independence</h3>
+<p>When events are independent, the multiplication rule simplifies:</p>
+<p><span class="math display">\[P(A \text{ and } B \text{ and } C) = P(A) \times P(B) \times P(C)\]</span></p>
+<p>But we must be careful—assuming independence can result in very different and incorrect probability calculations when we don’t actually have independence.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Independence Matters
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Imagine a court case where the suspect was described as having a mustache and a beard. The defendant has both, and the prosecution brings in an “expert” who testifies that 1/10 men have beards and 1/5 have mustaches, concluding that only <span class="math inline">\(1/10 \times 1/5 = 0.02\)</span> have both.</p>
+<p>But to multiply like this we need to assume independence! If the conditional probability of a man having a mustache given that he has a beard is 0.95, then the correct probability is much higher: <span class="math inline">\(1/10 \times 0.95 = 0.095\)</span>.</p>
+</div>
+</div>
 </section>
 </section>
-<section id="simulating-coin-flips-in-r" class="level2" data-number="7.6">
-<h2 data-number="7.6" class="anchored" data-anchor-id="simulating-coin-flips-in-r"><span class="header-section-number">7.6</span> Simulating Coin Flips in R</h2>
-<p>We can explore these concepts through simulation:</p>
+<section id="independence" class="level2" data-number="7.9">
+<h2 data-number="7.9" class="anchored" data-anchor-id="independence"><span class="header-section-number">7.9</span> Independence</h2>
+<p>We say two events are <strong>independent</strong> if the outcome of one does not affect the other. The classic example is coin tosses. Every time we toss a fair coin, the probability of seeing heads is 1/2 regardless of what previous tosses have revealed. The same is true when we pick beads from an urn with replacement.</p>
+<p>Many examples of events that are not independent come from card games. When we deal the first card, the probability of getting a King is 1/13 since there are thirteen possibilities. Now if we deal a King for the first card and don’t replace it into the deck, the probability of a second card being a King is only 3/51. These events are <strong>not independent</strong>: the first outcome affected the next one.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate a fair coin</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"heads"</span>, <span class="st">"tails"</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Flip once</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(coin, <span class="at">size =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Demonstrate non-independence with sequential draws</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">sample</span>(beads, <span class="dv">5</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>x[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]  <span class="co"># First four draws</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "tails"</code></pre>
+<pre><code>[1] "red"  "blue" "blue" "blue"</code></pre>
 </div>
-</div>
-<div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Flip many times and see the distribution</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>flips <span class="ot">&lt;-</span> <span class="fu">sample</span>(coin, <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>), <span class="at">size =</span> <span class="dv">100</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(flips), <span class="at">main =</span> <span class="st">"100 Fair Coin Flips"</span>, <span class="at">col =</span> <span class="st">"steelblue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>x[<span class="dv">5</span>]    <span class="co"># If first four are blue, the fifth must be...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="07-probability-foundations_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="576"></p>
-</figure>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "red"</code></pre>
 </div>
 </div>
-</div>
-<p>Try changing the probabilities or sample size to see how the results change. With small samples, randomness can produce results far from the expected proportions. With large samples, the observed proportions converge to the true probabilities—a manifestation of the law of large numbers.</p>
+<p>If you have to guess the color of the first bead, you would predict blue since blue has a 60% chance. But if you know the first four were blue, the probability of the fifth being red is now 100%, not 40%. The events are not independent, so the probabilities change.</p>
 </section>
-<section id="joint-and-conditional-probability" class="level2" data-number="7.7">
-<h2 data-number="7.7" class="anchored" data-anchor-id="joint-and-conditional-probability"><span class="header-section-number">7.7</span> Joint and Conditional Probability</h2>
-<p>When we consider two random variables together, we encounter joint and conditional probabilities.</p>
-<p>The <strong>joint probability</strong> <span class="math inline">\(P(X, Y)\)</span> is the probability that both X and Y take particular values. For independent events:</p>
-<p><span class="math display">\[P(X, Y) = P(X) \times P(Y)\]</span></p>
-<p>However, many pairs of variables are not independent. The <strong>conditional probability</strong> <span class="math inline">\(P(Y|X)\)</span> is the probability of Y given that X has occurred. It captures how knowing X changes our beliefs about Y.</p>
-<p>For independent variables, knowing X tells us nothing about Y:</p>
-<p><span class="math display">\[P(Y|X) = P(Y) \quad \text{and} \quad P(X|Y) = P(X)\]</span></p>
-<p>For non-independent (dependent) variables:</p>
-<p><span class="math display">\[P(Y|X) \neq P(Y) \quad \text{and} \quad P(X|Y) \neq P(X)\]</span></p>
-<p>The relationship between joint and conditional probability is given by:</p>
-<p><span class="math display">\[P(X, Y) = P(Y|X) \times P(X) = P(X|Y) \times P(Y)\]</span></p>
+<section id="conditional-probabilities" class="level2" data-number="7.10">
+<h2 data-number="7.10" class="anchored" data-anchor-id="conditional-probabilities"><span class="header-section-number">7.10</span> Conditional Probabilities</h2>
+<p>When events are not independent, <em>conditional probabilities</em> are useful. The conditional probability <span class="math inline">\(P(B|A)\)</span> is the probability of B given that A has occurred:</p>
+<p><span class="math display">\[P(\text{Card 2 is a King} \mid \text{Card 1 is a King}) = \frac{3}{51}\]</span></p>
+<p>We use the <span class="math inline">\(\mid\)</span> as shorthand for “given that” or “conditional on”.</p>
+<p>When two events A and B are independent:</p>
+<p><span class="math display">\[P(A \mid B) = P(A)\]</span></p>
+<p>This is the mathematical definition of independence: the fact that B happened does not affect the probability of A happening.</p>
+<p>The general multiplication rule relates joint and conditional probability:</p>
+<p><span class="math display">\[P(A \text{ and } B) = P(A) \times P(B \mid A)\]</span></p>
+<p>This can be extended to more events:</p>
+<p><span class="math display">\[P(A \text{ and } B \text{ and } C) = P(A) \times P(B \mid A) \times P(C \mid A \text{ and } B)\]</span></p>
 </section>
-<section id="bayes-theorem" class="level2" data-number="7.8">
-<h2 data-number="7.8" class="anchored" data-anchor-id="bayes-theorem"><span class="header-section-number">7.8</span> Bayes’ Theorem</h2>
-<p>Rearranging the above relationship yields Bayes’ theorem, a cornerstone of probabilistic reasoning:</p>
-<p><span class="math display">\[P(X|Y) = \frac{P(Y|X) \times P(X)}{P(Y)}\]</span></p>
-<p>Bayes’ theorem tells us how to update our beliefs about X after observing Y. It forms the foundation of Bayesian statistics, where we start with prior beliefs about parameters, observe data, and compute posterior beliefs.</p>
+<section id="bayes-theorem" class="level2" data-number="7.11">
+<h2 data-number="7.11" class="anchored" data-anchor-id="bayes-theorem"><span class="header-section-number">7.11</span> Bayes’ Theorem</h2>
+<p>Rearranging the multiplication rule yields Bayes’ theorem, a cornerstone of probabilistic reasoning:</p>
+<p><span class="math display">\[P(A|B) = \frac{P(B|A) \times P(A)}{P(B)}\]</span></p>
+<p>Bayes’ theorem tells us how to update our beliefs about A after observing B. In Bayesian statistics, this is written as:</p>
+<p><span class="math display">\[P(\theta|d) = \frac{P(d|\theta) \times P(\theta)}{P(d)}\]</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline">\(P(\theta|d)\)</span> = posterior probability distribution</li>
+<li><span class="math inline">\(P(d|\theta)\)</span> = likelihood function for <span class="math inline">\(\theta\)</span></li>
+<li><span class="math inline">\(P(\theta)\)</span> = prior probability distribution</li>
+<li><span class="math inline">\(P(d)\)</span> = marginal likelihood (normalizing constant)</li>
+</ul>
 </section>
-<section id="likelihood-vs.-probability" class="level2" data-number="7.9">
-<h2 data-number="7.9" class="anchored" data-anchor-id="likelihood-vs.-probability"><span class="header-section-number">7.9</span> Likelihood vs.&nbsp;Probability</h2>
+<section id="likelihood-vs.-probability" class="level2" data-number="7.12">
+<h2 data-number="7.12" class="anchored" data-anchor-id="likelihood-vs.-probability"><span class="header-section-number">7.12</span> Likelihood vs.&nbsp;Probability</h2>
 <p>A subtle but important distinction exists between probability and likelihood.</p>
-<p><strong>Probability</strong> refers to the chance of observing particular data given a model or parameter value. If we know a coin has <span class="math inline">\(p = 0.5\)</span>, what is the probability of observing 7 heads in 10 flips?</p>
-<p><strong>Likelihood</strong> refers to how well a parameter value explains observed data. Given that we observed 7 heads in 10 flips, how likely is it that the true probability is <span class="math inline">\(p = 0.5\)</span> versus <span class="math inline">\(p = 0.7\)</span>?</p>
+<p><strong>Probability</strong> is the chance of observing particular data given a model or parameter value. If we know a coin has <span class="math inline">\(p = 0.5\)</span>, what is the probability of observing 7 heads in 10 flips?</p>
+<p><strong>Likelihood</strong> is how well a parameter value explains observed data. Given that we observed 7 heads in 10 flips, how likely is it that the true probability is <span class="math inline">\(p = 0.5\)</span> versus <span class="math inline">\(p = 0.7\)</span>?</p>
 <p>Mathematically, the likelihood function uses the same formula as probability, but we think of it differently:</p>
 <p><span class="math display">\[L(\text{parameter} | \text{data}) = P(\text{data} | \text{parameter})\]</span></p>
 <p>Maximum likelihood estimation finds the parameter value that makes the observed data most probable—the value that maximizes the likelihood function.</p>
 </section>
-<section id="covariance-and-correlation" class="level2" data-number="7.10">
-<h2 data-number="7.10" class="anchored" data-anchor-id="covariance-and-correlation"><span class="header-section-number">7.10</span> Covariance and Correlation</h2>
+<section id="combinations-and-permutations" class="level2" data-number="7.13">
+<h2 data-number="7.13" class="anchored" data-anchor-id="combinations-and-permutations"><span class="header-section-number">7.13</span> Combinations and Permutations</h2>
+<p>For more complicated probability calculations, we need to count possibilities systematically. The <code>gtools</code> package provides useful functions.</p>
+<section id="permutations-order-matters" class="level3" data-number="7.13.1">
+<h3 data-number="7.13.1" class="anchored" data-anchor-id="permutations-order-matters"><span class="header-section-number">7.13.1</span> Permutations (Order Matters)</h3>
+<p>A <strong>permutation</strong> is an arrangement where order matters. For any list of size <code>n</code>, the <code>permutations</code> function computes all different arrangements when selecting <code>r</code> items:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># All ways to arrange 2 items from {1, 2, 3}</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">permutations</span>(<span class="dv">3</span>, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2]
+[1,]    1    2
+[2,]    1    3
+[3,]    2    1
+[4,]    2    3
+[5,]    3    1
+[6,]    3    2</code></pre>
+</div>
+</div>
+<p>Notice that order matters: 3,1 is different than 1,3. Also, (1,1), (2,2), and (3,3) do not appear because once we pick a number, it can’t appear again.</p>
+</section>
+<section id="combinations-order-doesnt-matter" class="level3" data-number="7.13.2">
+<h3 data-number="7.13.2" class="anchored" data-anchor-id="combinations-order-doesnt-matter"><span class="header-section-number">7.13.2</span> Combinations (Order Doesn’t Matter)</h3>
+<p>A <strong>combination</strong> is a selection where order doesn’t matter:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">combinations</span>(<span class="dv">3</span>, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2]
+[1,]    1    2
+[2,]    1    3
+[3,]    2    3</code></pre>
+</div>
+</div>
+<p>The outcome (2,1) doesn’t appear because (1,2) already represents the same combination.</p>
+</section>
+<section id="example-blackjack" class="level3" data-number="7.13.3">
+<h3 data-number="7.13.3" class="anchored" data-anchor-id="example-blackjack"><span class="header-section-number">7.13.3</span> Example: Blackjack</h3>
+<p>Let’s compute the probability of getting a “Natural 21” in Blackjack—an Ace and a face card in the first two cards:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Build a deck</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>suits <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Diamonds"</span>, <span class="st">"Clubs"</span>, <span class="st">"Hearts"</span>, <span class="st">"Spades"</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>numbers <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Ace"</span>, <span class="st">"Deuce"</span>, <span class="st">"Three"</span>, <span class="st">"Four"</span>, <span class="st">"Five"</span>, <span class="st">"Six"</span>, <span class="st">"Seven"</span>,</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Eight"</span>, <span class="st">"Nine"</span>, <span class="st">"Ten"</span>, <span class="st">"Jack"</span>, <span class="st">"Queen"</span>, <span class="st">"King"</span>)</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>deck <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">number =</span> numbers, <span class="at">suit =</span> suits)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>deck <span class="ot">&lt;-</span> <span class="fu">paste</span>(deck<span class="sc">$</span>number, deck<span class="sc">$</span>suit)</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Define aces and face cards</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>aces <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">"Ace"</span>, suits)</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>facecard <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"King"</span>, <span class="st">"Queen"</span>, <span class="st">"Jack"</span>, <span class="st">"Ten"</span>)</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>facecard <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">number =</span> facecard, <span class="at">suit =</span> suits)</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>facecard <span class="ot">&lt;-</span> <span class="fu">paste</span>(facecard<span class="sc">$</span>number, facecard<span class="sc">$</span>suit)</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a><span class="co"># All possible two-card hands (order doesn't matter)</span></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>hands <span class="ot">&lt;-</span> <span class="fu">combinations</span>(<span class="dv">52</span>, <span class="dv">2</span>, <span class="at">v =</span> deck)</span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Probability of Natural 21</span></span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>((hands[,<span class="dv">1</span>] <span class="sc">%in%</span> aces <span class="sc">&amp;</span> hands[,<span class="dv">2</span>] <span class="sc">%in%</span> facecard) <span class="sc">|</span></span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>     (hands[,<span class="dv">2</span>] <span class="sc">%in%</span> aces <span class="sc">&amp;</span> hands[,<span class="dv">1</span>] <span class="sc">%in%</span> facecard))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.04826546</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="classic-examples" class="level2" data-number="7.14">
+<h2 data-number="7.14" class="anchored" data-anchor-id="classic-examples"><span class="header-section-number">7.14</span> Classic Examples</h2>
+<section id="the-monty-hall-problem" class="level3" data-number="7.14.1">
+<h3 data-number="7.14.1" class="anchored" data-anchor-id="the-monty-hall-problem"><span class="header-section-number">7.14.1</span> The Monty Hall Problem</h3>
+<p>In the game show “Let’s Make a Deal,” contestants pick one of three doors. Behind one door is a car; behind the others are goats. After you pick a door, Monty Hall opens one of the remaining doors to reveal a goat. Then he asks: “Do you want to switch doors?”</p>
+<p>Intuition suggests it shouldn’t matter—you’re choosing between two doors, so shouldn’t the probability be 50-50? Let’s use Monte Carlo simulation:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>monty_hall <span class="ot">&lt;-</span> <span class="cf">function</span>(strategy) {</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  doors <span class="ot">&lt;-</span> <span class="fu">as.character</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  prize <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"car"</span>, <span class="st">"goat"</span>, <span class="st">"goat"</span>))</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  prize_door <span class="ot">&lt;-</span> doors[prize <span class="sc">==</span> <span class="st">"car"</span>]</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  my_pick <span class="ot">&lt;-</span> <span class="fu">sample</span>(doors, <span class="dv">1</span>)</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  show <span class="ot">&lt;-</span> <span class="fu">sample</span>(doors[<span class="sc">!</span>doors <span class="sc">%in%</span> <span class="fu">c</span>(my_pick, prize_door)], <span class="dv">1</span>)</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (strategy <span class="sc">==</span> <span class="st">"stick"</span>) {</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>    choice <span class="ot">&lt;-</span> my_pick</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    choice <span class="ot">&lt;-</span> doors[<span class="sc">!</span>doors <span class="sc">%in%</span> <span class="fu">c</span>(my_pick, show)]</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>  choice <span class="sc">==</span> prize_door</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>stick_wins <span class="ot">&lt;-</span> <span class="fu">replicate</span>(B, <span class="fu">monty_hall</span>(<span class="st">"stick"</span>))</span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>switch_wins <span class="ot">&lt;-</span> <span class="fu">replicate</span>(B, <span class="fu">monty_hall</span>(<span class="st">"switch"</span>))</span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Probability of winning when sticking:"</span>, <span class="fu">mean</span>(stick_wins), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Probability of winning when sticking: 0.3365 </code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Probability of winning when switching:"</span>, <span class="fu">mean</span>(switch_wins), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Probability of winning when switching: 0.6643 </code></pre>
+</div>
+</div>
+<p>Switching doubles your chances! The key insight: when you first pick, you have a 1/3 chance of being right. Monty’s reveal doesn’t change that. Since the probability the car is behind one of the other doors was 2/3, and Monty showed you which one doesn’t have it, switching gives you that 2/3 probability.</p>
+</section>
+<section id="the-birthday-problem" class="level3" data-number="7.14.2">
+<h3 data-number="7.14.2" class="anchored" data-anchor-id="the-birthday-problem"><span class="header-section-number">7.14.2</span> The Birthday Problem</h3>
+<p>In a room with 50 people, what’s the probability that at least two share a birthday?</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Monte Carlo simulation</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>same_birthday <span class="ot">&lt;-</span> <span class="cf">function</span>(n) {</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  bdays <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">365</span>, n, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">any</span>(<span class="fu">duplicated</span>(bdays))</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">replicate</span>(B, <span class="fu">same_birthday</span>(<span class="dv">50</span>))</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Probability with 50 people:"</span>, <span class="fu">mean</span>(results), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Probability with 50 people: 0.9701 </code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># How does this change with group size?</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>compute_prob <span class="ot">&lt;-</span> <span class="cf">function</span>(n, <span class="at">B =</span> <span class="dv">10000</span>) {</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  results <span class="ot">&lt;-</span> <span class="fu">replicate</span>(B, <span class="fu">same_birthday</span>(n))</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(results)</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">60</span>)</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>prob <span class="ot">&lt;-</span> <span class="fu">sapply</span>(n, compute_prob)</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="fu">qplot</span>(n, prob, <span class="at">geom =</span> <span class="st">"line"</span>) <span class="sc">+</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">0.5</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Group Size"</span>, <span class="at">y =</span> <span class="st">"Probability of Shared Birthday"</span>,</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"The Birthday Problem"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="07-probability-foundations_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>With just 23 people, there’s already a 50% chance of a shared birthday! People tend to underestimate these probabilities because they think about the probability that someone shares <em>their</em> birthday, not the probability that <em>any two people</em> share a birthday.</p>
+<p>We can also compute this exactly using the multiplication rule:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Probability that all n people have UNIQUE birthdays</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>exact_prob <span class="ot">&lt;-</span> <span class="cf">function</span>(n) {</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  prob_unique <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">365</span>, <span class="dv">365</span> <span class="sc">-</span> n <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">/</span> <span class="dv">365</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span> <span class="sc">-</span> <span class="fu">prod</span>(prob_unique)</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>eprob <span class="ot">&lt;-</span> <span class="fu">sapply</span>(n, exact_prob)</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Exact probability with 50 people:"</span>, <span class="fu">exact_prob</span>(<span class="dv">50</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Exact probability with 50 people: 0.9703736 </code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="covariance-and-correlation" class="level2" data-number="7.15">
+<h2 data-number="7.15" class="anchored" data-anchor-id="covariance-and-correlation"><span class="header-section-number">7.15</span> Covariance and Correlation</h2>
 <p>When two variables are not independent, they share information—knowing one tells you something about the other. This shared information is quantified by <strong>covariance</strong>, a measure of how two variables vary together.</p>
 <p>If high values of X tend to occur with high values of Y (and low with low), the covariance is positive. If high values of X tend to occur with low values of Y, the covariance is negative. If there is no relationship, the covariance is near zero.</p>
 <p><strong>Correlation</strong> is covariance standardized to fall between -1 and 1, making it easier to interpret. A correlation of 1 means perfect positive linear relationship; -1 means perfect negative linear relationship; 0 means no linear relationship.</p>
 <p>These concepts will become central when we discuss regression and other methods for relating variables to each other.</p>
 </section>
-<section id="looking-ahead" class="level2" data-number="7.11">
-<h2 data-number="7.11" class="anchored" data-anchor-id="looking-ahead"><span class="header-section-number">7.11</span> Looking Ahead</h2>
-<p>This chapter introduced the language of probability—random variables, sample spaces, probability distributions, and rules for combining probabilities. In the following chapters, we will explore specific probability distributions that arise frequently in practice, both discrete (binomial, Poisson) and continuous (normal, exponential). Understanding these distributions provides the foundation for statistical inference.</p>
+<section id="how-large-is-large-enough-for-monte-carlo" class="level2" data-number="7.16">
+<h2 data-number="7.16" class="anchored" data-anchor-id="how-large-is-large-enough-for-monte-carlo"><span class="header-section-number">7.16</span> How Large is “Large Enough” for Monte Carlo?</h2>
+<p>The theory described here requires repeating experiments over and over forever. In practice, we can’t do this. In the examples above, we used <span class="math inline">\(B = 10,000\)</span> Monte Carlo experiments and it turned out to provide accurate estimates.</p>
+<p>One practical approach is to check for the stability of the estimate:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>B_values <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span><span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">5</span>, <span class="at">len =</span> <span class="dv">100</span>)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>compute_prob_B <span class="ot">&lt;-</span> <span class="cf">function</span>(B, <span class="at">n =</span> <span class="dv">25</span>) {</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  same_day <span class="ot">&lt;-</span> <span class="fu">replicate</span>(B, <span class="fu">same_birthday</span>(n))</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(same_day)</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>prob <span class="ot">&lt;-</span> <span class="fu">sapply</span>(B_values, compute_prob_B)</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="fu">qplot</span>(<span class="fu">log10</span>(B_values), prob, <span class="at">geom =</span> <span class="st">"line"</span>) <span class="sc">+</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">exact_prob</span>(<span class="dv">25</span>), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"log10(Number of Simulations)"</span>, <span class="at">y =</span> <span class="st">"Estimated Probability"</span>,</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Monte Carlo Convergence"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="07-probability-foundations_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The values start to stabilize (vary less than 0.01) around 1000 simulations. The exact probability is shown in red.</p>
+</section>
+<section id="summary" class="level2" data-number="7.17">
+<h2 data-number="7.17" class="anchored" data-anchor-id="summary"><span class="header-section-number">7.17</span> Summary</h2>
+<p>This chapter introduced the language of probability:</p>
+<ul>
+<li><strong>Random variables</strong> can take different values with different probabilities</li>
+<li>The <strong>sample space</strong> contains all possible outcomes</li>
+<li><strong>Probability distributions</strong> describe how likely each outcome is</li>
+<li>The <strong>AND rule</strong> (multiply) and <strong>OR rule</strong> (add) combine probabilities</li>
+<li><strong>Independence</strong> means one event doesn’t affect another’s probability</li>
+<li><strong>Conditional probability</strong> describes probability given other information</li>
+<li><strong>Bayes’ theorem</strong> updates beliefs based on new evidence</li>
+<li><strong>Monte Carlo simulations</strong> estimate probabilities through repeated random sampling</li>
+<li>Classic problems like Monty Hall and birthdays reveal counterintuitive probability results</li>
+</ul>
+<p>Understanding these foundations is essential for all statistical inference that follows.</p>
+</section>
+<section id="practice-exercises" class="level2" data-number="7.18">
+<h2 data-number="7.18" class="anchored" data-anchor-id="practice-exercises"><span class="header-section-number">7.18</span> Practice Exercises</h2>
+<p>For hands-on practice with probability concepts, see <a href="A9-exercises.html#sec-ex-prob" class="quarto-xref"><span>Section 35.6</span></a> in the Practice Exercises appendix. The exercises include:</p>
+<ul>
+<li>Simulating coin flips and exploring the law of large numbers</li>
+<li>Working with the binomial distribution</li>
+<li>Exploring the birthday problem through Monte Carlo simulation</li>
+<li>Understanding conditional probability with card simulations</li>
+<li>Simulating the Monty Hall problem</li>
+</ul>
+</section>
+<section id="additional-resources" class="level2" data-number="7.19">
+<h2 data-number="7.19" class="anchored" data-anchor-id="additional-resources"><span class="header-section-number">7.19</span> Additional Resources</h2>
+<ul>
+<li><span class="citation" data-cites="irizarry2019introduction">Irizarry (<a href="../references.html#ref-irizarry2019introduction" role="doc-biblioref">2019</a>)</span> - A gitbook by a statistician with excellent introductions to key topics in statistical inference</li>
+<li><span class="citation" data-cites="logan2010biostatistical">Logan (<a href="../references.html#ref-logan2010biostatistical" role="doc-biblioref">2010</a>)</span> - A comprehensive introduction to R for statistical analysis</li>
+<li>For a detailed reference of common probability distributions, see <a href="A3-probability-distributions.html" class="quarto-xref"><span>Chapter 29</span></a></li>
+</ul>
 
 
 <!-- -->
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-irizarry2019introduction" class="csl-entry" role="listitem">
+Irizarry, Rafael A. 2019. <em>Introduction to Data Science</em>. Self-published. <a href="https://rafalab.github.io/dsbook/">https://rafalab.github.io/dsbook/</a>.
+</div>
+<div id="ref-logan2010biostatistical" class="csl-entry" role="listitem">
+Logan, Murray. 2010. <em>Biostatistical Design and Analysis Using r</em>. Wiley-Blackwell.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->
@@ -1050,177 +1601,501 @@ window.Quarto = {
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb4" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Foundations of Probability {#sec-probability}</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_minimal</span>())</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="fu">## Why Probability Matters</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>Statistics is fundamentally about quantifying and managing uncertainty. We rarely know the world perfectly, yet we need to draw conclusions and make decisions. Probability provides the mathematical language for reasoning about uncertainty.</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>When you take a sample from a population, the values you obtain are subject to random variation. When you run an experiment, the outcomes vary even under identical conditions. Probability theory tells us what to expect from this variation and provides the foundation for statistical inference.</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="fu">## Two Interpretations of Probability</span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>There are two main ways to think about what probability means.</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>The **frequentist interpretation** views probabilities as long-run relative frequencies. If we say the probability of heads when flipping a fair coin is 0.5, we mean that if we flipped the coin many, many times, about half the flips would come up heads. This interpretation grounds probability in observable, repeatable phenomena.</span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>The **subjective (Bayesian) interpretation** views probability as a measure of belief or uncertainty. A probability statement expresses how confident someone is that an event will occur, given their current information. This interpretation allows us to assign probabilities to one-time events and to update beliefs as we gather evidence.</span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>Both interpretations have their uses, and modern statistics draws on both perspectives. For now, the frequentist interpretation provides good intuition for the concepts we will develop.</span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="fu">## Random Variables and Sample Spaces</span></span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>A **random variable** is a quantity that can take different values with different probabilities. The outcome of a coin flip, the number of bacterial colonies on a plate, and the expression level of a gene are all random variables.</span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>The **sample space** of a random variable is the set of all possible values it can take. For a coin flip, the sample space is {Heads, Tails}. For a die roll, it is {1, 2, 3, 4, 5, 6}. For the concentration of a protein, it might be any non-negative real number.</span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>A probability distribution describes how likely each value in the sample space is. For discrete random variables (those that take distinct values), we use a **probability mass function** that gives the probability of each possible value. For continuous random variables (those that can take any value in a range), we use a **probability density function** from which probabilities are calculated by integration.</span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>One fundamental rule: the probabilities across the entire sample space must sum (or integrate) to 1. Something from the sample space must happen.</span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Bernoulli Distribution</span></span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>The simplest probability distribution describes a single event with two possible outcomes—success or failure, yes or no, heads or tails. This is the Bernoulli distribution.</span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>Consider flipping a fair coin once. The probability of heads is:</span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>$$P(X = \text{Head}) = \frac{1}{2} = 0.5 = p$$</span>
-<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>And the probability of tails is:</span>
-<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>$$P(X = \text{Tail}) = \frac{1}{2} = 0.5 = 1 - p = q$$</span>
-<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>If the coin is not fair, $p$ might differ from 0.5, but the probabilities still sum to 1:</span>
-<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>$$p + (1-p) = 1$$</span>
-<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>$$p + q = 1$$</span>
-<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>This same framework applies to any binary outcome: whether a patient responds to treatment, whether an electronic component fails, whether an allele is inherited from a parent.</span>
-<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a><span class="fu">## Probability Rules</span></span>
-<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>Two fundamental rules govern how probabilities combine.</span>
-<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a><span class="fu">### The AND Rule (Multiplication)</span></span>
-<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a>The probability that two independent events both occur is the product of their individual probabilities. If you flip a coin twice:</span>
-<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a>$$P(\text{First = Head AND Second = Head}) = p \times p = p^2$$</span>
-<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a>More generally, for independent events A and B:</span>
-<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a>$$P(A \text{ and } B) = P(A) \times P(B)$$</span>
-<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a>For a fair coin with $p = 0.5$:</span>
-<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a>$$P(\text{HH}) = 0.5 \times 0.5 = 0.25$$</span>
-<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a>$$P(\text{HT}) = 0.5 \times 0.5 = 0.25$$</span>
-<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a>$$P(\text{TH}) = 0.5 \times 0.5 = 0.25$$</span>
-<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a>$$P(\text{TT}) = 0.5 \times 0.5 = 0.25$$</span>
-<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a><span class="fu">### The OR Rule (Addition)</span></span>
-<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a>The probability that at least one of two mutually exclusive events occurs is the sum of their probabilities. The probability of getting heads or tails on a single flip:</span>
-<span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a>$$P(\text{Head OR Tail}) = p + q = 1$$</span>
-<span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-84"><a href="#cb4-84" aria-hidden="true" tabindex="-1"></a>The probability of getting exactly one head in two flips (either HT or TH):</span>
-<span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-86"><a href="#cb4-86" aria-hidden="true" tabindex="-1"></a>$$P(\text{one head}) = P(\text{HT}) + P(\text{TH}) = 0.25 + 0.25 = 0.5$$</span>
-<span id="cb4-87"><a href="#cb4-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-88"><a href="#cb4-88" aria-hidden="true" tabindex="-1"></a>For mutually exclusive events A and B:</span>
-<span id="cb4-89"><a href="#cb4-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-90"><a href="#cb4-90" aria-hidden="true" tabindex="-1"></a>$$P(A \text{ or } B) = P(A) + P(B)$$</span>
-<span id="cb4-91"><a href="#cb4-91" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-92"><a href="#cb4-92" aria-hidden="true" tabindex="-1"></a>These simple rules—AND means multiply, OR means add—underlie most probability calculations. Complex probability distributions can be built up from these basic principles.</span>
-<span id="cb4-93"><a href="#cb4-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-94"><a href="#cb4-94" aria-hidden="true" tabindex="-1"></a><span class="fu">## Simulating Coin Flips in R</span></span>
-<span id="cb4-95"><a href="#cb4-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-96"><a href="#cb4-96" aria-hidden="true" tabindex="-1"></a>We can explore these concepts through simulation:</span>
-<span id="cb4-97"><a href="#cb4-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-100"><a href="#cb4-100" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb4-101"><a href="#cb4-101" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate a fair coin</span></span>
-<span id="cb4-102"><a href="#cb4-102" aria-hidden="true" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"heads"</span>, <span class="st">"tails"</span>)</span>
-<span id="cb4-103"><a href="#cb4-103" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-104"><a href="#cb4-104" aria-hidden="true" tabindex="-1"></a><span class="co"># Flip once</span></span>
-<span id="cb4-105"><a href="#cb4-105" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(coin, <span class="at">size =</span> <span class="dv">1</span>)</span>
-<span id="cb4-106"><a href="#cb4-106" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb4-107"><a href="#cb4-107" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-110"><a href="#cb4-110" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb4-111"><a href="#cb4-111" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 6</span></span>
-<span id="cb4-112"><a href="#cb4-112" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4</span></span>
-<span id="cb4-113"><a href="#cb4-113" aria-hidden="true" tabindex="-1"></a><span class="co"># Flip many times and see the distribution</span></span>
-<span id="cb4-114"><a href="#cb4-114" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
-<span id="cb4-115"><a href="#cb4-115" aria-hidden="true" tabindex="-1"></a>flips <span class="ot">&lt;-</span> <span class="fu">sample</span>(coin, <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>), <span class="at">size =</span> <span class="dv">100</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb4-116"><a href="#cb4-116" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(flips), <span class="at">main =</span> <span class="st">"100 Fair Coin Flips"</span>, <span class="at">col =</span> <span class="st">"steelblue"</span>)</span>
-<span id="cb4-117"><a href="#cb4-117" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb4-118"><a href="#cb4-118" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-119"><a href="#cb4-119" aria-hidden="true" tabindex="-1"></a>Try changing the probabilities or sample size to see how the results change. With small samples, randomness can produce results far from the expected proportions. With large samples, the observed proportions converge to the true probabilities—a manifestation of the law of large numbers.</span>
-<span id="cb4-120"><a href="#cb4-120" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-121"><a href="#cb4-121" aria-hidden="true" tabindex="-1"></a><span class="fu">## Joint and Conditional Probability</span></span>
-<span id="cb4-122"><a href="#cb4-122" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-123"><a href="#cb4-123" aria-hidden="true" tabindex="-1"></a>When we consider two random variables together, we encounter joint and conditional probabilities.</span>
-<span id="cb4-124"><a href="#cb4-124" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-125"><a href="#cb4-125" aria-hidden="true" tabindex="-1"></a>The **joint probability** $P(X, Y)$ is the probability that both X and Y take particular values. For independent events:</span>
-<span id="cb4-126"><a href="#cb4-126" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-127"><a href="#cb4-127" aria-hidden="true" tabindex="-1"></a>$$P(X, Y) = P(X) \times P(Y)$$</span>
-<span id="cb4-128"><a href="#cb4-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-129"><a href="#cb4-129" aria-hidden="true" tabindex="-1"></a>However, many pairs of variables are not independent. The **conditional probability** $P(Y|X)$ is the probability of Y given that X has occurred. It captures how knowing X changes our beliefs about Y.</span>
-<span id="cb4-130"><a href="#cb4-130" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-131"><a href="#cb4-131" aria-hidden="true" tabindex="-1"></a>For independent variables, knowing X tells us nothing about Y:</span>
-<span id="cb4-132"><a href="#cb4-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-133"><a href="#cb4-133" aria-hidden="true" tabindex="-1"></a>$$P(Y|X) = P(Y) \quad \text{and} \quad P(X|Y) = P(X)$$</span>
-<span id="cb4-134"><a href="#cb4-134" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-135"><a href="#cb4-135" aria-hidden="true" tabindex="-1"></a>For non-independent (dependent) variables:</span>
-<span id="cb4-136"><a href="#cb4-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-137"><a href="#cb4-137" aria-hidden="true" tabindex="-1"></a>$$P(Y|X) \neq P(Y) \quad \text{and} \quad P(X|Y) \neq P(X)$$</span>
-<span id="cb4-138"><a href="#cb4-138" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-139"><a href="#cb4-139" aria-hidden="true" tabindex="-1"></a>The relationship between joint and conditional probability is given by:</span>
-<span id="cb4-140"><a href="#cb4-140" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-141"><a href="#cb4-141" aria-hidden="true" tabindex="-1"></a>$$P(X, Y) = P(Y|X) \times P(X) = P(X|Y) \times P(Y)$$</span>
-<span id="cb4-142"><a href="#cb4-142" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-143"><a href="#cb4-143" aria-hidden="true" tabindex="-1"></a><span class="fu">## Bayes' Theorem</span></span>
-<span id="cb4-144"><a href="#cb4-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-145"><a href="#cb4-145" aria-hidden="true" tabindex="-1"></a>Rearranging the above relationship yields Bayes' theorem, a cornerstone of probabilistic reasoning:</span>
-<span id="cb4-146"><a href="#cb4-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-147"><a href="#cb4-147" aria-hidden="true" tabindex="-1"></a>$$P(X|Y) = \frac{P(Y|X) \times P(X)}{P(Y)}$$</span>
-<span id="cb4-148"><a href="#cb4-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-149"><a href="#cb4-149" aria-hidden="true" tabindex="-1"></a>Bayes' theorem tells us how to update our beliefs about X after observing Y. It forms the foundation of Bayesian statistics, where we start with prior beliefs about parameters, observe data, and compute posterior beliefs.</span>
-<span id="cb4-150"><a href="#cb4-150" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-151"><a href="#cb4-151" aria-hidden="true" tabindex="-1"></a><span class="fu">## Likelihood vs. Probability</span></span>
-<span id="cb4-152"><a href="#cb4-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-153"><a href="#cb4-153" aria-hidden="true" tabindex="-1"></a>A subtle but important distinction exists between probability and likelihood.</span>
-<span id="cb4-154"><a href="#cb4-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-155"><a href="#cb4-155" aria-hidden="true" tabindex="-1"></a>**Probability** refers to the chance of observing particular data given a model or parameter value. If we know a coin has $p = 0.5$, what is the probability of observing 7 heads in 10 flips?</span>
-<span id="cb4-156"><a href="#cb4-156" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-157"><a href="#cb4-157" aria-hidden="true" tabindex="-1"></a>**Likelihood** refers to how well a parameter value explains observed data. Given that we observed 7 heads in 10 flips, how likely is it that the true probability is $p = 0.5$ versus $p = 0.7$?</span>
-<span id="cb4-158"><a href="#cb4-158" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-159"><a href="#cb4-159" aria-hidden="true" tabindex="-1"></a>Mathematically, the likelihood function uses the same formula as probability, but we think of it differently:</span>
-<span id="cb4-160"><a href="#cb4-160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-161"><a href="#cb4-161" aria-hidden="true" tabindex="-1"></a>$$L(\text{parameter} | \text{data}) = P(\text{data} | \text{parameter})$$</span>
-<span id="cb4-162"><a href="#cb4-162" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-163"><a href="#cb4-163" aria-hidden="true" tabindex="-1"></a>Maximum likelihood estimation finds the parameter value that makes the observed data most probable—the value that maximizes the likelihood function.</span>
-<span id="cb4-164"><a href="#cb4-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-165"><a href="#cb4-165" aria-hidden="true" tabindex="-1"></a><span class="fu">## Covariance and Correlation</span></span>
-<span id="cb4-166"><a href="#cb4-166" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-167"><a href="#cb4-167" aria-hidden="true" tabindex="-1"></a>When two variables are not independent, they share information—knowing one tells you something about the other. This shared information is quantified by **covariance**, a measure of how two variables vary together.</span>
-<span id="cb4-168"><a href="#cb4-168" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-169"><a href="#cb4-169" aria-hidden="true" tabindex="-1"></a>If high values of X tend to occur with high values of Y (and low with low), the covariance is positive. If high values of X tend to occur with low values of Y, the covariance is negative. If there is no relationship, the covariance is near zero.</span>
-<span id="cb4-170"><a href="#cb4-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-171"><a href="#cb4-171" aria-hidden="true" tabindex="-1"></a>**Correlation** is covariance standardized to fall between -1 and 1, making it easier to interpret. A correlation of 1 means perfect positive linear relationship; -1 means perfect negative linear relationship; 0 means no linear relationship.</span>
-<span id="cb4-172"><a href="#cb4-172" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-173"><a href="#cb4-173" aria-hidden="true" tabindex="-1"></a>These concepts will become central when we discuss regression and other methods for relating variables to each other.</span>
-<span id="cb4-174"><a href="#cb4-174" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-175"><a href="#cb4-175" aria-hidden="true" tabindex="-1"></a><span class="fu">## Looking Ahead</span></span>
-<span id="cb4-176"><a href="#cb4-176" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-177"><a href="#cb4-177" aria-hidden="true" tabindex="-1"></a>This chapter introduced the language of probability—random variables, sample spaces, probability distributions, and rules for combining probabilities. In the following chapters, we will explore specific probability distributions that arise frequently in practice, both discrete (binomial, Poisson) and continuous (normal, exponential). Understanding these distributions provides the foundation for statistical inference.</span>
+<div class="sourceCode" id="cb33" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Foundations of Probability {#sec-probability}</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtools)</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_minimal</span>())</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a><span class="fu">## Why Probability Matters</span></span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>In games of chance, probability has a very intuitive definition. We know what it means that the chance of a pair of dice coming up seven is 1 in 6. However, probability is used much more broadly today, with the word commonly appearing in everyday language. Google's auto-complete of "What are the chances of" gives us: "having twins", "rain today", "getting struck by lightning", and "getting cancer". One goal of this chapter is to help us understand how probability is useful to understand and describe real-world events when performing data analysis.</span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>Because knowing how to compute probabilities gives you an edge in games of chance, throughout history many smart individuals—including famous mathematicians such as Cardano, Fermat, and Pascal—spent time and energy thinking through the math of these games. As a result, Probability Theory was born. Probability continues to be highly useful in modern games of chance. For example, in poker, we can compute the probability of winning a hand based on the cards on the table. Casinos rely on probability theory to develop games that almost certainly guarantee a profit.</span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a>Probability theory is useful in many other contexts and, in particular, in areas that depend on data affected by chance in some way. All of the other chapters in this part build upon probability theory. Knowledge of probability is therefore indispensable for data science.</span>
+<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a><span class="fu">## Two Interpretations of Probability</span></span>
+<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-23"><a href="#cb33-23" aria-hidden="true" tabindex="-1"></a>There are two main ways to think about what probability means.</span>
+<span id="cb33-24"><a href="#cb33-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-25"><a href="#cb33-25" aria-hidden="true" tabindex="-1"></a>The **frequentist interpretation** views probability as mathematically convenient approximations to long-run relative frequencies. If we say the probability of heads when flipping a fair coin is 0.5, we mean that if we flipped the coin many, many times, about half the flips would come up heads. This interpretation grounds probability in observable, repeatable phenomena.</span>
+<span id="cb33-26"><a href="#cb33-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-27"><a href="#cb33-27" aria-hidden="true" tabindex="-1"></a>The **subjective (Bayesian) interpretation** views probability as a measure of belief or uncertainty. A probability statement expresses the opinion of some individual regarding how certain an event is to occur, given their current information. This interpretation allows us to assign probabilities to one-time events and to update beliefs as we gather evidence.</span>
+<span id="cb33-28"><a href="#cb33-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-29"><a href="#cb33-29" aria-hidden="true" tabindex="-1"></a>Both interpretations have their uses, and modern statistics draws on both perspectives. For now, the frequentist interpretation provides good intuition for the concepts we will develop.</span>
+<span id="cb33-30"><a href="#cb33-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-31"><a href="#cb33-31" aria-hidden="true" tabindex="-1"></a><span class="fu">## Random Variables and Sample Spaces</span></span>
+<span id="cb33-32"><a href="#cb33-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-33"><a href="#cb33-33" aria-hidden="true" tabindex="-1"></a>A **random variable** is a quantity that can take on different values with different probabilities. The outcome of a coin flip, the number of bacterial colonies on a plate, and the expression level of a gene are all random variables.</span>
+<span id="cb33-34"><a href="#cb33-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-35"><a href="#cb33-35" aria-hidden="true" tabindex="-1"></a>The **sample space** of a random variable is the set of all possible values it can take. For a coin flip, the sample space is {Heads, Tails}. For a die roll, it is {1, 2, 3, 4, 5, 6}. For the concentration of a protein, it might be any non-negative real number.</span>
+<span id="cb33-36"><a href="#cb33-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-37"><a href="#cb33-37" aria-hidden="true" tabindex="-1"></a>A **probability distribution** describes how likely each value in the sample space is:</span>
+<span id="cb33-38"><a href="#cb33-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-39"><a href="#cb33-39" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>For discrete random variables (those that take distinct values), we use a **probability mass function** that gives the probability of each possible value</span>
+<span id="cb33-40"><a href="#cb33-40" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>For continuous random variables (those that can take any value in a range), we use a **probability density function** from which probabilities are calculated by integration</span>
+<span id="cb33-41"><a href="#cb33-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-42"><a href="#cb33-42" aria-hidden="true" tabindex="-1"></a>One fundamental rule: the probabilities across the entire sample space must sum (or integrate) to 1. Something from the sample space must happen.</span>
+<span id="cb33-43"><a href="#cb33-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-44"><a href="#cb33-44" aria-hidden="true" tabindex="-1"></a><span class="fu">## Discrete Probability</span></span>
+<span id="cb33-45"><a href="#cb33-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-46"><a href="#cb33-46" aria-hidden="true" tabindex="-1"></a>We start by covering some basic principles related to categorical data. This subset of probability is referred to as *discrete probability*. It will help us understand the probability theory we will later introduce for numeric and continuous data, which is much more common in data science applications.</span>
+<span id="cb33-47"><a href="#cb33-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-48"><a href="#cb33-48" aria-hidden="true" tabindex="-1"></a><span class="fu">### Relative Frequency</span></span>
+<span id="cb33-49"><a href="#cb33-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-50"><a href="#cb33-50" aria-hidden="true" tabindex="-1"></a>A precise definition of probability can be given by noting all possible outcomes and counting how many satisfy the condition for our event. For example, if we have 2 red beads and 3 blue beads inside an urn and we pick one at random, what is the probability of picking a red one?</span>
+<span id="cb33-51"><a href="#cb33-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-52"><a href="#cb33-52" aria-hidden="true" tabindex="-1"></a>Our intuition tells us that the answer is 2/5 or 40%. There are five possible outcomes, of which two satisfy the condition necessary for the event "pick a red bead". Since each of the five outcomes has the same chance of occurring, we conclude that the probability is 0.4 for red and 0.6 for blue.</span>
+<span id="cb33-53"><a href="#cb33-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-54"><a href="#cb33-54" aria-hidden="true" tabindex="-1"></a>A more tangible way to think about the probability of an event is as the proportion of times the event occurs when we repeat the experiment an infinite number of times, independently, and under the same conditions.</span>
+<span id="cb33-55"><a href="#cb33-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-56"><a href="#cb33-56" aria-hidden="true" tabindex="-1"></a><span class="fu">### Notation</span></span>
+<span id="cb33-57"><a href="#cb33-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-58"><a href="#cb33-58" aria-hidden="true" tabindex="-1"></a>We use the notation $\mbox{Pr}(A)$ to denote the probability of event $A$ happening. We use the very general term *event* to refer to things that can happen when something occurs by chance. In our previous example, the event was "picking a red bead". In a political poll in which we call 100 likely voters at random, an example of an event is "calling 48 Democrats and 52 Republicans".</span>
+<span id="cb33-59"><a href="#cb33-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-60"><a href="#cb33-60" aria-hidden="true" tabindex="-1"></a>In data science applications, we will often deal with continuous variables. These events will often be things like "is this person taller than 6 feet". In this case, we write events in a more mathematical form: $X \geq 6$.</span>
+<span id="cb33-61"><a href="#cb33-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-62"><a href="#cb33-62" aria-hidden="true" tabindex="-1"></a><span class="fu">### Probability Distributions for Categorical Data</span></span>
+<span id="cb33-63"><a href="#cb33-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-64"><a href="#cb33-64" aria-hidden="true" tabindex="-1"></a>If we know the relative frequency of the different categories, defining a distribution for categorical outcomes is straightforward. We simply assign a probability to each category. In cases that can be thought of as beads in an urn, for each bead type, their proportion defines the distribution.</span>
+<span id="cb33-65"><a href="#cb33-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-66"><a href="#cb33-66" aria-hidden="true" tabindex="-1"></a>If we are randomly calling likely voters from a population that is 44% Democrat, 44% Republican, 10% undecided, and 2% Green Party, these proportions define the probability for each group:</span>
+<span id="cb33-67"><a href="#cb33-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-68"><a href="#cb33-68" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Group <span class="pp">|</span> Probability <span class="pp">|</span></span>
+<span id="cb33-69"><a href="#cb33-69" aria-hidden="true" tabindex="-1"></a><span class="pp">|:------|:------------|</span></span>
+<span id="cb33-70"><a href="#cb33-70" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Republican <span class="pp">|</span> 0.44 <span class="pp">|</span></span>
+<span id="cb33-71"><a href="#cb33-71" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Democrat <span class="pp">|</span> 0.44 <span class="pp">|</span></span>
+<span id="cb33-72"><a href="#cb33-72" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Undecided <span class="pp">|</span> 0.10 <span class="pp">|</span></span>
+<span id="cb33-73"><a href="#cb33-73" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Green <span class="pp">|</span> 0.02 <span class="pp">|</span></span>
+<span id="cb33-74"><a href="#cb33-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-75"><a href="#cb33-75" aria-hidden="true" tabindex="-1"></a><span class="fu">## Distribution Moments and Parameters</span></span>
+<span id="cb33-76"><a href="#cb33-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-77"><a href="#cb33-77" aria-hidden="true" tabindex="-1"></a>Probability distributions can be characterized by their **moments**—metrics that describe the shape of the distribution. The first four moments correspond to important properties:</span>
+<span id="cb33-78"><a href="#cb33-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-79"><a href="#cb33-79" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Mean** ($\mu$) - the center or expected value</span>
+<span id="cb33-80"><a href="#cb33-80" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Variance** ($\sigma^2$) - the spread or dispersion</span>
+<span id="cb33-81"><a href="#cb33-81" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Skewness** - the asymmetry of the distribution</span>
+<span id="cb33-82"><a href="#cb33-82" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Kurtosis** - the "tailedness" or peakedness</span>
+<span id="cb33-83"><a href="#cb33-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-84"><a href="#cb33-84" aria-hidden="true" tabindex="-1"></a>For a discrete random variable X, the **expected value** (mean) is:</span>
+<span id="cb33-85"><a href="#cb33-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-86"><a href="#cb33-86" aria-hidden="true" tabindex="-1"></a>$$E<span class="co">[</span><span class="ot">X</span><span class="co">]</span> = \sum_{\text{all } x} x \cdot P(X = x) = \mu$$</span>
+<span id="cb33-87"><a href="#cb33-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-88"><a href="#cb33-88" aria-hidden="true" tabindex="-1"></a>The **variance** measures dispersion around the mean:</span>
+<span id="cb33-89"><a href="#cb33-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-90"><a href="#cb33-90" aria-hidden="true" tabindex="-1"></a>$$\text{Var}(X) = E<span class="co">[</span><span class="ot">(X - \mu)^2</span><span class="co">]</span> = \sigma^2$$</span>
+<span id="cb33-91"><a href="#cb33-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-92"><a href="#cb33-92" aria-hidden="true" tabindex="-1"></a>These parameters are crucial because they describe real properties of the systems we study. In biology, for example, the mean height of a population tells us about the typical value, while the variance tells us about the diversity of heights among individuals.</span>
+<span id="cb33-93"><a href="#cb33-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-94"><a href="#cb33-94" aria-hidden="true" tabindex="-1"></a><span class="fu">## Monte Carlo Simulations</span></span>
+<span id="cb33-95"><a href="#cb33-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-96"><a href="#cb33-96" aria-hidden="true" tabindex="-1"></a>Computers provide a way to actually perform random experiments. Random number generators permit us to mimic the process of picking at random. An example is the <span class="in">`sample`</span> function in R.</span>
+<span id="cb33-97"><a href="#cb33-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-98"><a href="#cb33-98" aria-hidden="true" tabindex="-1"></a>First, we use the function <span class="in">`rep`</span> to generate the urn:</span>
+<span id="cb33-99"><a href="#cb33-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-102"><a href="#cb33-102" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb33-103"><a href="#cb33-103" aria-hidden="true" tabindex="-1"></a>beads <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"blue"</span>), <span class="at">times =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>))</span>
+<span id="cb33-104"><a href="#cb33-104" aria-hidden="true" tabindex="-1"></a>beads</span>
+<span id="cb33-105"><a href="#cb33-105" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb33-106"><a href="#cb33-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-107"><a href="#cb33-107" aria-hidden="true" tabindex="-1"></a>Then use <span class="in">`sample`</span> to pick a bead at random:</span>
+<span id="cb33-108"><a href="#cb33-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-111"><a href="#cb33-111" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb33-112"><a href="#cb33-112" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(beads, <span class="dv">1</span>)</span>
+<span id="cb33-113"><a href="#cb33-113" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb33-114"><a href="#cb33-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-115"><a href="#cb33-115" aria-hidden="true" tabindex="-1"></a>This line of code produces one random outcome. We want to repeat this experiment a large enough number of times to make the results practically equivalent to repeating forever. **This is an example of a Monte Carlo simulation**.</span>
+<span id="cb33-116"><a href="#cb33-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-117"><a href="#cb33-117" aria-hidden="true" tabindex="-1"></a>To perform our first Monte Carlo simulation, we use the <span class="in">`replicate`</span> function, which permits us to repeat the same task any number of times. Here, we repeat the random event B = 10,000 times:</span>
+<span id="cb33-118"><a href="#cb33-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-121"><a href="#cb33-121" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb33-122"><a href="#cb33-122" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1986</span>)  <span class="co"># For reproducibility</span></span>
+<span id="cb33-123"><a href="#cb33-123" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb33-124"><a href="#cb33-124" aria-hidden="true" tabindex="-1"></a>events <span class="ot">&lt;-</span> <span class="fu">replicate</span>(B, <span class="fu">sample</span>(beads, <span class="dv">1</span>))</span>
+<span id="cb33-125"><a href="#cb33-125" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb33-126"><a href="#cb33-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-127"><a href="#cb33-127" aria-hidden="true" tabindex="-1"></a>We can now see if our definition actually agrees with this Monte Carlo simulation approximation:</span>
+<span id="cb33-128"><a href="#cb33-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-131"><a href="#cb33-131" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb33-132"><a href="#cb33-132" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> <span class="fu">table</span>(events)</span>
+<span id="cb33-133"><a href="#cb33-133" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(tab)</span>
+<span id="cb33-134"><a href="#cb33-134" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb33-135"><a href="#cb33-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-136"><a href="#cb33-136" aria-hidden="true" tabindex="-1"></a>The numbers above are the estimated probabilities provided by this Monte Carlo simulation. Statistical theory tells us that as $B$ gets larger, the estimates get closer to 3/5 = 0.6 and 2/5 = 0.4.</span>
+<span id="cb33-137"><a href="#cb33-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-138"><a href="#cb33-138" aria-hidden="true" tabindex="-1"></a><span class="fu">### With and Without Replacement</span></span>
+<span id="cb33-139"><a href="#cb33-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-140"><a href="#cb33-140" aria-hidden="true" tabindex="-1"></a>The function <span class="in">`sample`</span> has an argument that permits us to pick more than one element from the urn. By default, this selection occurs *without replacement*: after a bead is selected, it is not put back in the bag.</span>
+<span id="cb33-141"><a href="#cb33-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-144"><a href="#cb33-144" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb33-145"><a href="#cb33-145" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(beads, <span class="dv">5</span>)</span>
+<span id="cb33-146"><a href="#cb33-146" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb33-147"><a href="#cb33-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-148"><a href="#cb33-148" aria-hidden="true" tabindex="-1"></a>This results in rearrangements that always have three blue and two red beads because we can't select more beads than exist.</span>
+<span id="cb33-149"><a href="#cb33-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-150"><a href="#cb33-150" aria-hidden="true" tabindex="-1"></a>However, we can sample *with replacement*: return the bead back to the urn after selecting it:</span>
+<span id="cb33-151"><a href="#cb33-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-154"><a href="#cb33-154" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb33-155"><a href="#cb33-155" aria-hidden="true" tabindex="-1"></a>events <span class="ot">&lt;-</span> <span class="fu">sample</span>(beads, B, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb33-156"><a href="#cb33-156" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(events))</span>
+<span id="cb33-157"><a href="#cb33-157" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb33-158"><a href="#cb33-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-159"><a href="#cb33-159" aria-hidden="true" tabindex="-1"></a>Not surprisingly, we get results very similar to those previously obtained with <span class="in">`replicate`</span>.</span>
+<span id="cb33-160"><a href="#cb33-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-161"><a href="#cb33-161" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Bernoulli Distribution</span></span>
+<span id="cb33-162"><a href="#cb33-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-163"><a href="#cb33-163" aria-hidden="true" tabindex="-1"></a>The simplest probability distribution describes a single event with two possible outcomes—success or failure, yes or no, heads or tails. This is the **Bernoulli distribution**.</span>
+<span id="cb33-164"><a href="#cb33-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-165"><a href="#cb33-165" aria-hidden="true" tabindex="-1"></a>Consider flipping a fair coin once:</span>
+<span id="cb33-166"><a href="#cb33-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-167"><a href="#cb33-167" aria-hidden="true" tabindex="-1"></a>$$P(X = \text{Head}) = \frac{1}{2} = 0.5 = p$$</span>
+<span id="cb33-168"><a href="#cb33-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-169"><a href="#cb33-169" aria-hidden="true" tabindex="-1"></a>And the probability of tails is:</span>
+<span id="cb33-170"><a href="#cb33-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-171"><a href="#cb33-171" aria-hidden="true" tabindex="-1"></a>$$P(X = \text{Tail}) = \frac{1}{2} = 0.5 = 1 - p = q$$</span>
+<span id="cb33-172"><a href="#cb33-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-173"><a href="#cb33-173" aria-hidden="true" tabindex="-1"></a>If the coin is not fair, $p$ might differ from 0.5, but the probabilities still sum to 1:</span>
+<span id="cb33-174"><a href="#cb33-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-175"><a href="#cb33-175" aria-hidden="true" tabindex="-1"></a>$$p + (1-p) = 1$$</span>
+<span id="cb33-176"><a href="#cb33-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-177"><a href="#cb33-177" aria-hidden="true" tabindex="-1"></a>This same framework applies to any binary outcome: whether a patient responds to treatment, whether an allele is inherited from a parent, or whether a product passes quality control.</span>
+<span id="cb33-178"><a href="#cb33-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-181"><a href="#cb33-181" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb33-182"><a href="#cb33-182" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 5</span></span>
+<span id="cb33-183"><a href="#cb33-183" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4</span></span>
+<span id="cb33-184"><a href="#cb33-184" aria-hidden="true" tabindex="-1"></a><span class="co"># Flip a coin 1000 times</span></span>
+<span id="cb33-185"><a href="#cb33-185" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb33-186"><a href="#cb33-186" aria-hidden="true" tabindex="-1"></a>flips <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">1000</span>, <span class="dv">1</span>, <span class="fl">0.5</span>)</span>
+<span id="cb33-187"><a href="#cb33-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-188"><a href="#cb33-188" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(flips) <span class="sc">/</span> <span class="dv">1000</span>,</span>
+<span id="cb33-189"><a href="#cb33-189" aria-hidden="true" tabindex="-1"></a>        <span class="at">names.arg =</span> <span class="fu">c</span>(<span class="st">"Tails"</span>, <span class="st">"Heads"</span>),</span>
+<span id="cb33-190"><a href="#cb33-190" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"Probability"</span>,</span>
+<span id="cb33-191"><a href="#cb33-191" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.75</span>),</span>
+<span id="cb33-192"><a href="#cb33-192" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> <span class="st">"steelblue"</span>,</span>
+<span id="cb33-193"><a href="#cb33-193" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">"Estimated Bernoulli Distribution"</span>)</span>
+<span id="cb33-194"><a href="#cb33-194" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb33-195"><a href="#cb33-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-196"><a href="#cb33-196" aria-hidden="true" tabindex="-1"></a><span class="fu">## Probability Rules</span></span>
+<span id="cb33-197"><a href="#cb33-197" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-198"><a href="#cb33-198" aria-hidden="true" tabindex="-1"></a>Two fundamental rules govern how probabilities combine. Most probability distributions can be built up from these simple rules.</span>
+<span id="cb33-199"><a href="#cb33-199" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-200"><a href="#cb33-200" aria-hidden="true" tabindex="-1"></a><span class="fu">### The AND Rule (Multiplication)</span></span>
+<span id="cb33-201"><a href="#cb33-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-202"><a href="#cb33-202" aria-hidden="true" tabindex="-1"></a>The probability that two independent events both occur is the product of their individual probabilities. If you flip a coin twice:</span>
+<span id="cb33-203"><a href="#cb33-203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-204"><a href="#cb33-204" aria-hidden="true" tabindex="-1"></a>$$P(\text{First = Head AND Second = Head}) = p \times p = p^2$$</span>
+<span id="cb33-205"><a href="#cb33-205" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-206"><a href="#cb33-206" aria-hidden="true" tabindex="-1"></a>More generally, for independent events A and B:</span>
+<span id="cb33-207"><a href="#cb33-207" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-208"><a href="#cb33-208" aria-hidden="true" tabindex="-1"></a>$$P(A \text{ and } B) = P(A) \times P(B)$$</span>
+<span id="cb33-209"><a href="#cb33-209" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-210"><a href="#cb33-210" aria-hidden="true" tabindex="-1"></a>For a fair coin with $p = 0.5$:</span>
+<span id="cb33-211"><a href="#cb33-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-212"><a href="#cb33-212" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$P(\text{HH}) = 0.5 \times 0.5 = 0.25$</span>
+<span id="cb33-213"><a href="#cb33-213" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$P(\text{HT}) = 0.5 \times 0.5 = 0.25$</span>
+<span id="cb33-214"><a href="#cb33-214" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$P(\text{TH}) = 0.5 \times 0.5 = 0.25$</span>
+<span id="cb33-215"><a href="#cb33-215" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$P(\text{TT}) = 0.5 \times 0.5 = 0.25$</span>
+<span id="cb33-216"><a href="#cb33-216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-217"><a href="#cb33-217" aria-hidden="true" tabindex="-1"></a><span class="fu">### The OR Rule (Addition)</span></span>
+<span id="cb33-218"><a href="#cb33-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-219"><a href="#cb33-219" aria-hidden="true" tabindex="-1"></a>The probability that at least one of two mutually exclusive events occurs is the sum of their probabilities:</span>
+<span id="cb33-220"><a href="#cb33-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-221"><a href="#cb33-221" aria-hidden="true" tabindex="-1"></a>$$P(A \text{ or } B) = P(A) + P(B) - P(A \text{ and } B)$$</span>
+<span id="cb33-222"><a href="#cb33-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-223"><a href="#cb33-223" aria-hidden="true" tabindex="-1"></a>For mutually exclusive events (those that cannot both occur), the intersection is empty:</span>
+<span id="cb33-224"><a href="#cb33-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-225"><a href="#cb33-225" aria-hidden="true" tabindex="-1"></a>$$P(A \text{ or } B) = P(A) + P(B)$$</span>
+<span id="cb33-226"><a href="#cb33-226" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-227"><a href="#cb33-227" aria-hidden="true" tabindex="-1"></a>The probability of getting exactly one head in two flips (either HT or TH):</span>
+<span id="cb33-228"><a href="#cb33-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-229"><a href="#cb33-229" aria-hidden="true" tabindex="-1"></a>$$P(\text{one head}) = P(\text{HT}) + P(\text{TH}) = 0.25 + 0.25 = 0.5$$</span>
+<span id="cb33-230"><a href="#cb33-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-231"><a href="#cb33-231" aria-hidden="true" tabindex="-1"></a><span class="fu">### Multiplication Rule Under Independence</span></span>
+<span id="cb33-232"><a href="#cb33-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-233"><a href="#cb33-233" aria-hidden="true" tabindex="-1"></a>When events are independent, the multiplication rule simplifies:</span>
+<span id="cb33-234"><a href="#cb33-234" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-235"><a href="#cb33-235" aria-hidden="true" tabindex="-1"></a>$$P(A \text{ and } B \text{ and } C) = P(A) \times P(B) \times P(C)$$</span>
+<span id="cb33-236"><a href="#cb33-236" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-237"><a href="#cb33-237" aria-hidden="true" tabindex="-1"></a>But we must be careful—assuming independence can result in very different and incorrect probability calculations when we don't actually have independence.</span>
+<span id="cb33-238"><a href="#cb33-238" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-239"><a href="#cb33-239" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning}</span>
+<span id="cb33-240"><a href="#cb33-240" aria-hidden="true" tabindex="-1"></a><span class="fu">## Independence Matters</span></span>
+<span id="cb33-241"><a href="#cb33-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-242"><a href="#cb33-242" aria-hidden="true" tabindex="-1"></a>Imagine a court case where the suspect was described as having a mustache and a beard. The defendant has both, and the prosecution brings in an "expert" who testifies that 1/10 men have beards and 1/5 have mustaches, concluding that only $1/10 \times 1/5 = 0.02$ have both.</span>
+<span id="cb33-243"><a href="#cb33-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-244"><a href="#cb33-244" aria-hidden="true" tabindex="-1"></a>But to multiply like this we need to assume independence! If the conditional probability of a man having a mustache given that he has a beard is 0.95, then the correct probability is much higher: $1/10 \times 0.95 = 0.095$.</span>
+<span id="cb33-245"><a href="#cb33-245" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb33-246"><a href="#cb33-246" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-247"><a href="#cb33-247" aria-hidden="true" tabindex="-1"></a><span class="fu">## Independence</span></span>
+<span id="cb33-248"><a href="#cb33-248" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-249"><a href="#cb33-249" aria-hidden="true" tabindex="-1"></a>We say two events are **independent** if the outcome of one does not affect the other. The classic example is coin tosses. Every time we toss a fair coin, the probability of seeing heads is 1/2 regardless of what previous tosses have revealed. The same is true when we pick beads from an urn with replacement.</span>
+<span id="cb33-250"><a href="#cb33-250" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-251"><a href="#cb33-251" aria-hidden="true" tabindex="-1"></a>Many examples of events that are not independent come from card games. When we deal the first card, the probability of getting a King is 1/13 since there are thirteen possibilities. Now if we deal a King for the first card and don't replace it into the deck, the probability of a second card being a King is only 3/51. These events are **not independent**: the first outcome affected the next one.</span>
+<span id="cb33-252"><a href="#cb33-252" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-255"><a href="#cb33-255" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb33-256"><a href="#cb33-256" aria-hidden="true" tabindex="-1"></a><span class="co"># Demonstrate non-independence with sequential draws</span></span>
+<span id="cb33-257"><a href="#cb33-257" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb33-258"><a href="#cb33-258" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">sample</span>(beads, <span class="dv">5</span>)</span>
+<span id="cb33-259"><a href="#cb33-259" aria-hidden="true" tabindex="-1"></a>x[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]  <span class="co"># First four draws</span></span>
+<span id="cb33-260"><a href="#cb33-260" aria-hidden="true" tabindex="-1"></a>x[<span class="dv">5</span>]    <span class="co"># If first four are blue, the fifth must be...</span></span>
+<span id="cb33-261"><a href="#cb33-261" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb33-262"><a href="#cb33-262" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-263"><a href="#cb33-263" aria-hidden="true" tabindex="-1"></a>If you have to guess the color of the first bead, you would predict blue since blue has a 60% chance. But if you know the first four were blue, the probability of the fifth being red is now 100%, not 40%. The events are not independent, so the probabilities change.</span>
+<span id="cb33-264"><a href="#cb33-264" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-265"><a href="#cb33-265" aria-hidden="true" tabindex="-1"></a><span class="fu">## Conditional Probabilities</span></span>
+<span id="cb33-266"><a href="#cb33-266" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-267"><a href="#cb33-267" aria-hidden="true" tabindex="-1"></a>When events are not independent, *conditional probabilities* are useful. The conditional probability $P(B|A)$ is the probability of B given that A has occurred:</span>
+<span id="cb33-268"><a href="#cb33-268" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-269"><a href="#cb33-269" aria-hidden="true" tabindex="-1"></a>$$P(\text{Card 2 is a King} \mid \text{Card 1 is a King}) = \frac{3}{51}$$</span>
+<span id="cb33-270"><a href="#cb33-270" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-271"><a href="#cb33-271" aria-hidden="true" tabindex="-1"></a>We use the $\mid$ as shorthand for "given that" or "conditional on".</span>
+<span id="cb33-272"><a href="#cb33-272" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-273"><a href="#cb33-273" aria-hidden="true" tabindex="-1"></a>When two events A and B are independent:</span>
+<span id="cb33-274"><a href="#cb33-274" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-275"><a href="#cb33-275" aria-hidden="true" tabindex="-1"></a>$$P(A \mid B) = P(A)$$</span>
+<span id="cb33-276"><a href="#cb33-276" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-277"><a href="#cb33-277" aria-hidden="true" tabindex="-1"></a>This is the mathematical definition of independence: the fact that B happened does not affect the probability of A happening.</span>
+<span id="cb33-278"><a href="#cb33-278" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-279"><a href="#cb33-279" aria-hidden="true" tabindex="-1"></a>The general multiplication rule relates joint and conditional probability:</span>
+<span id="cb33-280"><a href="#cb33-280" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-281"><a href="#cb33-281" aria-hidden="true" tabindex="-1"></a>$$P(A \text{ and } B) = P(A) \times P(B \mid A)$$</span>
+<span id="cb33-282"><a href="#cb33-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-283"><a href="#cb33-283" aria-hidden="true" tabindex="-1"></a>This can be extended to more events:</span>
+<span id="cb33-284"><a href="#cb33-284" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-285"><a href="#cb33-285" aria-hidden="true" tabindex="-1"></a>$$P(A \text{ and } B \text{ and } C) = P(A) \times P(B \mid A) \times P(C \mid A \text{ and } B)$$</span>
+<span id="cb33-286"><a href="#cb33-286" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-287"><a href="#cb33-287" aria-hidden="true" tabindex="-1"></a><span class="fu">## Bayes' Theorem</span></span>
+<span id="cb33-288"><a href="#cb33-288" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-289"><a href="#cb33-289" aria-hidden="true" tabindex="-1"></a>Rearranging the multiplication rule yields Bayes' theorem, a cornerstone of probabilistic reasoning:</span>
+<span id="cb33-290"><a href="#cb33-290" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-291"><a href="#cb33-291" aria-hidden="true" tabindex="-1"></a>$$P(A|B) = \frac{P(B|A) \times P(A)}{P(B)}$$</span>
+<span id="cb33-292"><a href="#cb33-292" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-293"><a href="#cb33-293" aria-hidden="true" tabindex="-1"></a>Bayes' theorem tells us how to update our beliefs about A after observing B. In Bayesian statistics, this is written as:</span>
+<span id="cb33-294"><a href="#cb33-294" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-295"><a href="#cb33-295" aria-hidden="true" tabindex="-1"></a>$$P(\theta|d) = \frac{P(d|\theta) \times P(\theta)}{P(d)}$$</span>
+<span id="cb33-296"><a href="#cb33-296" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-297"><a href="#cb33-297" aria-hidden="true" tabindex="-1"></a>where:</span>
+<span id="cb33-298"><a href="#cb33-298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-299"><a href="#cb33-299" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$P(\theta|d)$ = posterior probability distribution</span>
+<span id="cb33-300"><a href="#cb33-300" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$P(d|\theta)$ = likelihood function for $\theta$</span>
+<span id="cb33-301"><a href="#cb33-301" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$P(\theta)$ = prior probability distribution</span>
+<span id="cb33-302"><a href="#cb33-302" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$P(d)$ = marginal likelihood (normalizing constant)</span>
+<span id="cb33-303"><a href="#cb33-303" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-304"><a href="#cb33-304" aria-hidden="true" tabindex="-1"></a><span class="fu">## Likelihood vs. Probability</span></span>
+<span id="cb33-305"><a href="#cb33-305" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-306"><a href="#cb33-306" aria-hidden="true" tabindex="-1"></a>A subtle but important distinction exists between probability and likelihood.</span>
+<span id="cb33-307"><a href="#cb33-307" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-308"><a href="#cb33-308" aria-hidden="true" tabindex="-1"></a>**Probability** is the chance of observing particular data given a model or parameter value. If we know a coin has $p = 0.5$, what is the probability of observing 7 heads in 10 flips?</span>
+<span id="cb33-309"><a href="#cb33-309" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-310"><a href="#cb33-310" aria-hidden="true" tabindex="-1"></a>**Likelihood** is how well a parameter value explains observed data. Given that we observed 7 heads in 10 flips, how likely is it that the true probability is $p = 0.5$ versus $p = 0.7$?</span>
+<span id="cb33-311"><a href="#cb33-311" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-312"><a href="#cb33-312" aria-hidden="true" tabindex="-1"></a>Mathematically, the likelihood function uses the same formula as probability, but we think of it differently:</span>
+<span id="cb33-313"><a href="#cb33-313" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-314"><a href="#cb33-314" aria-hidden="true" tabindex="-1"></a>$$L(\text{parameter} | \text{data}) = P(\text{data} | \text{parameter})$$</span>
+<span id="cb33-315"><a href="#cb33-315" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-316"><a href="#cb33-316" aria-hidden="true" tabindex="-1"></a>Maximum likelihood estimation finds the parameter value that makes the observed data most probable—the value that maximizes the likelihood function.</span>
+<span id="cb33-317"><a href="#cb33-317" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-318"><a href="#cb33-318" aria-hidden="true" tabindex="-1"></a><span class="fu">## Combinations and Permutations</span></span>
+<span id="cb33-319"><a href="#cb33-319" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-320"><a href="#cb33-320" aria-hidden="true" tabindex="-1"></a>For more complicated probability calculations, we need to count possibilities systematically. The <span class="in">`gtools`</span> package provides useful functions.</span>
+<span id="cb33-321"><a href="#cb33-321" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-322"><a href="#cb33-322" aria-hidden="true" tabindex="-1"></a><span class="fu">### Permutations (Order Matters)</span></span>
+<span id="cb33-323"><a href="#cb33-323" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-324"><a href="#cb33-324" aria-hidden="true" tabindex="-1"></a>A **permutation** is an arrangement where order matters. For any list of size <span class="in">`n`</span>, the <span class="in">`permutations`</span> function computes all different arrangements when selecting <span class="in">`r`</span> items:</span>
+<span id="cb33-325"><a href="#cb33-325" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-328"><a href="#cb33-328" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb33-329"><a href="#cb33-329" aria-hidden="true" tabindex="-1"></a><span class="co"># All ways to arrange 2 items from {1, 2, 3}</span></span>
+<span id="cb33-330"><a href="#cb33-330" aria-hidden="true" tabindex="-1"></a><span class="fu">permutations</span>(<span class="dv">3</span>, <span class="dv">2</span>)</span>
+<span id="cb33-331"><a href="#cb33-331" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb33-332"><a href="#cb33-332" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-333"><a href="#cb33-333" aria-hidden="true" tabindex="-1"></a>Notice that order matters: 3,1 is different than 1,3. Also, (1,1), (2,2), and (3,3) do not appear because once we pick a number, it can't appear again.</span>
+<span id="cb33-334"><a href="#cb33-334" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-335"><a href="#cb33-335" aria-hidden="true" tabindex="-1"></a><span class="fu">### Combinations (Order Doesn't Matter)</span></span>
+<span id="cb33-336"><a href="#cb33-336" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-337"><a href="#cb33-337" aria-hidden="true" tabindex="-1"></a>A **combination** is a selection where order doesn't matter:</span>
+<span id="cb33-338"><a href="#cb33-338" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-341"><a href="#cb33-341" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb33-342"><a href="#cb33-342" aria-hidden="true" tabindex="-1"></a><span class="fu">combinations</span>(<span class="dv">3</span>, <span class="dv">2</span>)</span>
+<span id="cb33-343"><a href="#cb33-343" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb33-344"><a href="#cb33-344" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-345"><a href="#cb33-345" aria-hidden="true" tabindex="-1"></a>The outcome (2,1) doesn't appear because (1,2) already represents the same combination.</span>
+<span id="cb33-346"><a href="#cb33-346" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-347"><a href="#cb33-347" aria-hidden="true" tabindex="-1"></a><span class="fu">### Example: Blackjack</span></span>
+<span id="cb33-348"><a href="#cb33-348" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-349"><a href="#cb33-349" aria-hidden="true" tabindex="-1"></a>Let's compute the probability of getting a "Natural 21" in Blackjack—an Ace and a face card in the first two cards:</span>
+<span id="cb33-350"><a href="#cb33-350" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-353"><a href="#cb33-353" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb33-354"><a href="#cb33-354" aria-hidden="true" tabindex="-1"></a><span class="co"># Build a deck</span></span>
+<span id="cb33-355"><a href="#cb33-355" aria-hidden="true" tabindex="-1"></a>suits <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Diamonds"</span>, <span class="st">"Clubs"</span>, <span class="st">"Hearts"</span>, <span class="st">"Spades"</span>)</span>
+<span id="cb33-356"><a href="#cb33-356" aria-hidden="true" tabindex="-1"></a>numbers <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Ace"</span>, <span class="st">"Deuce"</span>, <span class="st">"Three"</span>, <span class="st">"Four"</span>, <span class="st">"Five"</span>, <span class="st">"Six"</span>, <span class="st">"Seven"</span>,</span>
+<span id="cb33-357"><a href="#cb33-357" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Eight"</span>, <span class="st">"Nine"</span>, <span class="st">"Ten"</span>, <span class="st">"Jack"</span>, <span class="st">"Queen"</span>, <span class="st">"King"</span>)</span>
+<span id="cb33-358"><a href="#cb33-358" aria-hidden="true" tabindex="-1"></a>deck <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">number =</span> numbers, <span class="at">suit =</span> suits)</span>
+<span id="cb33-359"><a href="#cb33-359" aria-hidden="true" tabindex="-1"></a>deck <span class="ot">&lt;-</span> <span class="fu">paste</span>(deck<span class="sc">$</span>number, deck<span class="sc">$</span>suit)</span>
+<span id="cb33-360"><a href="#cb33-360" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-361"><a href="#cb33-361" aria-hidden="true" tabindex="-1"></a><span class="co"># Define aces and face cards</span></span>
+<span id="cb33-362"><a href="#cb33-362" aria-hidden="true" tabindex="-1"></a>aces <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">"Ace"</span>, suits)</span>
+<span id="cb33-363"><a href="#cb33-363" aria-hidden="true" tabindex="-1"></a>facecard <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"King"</span>, <span class="st">"Queen"</span>, <span class="st">"Jack"</span>, <span class="st">"Ten"</span>)</span>
+<span id="cb33-364"><a href="#cb33-364" aria-hidden="true" tabindex="-1"></a>facecard <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">number =</span> facecard, <span class="at">suit =</span> suits)</span>
+<span id="cb33-365"><a href="#cb33-365" aria-hidden="true" tabindex="-1"></a>facecard <span class="ot">&lt;-</span> <span class="fu">paste</span>(facecard<span class="sc">$</span>number, facecard<span class="sc">$</span>suit)</span>
+<span id="cb33-366"><a href="#cb33-366" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-367"><a href="#cb33-367" aria-hidden="true" tabindex="-1"></a><span class="co"># All possible two-card hands (order doesn't matter)</span></span>
+<span id="cb33-368"><a href="#cb33-368" aria-hidden="true" tabindex="-1"></a>hands <span class="ot">&lt;-</span> <span class="fu">combinations</span>(<span class="dv">52</span>, <span class="dv">2</span>, <span class="at">v =</span> deck)</span>
+<span id="cb33-369"><a href="#cb33-369" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-370"><a href="#cb33-370" aria-hidden="true" tabindex="-1"></a><span class="co"># Probability of Natural 21</span></span>
+<span id="cb33-371"><a href="#cb33-371" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>((hands[,<span class="dv">1</span>] <span class="sc">%in%</span> aces <span class="sc">&amp;</span> hands[,<span class="dv">2</span>] <span class="sc">%in%</span> facecard) <span class="sc">|</span></span>
+<span id="cb33-372"><a href="#cb33-372" aria-hidden="true" tabindex="-1"></a>     (hands[,<span class="dv">2</span>] <span class="sc">%in%</span> aces <span class="sc">&amp;</span> hands[,<span class="dv">1</span>] <span class="sc">%in%</span> facecard))</span>
+<span id="cb33-373"><a href="#cb33-373" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb33-374"><a href="#cb33-374" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-375"><a href="#cb33-375" aria-hidden="true" tabindex="-1"></a><span class="fu">## Classic Examples</span></span>
+<span id="cb33-376"><a href="#cb33-376" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-377"><a href="#cb33-377" aria-hidden="true" tabindex="-1"></a><span class="fu">### The Monty Hall Problem</span></span>
+<span id="cb33-378"><a href="#cb33-378" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-379"><a href="#cb33-379" aria-hidden="true" tabindex="-1"></a>In the game show "Let's Make a Deal," contestants pick one of three doors. Behind one door is a car; behind the others are goats. After you pick a door, Monty Hall opens one of the remaining doors to reveal a goat. Then he asks: "Do you want to switch doors?"</span>
+<span id="cb33-380"><a href="#cb33-380" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-381"><a href="#cb33-381" aria-hidden="true" tabindex="-1"></a>Intuition suggests it shouldn't matter—you're choosing between two doors, so shouldn't the probability be 50-50? Let's use Monte Carlo simulation:</span>
+<span id="cb33-382"><a href="#cb33-382" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-385"><a href="#cb33-385" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb33-386"><a href="#cb33-386" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb33-387"><a href="#cb33-387" aria-hidden="true" tabindex="-1"></a>monty_hall <span class="ot">&lt;-</span> <span class="cf">function</span>(strategy) {</span>
+<span id="cb33-388"><a href="#cb33-388" aria-hidden="true" tabindex="-1"></a>  doors <span class="ot">&lt;-</span> <span class="fu">as.character</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span>
+<span id="cb33-389"><a href="#cb33-389" aria-hidden="true" tabindex="-1"></a>  prize <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"car"</span>, <span class="st">"goat"</span>, <span class="st">"goat"</span>))</span>
+<span id="cb33-390"><a href="#cb33-390" aria-hidden="true" tabindex="-1"></a>  prize_door <span class="ot">&lt;-</span> doors[prize <span class="sc">==</span> <span class="st">"car"</span>]</span>
+<span id="cb33-391"><a href="#cb33-391" aria-hidden="true" tabindex="-1"></a>  my_pick <span class="ot">&lt;-</span> <span class="fu">sample</span>(doors, <span class="dv">1</span>)</span>
+<span id="cb33-392"><a href="#cb33-392" aria-hidden="true" tabindex="-1"></a>  show <span class="ot">&lt;-</span> <span class="fu">sample</span>(doors[<span class="sc">!</span>doors <span class="sc">%in%</span> <span class="fu">c</span>(my_pick, prize_door)], <span class="dv">1</span>)</span>
+<span id="cb33-393"><a href="#cb33-393" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-394"><a href="#cb33-394" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (strategy <span class="sc">==</span> <span class="st">"stick"</span>) {</span>
+<span id="cb33-395"><a href="#cb33-395" aria-hidden="true" tabindex="-1"></a>    choice <span class="ot">&lt;-</span> my_pick</span>
+<span id="cb33-396"><a href="#cb33-396" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb33-397"><a href="#cb33-397" aria-hidden="true" tabindex="-1"></a>    choice <span class="ot">&lt;-</span> doors[<span class="sc">!</span>doors <span class="sc">%in%</span> <span class="fu">c</span>(my_pick, show)]</span>
+<span id="cb33-398"><a href="#cb33-398" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb33-399"><a href="#cb33-399" aria-hidden="true" tabindex="-1"></a>  choice <span class="sc">==</span> prize_door</span>
+<span id="cb33-400"><a href="#cb33-400" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb33-401"><a href="#cb33-401" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-402"><a href="#cb33-402" aria-hidden="true" tabindex="-1"></a>stick_wins <span class="ot">&lt;-</span> <span class="fu">replicate</span>(B, <span class="fu">monty_hall</span>(<span class="st">"stick"</span>))</span>
+<span id="cb33-403"><a href="#cb33-403" aria-hidden="true" tabindex="-1"></a>switch_wins <span class="ot">&lt;-</span> <span class="fu">replicate</span>(B, <span class="fu">monty_hall</span>(<span class="st">"switch"</span>))</span>
+<span id="cb33-404"><a href="#cb33-404" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-405"><a href="#cb33-405" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Probability of winning when sticking:"</span>, <span class="fu">mean</span>(stick_wins), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb33-406"><a href="#cb33-406" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Probability of winning when switching:"</span>, <span class="fu">mean</span>(switch_wins), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb33-407"><a href="#cb33-407" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb33-408"><a href="#cb33-408" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-409"><a href="#cb33-409" aria-hidden="true" tabindex="-1"></a>Switching doubles your chances! The key insight: when you first pick, you have a 1/3 chance of being right. Monty's reveal doesn't change that. Since the probability the car is behind one of the other doors was 2/3, and Monty showed you which one doesn't have it, switching gives you that 2/3 probability.</span>
+<span id="cb33-410"><a href="#cb33-410" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-411"><a href="#cb33-411" aria-hidden="true" tabindex="-1"></a><span class="fu">### The Birthday Problem</span></span>
+<span id="cb33-412"><a href="#cb33-412" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-413"><a href="#cb33-413" aria-hidden="true" tabindex="-1"></a>In a room with 50 people, what's the probability that at least two share a birthday?</span>
+<span id="cb33-414"><a href="#cb33-414" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-417"><a href="#cb33-417" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb33-418"><a href="#cb33-418" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 6</span></span>
+<span id="cb33-419"><a href="#cb33-419" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4</span></span>
+<span id="cb33-420"><a href="#cb33-420" aria-hidden="true" tabindex="-1"></a><span class="co"># Monte Carlo simulation</span></span>
+<span id="cb33-421"><a href="#cb33-421" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb33-422"><a href="#cb33-422" aria-hidden="true" tabindex="-1"></a>same_birthday <span class="ot">&lt;-</span> <span class="cf">function</span>(n) {</span>
+<span id="cb33-423"><a href="#cb33-423" aria-hidden="true" tabindex="-1"></a>  bdays <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">365</span>, n, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb33-424"><a href="#cb33-424" aria-hidden="true" tabindex="-1"></a>  <span class="fu">any</span>(<span class="fu">duplicated</span>(bdays))</span>
+<span id="cb33-425"><a href="#cb33-425" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb33-426"><a href="#cb33-426" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-427"><a href="#cb33-427" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">replicate</span>(B, <span class="fu">same_birthday</span>(<span class="dv">50</span>))</span>
+<span id="cb33-428"><a href="#cb33-428" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Probability with 50 people:"</span>, <span class="fu">mean</span>(results), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb33-429"><a href="#cb33-429" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-430"><a href="#cb33-430" aria-hidden="true" tabindex="-1"></a><span class="co"># How does this change with group size?</span></span>
+<span id="cb33-431"><a href="#cb33-431" aria-hidden="true" tabindex="-1"></a>compute_prob <span class="ot">&lt;-</span> <span class="cf">function</span>(n, <span class="at">B =</span> <span class="dv">10000</span>) {</span>
+<span id="cb33-432"><a href="#cb33-432" aria-hidden="true" tabindex="-1"></a>  results <span class="ot">&lt;-</span> <span class="fu">replicate</span>(B, <span class="fu">same_birthday</span>(n))</span>
+<span id="cb33-433"><a href="#cb33-433" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(results)</span>
+<span id="cb33-434"><a href="#cb33-434" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb33-435"><a href="#cb33-435" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-436"><a href="#cb33-436" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">60</span>)</span>
+<span id="cb33-437"><a href="#cb33-437" aria-hidden="true" tabindex="-1"></a>prob <span class="ot">&lt;-</span> <span class="fu">sapply</span>(n, compute_prob)</span>
+<span id="cb33-438"><a href="#cb33-438" aria-hidden="true" tabindex="-1"></a><span class="fu">qplot</span>(n, prob, <span class="at">geom =</span> <span class="st">"line"</span>) <span class="sc">+</span></span>
+<span id="cb33-439"><a href="#cb33-439" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">0.5</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb33-440"><a href="#cb33-440" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Group Size"</span>, <span class="at">y =</span> <span class="st">"Probability of Shared Birthday"</span>,</span>
+<span id="cb33-441"><a href="#cb33-441" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"The Birthday Problem"</span>)</span>
+<span id="cb33-442"><a href="#cb33-442" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb33-443"><a href="#cb33-443" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-444"><a href="#cb33-444" aria-hidden="true" tabindex="-1"></a>With just 23 people, there's already a 50% chance of a shared birthday! People tend to underestimate these probabilities because they think about the probability that someone shares *their* birthday, not the probability that *any two people* share a birthday.</span>
+<span id="cb33-445"><a href="#cb33-445" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-446"><a href="#cb33-446" aria-hidden="true" tabindex="-1"></a>We can also compute this exactly using the multiplication rule:</span>
+<span id="cb33-447"><a href="#cb33-447" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-450"><a href="#cb33-450" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb33-451"><a href="#cb33-451" aria-hidden="true" tabindex="-1"></a><span class="co"># Probability that all n people have UNIQUE birthdays</span></span>
+<span id="cb33-452"><a href="#cb33-452" aria-hidden="true" tabindex="-1"></a>exact_prob <span class="ot">&lt;-</span> <span class="cf">function</span>(n) {</span>
+<span id="cb33-453"><a href="#cb33-453" aria-hidden="true" tabindex="-1"></a>  prob_unique <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">365</span>, <span class="dv">365</span> <span class="sc">-</span> n <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">/</span> <span class="dv">365</span></span>
+<span id="cb33-454"><a href="#cb33-454" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span> <span class="sc">-</span> <span class="fu">prod</span>(prob_unique)</span>
+<span id="cb33-455"><a href="#cb33-455" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb33-456"><a href="#cb33-456" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-457"><a href="#cb33-457" aria-hidden="true" tabindex="-1"></a>eprob <span class="ot">&lt;-</span> <span class="fu">sapply</span>(n, exact_prob)</span>
+<span id="cb33-458"><a href="#cb33-458" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Exact probability with 50 people:"</span>, <span class="fu">exact_prob</span>(<span class="dv">50</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb33-459"><a href="#cb33-459" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb33-460"><a href="#cb33-460" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-461"><a href="#cb33-461" aria-hidden="true" tabindex="-1"></a><span class="fu">## Covariance and Correlation</span></span>
+<span id="cb33-462"><a href="#cb33-462" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-463"><a href="#cb33-463" aria-hidden="true" tabindex="-1"></a>When two variables are not independent, they share information—knowing one tells you something about the other. This shared information is quantified by **covariance**, a measure of how two variables vary together.</span>
+<span id="cb33-464"><a href="#cb33-464" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-465"><a href="#cb33-465" aria-hidden="true" tabindex="-1"></a>If high values of X tend to occur with high values of Y (and low with low), the covariance is positive. If high values of X tend to occur with low values of Y, the covariance is negative. If there is no relationship, the covariance is near zero.</span>
+<span id="cb33-466"><a href="#cb33-466" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-467"><a href="#cb33-467" aria-hidden="true" tabindex="-1"></a>**Correlation** is covariance standardized to fall between -1 and 1, making it easier to interpret. A correlation of 1 means perfect positive linear relationship; -1 means perfect negative linear relationship; 0 means no linear relationship.</span>
+<span id="cb33-468"><a href="#cb33-468" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-469"><a href="#cb33-469" aria-hidden="true" tabindex="-1"></a>These concepts will become central when we discuss regression and other methods for relating variables to each other.</span>
+<span id="cb33-470"><a href="#cb33-470" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-471"><a href="#cb33-471" aria-hidden="true" tabindex="-1"></a><span class="fu">## How Large is "Large Enough" for Monte Carlo?</span></span>
+<span id="cb33-472"><a href="#cb33-472" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-473"><a href="#cb33-473" aria-hidden="true" tabindex="-1"></a>The theory described here requires repeating experiments over and over forever. In practice, we can't do this. In the examples above, we used $B = 10,000$ Monte Carlo experiments and it turned out to provide accurate estimates.</span>
+<span id="cb33-474"><a href="#cb33-474" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-475"><a href="#cb33-475" aria-hidden="true" tabindex="-1"></a>One practical approach is to check for the stability of the estimate:</span>
+<span id="cb33-476"><a href="#cb33-476" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-479"><a href="#cb33-479" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb33-480"><a href="#cb33-480" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 6</span></span>
+<span id="cb33-481"><a href="#cb33-481" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4</span></span>
+<span id="cb33-482"><a href="#cb33-482" aria-hidden="true" tabindex="-1"></a>B_values <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span><span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">5</span>, <span class="at">len =</span> <span class="dv">100</span>)</span>
+<span id="cb33-483"><a href="#cb33-483" aria-hidden="true" tabindex="-1"></a>compute_prob_B <span class="ot">&lt;-</span> <span class="cf">function</span>(B, <span class="at">n =</span> <span class="dv">25</span>) {</span>
+<span id="cb33-484"><a href="#cb33-484" aria-hidden="true" tabindex="-1"></a>  same_day <span class="ot">&lt;-</span> <span class="fu">replicate</span>(B, <span class="fu">same_birthday</span>(n))</span>
+<span id="cb33-485"><a href="#cb33-485" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(same_day)</span>
+<span id="cb33-486"><a href="#cb33-486" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb33-487"><a href="#cb33-487" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-488"><a href="#cb33-488" aria-hidden="true" tabindex="-1"></a>prob <span class="ot">&lt;-</span> <span class="fu">sapply</span>(B_values, compute_prob_B)</span>
+<span id="cb33-489"><a href="#cb33-489" aria-hidden="true" tabindex="-1"></a><span class="fu">qplot</span>(<span class="fu">log10</span>(B_values), prob, <span class="at">geom =</span> <span class="st">"line"</span>) <span class="sc">+</span></span>
+<span id="cb33-490"><a href="#cb33-490" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">exact_prob</span>(<span class="dv">25</span>), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb33-491"><a href="#cb33-491" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"log10(Number of Simulations)"</span>, <span class="at">y =</span> <span class="st">"Estimated Probability"</span>,</span>
+<span id="cb33-492"><a href="#cb33-492" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Monte Carlo Convergence"</span>)</span>
+<span id="cb33-493"><a href="#cb33-493" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb33-494"><a href="#cb33-494" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-495"><a href="#cb33-495" aria-hidden="true" tabindex="-1"></a>The values start to stabilize (vary less than 0.01) around 1000 simulations. The exact probability is shown in red.</span>
+<span id="cb33-496"><a href="#cb33-496" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-497"><a href="#cb33-497" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
+<span id="cb33-498"><a href="#cb33-498" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-499"><a href="#cb33-499" aria-hidden="true" tabindex="-1"></a>This chapter introduced the language of probability:</span>
+<span id="cb33-500"><a href="#cb33-500" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-501"><a href="#cb33-501" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Random variables** can take different values with different probabilities</span>
+<span id="cb33-502"><a href="#cb33-502" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The **sample space** contains all possible outcomes</span>
+<span id="cb33-503"><a href="#cb33-503" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Probability distributions** describe how likely each outcome is</span>
+<span id="cb33-504"><a href="#cb33-504" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The **AND rule** (multiply) and **OR rule** (add) combine probabilities</span>
+<span id="cb33-505"><a href="#cb33-505" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Independence** means one event doesn't affect another's probability</span>
+<span id="cb33-506"><a href="#cb33-506" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Conditional probability** describes probability given other information</span>
+<span id="cb33-507"><a href="#cb33-507" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Bayes' theorem** updates beliefs based on new evidence</span>
+<span id="cb33-508"><a href="#cb33-508" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Monte Carlo simulations** estimate probabilities through repeated random sampling</span>
+<span id="cb33-509"><a href="#cb33-509" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Classic problems like Monty Hall and birthdays reveal counterintuitive probability results</span>
+<span id="cb33-510"><a href="#cb33-510" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-511"><a href="#cb33-511" aria-hidden="true" tabindex="-1"></a>Understanding these foundations is essential for all statistical inference that follows.</span>
+<span id="cb33-512"><a href="#cb33-512" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-513"><a href="#cb33-513" aria-hidden="true" tabindex="-1"></a><span class="fu">## Practice Exercises</span></span>
+<span id="cb33-514"><a href="#cb33-514" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-515"><a href="#cb33-515" aria-hidden="true" tabindex="-1"></a>For hands-on practice with probability concepts, see @sec-ex-prob in the Practice Exercises appendix. The exercises include:</span>
+<span id="cb33-516"><a href="#cb33-516" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-517"><a href="#cb33-517" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Simulating coin flips and exploring the law of large numbers</span>
+<span id="cb33-518"><a href="#cb33-518" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Working with the binomial distribution</span>
+<span id="cb33-519"><a href="#cb33-519" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Exploring the birthday problem through Monte Carlo simulation</span>
+<span id="cb33-520"><a href="#cb33-520" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Understanding conditional probability with card simulations</span>
+<span id="cb33-521"><a href="#cb33-521" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Simulating the Monty Hall problem</span>
+<span id="cb33-522"><a href="#cb33-522" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-523"><a href="#cb33-523" aria-hidden="true" tabindex="-1"></a><span class="fu">## Additional Resources</span></span>
+<span id="cb33-524"><a href="#cb33-524" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-525"><a href="#cb33-525" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>@irizarry2019introduction - A gitbook by a statistician with excellent introductions to key topics in statistical inference</span>
+<span id="cb33-526"><a href="#cb33-526" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>@logan2010biostatistical - A comprehensive introduction to R for statistical analysis</span>
+<span id="cb33-527"><a href="#cb33-527" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>For a detailed reference of common probability distributions, see @sec-probability-distributions</span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

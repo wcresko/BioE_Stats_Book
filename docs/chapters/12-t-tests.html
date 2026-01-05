@@ -55,7 +55,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -299,6 +319,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Bootstrapping</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/14b-what-are-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">What are Models?</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -313,25 +339,25 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/15-correlation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Correlation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Correlation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/16-simple-linear-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Simple Linear Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Simple Linear Regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/17-residual-analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Residual Analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Residual Analysis</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/18-statistical-power.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Statistical Power</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Statistical Power</span></span></a>
   </div>
 </li>
       </ul>
@@ -348,31 +374,37 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/19-anova.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Analysis of Variance</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Analysis of Variance</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/20-multiple-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Multiple Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Multiple Regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/21-glm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/22-statistical-learning.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Statistical Learning</span></span></a>
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Statistical Learning</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/23-high-performance-computing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">High Performance Computing</span></span></a>
+  <a href="../chapters/23-dimensionality-reduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Dimensionality Reduction and Multivariate Methods</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/24-high-performance-computing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">High Performance Computing</span></span></a>
   </div>
 </li>
       </ul>
@@ -380,7 +412,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
- <span class="menu-text">Appendices</span></a>
+ <span class="menu-text">Scientific Communication</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -388,14 +420,73 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../chapters/25-presenting-results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Presenting Statistical Results</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../chapters/A1-eugenics-history.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">The Eugenics History of Statistics</span></span></a>
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">The Eugenics History of Statistics</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/A2-r-reference.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">R Quick Reference</span></span></a>
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">R Command Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A3-probability-distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Common Probability Distributions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A4-greek-letters.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Greek Letters in Mathematics and Statistics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A5-sampling-distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Sampling Distributions in Hypothesis Testing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A6-unix-reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Unix Command Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A7-latex-reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">LaTeX Command Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A8-keyboard-shortcuts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Keyboard Shortcuts Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A9-exercises.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Practice Exercises</span></span></a>
   </div>
 </li>
       </ul>
@@ -417,7 +508,10 @@ window.Quarto = {
    
   <ul>
   <li><a href="#comparing-means" id="toc-comparing-means" class="nav-link active" data-scroll-target="#comparing-means"><span class="header-section-number">12.1</span> Comparing Means</a></li>
-  <li><a href="#the-t-distribution" id="toc-the-t-distribution" class="nav-link" data-scroll-target="#the-t-distribution"><span class="header-section-number">12.2</span> The T-Distribution</a></li>
+  <li><a href="#the-t-distribution" id="toc-the-t-distribution" class="nav-link" data-scroll-target="#the-t-distribution"><span class="header-section-number">12.2</span> The T-Distribution</a>
+  <ul class="collapse">
+  <li><a href="#why-heavier-tails-matter-in-practice" id="toc-why-heavier-tails-matter-in-practice" class="nav-link" data-scroll-target="#why-heavier-tails-matter-in-practice"><span class="header-section-number">12.2.1</span> Why Heavier Tails Matter in Practice</a></li>
+  </ul></li>
   <li><a href="#one-sample-t-test" id="toc-one-sample-t-test" class="nav-link" data-scroll-target="#one-sample-t-test"><span class="header-section-number">12.3</span> One-Sample T-Test</a></li>
   <li><a href="#two-sample-t-test" id="toc-two-sample-t-test" class="nav-link" data-scroll-target="#two-sample-t-test"><span class="header-section-number">12.4</span> Two-Sample T-Test</a></li>
   <li><a href="#welchs-t-test" id="toc-welchs-t-test" class="nav-link" data-scroll-target="#welchs-t-test"><span class="header-section-number">12.5</span> Welch’s T-Test</a></li>
@@ -426,6 +520,11 @@ window.Quarto = {
   <li><a href="#checking-assumptions" id="toc-checking-assumptions" class="nav-link" data-scroll-target="#checking-assumptions"><span class="header-section-number">12.8</span> Checking Assumptions</a></li>
   <li><a href="#effect-size-cohens-d" id="toc-effect-size-cohens-d" class="nav-link" data-scroll-target="#effect-size-cohens-d"><span class="header-section-number">12.9</span> Effect Size: Cohen’s d</a></li>
   <li><a href="#practical-example" id="toc-practical-example" class="nav-link" data-scroll-target="#practical-example"><span class="header-section-number">12.10</span> Practical Example</a></li>
+  <li><a href="#randomization-tests-as-an-alternative" id="toc-randomization-tests-as-an-alternative" class="nav-link" data-scroll-target="#randomization-tests-as-an-alternative"><span class="header-section-number">12.11</span> Randomization Tests as an Alternative</a></li>
+  <li><a href="#choosing-the-right-t-test" id="toc-choosing-the-right-t-test" class="nav-link" data-scroll-target="#choosing-the-right-t-test"><span class="header-section-number">12.12</span> Choosing the Right T-Test</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">12.13</span> Summary</a></li>
+  <li><a href="#practice-exercises" id="toc-practice-exercises" class="nav-link" data-scroll-target="#practice-exercises"><span class="header-section-number">12.14</span> Practice Exercises</a></li>
+  <li><a href="#additional-resources" id="toc-additional-resources" class="nav-link" data-scroll-target="#additional-resources"><span class="header-section-number">12.15</span> Additional Resources</a></li>
   </ul>
 </nav>
     </div>
@@ -470,7 +569,7 @@ window.Quarto = {
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"T-distributions vs. Normal"</span>)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x, <span class="fu">dt</span>(x, <span class="at">df =</span> <span class="dv">3</span>), <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"red"</span>)</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x, <span class="fu">dt</span>(x, <span class="at">df =</span> <span class="dv">10</span>), <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"blue"</span>)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>, </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>,</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Normal"</span>, <span class="st">"t (df=3)"</span>, <span class="st">"t (df=10)"</span>),</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"black"</span>, <span class="st">"red"</span>, <span class="st">"blue"</span>), <span class="at">lwd =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -482,6 +581,103 @@ window.Quarto = {
 </div>
 </div>
 </div>
+<section id="why-heavier-tails-matter-in-practice" class="level3" data-number="12.2.1">
+<h3 data-number="12.2.1" class="anchored" data-anchor-id="why-heavier-tails-matter-in-practice"><span class="header-section-number">12.2.1</span> Why Heavier Tails Matter in Practice</h3>
+<p>The heavier tails of the t-distribution have real practical consequences. When you estimate the standard deviation from a small sample, you might underestimate or overestimate the true value. The t-distribution accounts for this uncertainty by assigning more probability to extreme values.</p>
+<p>Consider this concrete example: suppose you’re estimating voter support from a poll of 25 likely voters. With the true population proportion unknown and estimated from the sample, how wide should your confidence interval be?</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Demonstrate the practical difference between normal and t-based intervals</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2016</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate: true support is 48.5%, poll 25 people</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>true_support <span class="ot">&lt;-</span> <span class="fl">0.485</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>n_poll <span class="ot">&lt;-</span> <span class="dv">25</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># One poll result</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>poll_result <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">1</span>, n_poll, true_support) <span class="sc">/</span> n_poll</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>poll_se <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(poll_result <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> poll_result) <span class="sc">/</span> n_poll)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare critical values</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>z_crit <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(<span class="fl">0.975</span>)      <span class="co"># Normal: 1.96</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>t_crit <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> n_poll <span class="sc">-</span> <span class="dv">1</span>)  <span class="co"># t with 24 df: 2.06</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate intervals</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>normal_ci <span class="ot">&lt;-</span> <span class="fu">c</span>(poll_result <span class="sc">-</span> z_crit <span class="sc">*</span> poll_se, poll_result <span class="sc">+</span> z_crit <span class="sc">*</span> poll_se)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>t_ci <span class="ot">&lt;-</span> <span class="fu">c</span>(poll_result <span class="sc">-</span> t_crit <span class="sc">*</span> poll_se, poll_result <span class="sc">+</span> t_crit <span class="sc">*</span> poll_se)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Poll result:"</span>, <span class="fu">round</span>(poll_result <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>), <span class="st">"%</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Poll result: 40 %</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Standard error:"</span>, <span class="fu">round</span>(poll_se <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>), <span class="st">"%</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Standard error: 9.8 %</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Normal-based 95% CI: ["</span>, <span class="fu">round</span>(normal_ci[<span class="dv">1</span>]<span class="sc">*</span><span class="dv">100</span>, <span class="dv">1</span>), <span class="st">"%, "</span>,</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round</span>(normal_ci[<span class="dv">2</span>]<span class="sc">*</span><span class="dv">100</span>, <span class="dv">1</span>), <span class="st">"%]</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Normal-based 95% CI: [ 20.8 %,  59.2 %]</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"t-based 95% CI:      ["</span>, <span class="fu">round</span>(t_ci[<span class="dv">1</span>]<span class="sc">*</span><span class="dv">100</span>, <span class="dv">1</span>), <span class="st">"%, "</span>,</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round</span>(t_ci[<span class="dv">2</span>]<span class="sc">*</span><span class="dv">100</span>, <span class="dv">1</span>), <span class="st">"%]</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>t-based 95% CI:      [ 19.8 %,  60.2 %]</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Difference in width:"</span>, <span class="fu">round</span>((t_ci[<span class="dv">2</span>] <span class="sc">-</span> t_ci[<span class="dv">1</span>] <span class="sc">-</span> (normal_ci[<span class="dv">2</span>] <span class="sc">-</span> normal_ci[<span class="dv">1</span>]))<span class="sc">*</span><span class="dv">100</span>, <span class="dv">2</span>),</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"percentage points</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Difference in width: 2.04 percentage points</code></pre>
+</div>
+</div>
+<p>With only 25 observations, the t-distribution gives a critical value of about 2.06 instead of 1.96. This ~5% wider interval provides better coverage when the sample standard deviation might deviate substantially from the population value.</p>
+<p>The difference matters most in the tails. For extreme values (like being 2.5+ standard errors away from the mean), the t-distribution assigns noticeably more probability:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Probability of being more than 2.5 SE from the mean</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>prob_extreme_normal <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">pnorm</span>(<span class="sc">-</span><span class="fl">2.5</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>prob_extreme_t <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">pt</span>(<span class="sc">-</span><span class="fl">2.5</span>, <span class="at">df =</span> <span class="dv">24</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"P(|Z| &gt; 2.5) with normal distribution:"</span>, <span class="fu">round</span>(prob_extreme_normal, <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>P(|Z| &gt; 2.5) with normal distribution: 0.0124 </code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"P(|T| &gt; 2.5) with t(df=24):"</span>, <span class="fu">round</span>(prob_extreme_t, <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>P(|T| &gt; 2.5) with t(df=24): 0.0197 </code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"The t-distribution gives"</span>, <span class="fu">round</span>(prob_extreme_t<span class="sc">/</span>prob_extreme_normal, <span class="dv">1</span>),</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"times higher probability to extreme values</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>The t-distribution gives 1.6 times higher probability to extreme values</code></pre>
+</div>
+</div>
+<p>This is why using the normal distribution instead of the t-distribution for small samples leads to confidence intervals that are too narrow and p-values that are too small—both resulting in overconfident conclusions.</p>
+</section>
 </section>
 <section id="one-sample-t-test" class="level2" data-number="12.3">
 <h2 data-number="12.3" class="anchored" data-anchor-id="one-sample-t-test"><span class="header-section-number">12.3</span> One-Sample T-Test</h2>
@@ -492,12 +688,12 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># One-sample t-test example</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Does this sample come from a population with mean = 100?</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>sample_data <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">25</span>, <span class="at">mean =</span> <span class="dv">105</span>, <span class="at">sd =</span> <span class="dv">15</span>)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(sample_data, <span class="at">mu =</span> <span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># One-sample t-test example</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Does this sample come from a population with mean = 100?</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>sample_data <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">25</span>, <span class="at">mean =</span> <span class="dv">105</span>, <span class="at">sd =</span> <span class="dv">15</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(sample_data, <span class="at">mu =</span> <span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -522,27 +718,27 @@ mean of x
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Two-sample t-test example</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">518</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>treatment <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">30</span>, <span class="at">mean =</span> <span class="dv">12</span>, <span class="at">sd =</span> <span class="dv">3</span>)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>control <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">30</span>, <span class="at">mean =</span> <span class="dv">10</span>, <span class="at">sd =</span> <span class="dv">3</span>)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the data</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(treatment, control, <span class="at">names =</span> <span class="fu">c</span>(<span class="st">"Treatment"</span>, <span class="st">"Control"</span>),</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"lightblue"</span>, <span class="st">"lightgreen"</span>), <span class="at">main =</span> <span class="st">"Boxplot"</span>)</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Combined histogram</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(treatment, <span class="at">col =</span> <span class="fu">rgb</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.5</span>), <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">20</span>),</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Histograms"</span>, <span class="at">xlab =</span> <span class="st">"Value"</span>)</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(control, <span class="at">col =</span> <span class="fu">rgb</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="fl">0.5</span>), <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Treatment"</span>, <span class="st">"Control"</span>),</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="fu">c</span>(<span class="fu">rgb</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.5</span>), <span class="fu">rgb</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="fl">0.5</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Two-sample t-test example</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">518</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>treatment <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">30</span>, <span class="at">mean =</span> <span class="dv">12</span>, <span class="at">sd =</span> <span class="dv">3</span>)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>control <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">30</span>, <span class="at">mean =</span> <span class="dv">10</span>, <span class="at">sd =</span> <span class="dv">3</span>)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the data</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(treatment, control, <span class="at">names =</span> <span class="fu">c</span>(<span class="st">"Treatment"</span>, <span class="st">"Control"</span>),</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"lightblue"</span>, <span class="st">"lightgreen"</span>), <span class="at">main =</span> <span class="st">"Boxplot"</span>)</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Combined histogram</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(treatment, <span class="at">col =</span> <span class="fu">rgb</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.5</span>), <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">20</span>),</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Histograms"</span>, <span class="at">xlab =</span> <span class="st">"Value"</span>)</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(control, <span class="at">col =</span> <span class="fu">rgb</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="fl">0.5</span>), <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Treatment"</span>, <span class="st">"Control"</span>),</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="fu">c</span>(<span class="fu">rgb</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.5</span>), <span class="fu">rgb</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="fl">0.5</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="12-t-tests_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="768"></p>
+<p><img src="12-t-tests_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="768"></p>
 </figure>
 </div>
 </div>
@@ -550,8 +746,8 @@ mean of x
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform the t-test</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(treatment, control)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform the t-test</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(treatment, control)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -575,13 +771,13 @@ mean of x mean of y
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># When variances are unequal</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>group1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">30</span>, <span class="at">mean =</span> <span class="dv">50</span>, <span class="at">sd =</span> <span class="dv">5</span>)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>group2 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">30</span>, <span class="at">mean =</span> <span class="dv">52</span>, <span class="at">sd =</span> <span class="dv">15</span>)</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Welch's test (default)</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(group1, group2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># When variances are unequal</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>group1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">30</span>, <span class="at">mean =</span> <span class="dv">50</span>, <span class="at">sd =</span> <span class="dv">5</span>)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>group2 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">30</span>, <span class="at">mean =</span> <span class="dv">52</span>, <span class="at">sd =</span> <span class="dv">15</span>)</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Welch's test (default)</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(group1, group2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -598,8 +794,8 @@ mean of x mean of y
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Equal variance assumed</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(group1, group2, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Equal variance assumed</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(group1, group2, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -623,15 +819,15 @@ mean of x mean of y
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Paired t-test example: before and after treatment</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">20</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>before <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">100</span>, <span class="at">sd =</span> <span class="dv">15</span>)</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># After measurements are correlated with before</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>after <span class="ot">&lt;-</span> before <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">5</span>, <span class="at">sd =</span> <span class="dv">5</span>)</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Paired test (correct for this data)</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(after, before, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Paired t-test example: before and after treatment</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">20</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>before <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">100</span>, <span class="at">sd =</span> <span class="dv">15</span>)</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co"># After measurements are correlated with before</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>after <span class="ot">&lt;-</span> before <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">5</span>, <span class="at">sd =</span> <span class="dv">5</span>)</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Paired test (correct for this data)</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(after, before, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -648,8 +844,8 @@ mean difference
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare to unpaired (less power)</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(after, before, <span class="at">paired =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare to unpaired (less power)</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(after, before, <span class="at">paired =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -673,24 +869,24 @@ mean of x mean of y
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Two-tailed (default): H_A: treatment ≠ control</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(treatment, control, <span class="at">alternative =</span> <span class="st">"two.sided"</span>)<span class="sc">$</span>p.value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Two-tailed (default): H_A: treatment ≠ control</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(treatment, control, <span class="at">alternative =</span> <span class="st">"two.sided"</span>)<span class="sc">$</span>p.value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.1912327</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># One-tailed: H_A: treatment &gt; control</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(treatment, control, <span class="at">alternative =</span> <span class="st">"greater"</span>)<span class="sc">$</span>p.value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># One-tailed: H_A: treatment &gt; control</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(treatment, control, <span class="at">alternative =</span> <span class="st">"greater"</span>)<span class="sc">$</span>p.value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.09561633</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># One-tailed: H_A: treatment &lt; control</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(treatment, control, <span class="at">alternative =</span> <span class="st">"less"</span>)<span class="sc">$</span>p.value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># One-tailed: H_A: treatment &lt; control</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(treatment, control, <span class="at">alternative =</span> <span class="st">"less"</span>)<span class="sc">$</span>p.value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.9043837</code></pre>
@@ -705,14 +901,14 @@ mean of x mean of y
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check normality with Q-Q plot</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(treatment)</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(treatment, <span class="at">col =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check normality with Q-Q plot</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(treatment)</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(treatment, <span class="at">col =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="12-t-tests_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="576"></p>
+<p><img src="12-t-tests_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="576"></p>
 </figure>
 </div>
 </div>
@@ -720,8 +916,8 @@ mean of x mean of y
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Shapiro-Wilk test for normality</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(treatment)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Shapiro-Wilk test for normality</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(treatment)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -736,24 +932,24 @@ W = 0.9115, p-value = 0.01624</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare standard deviations</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(treatment)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare standard deviations</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(treatment)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3.024138</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(control)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(control)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2.968592</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Levene's test (from car package)</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="co"># car::leveneTest(c(treatment, control), </span></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="co">#                 factor(rep(c("treatment", "control"), each = 30)))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Levene's test (from car package)</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="co"># car::leveneTest(c(treatment, control), </span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="co">#                 factor(rep(c("treatment", "control"), each = 30)))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -766,12 +962,12 @@ W = 0.9115, p-value = 0.01624</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate Cohen's d</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>mean_diff <span class="ot">&lt;-</span> <span class="fu">mean</span>(treatment) <span class="sc">-</span> <span class="fu">mean</span>(control)</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>s_pooled <span class="ot">&lt;-</span> <span class="fu">sqrt</span>((<span class="fu">var</span>(treatment) <span class="sc">+</span> <span class="fu">var</span>(control)) <span class="sc">/</span> <span class="dv">2</span>)</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>cohens_d <span class="ot">&lt;-</span> mean_diff <span class="sc">/</span> s_pooled</span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Cohen's d:"</span>, <span class="fu">round</span>(cohens_d, <span class="dv">2</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate Cohen's d</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>mean_diff <span class="ot">&lt;-</span> <span class="fu">mean</span>(treatment) <span class="sc">-</span> <span class="fu">mean</span>(control)</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>s_pooled <span class="ot">&lt;-</span> <span class="fu">sqrt</span>((<span class="fu">var</span>(treatment) <span class="sc">+</span> <span class="fu">var</span>(control)) <span class="sc">/</span> <span class="dv">2</span>)</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>cohens_d <span class="ot">&lt;-</span> mean_diff <span class="sc">/</span> s_pooled</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Cohen's d:"</span>, <span class="fu">round</span>(cohens_d, <span class="dv">2</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Cohen's d: 0.34 </code></pre>
@@ -784,31 +980,31 @@ W = 0.9115, p-value = 0.01624</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulated drug trial data</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">999</span>)</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>drug <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">40</span>, <span class="at">mean =</span> <span class="dv">75</span>, <span class="at">sd =</span> <span class="dv">12</span>)</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>placebo <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">40</span>, <span class="at">mean =</span> <span class="dv">70</span>, <span class="at">sd =</span> <span class="dv">12</span>)</span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 1: Visualize</span></span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(drug, placebo, <span class="at">names =</span> <span class="fu">c</span>(<span class="st">"Drug"</span>, <span class="st">"Placebo"</span>), </span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"coral"</span>, <span class="st">"lightblue"</span>), <span class="at">main =</span> <span class="st">"Response by Group"</span>)</span>
-<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2: Check normality</span></span>
-<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(drug, <span class="at">main =</span> <span class="st">"Q-Q Plot: Drug"</span>)</span>
-<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(drug, <span class="at">col =</span> <span class="st">"red"</span>)</span>
-<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(placebo, <span class="at">main =</span> <span class="st">"Q-Q Plot: Placebo"</span>)</span>
-<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(placebo, <span class="at">col =</span> <span class="st">"red"</span>)</span>
-<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Combined histogram</span></span>
-<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(drug, <span class="at">col =</span> <span class="fu">rgb</span>(<span class="dv">1</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>), <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">40</span>, <span class="dv">110</span>),</span>
-<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Distribution Comparison"</span>, <span class="at">xlab =</span> <span class="st">"Response"</span>)</span>
-<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(placebo, <span class="at">col =</span> <span class="fu">rgb</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="fl">0.5</span>), <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulated drug trial data</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">999</span>)</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>drug <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">40</span>, <span class="at">mean =</span> <span class="dv">75</span>, <span class="at">sd =</span> <span class="dv">12</span>)</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>placebo <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">40</span>, <span class="at">mean =</span> <span class="dv">70</span>, <span class="at">sd =</span> <span class="dv">12</span>)</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 1: Visualize</span></span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(drug, placebo, <span class="at">names =</span> <span class="fu">c</span>(<span class="st">"Drug"</span>, <span class="st">"Placebo"</span>), </span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"coral"</span>, <span class="st">"lightblue"</span>), <span class="at">main =</span> <span class="st">"Response by Group"</span>)</span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2: Check normality</span></span>
+<span id="cb47-12"><a href="#cb47-12" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(drug, <span class="at">main =</span> <span class="st">"Q-Q Plot: Drug"</span>)</span>
+<span id="cb47-13"><a href="#cb47-13" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(drug, <span class="at">col =</span> <span class="st">"red"</span>)</span>
+<span id="cb47-14"><a href="#cb47-14" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(placebo, <span class="at">main =</span> <span class="st">"Q-Q Plot: Placebo"</span>)</span>
+<span id="cb47-15"><a href="#cb47-15" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(placebo, <span class="at">col =</span> <span class="st">"red"</span>)</span>
+<span id="cb47-16"><a href="#cb47-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-17"><a href="#cb47-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Combined histogram</span></span>
+<span id="cb47-18"><a href="#cb47-18" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(drug, <span class="at">col =</span> <span class="fu">rgb</span>(<span class="dv">1</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>), <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">40</span>, <span class="dv">110</span>),</span>
+<span id="cb47-19"><a href="#cb47-19" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Distribution Comparison"</span>, <span class="at">xlab =</span> <span class="st">"Response"</span>)</span>
+<span id="cb47-20"><a href="#cb47-20" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(placebo, <span class="at">col =</span> <span class="fu">rgb</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="fl">0.5</span>), <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="12-t-tests_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="768"></p>
+<p><img src="12-t-tests_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="768"></p>
 </figure>
 </div>
 </div>
@@ -816,9 +1012,9 @@ W = 0.9115, p-value = 0.01624</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 3: Perform t-test</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">t.test</span>(drug, placebo)</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 3: Perform t-test</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">t.test</span>(drug, placebo)</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -835,10 +1031,10 @@ mean of x mean of y
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 4: Calculate effect size</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>cohens_d <span class="ot">&lt;-</span> (<span class="fu">mean</span>(drug) <span class="sc">-</span> <span class="fu">mean</span>(placebo)) <span class="sc">/</span> </span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>            <span class="fu">sqrt</span>((<span class="fu">var</span>(drug) <span class="sc">+</span> <span class="fu">var</span>(placebo)) <span class="sc">/</span> <span class="dv">2</span>)</span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Cohen's d:"</span>, <span class="fu">round</span>(cohens_d, <span class="dv">2</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 4: Calculate effect size</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>cohens_d <span class="ot">&lt;-</span> (<span class="fu">mean</span>(drug) <span class="sc">-</span> <span class="fu">mean</span>(placebo)) <span class="sc">/</span> </span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>            <span class="fu">sqrt</span>((<span class="fu">var</span>(drug) <span class="sc">+</span> <span class="fu">var</span>(placebo)) <span class="sc">/</span> <span class="dv">2</span>)</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Cohen's d:"</span>, <span class="fu">round</span>(cohens_d, <span class="dv">2</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -846,10 +1042,173 @@ Cohen's d: 0.27 </code></pre>
 </div>
 </div>
 <p>The t-test shows a significant difference (p &lt; 0.05), and Cohen’s d indicates a medium effect size. We can conclude that the drug group shows higher response than the placebo group, with the mean difference being about 0.4 standard deviations.</p>
+</section>
+<section id="randomization-tests-as-an-alternative" class="level2" data-number="12.11">
+<h2 data-number="12.11" class="anchored" data-anchor-id="randomization-tests-as-an-alternative"><span class="header-section-number">12.11</span> Randomization Tests as an Alternative</h2>
+<p>When normality assumptions are questionable and sample sizes are small, randomization (permutation) tests provide a non-parametric alternative to the t-test. The logic is elegant: if there is no difference between groups, then the group labels are arbitrary and could be shuffled without affecting the distribution of the test statistic.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Randomization test example</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>group_A <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">23</span>, <span class="dv">25</span>, <span class="dv">28</span>, <span class="dv">31</span>, <span class="dv">35</span>, <span class="dv">29</span>)</span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>group_B <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">18</span>, <span class="dv">20</span>, <span class="dv">22</span>, <span class="dv">19</span>, <span class="dv">21</span>, <span class="dv">23</span>)</span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Observed difference</span></span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>obs_diff <span class="ot">&lt;-</span> <span class="fu">mean</span>(group_A) <span class="sc">-</span> <span class="fu">mean</span>(group_B)</span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine all observations</span></span>
+<span id="cb52-10"><a href="#cb52-10" aria-hidden="true" tabindex="-1"></a>all_data <span class="ot">&lt;-</span> <span class="fu">c</span>(group_A, group_B)</span>
+<span id="cb52-11"><a href="#cb52-11" aria-hidden="true" tabindex="-1"></a>n_A <span class="ot">&lt;-</span> <span class="fu">length</span>(group_A)</span>
+<span id="cb52-12"><a href="#cb52-12" aria-hidden="true" tabindex="-1"></a>n_B <span class="ot">&lt;-</span> <span class="fu">length</span>(group_B)</span>
+<span id="cb52-13"><a href="#cb52-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-14"><a href="#cb52-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate null distribution by permutation</span></span>
+<span id="cb52-15"><a href="#cb52-15" aria-hidden="true" tabindex="-1"></a>n_perms <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb52-16"><a href="#cb52-16" aria-hidden="true" tabindex="-1"></a>perm_diffs <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n_perms)</span>
+<span id="cb52-17"><a href="#cb52-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-18"><a href="#cb52-18" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n_perms) {</span>
+<span id="cb52-19"><a href="#cb52-19" aria-hidden="true" tabindex="-1"></a>  shuffled <span class="ot">&lt;-</span> <span class="fu">sample</span>(all_data)</span>
+<span id="cb52-20"><a href="#cb52-20" aria-hidden="true" tabindex="-1"></a>  perm_diffs[i] <span class="ot">&lt;-</span> <span class="fu">mean</span>(shuffled[<span class="dv">1</span><span class="sc">:</span>n_A]) <span class="sc">-</span> <span class="fu">mean</span>(shuffled[(n_A<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span>(n_A<span class="sc">+</span>n_B)])</span>
+<span id="cb52-21"><a href="#cb52-21" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb52-22"><a href="#cb52-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-23"><a href="#cb52-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot null distribution</span></span>
+<span id="cb52-24"><a href="#cb52-24" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(perm_diffs, <span class="at">breaks =</span> <span class="dv">50</span>, <span class="at">col =</span> <span class="st">"lightblue"</span>,</span>
+<span id="cb52-25"><a href="#cb52-25" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Randomization Null Distribution"</span>,</span>
+<span id="cb52-26"><a href="#cb52-26" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Difference in Means"</span>)</span>
+<span id="cb52-27"><a href="#cb52-27" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> obs_diff, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb52-28"><a href="#cb52-28" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="sc">-</span>obs_diff, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="12-t-tests_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Two-tailed p-value</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>p_value <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">abs</span>(perm_diffs) <span class="sc">&gt;=</span> <span class="fu">abs</span>(obs_diff))</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Observed difference:"</span>, <span class="fu">round</span>(obs_diff, <span class="dv">2</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Observed difference: 8 </code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Permutation p-value:"</span>, p_value, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Permutation p-value: 0.0039 </code></pre>
+</div>
+</div>
+<p>The randomization test makes no assumptions about the underlying distribution—it only assumes that observations are exchangeable under the null hypothesis. This makes it robust to non-normality and outliers.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+When to Use Randomization Tests
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Sample sizes are small (n &lt; 20 per group)</li>
+<li>Data are clearly non-normal or contain outliers</li>
+<li>You want to avoid distributional assumptions</li>
+<li>As a sensitivity analysis to complement parametric results</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="choosing-the-right-t-test" class="level2" data-number="12.12">
+<h2 data-number="12.12" class="anchored" data-anchor-id="choosing-the-right-t-test"><span class="header-section-number">12.12</span> Choosing the Right T-Test</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 35%">
+<col style="width: 21%">
+<col style="width: 42%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Scenario</th>
+<th style="text-align: left;">Test</th>
+<th style="text-align: left;">R Function</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Compare sample mean to known value</td>
+<td style="text-align: left;">One-sample</td>
+<td style="text-align: left;"><code>t.test(x, mu = value)</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Compare two independent groups</td>
+<td style="text-align: left;">Two-sample (Welch’s)</td>
+<td style="text-align: left;"><code>t.test(x, y)</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Compare two independent groups (equal variance)</td>
+<td style="text-align: left;">Two-sample (Student’s)</td>
+<td style="text-align: left;"><code>t.test(x, y, var.equal = TRUE)</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Compare paired measurements</td>
+<td style="text-align: left;">Paired</td>
+<td style="text-align: left;"><code>t.test(x, y, paired = TRUE)</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Decision guidelines:</strong></p>
+<ol type="1">
+<li>If comparing to a fixed, known value: <strong>one-sample t-test</strong></li>
+<li>If observations in groups are naturally paired: <strong>paired t-test</strong></li>
+<li>If groups are independent with potentially unequal variances: <strong>Welch’s t-test</strong> (the default)</li>
+<li>If groups are independent and you have strong evidence of equal variances: <strong>Student’s t-test</strong></li>
+</ol>
+<p>When in doubt, use Welch’s t-test—it performs nearly as well as Student’s t-test when variances are equal and much better when they are not.</p>
+</section>
+<section id="summary" class="level2" data-number="12.13">
+<h2 data-number="12.13" class="anchored" data-anchor-id="summary"><span class="header-section-number">12.13</span> Summary</h2>
+<p>The t-test family provides essential tools for comparing means:</p>
+<ul>
+<li>One-sample tests compare a sample to a hypothesized value</li>
+<li>Two-sample tests compare independent groups</li>
+<li>Paired tests compare matched or repeated measurements</li>
+<li>Welch’s version handles unequal variances (recommended default)</li>
+<li>Randomization tests provide a distribution-free alternative</li>
+</ul>
+<p>Always visualize your data, check assumptions, and report effect sizes alongside p-values. A statistically significant result is only meaningful if the underlying assumptions are reasonable and the effect size is practically relevant.</p>
+</section>
+<section id="practice-exercises" class="level2" data-number="12.14">
+<h2 data-number="12.14" class="anchored" data-anchor-id="practice-exercises"><span class="header-section-number">12.14</span> Practice Exercises</h2>
+<p>For hands-on practice with t-tests and hypothesis testing, see <a href="A9-exercises.html#sec-ex-hypothesis" class="quarto-xref"><span>Section 35.9</span></a> in the Practice Exercises appendix. The exercises include:</p>
+<ul>
+<li>Performing one-sample and two-sample t-tests</li>
+<li>Exploring the effects of sample size on statistical power</li>
+<li>Chi-square tests for categorical data</li>
+<li>Testing for Hardy-Weinberg equilibrium</li>
+</ul>
+</section>
+<section id="additional-resources" class="level2" data-number="12.15">
+<h2 data-number="12.15" class="anchored" data-anchor-id="additional-resources"><span class="header-section-number">12.15</span> Additional Resources</h2>
+<ul>
+<li><span class="citation" data-cites="logan2010biostatistical">Logan (<a href="../references.html#ref-logan2010biostatistical" role="doc-biblioref">2010</a>)</span> - Detailed coverage of t-tests with biological examples</li>
+<li><span class="citation" data-cites="irizarry2019introduction">Irizarry (<a href="../references.html#ref-irizarry2019introduction" role="doc-biblioref">2019</a>)</span> - Excellent treatment of randomization and permutation methods</li>
+</ul>
 
 
 <!-- -->
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-irizarry2019introduction" class="csl-entry" role="listitem">
+Irizarry, Rafael A. 2019. <em>Introduction to Data Science</em>. Self-published. <a href="https://rafalab.github.io/dsbook/">https://rafalab.github.io/dsbook/</a>.
+</div>
+<div id="ref-logan2010biostatistical" class="csl-entry" role="listitem">
+Logan, Murray. 2010. <em>Biostatistical Design and Analysis Using r</em>. Wiley-Blackwell.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->
@@ -1315,250 +1674,402 @@ Cohen's d: 0.27 </code></pre>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb36" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># T-Tests {#sec-t-tests}</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_minimal</span>())</span>
-<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a><span class="fu">## Comparing Means</span></span>
-<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>One of the most common questions in data analysis is whether two groups differ. Is the mean expression level different between treatment and control? Does the new material have different strength than the standard? Do patients on drug A have different outcomes than patients on drug B?</span>
-<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a>The t-test is the classic method for comparing means. It compares the observed difference between groups to the variability expected by chance, producing a test statistic that follows a t-distribution under the null hypothesis of no difference.</span>
-<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a><span class="fu">## The T-Distribution</span></span>
-<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-20"><a href="#cb36-20" aria-hidden="true" tabindex="-1"></a>The t-distribution, discovered by William Sealy Gosset (who published under the pseudonym "Student"), resembles the normal distribution but has heavier tails. This accounts for the extra uncertainty that comes from estimating the population standard deviation from sample data.</span>
-<span id="cb36-21"><a href="#cb36-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-22"><a href="#cb36-22" aria-hidden="true" tabindex="-1"></a>The t-distribution is characterized by its degrees of freedom (df). As df increases, the t-distribution approaches the normal distribution. For small samples, the heavier tails mean that extreme values are more likely, leading to wider confidence intervals and more conservative tests.</span>
-<span id="cb36-23"><a href="#cb36-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-26"><a href="#cb36-26" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb36-27"><a href="#cb36-27" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 7</span></span>
-<span id="cb36-28"><a href="#cb36-28" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5</span></span>
-<span id="cb36-29"><a href="#cb36-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare t-distributions with different df</span></span>
-<span id="cb36-30"><a href="#cb36-30" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="at">length.out =</span> <span class="dv">200</span>)</span>
-<span id="cb36-31"><a href="#cb36-31" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, <span class="fu">dnorm</span>(x), <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"black"</span>,</span>
-<span id="cb36-32"><a href="#cb36-32" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"x"</span>, <span class="at">ylab =</span> <span class="st">"Density"</span>,</span>
-<span id="cb36-33"><a href="#cb36-33" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"T-distributions vs. Normal"</span>)</span>
-<span id="cb36-34"><a href="#cb36-34" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x, <span class="fu">dt</span>(x, <span class="at">df =</span> <span class="dv">3</span>), <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"red"</span>)</span>
-<span id="cb36-35"><a href="#cb36-35" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x, <span class="fu">dt</span>(x, <span class="at">df =</span> <span class="dv">10</span>), <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"blue"</span>)</span>
-<span id="cb36-36"><a href="#cb36-36" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>, </span>
-<span id="cb36-37"><a href="#cb36-37" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Normal"</span>, <span class="st">"t (df=3)"</span>, <span class="st">"t (df=10)"</span>),</span>
-<span id="cb36-38"><a href="#cb36-38" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"black"</span>, <span class="st">"red"</span>, <span class="st">"blue"</span>), <span class="at">lwd =</span> <span class="dv">2</span>)</span>
-<span id="cb36-39"><a href="#cb36-39" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb36-40"><a href="#cb36-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-41"><a href="#cb36-41" aria-hidden="true" tabindex="-1"></a><span class="fu">## One-Sample T-Test</span></span>
-<span id="cb36-42"><a href="#cb36-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-43"><a href="#cb36-43" aria-hidden="true" tabindex="-1"></a>The one-sample t-test compares a sample mean to a hypothesized population value. The null hypothesis is that the population mean equals the specified value: $H_0: \mu = \mu_0$.</span>
-<span id="cb36-44"><a href="#cb36-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-45"><a href="#cb36-45" aria-hidden="true" tabindex="-1"></a>The test statistic is:</span>
-<span id="cb36-46"><a href="#cb36-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-47"><a href="#cb36-47" aria-hidden="true" tabindex="-1"></a>$$t = \frac{\bar{x} - \mu_0}{s / \sqrt{n}}$$</span>
-<span id="cb36-48"><a href="#cb36-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-49"><a href="#cb36-49" aria-hidden="true" tabindex="-1"></a>This is the difference between the sample mean and hypothesized value, divided by the standard error of the mean. Under the null hypothesis, this statistic follows a t-distribution with $n-1$ degrees of freedom.</span>
-<span id="cb36-50"><a href="#cb36-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-53"><a href="#cb36-53" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb36-54"><a href="#cb36-54" aria-hidden="true" tabindex="-1"></a><span class="co"># One-sample t-test example</span></span>
-<span id="cb36-55"><a href="#cb36-55" aria-hidden="true" tabindex="-1"></a><span class="co"># Does this sample come from a population with mean = 100?</span></span>
-<span id="cb36-56"><a href="#cb36-56" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
-<span id="cb36-57"><a href="#cb36-57" aria-hidden="true" tabindex="-1"></a>sample_data <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">25</span>, <span class="at">mean =</span> <span class="dv">105</span>, <span class="at">sd =</span> <span class="dv">15</span>)</span>
-<span id="cb36-58"><a href="#cb36-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-59"><a href="#cb36-59" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(sample_data, <span class="at">mu =</span> <span class="dv">100</span>)</span>
-<span id="cb36-60"><a href="#cb36-60" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb36-61"><a href="#cb36-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-62"><a href="#cb36-62" aria-hidden="true" tabindex="-1"></a>The output shows the t-statistic, degrees of freedom, p-value, confidence interval, and sample mean. The small p-value indicates evidence that the true mean differs from 100.</span>
-<span id="cb36-63"><a href="#cb36-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-64"><a href="#cb36-64" aria-hidden="true" tabindex="-1"></a><span class="fu">## Two-Sample T-Test</span></span>
-<span id="cb36-65"><a href="#cb36-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-66"><a href="#cb36-66" aria-hidden="true" tabindex="-1"></a>The two-sample (independent samples) t-test compares means from two independent groups. The null hypothesis is that the population means are equal: $H_0: \mu_1 = \mu_2$.</span>
-<span id="cb36-67"><a href="#cb36-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-68"><a href="#cb36-68" aria-hidden="true" tabindex="-1"></a>The test assumes:</span>
-<span id="cb36-69"><a href="#cb36-69" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Independence of observations within and between groups</span>
-<span id="cb36-70"><a href="#cb36-70" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Normally distributed populations (or large samples)</span>
-<span id="cb36-71"><a href="#cb36-71" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Equal variances in both groups (for the standard version)</span>
-<span id="cb36-72"><a href="#cb36-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-75"><a href="#cb36-75" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb36-76"><a href="#cb36-76" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 8</span></span>
-<span id="cb36-77"><a href="#cb36-77" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4</span></span>
-<span id="cb36-78"><a href="#cb36-78" aria-hidden="true" tabindex="-1"></a><span class="co"># Two-sample t-test example</span></span>
-<span id="cb36-79"><a href="#cb36-79" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">518</span>)</span>
-<span id="cb36-80"><a href="#cb36-80" aria-hidden="true" tabindex="-1"></a>treatment <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">30</span>, <span class="at">mean =</span> <span class="dv">12</span>, <span class="at">sd =</span> <span class="dv">3</span>)</span>
-<span id="cb36-81"><a href="#cb36-81" aria-hidden="true" tabindex="-1"></a>control <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">30</span>, <span class="at">mean =</span> <span class="dv">10</span>, <span class="at">sd =</span> <span class="dv">3</span>)</span>
-<span id="cb36-82"><a href="#cb36-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-83"><a href="#cb36-83" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the data</span></span>
-<span id="cb36-84"><a href="#cb36-84" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb36-85"><a href="#cb36-85" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(treatment, control, <span class="at">names =</span> <span class="fu">c</span>(<span class="st">"Treatment"</span>, <span class="st">"Control"</span>),</span>
-<span id="cb36-86"><a href="#cb36-86" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"lightblue"</span>, <span class="st">"lightgreen"</span>), <span class="at">main =</span> <span class="st">"Boxplot"</span>)</span>
-<span id="cb36-87"><a href="#cb36-87" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb36-88"><a href="#cb36-88" aria-hidden="true" tabindex="-1"></a><span class="co"># Combined histogram</span></span>
-<span id="cb36-89"><a href="#cb36-89" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(treatment, <span class="at">col =</span> <span class="fu">rgb</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.5</span>), <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">20</span>),</span>
-<span id="cb36-90"><a href="#cb36-90" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Histograms"</span>, <span class="at">xlab =</span> <span class="st">"Value"</span>)</span>
-<span id="cb36-91"><a href="#cb36-91" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(control, <span class="at">col =</span> <span class="fu">rgb</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="fl">0.5</span>), <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb36-92"><a href="#cb36-92" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Treatment"</span>, <span class="st">"Control"</span>),</span>
-<span id="cb36-93"><a href="#cb36-93" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="fu">c</span>(<span class="fu">rgb</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.5</span>), <span class="fu">rgb</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="fl">0.5</span>)))</span>
-<span id="cb36-94"><a href="#cb36-94" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb36-95"><a href="#cb36-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-98"><a href="#cb36-98" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb36-99"><a href="#cb36-99" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform the t-test</span></span>
-<span id="cb36-100"><a href="#cb36-100" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(treatment, control)</span>
-<span id="cb36-101"><a href="#cb36-101" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb36-102"><a href="#cb36-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-103"><a href="#cb36-103" aria-hidden="true" tabindex="-1"></a><span class="fu">## Welch's T-Test</span></span>
-<span id="cb36-104"><a href="#cb36-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-105"><a href="#cb36-105" aria-hidden="true" tabindex="-1"></a>The classic two-sample t-test assumes equal variances. When this assumption is violated, Welch's t-test provides a better alternative. It adjusts the degrees of freedom to account for unequal variances.</span>
-<span id="cb36-106"><a href="#cb36-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-107"><a href="#cb36-107" aria-hidden="true" tabindex="-1"></a>R's <span class="in">`t.test()`</span> function uses Welch's test by default. To use the equal-variance version, set <span class="in">`var.equal = TRUE`</span>.</span>
-<span id="cb36-108"><a href="#cb36-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-111"><a href="#cb36-111" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb36-112"><a href="#cb36-112" aria-hidden="true" tabindex="-1"></a><span class="co"># When variances are unequal</span></span>
-<span id="cb36-113"><a href="#cb36-113" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
-<span id="cb36-114"><a href="#cb36-114" aria-hidden="true" tabindex="-1"></a>group1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">30</span>, <span class="at">mean =</span> <span class="dv">50</span>, <span class="at">sd =</span> <span class="dv">5</span>)</span>
-<span id="cb36-115"><a href="#cb36-115" aria-hidden="true" tabindex="-1"></a>group2 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">30</span>, <span class="at">mean =</span> <span class="dv">52</span>, <span class="at">sd =</span> <span class="dv">15</span>)</span>
-<span id="cb36-116"><a href="#cb36-116" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-117"><a href="#cb36-117" aria-hidden="true" tabindex="-1"></a><span class="co"># Welch's test (default)</span></span>
-<span id="cb36-118"><a href="#cb36-118" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(group1, group2)</span>
-<span id="cb36-119"><a href="#cb36-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-120"><a href="#cb36-120" aria-hidden="true" tabindex="-1"></a><span class="co"># Equal variance assumed</span></span>
-<span id="cb36-121"><a href="#cb36-121" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(group1, group2, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb36-122"><a href="#cb36-122" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb36-123"><a href="#cb36-123" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-124"><a href="#cb36-124" aria-hidden="true" tabindex="-1"></a><span class="fu">## Paired T-Test</span></span>
-<span id="cb36-125"><a href="#cb36-125" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-126"><a href="#cb36-126" aria-hidden="true" tabindex="-1"></a>When observations in two groups are naturally paired—the same subjects measured twice, matched pairs, or before-and-after measurements—the paired t-test is more appropriate. It tests whether the mean difference within pairs is zero.</span>
-<span id="cb36-127"><a href="#cb36-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-128"><a href="#cb36-128" aria-hidden="true" tabindex="-1"></a>The paired t-test is more powerful than the two-sample test when pairs are positively correlated, because it removes between-subject variability.</span>
-<span id="cb36-129"><a href="#cb36-129" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-132"><a href="#cb36-132" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb36-133"><a href="#cb36-133" aria-hidden="true" tabindex="-1"></a><span class="co"># Paired t-test example: before and after treatment</span></span>
-<span id="cb36-134"><a href="#cb36-134" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb36-135"><a href="#cb36-135" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">20</span></span>
-<span id="cb36-136"><a href="#cb36-136" aria-hidden="true" tabindex="-1"></a>before <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">100</span>, <span class="at">sd =</span> <span class="dv">15</span>)</span>
-<span id="cb36-137"><a href="#cb36-137" aria-hidden="true" tabindex="-1"></a><span class="co"># After measurements are correlated with before</span></span>
-<span id="cb36-138"><a href="#cb36-138" aria-hidden="true" tabindex="-1"></a>after <span class="ot">&lt;-</span> before <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">5</span>, <span class="at">sd =</span> <span class="dv">5</span>)</span>
-<span id="cb36-139"><a href="#cb36-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-140"><a href="#cb36-140" aria-hidden="true" tabindex="-1"></a><span class="co"># Paired test (correct for this data)</span></span>
-<span id="cb36-141"><a href="#cb36-141" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(after, before, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb36-142"><a href="#cb36-142" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-143"><a href="#cb36-143" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare to unpaired (less power)</span></span>
-<span id="cb36-144"><a href="#cb36-144" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(after, before, <span class="at">paired =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb36-145"><a href="#cb36-145" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb36-146"><a href="#cb36-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-147"><a href="#cb36-147" aria-hidden="true" tabindex="-1"></a>Notice that the paired test produces a smaller p-value because it accounts for the correlation between measurements on the same subject.</span>
-<span id="cb36-148"><a href="#cb36-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-149"><a href="#cb36-149" aria-hidden="true" tabindex="-1"></a><span class="fu">## One-Tailed vs. Two-Tailed Tests</span></span>
-<span id="cb36-150"><a href="#cb36-150" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-151"><a href="#cb36-151" aria-hidden="true" tabindex="-1"></a>By default, <span class="in">`t.test()`</span> performs a two-tailed test. For a one-tailed test, specify the alternative hypothesis:</span>
-<span id="cb36-152"><a href="#cb36-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-155"><a href="#cb36-155" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb36-156"><a href="#cb36-156" aria-hidden="true" tabindex="-1"></a><span class="co"># Two-tailed (default): H_A: treatment ≠ control</span></span>
-<span id="cb36-157"><a href="#cb36-157" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(treatment, control, <span class="at">alternative =</span> <span class="st">"two.sided"</span>)<span class="sc">$</span>p.value</span>
-<span id="cb36-158"><a href="#cb36-158" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-159"><a href="#cb36-159" aria-hidden="true" tabindex="-1"></a><span class="co"># One-tailed: H_A: treatment &gt; control</span></span>
-<span id="cb36-160"><a href="#cb36-160" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(treatment, control, <span class="at">alternative =</span> <span class="st">"greater"</span>)<span class="sc">$</span>p.value</span>
-<span id="cb36-161"><a href="#cb36-161" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-162"><a href="#cb36-162" aria-hidden="true" tabindex="-1"></a><span class="co"># One-tailed: H_A: treatment &lt; control</span></span>
-<span id="cb36-163"><a href="#cb36-163" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(treatment, control, <span class="at">alternative =</span> <span class="st">"less"</span>)<span class="sc">$</span>p.value</span>
-<span id="cb36-164"><a href="#cb36-164" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb36-165"><a href="#cb36-165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-166"><a href="#cb36-166" aria-hidden="true" tabindex="-1"></a>Use one-tailed tests only when you have a strong prior reason to expect an effect in a specific direction and would not act on an effect in the opposite direction.</span>
-<span id="cb36-167"><a href="#cb36-167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-168"><a href="#cb36-168" aria-hidden="true" tabindex="-1"></a><span class="fu">## Checking Assumptions</span></span>
-<span id="cb36-169"><a href="#cb36-169" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-170"><a href="#cb36-170" aria-hidden="true" tabindex="-1"></a>T-tests assume normally distributed data (or large samples) and, for the standard two-sample test, equal variances. Check these assumptions before interpreting results.</span>
-<span id="cb36-171"><a href="#cb36-171" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-172"><a href="#cb36-172" aria-hidden="true" tabindex="-1"></a>**Normality**: Use histograms, Q-Q plots, or formal tests like Shapiro-Wilk.</span>
-<span id="cb36-173"><a href="#cb36-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-176"><a href="#cb36-176" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb36-177"><a href="#cb36-177" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 6</span></span>
-<span id="cb36-178"><a href="#cb36-178" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4</span></span>
-<span id="cb36-179"><a href="#cb36-179" aria-hidden="true" tabindex="-1"></a><span class="co"># Check normality with Q-Q plot</span></span>
-<span id="cb36-180"><a href="#cb36-180" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(treatment)</span>
-<span id="cb36-181"><a href="#cb36-181" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(treatment, <span class="at">col =</span> <span class="st">"red"</span>)</span>
-<span id="cb36-182"><a href="#cb36-182" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb36-183"><a href="#cb36-183" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-186"><a href="#cb36-186" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb36-187"><a href="#cb36-187" aria-hidden="true" tabindex="-1"></a><span class="co"># Shapiro-Wilk test for normality</span></span>
-<span id="cb36-188"><a href="#cb36-188" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(treatment)</span>
-<span id="cb36-189"><a href="#cb36-189" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb36-190"><a href="#cb36-190" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-191"><a href="#cb36-191" aria-hidden="true" tabindex="-1"></a>A non-significant Shapiro-Wilk test suggests the data are consistent with normality. However, this test has low power for small samples and may reject normality for trivial deviations with large samples.</span>
-<span id="cb36-192"><a href="#cb36-192" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-193"><a href="#cb36-193" aria-hidden="true" tabindex="-1"></a>**Equal variances**: Compare standard deviations or use Levene's test.</span>
-<span id="cb36-194"><a href="#cb36-194" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-197"><a href="#cb36-197" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb36-198"><a href="#cb36-198" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare standard deviations</span></span>
-<span id="cb36-199"><a href="#cb36-199" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(treatment)</span>
-<span id="cb36-200"><a href="#cb36-200" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(control)</span>
-<span id="cb36-201"><a href="#cb36-201" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-202"><a href="#cb36-202" aria-hidden="true" tabindex="-1"></a><span class="co"># Levene's test (from car package)</span></span>
-<span id="cb36-203"><a href="#cb36-203" aria-hidden="true" tabindex="-1"></a><span class="co"># car::leveneTest(c(treatment, control), </span></span>
-<span id="cb36-204"><a href="#cb36-204" aria-hidden="true" tabindex="-1"></a><span class="co">#                 factor(rep(c("treatment", "control"), each = 30)))</span></span>
-<span id="cb36-205"><a href="#cb36-205" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb36-206"><a href="#cb36-206" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-207"><a href="#cb36-207" aria-hidden="true" tabindex="-1"></a><span class="fu">## Effect Size: Cohen's d</span></span>
-<span id="cb36-208"><a href="#cb36-208" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-209"><a href="#cb36-209" aria-hidden="true" tabindex="-1"></a>Statistical significance does not tell you how large an effect is. **Cohen's d** measures effect size as the standardized difference between means:</span>
-<span id="cb36-210"><a href="#cb36-210" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-211"><a href="#cb36-211" aria-hidden="true" tabindex="-1"></a>$$d = \frac{\bar{x}_1 - \bar{x}_2}{s_{pooled}}$$</span>
-<span id="cb36-212"><a href="#cb36-212" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-213"><a href="#cb36-213" aria-hidden="true" tabindex="-1"></a>where $s_{pooled}$ is the pooled standard deviation.</span>
-<span id="cb36-214"><a href="#cb36-214" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-215"><a href="#cb36-215" aria-hidden="true" tabindex="-1"></a>Conventional interpretations: $|d| = 0.2$ is small, $|d| = 0.5$ is medium, $|d| = 0.8$ is large. However, context matters—a small d might be practically important in some fields.</span>
-<span id="cb36-216"><a href="#cb36-216" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-219"><a href="#cb36-219" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb36-220"><a href="#cb36-220" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate Cohen's d</span></span>
-<span id="cb36-221"><a href="#cb36-221" aria-hidden="true" tabindex="-1"></a>mean_diff <span class="ot">&lt;-</span> <span class="fu">mean</span>(treatment) <span class="sc">-</span> <span class="fu">mean</span>(control)</span>
-<span id="cb36-222"><a href="#cb36-222" aria-hidden="true" tabindex="-1"></a>s_pooled <span class="ot">&lt;-</span> <span class="fu">sqrt</span>((<span class="fu">var</span>(treatment) <span class="sc">+</span> <span class="fu">var</span>(control)) <span class="sc">/</span> <span class="dv">2</span>)</span>
-<span id="cb36-223"><a href="#cb36-223" aria-hidden="true" tabindex="-1"></a>cohens_d <span class="ot">&lt;-</span> mean_diff <span class="sc">/</span> s_pooled</span>
-<span id="cb36-224"><a href="#cb36-224" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-225"><a href="#cb36-225" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Cohen's d:"</span>, <span class="fu">round</span>(cohens_d, <span class="dv">2</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb36-226"><a href="#cb36-226" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb36-227"><a href="#cb36-227" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-228"><a href="#cb36-228" aria-hidden="true" tabindex="-1"></a><span class="fu">## Practical Example</span></span>
-<span id="cb36-229"><a href="#cb36-229" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-230"><a href="#cb36-230" aria-hidden="true" tabindex="-1"></a>Let's work through a complete analysis comparing two groups:</span>
-<span id="cb36-231"><a href="#cb36-231" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-234"><a href="#cb36-234" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb36-235"><a href="#cb36-235" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 8</span></span>
-<span id="cb36-236"><a href="#cb36-236" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 6</span></span>
-<span id="cb36-237"><a href="#cb36-237" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulated drug trial data</span></span>
-<span id="cb36-238"><a href="#cb36-238" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">999</span>)</span>
-<span id="cb36-239"><a href="#cb36-239" aria-hidden="true" tabindex="-1"></a>drug <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">40</span>, <span class="at">mean =</span> <span class="dv">75</span>, <span class="at">sd =</span> <span class="dv">12</span>)</span>
-<span id="cb36-240"><a href="#cb36-240" aria-hidden="true" tabindex="-1"></a>placebo <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">40</span>, <span class="at">mean =</span> <span class="dv">70</span>, <span class="at">sd =</span> <span class="dv">12</span>)</span>
-<span id="cb36-241"><a href="#cb36-241" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-242"><a href="#cb36-242" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 1: Visualize</span></span>
-<span id="cb36-243"><a href="#cb36-243" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb36-244"><a href="#cb36-244" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(drug, placebo, <span class="at">names =</span> <span class="fu">c</span>(<span class="st">"Drug"</span>, <span class="st">"Placebo"</span>), </span>
-<span id="cb36-245"><a href="#cb36-245" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"coral"</span>, <span class="st">"lightblue"</span>), <span class="at">main =</span> <span class="st">"Response by Group"</span>)</span>
-<span id="cb36-246"><a href="#cb36-246" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-247"><a href="#cb36-247" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2: Check normality</span></span>
-<span id="cb36-248"><a href="#cb36-248" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(drug, <span class="at">main =</span> <span class="st">"Q-Q Plot: Drug"</span>)</span>
-<span id="cb36-249"><a href="#cb36-249" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(drug, <span class="at">col =</span> <span class="st">"red"</span>)</span>
-<span id="cb36-250"><a href="#cb36-250" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(placebo, <span class="at">main =</span> <span class="st">"Q-Q Plot: Placebo"</span>)</span>
-<span id="cb36-251"><a href="#cb36-251" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(placebo, <span class="at">col =</span> <span class="st">"red"</span>)</span>
-<span id="cb36-252"><a href="#cb36-252" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-253"><a href="#cb36-253" aria-hidden="true" tabindex="-1"></a><span class="co"># Combined histogram</span></span>
-<span id="cb36-254"><a href="#cb36-254" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(drug, <span class="at">col =</span> <span class="fu">rgb</span>(<span class="dv">1</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>), <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">40</span>, <span class="dv">110</span>),</span>
-<span id="cb36-255"><a href="#cb36-255" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Distribution Comparison"</span>, <span class="at">xlab =</span> <span class="st">"Response"</span>)</span>
-<span id="cb36-256"><a href="#cb36-256" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(placebo, <span class="at">col =</span> <span class="fu">rgb</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="fl">0.5</span>), <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb36-257"><a href="#cb36-257" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb36-258"><a href="#cb36-258" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-261"><a href="#cb36-261" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb36-262"><a href="#cb36-262" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 3: Perform t-test</span></span>
-<span id="cb36-263"><a href="#cb36-263" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">t.test</span>(drug, placebo)</span>
-<span id="cb36-264"><a href="#cb36-264" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(result)</span>
-<span id="cb36-265"><a href="#cb36-265" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-266"><a href="#cb36-266" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 4: Calculate effect size</span></span>
-<span id="cb36-267"><a href="#cb36-267" aria-hidden="true" tabindex="-1"></a>cohens_d <span class="ot">&lt;-</span> (<span class="fu">mean</span>(drug) <span class="sc">-</span> <span class="fu">mean</span>(placebo)) <span class="sc">/</span> </span>
-<span id="cb36-268"><a href="#cb36-268" aria-hidden="true" tabindex="-1"></a>            <span class="fu">sqrt</span>((<span class="fu">var</span>(drug) <span class="sc">+</span> <span class="fu">var</span>(placebo)) <span class="sc">/</span> <span class="dv">2</span>)</span>
-<span id="cb36-269"><a href="#cb36-269" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Cohen's d:"</span>, <span class="fu">round</span>(cohens_d, <span class="dv">2</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb36-270"><a href="#cb36-270" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb36-271"><a href="#cb36-271" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-272"><a href="#cb36-272" aria-hidden="true" tabindex="-1"></a>The t-test shows a significant difference (p &lt; 0.05), and Cohen's d indicates a medium effect size. We can conclude that the drug group shows higher response than the placebo group, with the mean difference being about 0.4 standard deviations.</span>
+<div class="sourceCode" id="cb57" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># T-Tests {#sec-t-tests}</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_minimal</span>())</span>
+<span id="cb57-10"><a href="#cb57-10" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-11"><a href="#cb57-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-12"><a href="#cb57-12" aria-hidden="true" tabindex="-1"></a><span class="fu">## Comparing Means</span></span>
+<span id="cb57-13"><a href="#cb57-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-14"><a href="#cb57-14" aria-hidden="true" tabindex="-1"></a>One of the most common questions in data analysis is whether two groups differ. Is the mean expression level different between treatment and control? Does the new material have different strength than the standard? Do patients on drug A have different outcomes than patients on drug B?</span>
+<span id="cb57-15"><a href="#cb57-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-16"><a href="#cb57-16" aria-hidden="true" tabindex="-1"></a>The t-test is the classic method for comparing means. It compares the observed difference between groups to the variability expected by chance, producing a test statistic that follows a t-distribution under the null hypothesis of no difference.</span>
+<span id="cb57-17"><a href="#cb57-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-18"><a href="#cb57-18" aria-hidden="true" tabindex="-1"></a><span class="fu">## The T-Distribution</span></span>
+<span id="cb57-19"><a href="#cb57-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-20"><a href="#cb57-20" aria-hidden="true" tabindex="-1"></a>The t-distribution, discovered by William Sealy Gosset (who published under the pseudonym "Student"), resembles the normal distribution but has heavier tails. This accounts for the extra uncertainty that comes from estimating the population standard deviation from sample data.</span>
+<span id="cb57-21"><a href="#cb57-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-22"><a href="#cb57-22" aria-hidden="true" tabindex="-1"></a>The t-distribution is characterized by its degrees of freedom (df). As df increases, the t-distribution approaches the normal distribution. For small samples, the heavier tails mean that extreme values are more likely, leading to wider confidence intervals and more conservative tests.</span>
+<span id="cb57-23"><a href="#cb57-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-26"><a href="#cb57-26" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb57-27"><a href="#cb57-27" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 7</span></span>
+<span id="cb57-28"><a href="#cb57-28" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5</span></span>
+<span id="cb57-29"><a href="#cb57-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare t-distributions with different df</span></span>
+<span id="cb57-30"><a href="#cb57-30" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="at">length.out =</span> <span class="dv">200</span>)</span>
+<span id="cb57-31"><a href="#cb57-31" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, <span class="fu">dnorm</span>(x), <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"black"</span>,</span>
+<span id="cb57-32"><a href="#cb57-32" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"x"</span>, <span class="at">ylab =</span> <span class="st">"Density"</span>,</span>
+<span id="cb57-33"><a href="#cb57-33" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"T-distributions vs. Normal"</span>)</span>
+<span id="cb57-34"><a href="#cb57-34" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x, <span class="fu">dt</span>(x, <span class="at">df =</span> <span class="dv">3</span>), <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"red"</span>)</span>
+<span id="cb57-35"><a href="#cb57-35" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x, <span class="fu">dt</span>(x, <span class="at">df =</span> <span class="dv">10</span>), <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"blue"</span>)</span>
+<span id="cb57-36"><a href="#cb57-36" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>,</span>
+<span id="cb57-37"><a href="#cb57-37" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Normal"</span>, <span class="st">"t (df=3)"</span>, <span class="st">"t (df=10)"</span>),</span>
+<span id="cb57-38"><a href="#cb57-38" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"black"</span>, <span class="st">"red"</span>, <span class="st">"blue"</span>), <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb57-39"><a href="#cb57-39" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-40"><a href="#cb57-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-41"><a href="#cb57-41" aria-hidden="true" tabindex="-1"></a><span class="fu">### Why Heavier Tails Matter in Practice</span></span>
+<span id="cb57-42"><a href="#cb57-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-43"><a href="#cb57-43" aria-hidden="true" tabindex="-1"></a>The heavier tails of the t-distribution have real practical consequences. When you estimate the standard deviation from a small sample, you might underestimate or overestimate the true value. The t-distribution accounts for this uncertainty by assigning more probability to extreme values.</span>
+<span id="cb57-44"><a href="#cb57-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-45"><a href="#cb57-45" aria-hidden="true" tabindex="-1"></a>Consider this concrete example: suppose you're estimating voter support from a poll of 25 likely voters. With the true population proportion unknown and estimated from the sample, how wide should your confidence interval be?</span>
+<span id="cb57-46"><a href="#cb57-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-49"><a href="#cb57-49" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb57-50"><a href="#cb57-50" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 8</span></span>
+<span id="cb57-51"><a href="#cb57-51" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5</span></span>
+<span id="cb57-52"><a href="#cb57-52" aria-hidden="true" tabindex="-1"></a><span class="co"># Demonstrate the practical difference between normal and t-based intervals</span></span>
+<span id="cb57-53"><a href="#cb57-53" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2016</span>)</span>
+<span id="cb57-54"><a href="#cb57-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-55"><a href="#cb57-55" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate: true support is 48.5%, poll 25 people</span></span>
+<span id="cb57-56"><a href="#cb57-56" aria-hidden="true" tabindex="-1"></a>true_support <span class="ot">&lt;-</span> <span class="fl">0.485</span></span>
+<span id="cb57-57"><a href="#cb57-57" aria-hidden="true" tabindex="-1"></a>n_poll <span class="ot">&lt;-</span> <span class="dv">25</span></span>
+<span id="cb57-58"><a href="#cb57-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-59"><a href="#cb57-59" aria-hidden="true" tabindex="-1"></a><span class="co"># One poll result</span></span>
+<span id="cb57-60"><a href="#cb57-60" aria-hidden="true" tabindex="-1"></a>poll_result <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">1</span>, n_poll, true_support) <span class="sc">/</span> n_poll</span>
+<span id="cb57-61"><a href="#cb57-61" aria-hidden="true" tabindex="-1"></a>poll_se <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(poll_result <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> poll_result) <span class="sc">/</span> n_poll)</span>
+<span id="cb57-62"><a href="#cb57-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-63"><a href="#cb57-63" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare critical values</span></span>
+<span id="cb57-64"><a href="#cb57-64" aria-hidden="true" tabindex="-1"></a>z_crit <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(<span class="fl">0.975</span>)      <span class="co"># Normal: 1.96</span></span>
+<span id="cb57-65"><a href="#cb57-65" aria-hidden="true" tabindex="-1"></a>t_crit <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> n_poll <span class="sc">-</span> <span class="dv">1</span>)  <span class="co"># t with 24 df: 2.06</span></span>
+<span id="cb57-66"><a href="#cb57-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-67"><a href="#cb57-67" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate intervals</span></span>
+<span id="cb57-68"><a href="#cb57-68" aria-hidden="true" tabindex="-1"></a>normal_ci <span class="ot">&lt;-</span> <span class="fu">c</span>(poll_result <span class="sc">-</span> z_crit <span class="sc">*</span> poll_se, poll_result <span class="sc">+</span> z_crit <span class="sc">*</span> poll_se)</span>
+<span id="cb57-69"><a href="#cb57-69" aria-hidden="true" tabindex="-1"></a>t_ci <span class="ot">&lt;-</span> <span class="fu">c</span>(poll_result <span class="sc">-</span> t_crit <span class="sc">*</span> poll_se, poll_result <span class="sc">+</span> t_crit <span class="sc">*</span> poll_se)</span>
+<span id="cb57-70"><a href="#cb57-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-71"><a href="#cb57-71" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Poll result:"</span>, <span class="fu">round</span>(poll_result <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>), <span class="st">"%</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb57-72"><a href="#cb57-72" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Standard error:"</span>, <span class="fu">round</span>(poll_se <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>), <span class="st">"%</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb57-73"><a href="#cb57-73" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Normal-based 95% CI: ["</span>, <span class="fu">round</span>(normal_ci[<span class="dv">1</span>]<span class="sc">*</span><span class="dv">100</span>, <span class="dv">1</span>), <span class="st">"%, "</span>,</span>
+<span id="cb57-74"><a href="#cb57-74" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round</span>(normal_ci[<span class="dv">2</span>]<span class="sc">*</span><span class="dv">100</span>, <span class="dv">1</span>), <span class="st">"%]</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb57-75"><a href="#cb57-75" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"t-based 95% CI:      ["</span>, <span class="fu">round</span>(t_ci[<span class="dv">1</span>]<span class="sc">*</span><span class="dv">100</span>, <span class="dv">1</span>), <span class="st">"%, "</span>,</span>
+<span id="cb57-76"><a href="#cb57-76" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round</span>(t_ci[<span class="dv">2</span>]<span class="sc">*</span><span class="dv">100</span>, <span class="dv">1</span>), <span class="st">"%]</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb57-77"><a href="#cb57-77" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Difference in width:"</span>, <span class="fu">round</span>((t_ci[<span class="dv">2</span>] <span class="sc">-</span> t_ci[<span class="dv">1</span>] <span class="sc">-</span> (normal_ci[<span class="dv">2</span>] <span class="sc">-</span> normal_ci[<span class="dv">1</span>]))<span class="sc">*</span><span class="dv">100</span>, <span class="dv">2</span>),</span>
+<span id="cb57-78"><a href="#cb57-78" aria-hidden="true" tabindex="-1"></a>    <span class="st">"percentage points</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb57-79"><a href="#cb57-79" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-80"><a href="#cb57-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-81"><a href="#cb57-81" aria-hidden="true" tabindex="-1"></a>With only 25 observations, the t-distribution gives a critical value of about 2.06 instead of 1.96. This ~5% wider interval provides better coverage when the sample standard deviation might deviate substantially from the population value.</span>
+<span id="cb57-82"><a href="#cb57-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-83"><a href="#cb57-83" aria-hidden="true" tabindex="-1"></a>The difference matters most in the tails. For extreme values (like being 2.5+ standard errors away from the mean), the t-distribution assigns noticeably more probability:</span>
+<span id="cb57-84"><a href="#cb57-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-87"><a href="#cb57-87" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb57-88"><a href="#cb57-88" aria-hidden="true" tabindex="-1"></a><span class="co"># Probability of being more than 2.5 SE from the mean</span></span>
+<span id="cb57-89"><a href="#cb57-89" aria-hidden="true" tabindex="-1"></a>prob_extreme_normal <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">pnorm</span>(<span class="sc">-</span><span class="fl">2.5</span>)</span>
+<span id="cb57-90"><a href="#cb57-90" aria-hidden="true" tabindex="-1"></a>prob_extreme_t <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">pt</span>(<span class="sc">-</span><span class="fl">2.5</span>, <span class="at">df =</span> <span class="dv">24</span>)</span>
+<span id="cb57-91"><a href="#cb57-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-92"><a href="#cb57-92" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"P(|Z| &gt; 2.5) with normal distribution:"</span>, <span class="fu">round</span>(prob_extreme_normal, <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb57-93"><a href="#cb57-93" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"P(|T| &gt; 2.5) with t(df=24):"</span>, <span class="fu">round</span>(prob_extreme_t, <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb57-94"><a href="#cb57-94" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"The t-distribution gives"</span>, <span class="fu">round</span>(prob_extreme_t<span class="sc">/</span>prob_extreme_normal, <span class="dv">1</span>),</span>
+<span id="cb57-95"><a href="#cb57-95" aria-hidden="true" tabindex="-1"></a>    <span class="st">"times higher probability to extreme values</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb57-96"><a href="#cb57-96" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-97"><a href="#cb57-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-98"><a href="#cb57-98" aria-hidden="true" tabindex="-1"></a>This is why using the normal distribution instead of the t-distribution for small samples leads to confidence intervals that are too narrow and p-values that are too small—both resulting in overconfident conclusions.</span>
+<span id="cb57-99"><a href="#cb57-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-100"><a href="#cb57-100" aria-hidden="true" tabindex="-1"></a><span class="fu">## One-Sample T-Test</span></span>
+<span id="cb57-101"><a href="#cb57-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-102"><a href="#cb57-102" aria-hidden="true" tabindex="-1"></a>The one-sample t-test compares a sample mean to a hypothesized population value. The null hypothesis is that the population mean equals the specified value: $H_0: \mu = \mu_0$.</span>
+<span id="cb57-103"><a href="#cb57-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-104"><a href="#cb57-104" aria-hidden="true" tabindex="-1"></a>The test statistic is:</span>
+<span id="cb57-105"><a href="#cb57-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-106"><a href="#cb57-106" aria-hidden="true" tabindex="-1"></a>$$t = \frac{\bar{x} - \mu_0}{s / \sqrt{n}}$$</span>
+<span id="cb57-107"><a href="#cb57-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-108"><a href="#cb57-108" aria-hidden="true" tabindex="-1"></a>This is the difference between the sample mean and hypothesized value, divided by the standard error of the mean. Under the null hypothesis, this statistic follows a t-distribution with $n-1$ degrees of freedom.</span>
+<span id="cb57-109"><a href="#cb57-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-112"><a href="#cb57-112" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb57-113"><a href="#cb57-113" aria-hidden="true" tabindex="-1"></a><span class="co"># One-sample t-test example</span></span>
+<span id="cb57-114"><a href="#cb57-114" aria-hidden="true" tabindex="-1"></a><span class="co"># Does this sample come from a population with mean = 100?</span></span>
+<span id="cb57-115"><a href="#cb57-115" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb57-116"><a href="#cb57-116" aria-hidden="true" tabindex="-1"></a>sample_data <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">25</span>, <span class="at">mean =</span> <span class="dv">105</span>, <span class="at">sd =</span> <span class="dv">15</span>)</span>
+<span id="cb57-117"><a href="#cb57-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-118"><a href="#cb57-118" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(sample_data, <span class="at">mu =</span> <span class="dv">100</span>)</span>
+<span id="cb57-119"><a href="#cb57-119" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-120"><a href="#cb57-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-121"><a href="#cb57-121" aria-hidden="true" tabindex="-1"></a>The output shows the t-statistic, degrees of freedom, p-value, confidence interval, and sample mean. The small p-value indicates evidence that the true mean differs from 100.</span>
+<span id="cb57-122"><a href="#cb57-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-123"><a href="#cb57-123" aria-hidden="true" tabindex="-1"></a><span class="fu">## Two-Sample T-Test</span></span>
+<span id="cb57-124"><a href="#cb57-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-125"><a href="#cb57-125" aria-hidden="true" tabindex="-1"></a>The two-sample (independent samples) t-test compares means from two independent groups. The null hypothesis is that the population means are equal: $H_0: \mu_1 = \mu_2$.</span>
+<span id="cb57-126"><a href="#cb57-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-127"><a href="#cb57-127" aria-hidden="true" tabindex="-1"></a>The test assumes:</span>
+<span id="cb57-128"><a href="#cb57-128" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Independence of observations within and between groups</span>
+<span id="cb57-129"><a href="#cb57-129" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Normally distributed populations (or large samples)</span>
+<span id="cb57-130"><a href="#cb57-130" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Equal variances in both groups (for the standard version)</span>
+<span id="cb57-131"><a href="#cb57-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-134"><a href="#cb57-134" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb57-135"><a href="#cb57-135" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 8</span></span>
+<span id="cb57-136"><a href="#cb57-136" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4</span></span>
+<span id="cb57-137"><a href="#cb57-137" aria-hidden="true" tabindex="-1"></a><span class="co"># Two-sample t-test example</span></span>
+<span id="cb57-138"><a href="#cb57-138" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">518</span>)</span>
+<span id="cb57-139"><a href="#cb57-139" aria-hidden="true" tabindex="-1"></a>treatment <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">30</span>, <span class="at">mean =</span> <span class="dv">12</span>, <span class="at">sd =</span> <span class="dv">3</span>)</span>
+<span id="cb57-140"><a href="#cb57-140" aria-hidden="true" tabindex="-1"></a>control <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">30</span>, <span class="at">mean =</span> <span class="dv">10</span>, <span class="at">sd =</span> <span class="dv">3</span>)</span>
+<span id="cb57-141"><a href="#cb57-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-142"><a href="#cb57-142" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the data</span></span>
+<span id="cb57-143"><a href="#cb57-143" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb57-144"><a href="#cb57-144" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(treatment, control, <span class="at">names =</span> <span class="fu">c</span>(<span class="st">"Treatment"</span>, <span class="st">"Control"</span>),</span>
+<span id="cb57-145"><a href="#cb57-145" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"lightblue"</span>, <span class="st">"lightgreen"</span>), <span class="at">main =</span> <span class="st">"Boxplot"</span>)</span>
+<span id="cb57-146"><a href="#cb57-146" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb57-147"><a href="#cb57-147" aria-hidden="true" tabindex="-1"></a><span class="co"># Combined histogram</span></span>
+<span id="cb57-148"><a href="#cb57-148" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(treatment, <span class="at">col =</span> <span class="fu">rgb</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.5</span>), <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">20</span>),</span>
+<span id="cb57-149"><a href="#cb57-149" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Histograms"</span>, <span class="at">xlab =</span> <span class="st">"Value"</span>)</span>
+<span id="cb57-150"><a href="#cb57-150" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(control, <span class="at">col =</span> <span class="fu">rgb</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="fl">0.5</span>), <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb57-151"><a href="#cb57-151" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Treatment"</span>, <span class="st">"Control"</span>),</span>
+<span id="cb57-152"><a href="#cb57-152" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="fu">c</span>(<span class="fu">rgb</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.5</span>), <span class="fu">rgb</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="fl">0.5</span>)))</span>
+<span id="cb57-153"><a href="#cb57-153" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-154"><a href="#cb57-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-157"><a href="#cb57-157" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb57-158"><a href="#cb57-158" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform the t-test</span></span>
+<span id="cb57-159"><a href="#cb57-159" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(treatment, control)</span>
+<span id="cb57-160"><a href="#cb57-160" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-161"><a href="#cb57-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-162"><a href="#cb57-162" aria-hidden="true" tabindex="-1"></a><span class="fu">## Welch's T-Test</span></span>
+<span id="cb57-163"><a href="#cb57-163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-164"><a href="#cb57-164" aria-hidden="true" tabindex="-1"></a>The classic two-sample t-test assumes equal variances. When this assumption is violated, Welch's t-test provides a better alternative. It adjusts the degrees of freedom to account for unequal variances.</span>
+<span id="cb57-165"><a href="#cb57-165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-166"><a href="#cb57-166" aria-hidden="true" tabindex="-1"></a>R's <span class="in">`t.test()`</span> function uses Welch's test by default. To use the equal-variance version, set <span class="in">`var.equal = TRUE`</span>.</span>
+<span id="cb57-167"><a href="#cb57-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-170"><a href="#cb57-170" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb57-171"><a href="#cb57-171" aria-hidden="true" tabindex="-1"></a><span class="co"># When variances are unequal</span></span>
+<span id="cb57-172"><a href="#cb57-172" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb57-173"><a href="#cb57-173" aria-hidden="true" tabindex="-1"></a>group1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">30</span>, <span class="at">mean =</span> <span class="dv">50</span>, <span class="at">sd =</span> <span class="dv">5</span>)</span>
+<span id="cb57-174"><a href="#cb57-174" aria-hidden="true" tabindex="-1"></a>group2 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">30</span>, <span class="at">mean =</span> <span class="dv">52</span>, <span class="at">sd =</span> <span class="dv">15</span>)</span>
+<span id="cb57-175"><a href="#cb57-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-176"><a href="#cb57-176" aria-hidden="true" tabindex="-1"></a><span class="co"># Welch's test (default)</span></span>
+<span id="cb57-177"><a href="#cb57-177" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(group1, group2)</span>
+<span id="cb57-178"><a href="#cb57-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-179"><a href="#cb57-179" aria-hidden="true" tabindex="-1"></a><span class="co"># Equal variance assumed</span></span>
+<span id="cb57-180"><a href="#cb57-180" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(group1, group2, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb57-181"><a href="#cb57-181" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-182"><a href="#cb57-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-183"><a href="#cb57-183" aria-hidden="true" tabindex="-1"></a><span class="fu">## Paired T-Test</span></span>
+<span id="cb57-184"><a href="#cb57-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-185"><a href="#cb57-185" aria-hidden="true" tabindex="-1"></a>When observations in two groups are naturally paired—the same subjects measured twice, matched pairs, or before-and-after measurements—the paired t-test is more appropriate. It tests whether the mean difference within pairs is zero.</span>
+<span id="cb57-186"><a href="#cb57-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-187"><a href="#cb57-187" aria-hidden="true" tabindex="-1"></a>The paired t-test is more powerful than the two-sample test when pairs are positively correlated, because it removes between-subject variability.</span>
+<span id="cb57-188"><a href="#cb57-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-191"><a href="#cb57-191" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb57-192"><a href="#cb57-192" aria-hidden="true" tabindex="-1"></a><span class="co"># Paired t-test example: before and after treatment</span></span>
+<span id="cb57-193"><a href="#cb57-193" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb57-194"><a href="#cb57-194" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">20</span></span>
+<span id="cb57-195"><a href="#cb57-195" aria-hidden="true" tabindex="-1"></a>before <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">100</span>, <span class="at">sd =</span> <span class="dv">15</span>)</span>
+<span id="cb57-196"><a href="#cb57-196" aria-hidden="true" tabindex="-1"></a><span class="co"># After measurements are correlated with before</span></span>
+<span id="cb57-197"><a href="#cb57-197" aria-hidden="true" tabindex="-1"></a>after <span class="ot">&lt;-</span> before <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">5</span>, <span class="at">sd =</span> <span class="dv">5</span>)</span>
+<span id="cb57-198"><a href="#cb57-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-199"><a href="#cb57-199" aria-hidden="true" tabindex="-1"></a><span class="co"># Paired test (correct for this data)</span></span>
+<span id="cb57-200"><a href="#cb57-200" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(after, before, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb57-201"><a href="#cb57-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-202"><a href="#cb57-202" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare to unpaired (less power)</span></span>
+<span id="cb57-203"><a href="#cb57-203" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(after, before, <span class="at">paired =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb57-204"><a href="#cb57-204" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-205"><a href="#cb57-205" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-206"><a href="#cb57-206" aria-hidden="true" tabindex="-1"></a>Notice that the paired test produces a smaller p-value because it accounts for the correlation between measurements on the same subject.</span>
+<span id="cb57-207"><a href="#cb57-207" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-208"><a href="#cb57-208" aria-hidden="true" tabindex="-1"></a><span class="fu">## One-Tailed vs. Two-Tailed Tests</span></span>
+<span id="cb57-209"><a href="#cb57-209" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-210"><a href="#cb57-210" aria-hidden="true" tabindex="-1"></a>By default, <span class="in">`t.test()`</span> performs a two-tailed test. For a one-tailed test, specify the alternative hypothesis:</span>
+<span id="cb57-211"><a href="#cb57-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-214"><a href="#cb57-214" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb57-215"><a href="#cb57-215" aria-hidden="true" tabindex="-1"></a><span class="co"># Two-tailed (default): H_A: treatment ≠ control</span></span>
+<span id="cb57-216"><a href="#cb57-216" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(treatment, control, <span class="at">alternative =</span> <span class="st">"two.sided"</span>)<span class="sc">$</span>p.value</span>
+<span id="cb57-217"><a href="#cb57-217" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-218"><a href="#cb57-218" aria-hidden="true" tabindex="-1"></a><span class="co"># One-tailed: H_A: treatment &gt; control</span></span>
+<span id="cb57-219"><a href="#cb57-219" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(treatment, control, <span class="at">alternative =</span> <span class="st">"greater"</span>)<span class="sc">$</span>p.value</span>
+<span id="cb57-220"><a href="#cb57-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-221"><a href="#cb57-221" aria-hidden="true" tabindex="-1"></a><span class="co"># One-tailed: H_A: treatment &lt; control</span></span>
+<span id="cb57-222"><a href="#cb57-222" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(treatment, control, <span class="at">alternative =</span> <span class="st">"less"</span>)<span class="sc">$</span>p.value</span>
+<span id="cb57-223"><a href="#cb57-223" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-224"><a href="#cb57-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-225"><a href="#cb57-225" aria-hidden="true" tabindex="-1"></a>Use one-tailed tests only when you have a strong prior reason to expect an effect in a specific direction and would not act on an effect in the opposite direction.</span>
+<span id="cb57-226"><a href="#cb57-226" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-227"><a href="#cb57-227" aria-hidden="true" tabindex="-1"></a><span class="fu">## Checking Assumptions</span></span>
+<span id="cb57-228"><a href="#cb57-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-229"><a href="#cb57-229" aria-hidden="true" tabindex="-1"></a>T-tests assume normally distributed data (or large samples) and, for the standard two-sample test, equal variances. Check these assumptions before interpreting results.</span>
+<span id="cb57-230"><a href="#cb57-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-231"><a href="#cb57-231" aria-hidden="true" tabindex="-1"></a>**Normality**: Use histograms, Q-Q plots, or formal tests like Shapiro-Wilk.</span>
+<span id="cb57-232"><a href="#cb57-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-235"><a href="#cb57-235" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb57-236"><a href="#cb57-236" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 6</span></span>
+<span id="cb57-237"><a href="#cb57-237" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4</span></span>
+<span id="cb57-238"><a href="#cb57-238" aria-hidden="true" tabindex="-1"></a><span class="co"># Check normality with Q-Q plot</span></span>
+<span id="cb57-239"><a href="#cb57-239" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(treatment)</span>
+<span id="cb57-240"><a href="#cb57-240" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(treatment, <span class="at">col =</span> <span class="st">"red"</span>)</span>
+<span id="cb57-241"><a href="#cb57-241" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-242"><a href="#cb57-242" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-245"><a href="#cb57-245" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb57-246"><a href="#cb57-246" aria-hidden="true" tabindex="-1"></a><span class="co"># Shapiro-Wilk test for normality</span></span>
+<span id="cb57-247"><a href="#cb57-247" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(treatment)</span>
+<span id="cb57-248"><a href="#cb57-248" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-249"><a href="#cb57-249" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-250"><a href="#cb57-250" aria-hidden="true" tabindex="-1"></a>A non-significant Shapiro-Wilk test suggests the data are consistent with normality. However, this test has low power for small samples and may reject normality for trivial deviations with large samples.</span>
+<span id="cb57-251"><a href="#cb57-251" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-252"><a href="#cb57-252" aria-hidden="true" tabindex="-1"></a>**Equal variances**: Compare standard deviations or use Levene's test.</span>
+<span id="cb57-253"><a href="#cb57-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-256"><a href="#cb57-256" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb57-257"><a href="#cb57-257" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare standard deviations</span></span>
+<span id="cb57-258"><a href="#cb57-258" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(treatment)</span>
+<span id="cb57-259"><a href="#cb57-259" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(control)</span>
+<span id="cb57-260"><a href="#cb57-260" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-261"><a href="#cb57-261" aria-hidden="true" tabindex="-1"></a><span class="co"># Levene's test (from car package)</span></span>
+<span id="cb57-262"><a href="#cb57-262" aria-hidden="true" tabindex="-1"></a><span class="co"># car::leveneTest(c(treatment, control), </span></span>
+<span id="cb57-263"><a href="#cb57-263" aria-hidden="true" tabindex="-1"></a><span class="co">#                 factor(rep(c("treatment", "control"), each = 30)))</span></span>
+<span id="cb57-264"><a href="#cb57-264" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-265"><a href="#cb57-265" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-266"><a href="#cb57-266" aria-hidden="true" tabindex="-1"></a><span class="fu">## Effect Size: Cohen's d</span></span>
+<span id="cb57-267"><a href="#cb57-267" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-268"><a href="#cb57-268" aria-hidden="true" tabindex="-1"></a>Statistical significance does not tell you how large an effect is. **Cohen's d** measures effect size as the standardized difference between means:</span>
+<span id="cb57-269"><a href="#cb57-269" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-270"><a href="#cb57-270" aria-hidden="true" tabindex="-1"></a>$$d = \frac{\bar{x}_1 - \bar{x}_2}{s_{pooled}}$$</span>
+<span id="cb57-271"><a href="#cb57-271" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-272"><a href="#cb57-272" aria-hidden="true" tabindex="-1"></a>where $s_{pooled}$ is the pooled standard deviation.</span>
+<span id="cb57-273"><a href="#cb57-273" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-274"><a href="#cb57-274" aria-hidden="true" tabindex="-1"></a>Conventional interpretations: $|d| = 0.2$ is small, $|d| = 0.5$ is medium, $|d| = 0.8$ is large. However, context matters—a small d might be practically important in some fields.</span>
+<span id="cb57-275"><a href="#cb57-275" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-278"><a href="#cb57-278" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb57-279"><a href="#cb57-279" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate Cohen's d</span></span>
+<span id="cb57-280"><a href="#cb57-280" aria-hidden="true" tabindex="-1"></a>mean_diff <span class="ot">&lt;-</span> <span class="fu">mean</span>(treatment) <span class="sc">-</span> <span class="fu">mean</span>(control)</span>
+<span id="cb57-281"><a href="#cb57-281" aria-hidden="true" tabindex="-1"></a>s_pooled <span class="ot">&lt;-</span> <span class="fu">sqrt</span>((<span class="fu">var</span>(treatment) <span class="sc">+</span> <span class="fu">var</span>(control)) <span class="sc">/</span> <span class="dv">2</span>)</span>
+<span id="cb57-282"><a href="#cb57-282" aria-hidden="true" tabindex="-1"></a>cohens_d <span class="ot">&lt;-</span> mean_diff <span class="sc">/</span> s_pooled</span>
+<span id="cb57-283"><a href="#cb57-283" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-284"><a href="#cb57-284" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Cohen's d:"</span>, <span class="fu">round</span>(cohens_d, <span class="dv">2</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb57-285"><a href="#cb57-285" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-286"><a href="#cb57-286" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-287"><a href="#cb57-287" aria-hidden="true" tabindex="-1"></a><span class="fu">## Practical Example</span></span>
+<span id="cb57-288"><a href="#cb57-288" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-289"><a href="#cb57-289" aria-hidden="true" tabindex="-1"></a>Let's work through a complete analysis comparing two groups:</span>
+<span id="cb57-290"><a href="#cb57-290" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-293"><a href="#cb57-293" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb57-294"><a href="#cb57-294" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 8</span></span>
+<span id="cb57-295"><a href="#cb57-295" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 6</span></span>
+<span id="cb57-296"><a href="#cb57-296" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulated drug trial data</span></span>
+<span id="cb57-297"><a href="#cb57-297" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">999</span>)</span>
+<span id="cb57-298"><a href="#cb57-298" aria-hidden="true" tabindex="-1"></a>drug <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">40</span>, <span class="at">mean =</span> <span class="dv">75</span>, <span class="at">sd =</span> <span class="dv">12</span>)</span>
+<span id="cb57-299"><a href="#cb57-299" aria-hidden="true" tabindex="-1"></a>placebo <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">40</span>, <span class="at">mean =</span> <span class="dv">70</span>, <span class="at">sd =</span> <span class="dv">12</span>)</span>
+<span id="cb57-300"><a href="#cb57-300" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-301"><a href="#cb57-301" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 1: Visualize</span></span>
+<span id="cb57-302"><a href="#cb57-302" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb57-303"><a href="#cb57-303" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(drug, placebo, <span class="at">names =</span> <span class="fu">c</span>(<span class="st">"Drug"</span>, <span class="st">"Placebo"</span>), </span>
+<span id="cb57-304"><a href="#cb57-304" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"coral"</span>, <span class="st">"lightblue"</span>), <span class="at">main =</span> <span class="st">"Response by Group"</span>)</span>
+<span id="cb57-305"><a href="#cb57-305" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-306"><a href="#cb57-306" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2: Check normality</span></span>
+<span id="cb57-307"><a href="#cb57-307" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(drug, <span class="at">main =</span> <span class="st">"Q-Q Plot: Drug"</span>)</span>
+<span id="cb57-308"><a href="#cb57-308" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(drug, <span class="at">col =</span> <span class="st">"red"</span>)</span>
+<span id="cb57-309"><a href="#cb57-309" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(placebo, <span class="at">main =</span> <span class="st">"Q-Q Plot: Placebo"</span>)</span>
+<span id="cb57-310"><a href="#cb57-310" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(placebo, <span class="at">col =</span> <span class="st">"red"</span>)</span>
+<span id="cb57-311"><a href="#cb57-311" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-312"><a href="#cb57-312" aria-hidden="true" tabindex="-1"></a><span class="co"># Combined histogram</span></span>
+<span id="cb57-313"><a href="#cb57-313" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(drug, <span class="at">col =</span> <span class="fu">rgb</span>(<span class="dv">1</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>), <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">40</span>, <span class="dv">110</span>),</span>
+<span id="cb57-314"><a href="#cb57-314" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Distribution Comparison"</span>, <span class="at">xlab =</span> <span class="st">"Response"</span>)</span>
+<span id="cb57-315"><a href="#cb57-315" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(placebo, <span class="at">col =</span> <span class="fu">rgb</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="fl">0.5</span>), <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb57-316"><a href="#cb57-316" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-317"><a href="#cb57-317" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-320"><a href="#cb57-320" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb57-321"><a href="#cb57-321" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 3: Perform t-test</span></span>
+<span id="cb57-322"><a href="#cb57-322" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">t.test</span>(drug, placebo)</span>
+<span id="cb57-323"><a href="#cb57-323" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(result)</span>
+<span id="cb57-324"><a href="#cb57-324" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-325"><a href="#cb57-325" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 4: Calculate effect size</span></span>
+<span id="cb57-326"><a href="#cb57-326" aria-hidden="true" tabindex="-1"></a>cohens_d <span class="ot">&lt;-</span> (<span class="fu">mean</span>(drug) <span class="sc">-</span> <span class="fu">mean</span>(placebo)) <span class="sc">/</span> </span>
+<span id="cb57-327"><a href="#cb57-327" aria-hidden="true" tabindex="-1"></a>            <span class="fu">sqrt</span>((<span class="fu">var</span>(drug) <span class="sc">+</span> <span class="fu">var</span>(placebo)) <span class="sc">/</span> <span class="dv">2</span>)</span>
+<span id="cb57-328"><a href="#cb57-328" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Cohen's d:"</span>, <span class="fu">round</span>(cohens_d, <span class="dv">2</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb57-329"><a href="#cb57-329" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-330"><a href="#cb57-330" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-331"><a href="#cb57-331" aria-hidden="true" tabindex="-1"></a>The t-test shows a significant difference (p &lt; 0.05), and Cohen's d indicates a medium effect size. We can conclude that the drug group shows higher response than the placebo group, with the mean difference being about 0.4 standard deviations.</span>
+<span id="cb57-332"><a href="#cb57-332" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-333"><a href="#cb57-333" aria-hidden="true" tabindex="-1"></a><span class="fu">## Randomization Tests as an Alternative</span></span>
+<span id="cb57-334"><a href="#cb57-334" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-335"><a href="#cb57-335" aria-hidden="true" tabindex="-1"></a>When normality assumptions are questionable and sample sizes are small, randomization (permutation) tests provide a non-parametric alternative to the t-test. The logic is elegant: if there is no difference between groups, then the group labels are arbitrary and could be shuffled without affecting the distribution of the test statistic.</span>
+<span id="cb57-336"><a href="#cb57-336" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-339"><a href="#cb57-339" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb57-340"><a href="#cb57-340" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 7</span></span>
+<span id="cb57-341"><a href="#cb57-341" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5</span></span>
+<span id="cb57-342"><a href="#cb57-342" aria-hidden="true" tabindex="-1"></a><span class="co"># Randomization test example</span></span>
+<span id="cb57-343"><a href="#cb57-343" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb57-344"><a href="#cb57-344" aria-hidden="true" tabindex="-1"></a>group_A <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">23</span>, <span class="dv">25</span>, <span class="dv">28</span>, <span class="dv">31</span>, <span class="dv">35</span>, <span class="dv">29</span>)</span>
+<span id="cb57-345"><a href="#cb57-345" aria-hidden="true" tabindex="-1"></a>group_B <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">18</span>, <span class="dv">20</span>, <span class="dv">22</span>, <span class="dv">19</span>, <span class="dv">21</span>, <span class="dv">23</span>)</span>
+<span id="cb57-346"><a href="#cb57-346" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-347"><a href="#cb57-347" aria-hidden="true" tabindex="-1"></a><span class="co"># Observed difference</span></span>
+<span id="cb57-348"><a href="#cb57-348" aria-hidden="true" tabindex="-1"></a>obs_diff <span class="ot">&lt;-</span> <span class="fu">mean</span>(group_A) <span class="sc">-</span> <span class="fu">mean</span>(group_B)</span>
+<span id="cb57-349"><a href="#cb57-349" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-350"><a href="#cb57-350" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine all observations</span></span>
+<span id="cb57-351"><a href="#cb57-351" aria-hidden="true" tabindex="-1"></a>all_data <span class="ot">&lt;-</span> <span class="fu">c</span>(group_A, group_B)</span>
+<span id="cb57-352"><a href="#cb57-352" aria-hidden="true" tabindex="-1"></a>n_A <span class="ot">&lt;-</span> <span class="fu">length</span>(group_A)</span>
+<span id="cb57-353"><a href="#cb57-353" aria-hidden="true" tabindex="-1"></a>n_B <span class="ot">&lt;-</span> <span class="fu">length</span>(group_B)</span>
+<span id="cb57-354"><a href="#cb57-354" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-355"><a href="#cb57-355" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate null distribution by permutation</span></span>
+<span id="cb57-356"><a href="#cb57-356" aria-hidden="true" tabindex="-1"></a>n_perms <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb57-357"><a href="#cb57-357" aria-hidden="true" tabindex="-1"></a>perm_diffs <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n_perms)</span>
+<span id="cb57-358"><a href="#cb57-358" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-359"><a href="#cb57-359" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n_perms) {</span>
+<span id="cb57-360"><a href="#cb57-360" aria-hidden="true" tabindex="-1"></a>  shuffled <span class="ot">&lt;-</span> <span class="fu">sample</span>(all_data)</span>
+<span id="cb57-361"><a href="#cb57-361" aria-hidden="true" tabindex="-1"></a>  perm_diffs[i] <span class="ot">&lt;-</span> <span class="fu">mean</span>(shuffled[<span class="dv">1</span><span class="sc">:</span>n_A]) <span class="sc">-</span> <span class="fu">mean</span>(shuffled[(n_A<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span>(n_A<span class="sc">+</span>n_B)])</span>
+<span id="cb57-362"><a href="#cb57-362" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb57-363"><a href="#cb57-363" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-364"><a href="#cb57-364" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot null distribution</span></span>
+<span id="cb57-365"><a href="#cb57-365" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(perm_diffs, <span class="at">breaks =</span> <span class="dv">50</span>, <span class="at">col =</span> <span class="st">"lightblue"</span>,</span>
+<span id="cb57-366"><a href="#cb57-366" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Randomization Null Distribution"</span>,</span>
+<span id="cb57-367"><a href="#cb57-367" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Difference in Means"</span>)</span>
+<span id="cb57-368"><a href="#cb57-368" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> obs_diff, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb57-369"><a href="#cb57-369" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="sc">-</span>obs_diff, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb57-370"><a href="#cb57-370" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-371"><a href="#cb57-371" aria-hidden="true" tabindex="-1"></a><span class="co"># Two-tailed p-value</span></span>
+<span id="cb57-372"><a href="#cb57-372" aria-hidden="true" tabindex="-1"></a>p_value <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">abs</span>(perm_diffs) <span class="sc">&gt;=</span> <span class="fu">abs</span>(obs_diff))</span>
+<span id="cb57-373"><a href="#cb57-373" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Observed difference:"</span>, <span class="fu">round</span>(obs_diff, <span class="dv">2</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb57-374"><a href="#cb57-374" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Permutation p-value:"</span>, p_value, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb57-375"><a href="#cb57-375" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-376"><a href="#cb57-376" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-377"><a href="#cb57-377" aria-hidden="true" tabindex="-1"></a>The randomization test makes no assumptions about the underlying distribution—it only assumes that observations are exchangeable under the null hypothesis. This makes it robust to non-normality and outliers.</span>
+<span id="cb57-378"><a href="#cb57-378" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-379"><a href="#cb57-379" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb57-380"><a href="#cb57-380" aria-hidden="true" tabindex="-1"></a><span class="fu">## When to Use Randomization Tests</span></span>
+<span id="cb57-381"><a href="#cb57-381" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-382"><a href="#cb57-382" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Sample sizes are small (n &lt; 20 per group)</span>
+<span id="cb57-383"><a href="#cb57-383" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Data are clearly non-normal or contain outliers</span>
+<span id="cb57-384"><a href="#cb57-384" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>You want to avoid distributional assumptions</span>
+<span id="cb57-385"><a href="#cb57-385" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>As a sensitivity analysis to complement parametric results</span>
+<span id="cb57-386"><a href="#cb57-386" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb57-387"><a href="#cb57-387" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-388"><a href="#cb57-388" aria-hidden="true" tabindex="-1"></a><span class="fu">## Choosing the Right T-Test</span></span>
+<span id="cb57-389"><a href="#cb57-389" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-390"><a href="#cb57-390" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Scenario <span class="pp">|</span> Test <span class="pp">|</span> R Function <span class="pp">|</span></span>
+<span id="cb57-391"><a href="#cb57-391" aria-hidden="true" tabindex="-1"></a><span class="pp">|:---------|:-----|:-----------|</span></span>
+<span id="cb57-392"><a href="#cb57-392" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Compare sample mean to known value <span class="pp">|</span> One-sample <span class="pp">|</span> <span class="in">`t.test(x, mu = value)`</span> <span class="pp">|</span></span>
+<span id="cb57-393"><a href="#cb57-393" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Compare two independent groups <span class="pp">|</span> Two-sample (Welch's) <span class="pp">|</span> <span class="in">`t.test(x, y)`</span> <span class="pp">|</span></span>
+<span id="cb57-394"><a href="#cb57-394" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Compare two independent groups (equal variance) <span class="pp">|</span> Two-sample (Student's) <span class="pp">|</span> <span class="in">`t.test(x, y, var.equal = TRUE)`</span> <span class="pp">|</span></span>
+<span id="cb57-395"><a href="#cb57-395" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Compare paired measurements <span class="pp">|</span> Paired <span class="pp">|</span> <span class="in">`t.test(x, y, paired = TRUE)`</span> <span class="pp">|</span></span>
+<span id="cb57-396"><a href="#cb57-396" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-397"><a href="#cb57-397" aria-hidden="true" tabindex="-1"></a>**Decision guidelines:**</span>
+<span id="cb57-398"><a href="#cb57-398" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-399"><a href="#cb57-399" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>If comparing to a fixed, known value: **one-sample t-test**</span>
+<span id="cb57-400"><a href="#cb57-400" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>If observations in groups are naturally paired: **paired t-test**</span>
+<span id="cb57-401"><a href="#cb57-401" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>If groups are independent with potentially unequal variances: **Welch's t-test** (the default)</span>
+<span id="cb57-402"><a href="#cb57-402" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>If groups are independent and you have strong evidence of equal variances: **Student's t-test**</span>
+<span id="cb57-403"><a href="#cb57-403" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-404"><a href="#cb57-404" aria-hidden="true" tabindex="-1"></a>When in doubt, use Welch's t-test—it performs nearly as well as Student's t-test when variances are equal and much better when they are not.</span>
+<span id="cb57-405"><a href="#cb57-405" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-406"><a href="#cb57-406" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
+<span id="cb57-407"><a href="#cb57-407" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-408"><a href="#cb57-408" aria-hidden="true" tabindex="-1"></a>The t-test family provides essential tools for comparing means:</span>
+<span id="cb57-409"><a href="#cb57-409" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-410"><a href="#cb57-410" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>One-sample tests compare a sample to a hypothesized value</span>
+<span id="cb57-411"><a href="#cb57-411" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Two-sample tests compare independent groups</span>
+<span id="cb57-412"><a href="#cb57-412" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Paired tests compare matched or repeated measurements</span>
+<span id="cb57-413"><a href="#cb57-413" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Welch's version handles unequal variances (recommended default)</span>
+<span id="cb57-414"><a href="#cb57-414" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Randomization tests provide a distribution-free alternative</span>
+<span id="cb57-415"><a href="#cb57-415" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-416"><a href="#cb57-416" aria-hidden="true" tabindex="-1"></a>Always visualize your data, check assumptions, and report effect sizes alongside p-values. A statistically significant result is only meaningful if the underlying assumptions are reasonable and the effect size is practically relevant.</span>
+<span id="cb57-417"><a href="#cb57-417" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-418"><a href="#cb57-418" aria-hidden="true" tabindex="-1"></a><span class="fu">## Practice Exercises</span></span>
+<span id="cb57-419"><a href="#cb57-419" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-420"><a href="#cb57-420" aria-hidden="true" tabindex="-1"></a>For hands-on practice with t-tests and hypothesis testing, see @sec-ex-hypothesis in the Practice Exercises appendix. The exercises include:</span>
+<span id="cb57-421"><a href="#cb57-421" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-422"><a href="#cb57-422" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Performing one-sample and two-sample t-tests</span>
+<span id="cb57-423"><a href="#cb57-423" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Exploring the effects of sample size on statistical power</span>
+<span id="cb57-424"><a href="#cb57-424" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Chi-square tests for categorical data</span>
+<span id="cb57-425"><a href="#cb57-425" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Testing for Hardy-Weinberg equilibrium</span>
+<span id="cb57-426"><a href="#cb57-426" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-427"><a href="#cb57-427" aria-hidden="true" tabindex="-1"></a><span class="fu">## Additional Resources</span></span>
+<span id="cb57-428"><a href="#cb57-428" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-429"><a href="#cb57-429" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>@logan2010biostatistical - Detailed coverage of t-tests with biological examples</span>
+<span id="cb57-430"><a href="#cb57-430" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>@irizarry2019introduction - Excellent treatment of randomization and permutation methods</span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

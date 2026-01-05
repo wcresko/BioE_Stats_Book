@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>19&nbsp; Analysis of Variance – Statistics for Bioengineering</title>
+<title>20&nbsp; Analysis of Variance – Statistics for Bioengineering</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -55,7 +55,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -146,7 +166,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/19-anova.html">Advanced Topics</a></li><li class="breadcrumb-item"><a href="../chapters/19-anova.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Analysis of Variance</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/19-anova.html">Advanced Topics</a></li><li class="breadcrumb-item"><a href="../chapters/19-anova.html"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Analysis of Variance</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -299,6 +319,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Bootstrapping</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/14b-what-are-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">What are Models?</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -313,25 +339,25 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/15-correlation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Correlation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Correlation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/16-simple-linear-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Simple Linear Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Simple Linear Regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/17-residual-analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Residual Analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Residual Analysis</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/18-statistical-power.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Statistical Power</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Statistical Power</span></span></a>
   </div>
 </li>
       </ul>
@@ -348,31 +374,37 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/19-anova.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Analysis of Variance</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Analysis of Variance</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/20-multiple-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Multiple Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Multiple Regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/21-glm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/22-statistical-learning.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Statistical Learning</span></span></a>
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Statistical Learning</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/23-high-performance-computing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">High Performance Computing</span></span></a>
+  <a href="../chapters/23-dimensionality-reduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Dimensionality Reduction and Multivariate Methods</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/24-high-performance-computing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">High Performance Computing</span></span></a>
   </div>
 </li>
       </ul>
@@ -380,7 +412,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
- <span class="menu-text">Appendices</span></a>
+ <span class="menu-text">Scientific Communication</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -388,14 +420,73 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../chapters/25-presenting-results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Presenting Statistical Results</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../chapters/A1-eugenics-history.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">The Eugenics History of Statistics</span></span></a>
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">The Eugenics History of Statistics</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/A2-r-reference.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">R Quick Reference</span></span></a>
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">R Command Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A3-probability-distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Common Probability Distributions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A4-greek-letters.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Greek Letters in Mathematics and Statistics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A5-sampling-distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Sampling Distributions in Hypothesis Testing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A6-unix-reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Unix Command Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A7-latex-reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">LaTeX Command Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A8-keyboard-shortcuts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Keyboard Shortcuts Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A9-exercises.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Practice Exercises</span></span></a>
   </div>
 </li>
       </ul>
@@ -416,27 +507,33 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#beyond-two-groups" id="toc-beyond-two-groups" class="nav-link active" data-scroll-target="#beyond-two-groups"><span class="header-section-number">19.1</span> Beyond Two Groups</a></li>
-  <li><a href="#the-anova-framework" id="toc-the-anova-framework" class="nav-link" data-scroll-target="#the-anova-framework"><span class="header-section-number">19.2</span> The ANOVA Framework</a></li>
-  <li><a href="#the-f-test" id="toc-the-f-test" class="nav-link" data-scroll-target="#the-f-test"><span class="header-section-number">19.3</span> The F-Test</a></li>
-  <li><a href="#one-way-anova-in-r" id="toc-one-way-anova-in-r" class="nav-link" data-scroll-target="#one-way-anova-in-r"><span class="header-section-number">19.4</span> One-Way ANOVA in R</a></li>
-  <li><a href="#anova-assumptions" id="toc-anova-assumptions" class="nav-link" data-scroll-target="#anova-assumptions"><span class="header-section-number">19.5</span> ANOVA Assumptions</a></li>
-  <li><a href="#post-hoc-comparisons" id="toc-post-hoc-comparisons" class="nav-link" data-scroll-target="#post-hoc-comparisons"><span class="header-section-number">19.6</span> Post-Hoc Comparisons</a></li>
-  <li><a href="#planned-contrasts" id="toc-planned-contrasts" class="nav-link" data-scroll-target="#planned-contrasts"><span class="header-section-number">19.7</span> Planned Contrasts</a></li>
-  <li><a href="#fixed-vs.-random-effects" id="toc-fixed-vs.-random-effects" class="nav-link" data-scroll-target="#fixed-vs.-random-effects"><span class="header-section-number">19.8</span> Fixed vs.&nbsp;Random Effects</a></li>
-  <li><a href="#two-way-anova" id="toc-two-way-anova" class="nav-link" data-scroll-target="#two-way-anova"><span class="header-section-number">19.9</span> Two-Way ANOVA</a></li>
-  <li><a href="#interaction-plots" id="toc-interaction-plots" class="nav-link" data-scroll-target="#interaction-plots"><span class="header-section-number">19.10</span> Interaction Plots</a></li>
-  <li><a href="#nested-designs" id="toc-nested-designs" class="nav-link" data-scroll-target="#nested-designs"><span class="header-section-number">19.11</span> Nested Designs</a></li>
-  <li><a href="#practical-considerations" id="toc-practical-considerations" class="nav-link" data-scroll-target="#practical-considerations"><span class="header-section-number">19.12</span> Practical Considerations</a></li>
+  <li><a href="#beyond-two-groups" id="toc-beyond-two-groups" class="nav-link active" data-scroll-target="#beyond-two-groups"><span class="header-section-number">20.1</span> Beyond Two Groups</a></li>
+  <li><a href="#the-anova-framework" id="toc-the-anova-framework" class="nav-link" data-scroll-target="#the-anova-framework"><span class="header-section-number">20.2</span> The ANOVA Framework</a></li>
+  <li><a href="#the-f-test" id="toc-the-f-test" class="nav-link" data-scroll-target="#the-f-test"><span class="header-section-number">20.3</span> The F-Test</a></li>
+  <li><a href="#one-way-anova-in-r" id="toc-one-way-anova-in-r" class="nav-link" data-scroll-target="#one-way-anova-in-r"><span class="header-section-number">20.4</span> One-Way ANOVA in R</a></li>
+  <li><a href="#anova-assumptions" id="toc-anova-assumptions" class="nav-link" data-scroll-target="#anova-assumptions"><span class="header-section-number">20.5</span> ANOVA Assumptions</a></li>
+  <li><a href="#post-hoc-comparisons" id="toc-post-hoc-comparisons" class="nav-link" data-scroll-target="#post-hoc-comparisons"><span class="header-section-number">20.6</span> Post-Hoc Comparisons</a></li>
+  <li><a href="#planned-contrasts" id="toc-planned-contrasts" class="nav-link" data-scroll-target="#planned-contrasts"><span class="header-section-number">20.7</span> Planned Contrasts</a></li>
+  <li><a href="#fixed-vs.-random-effects" id="toc-fixed-vs.-random-effects" class="nav-link" data-scroll-target="#fixed-vs.-random-effects"><span class="header-section-number">20.8</span> Fixed vs.&nbsp;Random Effects</a></li>
+  <li><a href="#two-way-anova" id="toc-two-way-anova" class="nav-link" data-scroll-target="#two-way-anova"><span class="header-section-number">20.9</span> Two-Way ANOVA</a></li>
+  <li><a href="#interaction-plots" id="toc-interaction-plots" class="nav-link" data-scroll-target="#interaction-plots"><span class="header-section-number">20.10</span> Interaction Plots</a></li>
+  <li><a href="#nested-designs" id="toc-nested-designs" class="nav-link" data-scroll-target="#nested-designs"><span class="header-section-number">20.11</span> Nested Designs</a></li>
+  <li><a href="#practical-considerations" id="toc-practical-considerations" class="nav-link" data-scroll-target="#practical-considerations"><span class="header-section-number">20.12</span> Practical Considerations</a></li>
+  <li><a href="#anova-as-a-general-linear-model" id="toc-anova-as-a-general-linear-model" class="nav-link" data-scroll-target="#anova-as-a-general-linear-model"><span class="header-section-number">20.13</span> ANOVA as a General Linear Model</a></li>
+  <li><a href="#effect-sizes-in-anova" id="toc-effect-sizes-in-anova" class="nav-link" data-scroll-target="#effect-sizes-in-anova"><span class="header-section-number">20.14</span> Effect Sizes in ANOVA</a></li>
+  <li><a href="#pseudoreplication" id="toc-pseudoreplication" class="nav-link" data-scroll-target="#pseudoreplication"><span class="header-section-number">20.15</span> Pseudoreplication</a></li>
+  <li><a href="#repeated-measures-anova" id="toc-repeated-measures-anova" class="nav-link" data-scroll-target="#repeated-measures-anova"><span class="header-section-number">20.16</span> Repeated Measures ANOVA</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">20.17</span> Summary</a></li>
+  <li><a href="#additional-resources" id="toc-additional-resources" class="nav-link" data-scroll-target="#additional-resources"><span class="header-section-number">20.18</span> Additional Resources</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/19-anova.html">Advanced Topics</a></li><li class="breadcrumb-item"><a href="../chapters/19-anova.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Analysis of Variance</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/19-anova.html">Advanced Topics</a></li><li class="breadcrumb-item"><a href="../chapters/19-anova.html"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Analysis of Variance</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span id="sec-anova" class="quarto-section-identifier"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Analysis of Variance</span></span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span id="sec-anova" class="quarto-section-identifier"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Analysis of Variance</span></span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
 </div>
 
 
@@ -453,34 +550,34 @@ window.Quarto = {
 </header>
 
 
-<section id="beyond-two-groups" class="level2" data-number="19.1">
-<h2 data-number="19.1" class="anchored" data-anchor-id="beyond-two-groups"><span class="header-section-number">19.1</span> Beyond Two Groups</h2>
+<section id="beyond-two-groups" class="level2" data-number="20.1">
+<h2 data-number="20.1" class="anchored" data-anchor-id="beyond-two-groups"><span class="header-section-number">20.1</span> Beyond Two Groups</h2>
 <p>The t-test compares two groups, but many experiments involve more than two. We might compare three drug treatments, five temperature conditions, or four genetic strains. Running multiple t-tests creates problems: with many comparisons, false positives become likely even when no true differences exist.</p>
 <p>Analysis of Variance (ANOVA) provides a solution. It tests whether any of the group means differ from the others in a single test, controlling the overall Type I error rate.</p>
 </section>
-<section id="the-anova-framework" class="level2" data-number="19.2">
-<h2 data-number="19.2" class="anchored" data-anchor-id="the-anova-framework"><span class="header-section-number">19.2</span> The ANOVA Framework</h2>
+<section id="the-anova-framework" class="level2" data-number="20.2">
+<h2 data-number="20.2" class="anchored" data-anchor-id="the-anova-framework"><span class="header-section-number">20.2</span> The ANOVA Framework</h2>
 <p>ANOVA partitions the total variation in the data into components: variation between groups (due to treatment effects) and variation within groups (due to random error).</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../images/images_5b.016.jpeg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+<p><img src="../images/Images_5b.016.jpeg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
 </figure>
 </div>
 <p>The key insight is that if groups have equal means, the between-group variation should be similar to the within-group variation. If the between-group variation is much larger, the group means probably differ.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../images/images_5b.015.jpeg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+<p><img src="../images/Images_5b.015.jpeg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
 </figure>
 </div>
 </section>
-<section id="the-f-test" class="level2" data-number="19.3">
-<h2 data-number="19.3" class="anchored" data-anchor-id="the-f-test"><span class="header-section-number">19.3</span> The F-Test</h2>
+<section id="the-f-test" class="level2" data-number="20.3">
+<h2 data-number="20.3" class="anchored" data-anchor-id="the-f-test"><span class="header-section-number">20.3</span> The F-Test</h2>
 <p>ANOVA uses the F-statistic:</p>
 <p><span class="math display">\[F = \frac{MS_{between}}{MS_{within}} = \frac{\text{Variance between groups}}{\text{Variance within groups}}\]</span></p>
 <p>Under the null hypothesis (all group means equal), F follows an F-distribution. Large F values indicate that group means differ more than expected by chance.</p>
 </section>
-<section id="one-way-anova-in-r" class="level2" data-number="19.4">
-<h2 data-number="19.4" class="anchored" data-anchor-id="one-way-anova-in-r"><span class="header-section-number">19.4</span> One-Way ANOVA in R</h2>
+<section id="one-way-anova-in-r" class="level2" data-number="20.4">
+<h2 data-number="20.4" class="anchored" data-anchor-id="one-way-anova-in-r"><span class="header-section-number">20.4</span> One-Way ANOVA in R</h2>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -498,8 +595,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <p>The significant p-value tells us that sepal length differs among species, but not which species differ from which.</p>
 </section>
-<section id="anova-assumptions" class="level2" data-number="19.5">
-<h2 data-number="19.5" class="anchored" data-anchor-id="anova-assumptions"><span class="header-section-number">19.5</span> ANOVA Assumptions</h2>
+<section id="anova-assumptions" class="level2" data-number="20.5">
+<h2 data-number="20.5" class="anchored" data-anchor-id="anova-assumptions"><span class="header-section-number">20.5</span> ANOVA Assumptions</h2>
 <p>Like the t-test, ANOVA assumes:</p>
 <ol type="1">
 <li><strong>Normality</strong>: Observations within each group are normally distributed</li>
@@ -508,8 +605,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </ol>
 <p>ANOVA is robust to mild violations of normality, especially with balanced designs and large samples. Serious violations of homogeneity of variance are more problematic but can be addressed with Welch’s ANOVA or transformations.</p>
 </section>
-<section id="post-hoc-comparisons" class="level2" data-number="19.6">
-<h2 data-number="19.6" class="anchored" data-anchor-id="post-hoc-comparisons"><span class="header-section-number">19.6</span> Post-Hoc Comparisons</h2>
+<section id="post-hoc-comparisons" class="level2" data-number="20.6">
+<h2 data-number="20.6" class="anchored" data-anchor-id="post-hoc-comparisons"><span class="header-section-number">20.6</span> Post-Hoc Comparisons</h2>
 <p>A significant ANOVA tells us groups differ but not how. <strong>Post-hoc tests</strong> compare specific pairs of groups while controlling for multiple comparisons.</p>
 <p><strong>Tukey’s HSD</strong> (Honestly Significant Difference) compares all pairs:</p>
 <div class="cell">
@@ -532,8 +629,8 @@ virginica-versicolor 0.652 0.4082273 0.8957727     0</code></pre>
 </div>
 <p>Each pairwise comparison includes the difference in means, confidence interval, and adjusted p-value.</p>
 </section>
-<section id="planned-contrasts" class="level2" data-number="19.7">
-<h2 data-number="19.7" class="anchored" data-anchor-id="planned-contrasts"><span class="header-section-number">19.7</span> Planned Contrasts</h2>
+<section id="planned-contrasts" class="level2" data-number="20.7">
+<h2 data-number="20.7" class="anchored" data-anchor-id="planned-contrasts"><span class="header-section-number">20.7</span> Planned Contrasts</h2>
 <p>If you have specific hypotheses about which groups should differ (decided before seeing the data), planned contrasts are more powerful than post-hoc tests. They focus statistical power on the comparisons you care about.</p>
 <div class="cell">
 <details class="code-fold">
@@ -567,14 +664,14 @@ F-statistic: 119.3 on 2 and 147 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </section>
-<section id="fixed-vs.-random-effects" class="level2" data-number="19.8">
-<h2 data-number="19.8" class="anchored" data-anchor-id="fixed-vs.-random-effects"><span class="header-section-number">19.8</span> Fixed vs.&nbsp;Random Effects</h2>
+<section id="fixed-vs.-random-effects" class="level2" data-number="20.8">
+<h2 data-number="20.8" class="anchored" data-anchor-id="fixed-vs.-random-effects"><span class="header-section-number">20.8</span> Fixed vs.&nbsp;Random Effects</h2>
 <p><strong>Fixed effects</strong> are specific treatments of interest that would be the same if the study were replicated—drug A, drug B, drug C. Conclusions apply only to these specific treatments.</p>
 <p><strong>Random effects</strong> are levels sampled from a larger population—particular subjects, batches, or locations. The goal is to generalize to the population of possible levels, not just those observed.</p>
 <p>The distinction matters because it affects how F-ratios are calculated and what conclusions can be drawn.</p>
 </section>
-<section id="two-way-anova" class="level2" data-number="19.9">
-<h2 data-number="19.9" class="anchored" data-anchor-id="two-way-anova"><span class="header-section-number">19.9</span> Two-Way ANOVA</h2>
+<section id="two-way-anova" class="level2" data-number="20.9">
+<h2 data-number="20.9" class="anchored" data-anchor-id="two-way-anova"><span class="header-section-number">20.9</span> Two-Way ANOVA</h2>
 <p>When experiments have two factors, two-way ANOVA examines main effects of each factor and their interaction.</p>
 <div class="cell">
 <details class="code-fold">
@@ -604,8 +701,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <p>An <strong>interaction</strong> means the effect of one factor depends on the level of the other. Significant interactions often require examining simple effects rather than main effects.</p>
 </section>
-<section id="interaction-plots" class="level2" data-number="19.10">
-<h2 data-number="19.10" class="anchored" data-anchor-id="interaction-plots"><span class="header-section-number">19.10</span> Interaction Plots</h2>
+<section id="interaction-plots" class="level2" data-number="20.10">
+<h2 data-number="20.10" class="anchored" data-anchor-id="interaction-plots"><span class="header-section-number">20.10</span> Interaction Plots</h2>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -631,20 +728,195 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </figure>
 </div>
 </section>
-<section id="nested-designs" class="level2" data-number="19.11">
-<h2 data-number="19.11" class="anchored" data-anchor-id="nested-designs"><span class="header-section-number">19.11</span> Nested Designs</h2>
+<section id="nested-designs" class="level2" data-number="20.11">
+<h2 data-number="20.11" class="anchored" data-anchor-id="nested-designs"><span class="header-section-number">20.11</span> Nested Designs</h2>
 <p>In nested designs, levels of one factor exist only within levels of another. For example, technicians might be nested within labs—each technician works in only one lab.</p>
 <p>Nested designs have no interaction term because not all combinations of factor levels exist. They are common when sampling is hierarchical.</p>
 </section>
-<section id="practical-considerations" class="level2" data-number="19.12">
-<h2 data-number="19.12" class="anchored" data-anchor-id="practical-considerations"><span class="header-section-number">19.12</span> Practical Considerations</h2>
+<section id="practical-considerations" class="level2" data-number="20.12">
+<h2 data-number="20.12" class="anchored" data-anchor-id="practical-considerations"><span class="header-section-number">20.12</span> Practical Considerations</h2>
 <p>Report effect sizes (like <span class="math inline">\(\eta^2\)</span>) alongside p-values. A significant ANOVA with tiny effect size may not be practically meaningful.</p>
 <p>Check assumptions with residual plots. Consider transformations or nonparametric alternatives (Kruskal-Wallis) when assumptions are violated.</p>
 <p>Plan your sample size using power analysis before collecting data, specifying the minimum effect size you want to detect.</p>
+</section>
+<section id="anova-as-a-general-linear-model" class="level2" data-number="20.13">
+<h2 data-number="20.13" class="anchored" data-anchor-id="anova-as-a-general-linear-model"><span class="header-section-number">20.13</span> ANOVA as a General Linear Model</h2>
+<p>ANOVA is a special case of the general linear model (GLM). Both t-tests and ANOVA can be expressed as regression with indicator variables (dummy coding). This unified framework shows that these seemingly different methods are fundamentally the same.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ANOVA using lm() with dummy coding</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Equivalent to aov()</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>iris_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sepal.Length <span class="sc">~</span> Species, <span class="at">data =</span> iris)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(iris_lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: Sepal.Length
+           Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+Species     2 63.212  31.606  119.26 &lt; 2.2e-16 ***
+Residuals 147 38.956   0.265                      
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>The connection becomes clear when you realize: - A one-sample t-test is regression on an intercept - A two-sample t-test is regression with one binary predictor - One-way ANOVA is regression with multiple indicator variables</p>
+<p>This unified view is powerful: once you understand regression, you understand the entire family of linear models.</p>
+</section>
+<section id="effect-sizes-in-anova" class="level2" data-number="20.14">
+<h2 data-number="20.14" class="anchored" data-anchor-id="effect-sizes-in-anova"><span class="header-section-number">20.14</span> Effect Sizes in ANOVA</h2>
+<p>Beyond statistical significance, report how much of the variance is explained by your factors.</p>
+<p><strong>Eta-squared (<span class="math inline">\(\eta^2\)</span>)</strong>: Proportion of total variance explained by the factor</p>
+<p><span class="math display">\[\eta^2 = \frac{SS_{between}}{SS_{total}}\]</span></p>
+<p><strong>Partial eta-squared (<span class="math inline">\(\eta^2_p\)</span>)</strong>: Proportion of variance explained after accounting for other factors</p>
+<p><strong>Omega-squared (<span class="math inline">\(\omega^2\)</span>)</strong>: Less biased estimate of variance explained in the population</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate effect sizes</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>ss <span class="ot">&lt;-</span> <span class="fu">summary</span>(iris_aov)[[<span class="dv">1</span>]]</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>ss_between <span class="ot">&lt;-</span> ss[<span class="st">"Species"</span>, <span class="st">"Sum Sq"</span>]</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>ss_within <span class="ot">&lt;-</span> ss[<span class="st">"Residuals"</span>, <span class="st">"Sum Sq"</span>]</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>ss_total <span class="ot">&lt;-</span> ss_between <span class="sc">+</span> ss_within</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>eta_squared <span class="ot">&lt;-</span> ss_between <span class="sc">/</span> ss_total</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Eta-squared:"</span>, <span class="fu">round</span>(eta_squared, <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Eta-squared: 0.619 </code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Omega-squared (less biased)</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>ms_within <span class="ot">&lt;-</span> ss[<span class="st">"Residuals"</span>, <span class="st">"Mean Sq"</span>]</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(iris)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">unique</span>(iris<span class="sc">$</span>Species))</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>omega_squared <span class="ot">&lt;-</span> (ss_between <span class="sc">-</span> (k<span class="dv">-1</span>) <span class="sc">*</span> ms_within) <span class="sc">/</span> (ss_total <span class="sc">+</span> ms_within)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Omega-squared:"</span>, <span class="fu">round</span>(omega_squared, <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Omega-squared: 0.612 </code></pre>
+</div>
+</div>
+</section>
+<section id="pseudoreplication" class="level2" data-number="20.15">
+<h2 data-number="20.15" class="anchored" data-anchor-id="pseudoreplication"><span class="header-section-number">20.15</span> Pseudoreplication</h2>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+A Common Design Flaw
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Pseudoreplication</strong> occurs when non-independent observations are treated as independent replicates. This inflates the apparent sample size and leads to artificially small p-values.</p>
+<p>Common examples: - Multiple measurements from the same individual treated as independent - Multiple cells from the same culture dish - Multiple fish from the same tank when treatment was applied to tanks - Technical replicates confused with biological replicates</p>
+</div>
+</div>
+<p>The unit of replication must be the unit to which the treatment was independently applied. If you treat three tanks with drug A and three with drug B, you have n=3 per group regardless of how many fish are in each tank.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Wrong: treats individual fish as independent</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># If 10 fish per tank, and tanks are the true units:</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># This overstates the evidence because fish within tanks are correlated</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>tank_A <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">12</span>, <span class="dv">11</span>), <span class="at">each =</span> <span class="dv">10</span>) <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">30</span>, <span class="at">sd =</span> <span class="dv">1</span>)  <span class="co"># 3 tanks, 10 fish each</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>tank_B <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">9</span>, <span class="fl">8.5</span>), <span class="at">each =</span> <span class="dv">10</span>) <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">30</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Pseudoreplicated analysis (WRONG - n appears to be 30 per group)</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Pseudoreplicated p-value:"</span>, <span class="fu">t.test</span>(tank_A, tank_B)<span class="sc">$</span>p.value, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Pseudoreplicated p-value: 2.315344e-11 </code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Correct analysis (using tank means, n = 3 per group)</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>means_A <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">mean</span>(tank_A[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]), <span class="fu">mean</span>(tank_A[<span class="dv">11</span><span class="sc">:</span><span class="dv">20</span>]), <span class="fu">mean</span>(tank_A[<span class="dv">21</span><span class="sc">:</span><span class="dv">30</span>]))</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>means_B <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">mean</span>(tank_B[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]), <span class="fu">mean</span>(tank_B[<span class="dv">11</span><span class="sc">:</span><span class="dv">20</span>]), <span class="fu">mean</span>(tank_B[<span class="dv">21</span><span class="sc">:</span><span class="dv">30</span>]))</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Correct p-value:"</span>, <span class="fu">t.test</span>(means_A, means_B)<span class="sc">$</span>p.value, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Correct p-value: 0.008405113 </code></pre>
+</div>
+</div>
+<p>The correct analysis has less power (larger p-value) because it honestly reflects the true sample size.</p>
+</section>
+<section id="repeated-measures-anova" class="level2" data-number="20.16">
+<h2 data-number="20.16" class="anchored" data-anchor-id="repeated-measures-anova"><span class="header-section-number">20.16</span> Repeated Measures ANOVA</h2>
+<p>When the same subjects are measured under multiple conditions, observations are not independent—each subject creates correlated measurements. <strong>Repeated measures ANOVA</strong> accounts for this by partitioning out between-subject variability.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulated repeated measures data</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>n_subjects <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>subject <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span>n_subjects, <span class="dv">3</span>))</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>time <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"Before"</span>, <span class="st">"During"</span>, <span class="st">"After"</span>), <span class="at">each =</span> n_subjects))</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Subjects have baseline differences, plus time effect</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>baseline <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n_subjects, <span class="dv">50</span>, <span class="dv">10</span>)</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>response <span class="ot">&lt;-</span> <span class="fu">c</span>(baseline, baseline <span class="sc">+</span> <span class="dv">5</span> <span class="sc">+</span> <span class="fu">rnorm</span>(n_subjects, <span class="dv">0</span>, <span class="dv">3</span>),</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>              baseline <span class="sc">+</span> <span class="dv">2</span> <span class="sc">+</span> <span class="fu">rnorm</span>(n_subjects, <span class="dv">0</span>, <span class="dv">3</span>))</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>rm_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(subject, time, response)</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Repeated measures ANOVA</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>rm_aov <span class="ot">&lt;-</span> <span class="fu">aov</span>(response <span class="sc">~</span> time <span class="sc">+</span> <span class="fu">Error</span>(subject<span class="sc">/</span>time), <span class="at">data =</span> rm_data)</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(rm_aov)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Error: subject
+          Df Sum Sq Mean Sq F value Pr(&gt;F)
+Residuals  9   2593   288.1               
+
+Error: subject:time
+          Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+time       2  187.3   93.64   12.52 0.000391 ***
+Residuals 18  134.6    7.48                     
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>Repeated measures designs are powerful because they control for individual differences, but require additional assumptions (sphericity) that should be checked.</p>
+</section>
+<section id="summary" class="level2" data-number="20.17">
+<h2 data-number="20.17" class="anchored" data-anchor-id="summary"><span class="header-section-number">20.17</span> Summary</h2>
+<p>ANOVA provides a flexible framework for comparing groups:</p>
+<ul>
+<li>One-way ANOVA compares means across multiple groups</li>
+<li>The F-test assesses whether between-group variance exceeds within-group variance</li>
+<li>Post-hoc tests identify which specific groups differ</li>
+<li>Two-way ANOVA examines main effects and interactions</li>
+<li>Fixed effects are specific treatments; random effects are sampled from populations</li>
+<li>ANOVA is part of the general linear model family</li>
+<li>Always report effect sizes, not just p-values</li>
+<li>Beware of pseudoreplication—the unit of analysis must match the unit of replication</li>
+</ul>
+</section>
+<section id="additional-resources" class="level2" data-number="20.18">
+<h2 data-number="20.18" class="anchored" data-anchor-id="additional-resources"><span class="header-section-number">20.18</span> Additional Resources</h2>
+<ul>
+<li><span class="citation" data-cites="logan2010biostatistical">Logan (<a href="../references.html#ref-logan2010biostatistical" role="doc-biblioref">2010</a>)</span> - Comprehensive treatment of ANOVA designs in biological research</li>
+<li><span class="citation" data-cites="crawley2007r">Crawley (<a href="../references.html#ref-crawley2007r" role="doc-biblioref">2007</a>)</span> - Detailed coverage of linear models in R including ANOVA</li>
+</ul>
 
 
 <!-- -->
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-crawley2007r" class="csl-entry" role="listitem">
+Crawley, Michael J. 2007. <em>The r Book</em>. John Wiley &amp; Sons.
+</div>
+<div id="ref-logan2010biostatistical" class="csl-entry" role="listitem">
+Logan, Murray. 2010. <em>Biostatistical Design and Analysis Using r</em>. Wiley-Blackwell.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->
@@ -1101,153 +1373,279 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../chapters/18-statistical-power.html" class="pagination-link" aria-label="Statistical Power">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Statistical Power</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Statistical Power</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../chapters/20-multiple-regression.html" class="pagination-link" aria-label="Multiple Regression">
-        <span class="nav-page-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Multiple Regression</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Multiple Regression</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb10" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Analysis of Variance {#sec-anova}</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_minimal</span>())</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="fu">## Beyond Two Groups</span></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>The t-test compares two groups, but many experiments involve more than two. We might compare three drug treatments, five temperature conditions, or four genetic strains. Running multiple t-tests creates problems: with many comparisons, false positives become likely even when no true differences exist.</span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>Analysis of Variance (ANOVA) provides a solution. It tests whether any of the group means differ from the others in a single test, controlling the overall Type I error rate.</span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="fu">## The ANOVA Framework</span></span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>ANOVA partitions the total variation in the data into components: variation between groups (due to treatment effects) and variation within groups (due to random error).</span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="al">![](../images/images_5b.016.jpeg)</span>{fig-align="center"}</span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>The key insight is that if groups have equal means, the between-group variation should be similar to the within-group variation. If the between-group variation is much larger, the group means probably differ.</span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a><span class="al">![](../images/images_5b.015.jpeg)</span>{fig-align="center"}</span>
-<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a><span class="fu">## The F-Test</span></span>
-<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>ANOVA uses the F-statistic:</span>
-<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>$$F = \frac{MS_{between}}{MS_{within}} = \frac{\text{Variance between groups}}{\text{Variance within groups}}$$</span>
-<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>Under the null hypothesis (all group means equal), F follows an F-distribution. Large F values indicate that group means differ more than expected by chance.</span>
-<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a><span class="fu">## One-Way ANOVA in R</span></span>
-<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a><span class="co"># Example using iris data</span></span>
-<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>iris_aov <span class="ot">&lt;-</span> <span class="fu">aov</span>(Sepal.Length <span class="sc">~</span> Species, <span class="at">data =</span> iris)</span>
-<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(iris_aov)</span>
-<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a>The significant p-value tells us that sepal length differs among species, but not which species differ from which.</span>
-<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a><span class="fu">## ANOVA Assumptions</span></span>
-<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a>Like the t-test, ANOVA assumes:</span>
-<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Normality**: Observations within each group are normally distributed</span>
-<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Homogeneity of variance**: Groups have equal variances</span>
-<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Independence**: Observations are independent</span>
-<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a>ANOVA is robust to mild violations of normality, especially with balanced designs and large samples. Serious violations of homogeneity of variance are more problematic but can be addressed with Welch's ANOVA or transformations.</span>
-<span id="cb10-57"><a href="#cb10-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-58"><a href="#cb10-58" aria-hidden="true" tabindex="-1"></a><span class="fu">## Post-Hoc Comparisons</span></span>
-<span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-60"><a href="#cb10-60" aria-hidden="true" tabindex="-1"></a>A significant ANOVA tells us groups differ but not how. **Post-hoc tests** compare specific pairs of groups while controlling for multiple comparisons.</span>
-<span id="cb10-61"><a href="#cb10-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-62"><a href="#cb10-62" aria-hidden="true" tabindex="-1"></a>**Tukey's HSD** (Honestly Significant Difference) compares all pairs:</span>
-<span id="cb10-63"><a href="#cb10-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-66"><a href="#cb10-66" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb10-67"><a href="#cb10-67" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(iris_aov)</span>
-<span id="cb10-68"><a href="#cb10-68" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-69"><a href="#cb10-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-70"><a href="#cb10-70" aria-hidden="true" tabindex="-1"></a>Each pairwise comparison includes the difference in means, confidence interval, and adjusted p-value.</span>
-<span id="cb10-71"><a href="#cb10-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-72"><a href="#cb10-72" aria-hidden="true" tabindex="-1"></a><span class="fu">## Planned Contrasts</span></span>
-<span id="cb10-73"><a href="#cb10-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-74"><a href="#cb10-74" aria-hidden="true" tabindex="-1"></a>If you have specific hypotheses about which groups should differ (decided before seeing the data), planned contrasts are more powerful than post-hoc tests. They focus statistical power on the comparisons you care about.</span>
-<span id="cb10-75"><a href="#cb10-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-78"><a href="#cb10-78" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb10-79"><a href="#cb10-79" aria-hidden="true" tabindex="-1"></a><span class="co"># Example: Compare setosa to the average of the other two species</span></span>
-<span id="cb10-80"><a href="#cb10-80" aria-hidden="true" tabindex="-1"></a><span class="fu">contrasts</span>(iris<span class="sc">$</span>Species) <span class="ot">&lt;-</span> <span class="fu">cbind</span>(</span>
-<span id="cb10-81"><a href="#cb10-81" aria-hidden="true" tabindex="-1"></a>  <span class="at">setosa_vs_others =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>)</span>
-<span id="cb10-82"><a href="#cb10-82" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb10-83"><a href="#cb10-83" aria-hidden="true" tabindex="-1"></a><span class="fu">summary.lm</span>(<span class="fu">aov</span>(Sepal.Length <span class="sc">~</span> Species, <span class="at">data =</span> iris))</span>
-<span id="cb10-84"><a href="#cb10-84" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-85"><a href="#cb10-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-86"><a href="#cb10-86" aria-hidden="true" tabindex="-1"></a><span class="fu">## Fixed vs. Random Effects</span></span>
-<span id="cb10-87"><a href="#cb10-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-88"><a href="#cb10-88" aria-hidden="true" tabindex="-1"></a>**Fixed effects** are specific treatments of interest that would be the same if the study were replicated—drug A, drug B, drug C. Conclusions apply only to these specific treatments.</span>
-<span id="cb10-89"><a href="#cb10-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-90"><a href="#cb10-90" aria-hidden="true" tabindex="-1"></a>**Random effects** are levels sampled from a larger population—particular subjects, batches, or locations. The goal is to generalize to the population of possible levels, not just those observed.</span>
-<span id="cb10-91"><a href="#cb10-91" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-92"><a href="#cb10-92" aria-hidden="true" tabindex="-1"></a>The distinction matters because it affects how F-ratios are calculated and what conclusions can be drawn.</span>
-<span id="cb10-93"><a href="#cb10-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-94"><a href="#cb10-94" aria-hidden="true" tabindex="-1"></a><span class="fu">## Two-Way ANOVA</span></span>
-<span id="cb10-95"><a href="#cb10-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-96"><a href="#cb10-96" aria-hidden="true" tabindex="-1"></a>When experiments have two factors, two-way ANOVA examines main effects of each factor and their interaction.</span>
-<span id="cb10-97"><a href="#cb10-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-100"><a href="#cb10-100" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb10-101"><a href="#cb10-101" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 7</span></span>
-<span id="cb10-102"><a href="#cb10-102" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5</span></span>
-<span id="cb10-103"><a href="#cb10-103" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulated factorial design</span></span>
-<span id="cb10-104"><a href="#cb10-104" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
-<span id="cb10-105"><a href="#cb10-105" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">20</span></span>
-<span id="cb10-106"><a href="#cb10-106" aria-hidden="true" tabindex="-1"></a>data_factorial <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb10-107"><a href="#cb10-107" aria-hidden="true" tabindex="-1"></a>  <span class="at">response =</span> <span class="fu">c</span>(<span class="fu">rnorm</span>(n, <span class="dv">10</span>, <span class="dv">2</span>), <span class="fu">rnorm</span>(n, <span class="dv">12</span>, <span class="dv">2</span>), </span>
-<span id="cb10-108"><a href="#cb10-108" aria-hidden="true" tabindex="-1"></a>               <span class="fu">rnorm</span>(n, <span class="dv">11</span>, <span class="dv">2</span>), <span class="fu">rnorm</span>(n, <span class="dv">18</span>, <span class="dv">2</span>)),</span>
-<span id="cb10-109"><a href="#cb10-109" aria-hidden="true" tabindex="-1"></a>  <span class="at">factor_A =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"A1"</span>, <span class="st">"A1"</span>, <span class="st">"A2"</span>, <span class="st">"A2"</span>), <span class="at">each =</span> n),</span>
-<span id="cb10-110"><a href="#cb10-110" aria-hidden="true" tabindex="-1"></a>  <span class="at">factor_B =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"B1"</span>, <span class="st">"B2"</span>, <span class="st">"B1"</span>, <span class="st">"B2"</span>), <span class="at">each =</span> n)</span>
-<span id="cb10-111"><a href="#cb10-111" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb10-112"><a href="#cb10-112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-113"><a href="#cb10-113" aria-hidden="true" tabindex="-1"></a>two_way <span class="ot">&lt;-</span> <span class="fu">aov</span>(response <span class="sc">~</span> factor_A <span class="sc">*</span> factor_B, <span class="at">data =</span> data_factorial)</span>
-<span id="cb10-114"><a href="#cb10-114" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(two_way)</span>
-<span id="cb10-115"><a href="#cb10-115" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-116"><a href="#cb10-116" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-117"><a href="#cb10-117" aria-hidden="true" tabindex="-1"></a>An **interaction** means the effect of one factor depends on the level of the other. Significant interactions often require examining simple effects rather than main effects.</span>
-<span id="cb10-118"><a href="#cb10-118" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-119"><a href="#cb10-119" aria-hidden="true" tabindex="-1"></a><span class="fu">## Interaction Plots</span></span>
-<span id="cb10-120"><a href="#cb10-120" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-123"><a href="#cb10-123" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb10-124"><a href="#cb10-124" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 7</span></span>
-<span id="cb10-125"><a href="#cb10-125" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5</span></span>
-<span id="cb10-126"><a href="#cb10-126" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize interaction</span></span>
-<span id="cb10-127"><a href="#cb10-127" aria-hidden="true" tabindex="-1"></a><span class="fu">interaction.plot</span>(data_factorial<span class="sc">$</span>factor_A, data_factorial<span class="sc">$</span>factor_B, </span>
-<span id="cb10-128"><a href="#cb10-128" aria-hidden="true" tabindex="-1"></a>                 data_factorial<span class="sc">$</span>response,</span>
-<span id="cb10-129"><a href="#cb10-129" aria-hidden="true" tabindex="-1"></a>                 <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"red"</span>), <span class="at">lwd =</span> <span class="dv">2</span>,</span>
-<span id="cb10-130"><a href="#cb10-130" aria-hidden="true" tabindex="-1"></a>                 <span class="at">xlab =</span> <span class="st">"Factor A"</span>, <span class="at">ylab =</span> <span class="st">"Response"</span>,</span>
-<span id="cb10-131"><a href="#cb10-131" aria-hidden="true" tabindex="-1"></a>                 <span class="at">trace.label =</span> <span class="st">"Factor B"</span>)</span>
-<span id="cb10-132"><a href="#cb10-132" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-133"><a href="#cb10-133" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-134"><a href="#cb10-134" aria-hidden="true" tabindex="-1"></a>Non-parallel lines suggest an interaction. Parallel lines suggest additive (non-interacting) effects.</span>
-<span id="cb10-135"><a href="#cb10-135" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-136"><a href="#cb10-136" aria-hidden="true" tabindex="-1"></a><span class="al">![](../images/images_7a.022.jpeg)</span>{fig-align="center"}</span>
-<span id="cb10-137"><a href="#cb10-137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-138"><a href="#cb10-138" aria-hidden="true" tabindex="-1"></a><span class="fu">## Nested Designs</span></span>
-<span id="cb10-139"><a href="#cb10-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-140"><a href="#cb10-140" aria-hidden="true" tabindex="-1"></a>In nested designs, levels of one factor exist only within levels of another. For example, technicians might be nested within labs—each technician works in only one lab.</span>
-<span id="cb10-141"><a href="#cb10-141" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-142"><a href="#cb10-142" aria-hidden="true" tabindex="-1"></a>Nested designs have no interaction term because not all combinations of factor levels exist. They are common when sampling is hierarchical.</span>
-<span id="cb10-143"><a href="#cb10-143" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-144"><a href="#cb10-144" aria-hidden="true" tabindex="-1"></a><span class="fu">## Practical Considerations</span></span>
-<span id="cb10-145"><a href="#cb10-145" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-146"><a href="#cb10-146" aria-hidden="true" tabindex="-1"></a>Report effect sizes (like $\eta^2$) alongside p-values. A significant ANOVA with tiny effect size may not be practically meaningful.</span>
-<span id="cb10-147"><a href="#cb10-147" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-148"><a href="#cb10-148" aria-hidden="true" tabindex="-1"></a>Check assumptions with residual plots. Consider transformations or nonparametric alternatives (Kruskal-Wallis) when assumptions are violated.</span>
-<span id="cb10-149"><a href="#cb10-149" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-150"><a href="#cb10-150" aria-hidden="true" tabindex="-1"></a>Plan your sample size using power analysis before collecting data, specifying the minimum effect size you want to detect.</span>
+<div class="sourceCode" id="cb22" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Analysis of Variance {#sec-anova}</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_minimal</span>())</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="fu">## Beyond Two Groups</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>The t-test compares two groups, but many experiments involve more than two. We might compare three drug treatments, five temperature conditions, or four genetic strains. Running multiple t-tests creates problems: with many comparisons, false positives become likely even when no true differences exist.</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>Analysis of Variance (ANOVA) provides a solution. It tests whether any of the group means differ from the others in a single test, controlling the overall Type I error rate.</span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a><span class="fu">## The ANOVA Framework</span></span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>ANOVA partitions the total variation in the data into components: variation between groups (due to treatment effects) and variation within groups (due to random error).</span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a><span class="al">![](../images/Images_5b.016.jpeg)</span>{fig-align="center"}</span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>The key insight is that if groups have equal means, the between-group variation should be similar to the within-group variation. If the between-group variation is much larger, the group means probably differ.</span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a><span class="al">![](../images/Images_5b.015.jpeg)</span>{fig-align="center"}</span>
+<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a><span class="fu">## The F-Test</span></span>
+<span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-30"><a href="#cb22-30" aria-hidden="true" tabindex="-1"></a>ANOVA uses the F-statistic:</span>
+<span id="cb22-31"><a href="#cb22-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-32"><a href="#cb22-32" aria-hidden="true" tabindex="-1"></a>$$F = \frac{MS_{between}}{MS_{within}} = \frac{\text{Variance between groups}}{\text{Variance within groups}}$$</span>
+<span id="cb22-33"><a href="#cb22-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-34"><a href="#cb22-34" aria-hidden="true" tabindex="-1"></a>Under the null hypothesis (all group means equal), F follows an F-distribution. Large F values indicate that group means differ more than expected by chance.</span>
+<span id="cb22-35"><a href="#cb22-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-36"><a href="#cb22-36" aria-hidden="true" tabindex="-1"></a><span class="fu">## One-Way ANOVA in R</span></span>
+<span id="cb22-37"><a href="#cb22-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-40"><a href="#cb22-40" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb22-41"><a href="#cb22-41" aria-hidden="true" tabindex="-1"></a><span class="co"># Example using iris data</span></span>
+<span id="cb22-42"><a href="#cb22-42" aria-hidden="true" tabindex="-1"></a>iris_aov <span class="ot">&lt;-</span> <span class="fu">aov</span>(Sepal.Length <span class="sc">~</span> Species, <span class="at">data =</span> iris)</span>
+<span id="cb22-43"><a href="#cb22-43" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(iris_aov)</span>
+<span id="cb22-44"><a href="#cb22-44" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-45"><a href="#cb22-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-46"><a href="#cb22-46" aria-hidden="true" tabindex="-1"></a>The significant p-value tells us that sepal length differs among species, but not which species differ from which.</span>
+<span id="cb22-47"><a href="#cb22-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-48"><a href="#cb22-48" aria-hidden="true" tabindex="-1"></a><span class="fu">## ANOVA Assumptions</span></span>
+<span id="cb22-49"><a href="#cb22-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-50"><a href="#cb22-50" aria-hidden="true" tabindex="-1"></a>Like the t-test, ANOVA assumes:</span>
+<span id="cb22-51"><a href="#cb22-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-52"><a href="#cb22-52" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Normality**: Observations within each group are normally distributed</span>
+<span id="cb22-53"><a href="#cb22-53" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Homogeneity of variance**: Groups have equal variances</span>
+<span id="cb22-54"><a href="#cb22-54" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Independence**: Observations are independent</span>
+<span id="cb22-55"><a href="#cb22-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-56"><a href="#cb22-56" aria-hidden="true" tabindex="-1"></a>ANOVA is robust to mild violations of normality, especially with balanced designs and large samples. Serious violations of homogeneity of variance are more problematic but can be addressed with Welch's ANOVA or transformations.</span>
+<span id="cb22-57"><a href="#cb22-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-58"><a href="#cb22-58" aria-hidden="true" tabindex="-1"></a><span class="fu">## Post-Hoc Comparisons</span></span>
+<span id="cb22-59"><a href="#cb22-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-60"><a href="#cb22-60" aria-hidden="true" tabindex="-1"></a>A significant ANOVA tells us groups differ but not how. **Post-hoc tests** compare specific pairs of groups while controlling for multiple comparisons.</span>
+<span id="cb22-61"><a href="#cb22-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-62"><a href="#cb22-62" aria-hidden="true" tabindex="-1"></a>**Tukey's HSD** (Honestly Significant Difference) compares all pairs:</span>
+<span id="cb22-63"><a href="#cb22-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-66"><a href="#cb22-66" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb22-67"><a href="#cb22-67" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(iris_aov)</span>
+<span id="cb22-68"><a href="#cb22-68" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-69"><a href="#cb22-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-70"><a href="#cb22-70" aria-hidden="true" tabindex="-1"></a>Each pairwise comparison includes the difference in means, confidence interval, and adjusted p-value.</span>
+<span id="cb22-71"><a href="#cb22-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-72"><a href="#cb22-72" aria-hidden="true" tabindex="-1"></a><span class="fu">## Planned Contrasts</span></span>
+<span id="cb22-73"><a href="#cb22-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-74"><a href="#cb22-74" aria-hidden="true" tabindex="-1"></a>If you have specific hypotheses about which groups should differ (decided before seeing the data), planned contrasts are more powerful than post-hoc tests. They focus statistical power on the comparisons you care about.</span>
+<span id="cb22-75"><a href="#cb22-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-78"><a href="#cb22-78" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb22-79"><a href="#cb22-79" aria-hidden="true" tabindex="-1"></a><span class="co"># Example: Compare setosa to the average of the other two species</span></span>
+<span id="cb22-80"><a href="#cb22-80" aria-hidden="true" tabindex="-1"></a><span class="fu">contrasts</span>(iris<span class="sc">$</span>Species) <span class="ot">&lt;-</span> <span class="fu">cbind</span>(</span>
+<span id="cb22-81"><a href="#cb22-81" aria-hidden="true" tabindex="-1"></a>  <span class="at">setosa_vs_others =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb22-82"><a href="#cb22-82" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-83"><a href="#cb22-83" aria-hidden="true" tabindex="-1"></a><span class="fu">summary.lm</span>(<span class="fu">aov</span>(Sepal.Length <span class="sc">~</span> Species, <span class="at">data =</span> iris))</span>
+<span id="cb22-84"><a href="#cb22-84" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-85"><a href="#cb22-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-86"><a href="#cb22-86" aria-hidden="true" tabindex="-1"></a><span class="fu">## Fixed vs. Random Effects</span></span>
+<span id="cb22-87"><a href="#cb22-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-88"><a href="#cb22-88" aria-hidden="true" tabindex="-1"></a>**Fixed effects** are specific treatments of interest that would be the same if the study were replicated—drug A, drug B, drug C. Conclusions apply only to these specific treatments.</span>
+<span id="cb22-89"><a href="#cb22-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-90"><a href="#cb22-90" aria-hidden="true" tabindex="-1"></a>**Random effects** are levels sampled from a larger population—particular subjects, batches, or locations. The goal is to generalize to the population of possible levels, not just those observed.</span>
+<span id="cb22-91"><a href="#cb22-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-92"><a href="#cb22-92" aria-hidden="true" tabindex="-1"></a>The distinction matters because it affects how F-ratios are calculated and what conclusions can be drawn.</span>
+<span id="cb22-93"><a href="#cb22-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-94"><a href="#cb22-94" aria-hidden="true" tabindex="-1"></a><span class="fu">## Two-Way ANOVA</span></span>
+<span id="cb22-95"><a href="#cb22-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-96"><a href="#cb22-96" aria-hidden="true" tabindex="-1"></a>When experiments have two factors, two-way ANOVA examines main effects of each factor and their interaction.</span>
+<span id="cb22-97"><a href="#cb22-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-100"><a href="#cb22-100" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb22-101"><a href="#cb22-101" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 7</span></span>
+<span id="cb22-102"><a href="#cb22-102" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5</span></span>
+<span id="cb22-103"><a href="#cb22-103" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulated factorial design</span></span>
+<span id="cb22-104"><a href="#cb22-104" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb22-105"><a href="#cb22-105" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">20</span></span>
+<span id="cb22-106"><a href="#cb22-106" aria-hidden="true" tabindex="-1"></a>data_factorial <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb22-107"><a href="#cb22-107" aria-hidden="true" tabindex="-1"></a>  <span class="at">response =</span> <span class="fu">c</span>(<span class="fu">rnorm</span>(n, <span class="dv">10</span>, <span class="dv">2</span>), <span class="fu">rnorm</span>(n, <span class="dv">12</span>, <span class="dv">2</span>), </span>
+<span id="cb22-108"><a href="#cb22-108" aria-hidden="true" tabindex="-1"></a>               <span class="fu">rnorm</span>(n, <span class="dv">11</span>, <span class="dv">2</span>), <span class="fu">rnorm</span>(n, <span class="dv">18</span>, <span class="dv">2</span>)),</span>
+<span id="cb22-109"><a href="#cb22-109" aria-hidden="true" tabindex="-1"></a>  <span class="at">factor_A =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"A1"</span>, <span class="st">"A1"</span>, <span class="st">"A2"</span>, <span class="st">"A2"</span>), <span class="at">each =</span> n),</span>
+<span id="cb22-110"><a href="#cb22-110" aria-hidden="true" tabindex="-1"></a>  <span class="at">factor_B =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"B1"</span>, <span class="st">"B2"</span>, <span class="st">"B1"</span>, <span class="st">"B2"</span>), <span class="at">each =</span> n)</span>
+<span id="cb22-111"><a href="#cb22-111" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-112"><a href="#cb22-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-113"><a href="#cb22-113" aria-hidden="true" tabindex="-1"></a>two_way <span class="ot">&lt;-</span> <span class="fu">aov</span>(response <span class="sc">~</span> factor_A <span class="sc">*</span> factor_B, <span class="at">data =</span> data_factorial)</span>
+<span id="cb22-114"><a href="#cb22-114" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(two_way)</span>
+<span id="cb22-115"><a href="#cb22-115" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-116"><a href="#cb22-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-117"><a href="#cb22-117" aria-hidden="true" tabindex="-1"></a>An **interaction** means the effect of one factor depends on the level of the other. Significant interactions often require examining simple effects rather than main effects.</span>
+<span id="cb22-118"><a href="#cb22-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-119"><a href="#cb22-119" aria-hidden="true" tabindex="-1"></a><span class="fu">## Interaction Plots</span></span>
+<span id="cb22-120"><a href="#cb22-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-123"><a href="#cb22-123" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb22-124"><a href="#cb22-124" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 7</span></span>
+<span id="cb22-125"><a href="#cb22-125" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5</span></span>
+<span id="cb22-126"><a href="#cb22-126" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize interaction</span></span>
+<span id="cb22-127"><a href="#cb22-127" aria-hidden="true" tabindex="-1"></a><span class="fu">interaction.plot</span>(data_factorial<span class="sc">$</span>factor_A, data_factorial<span class="sc">$</span>factor_B, </span>
+<span id="cb22-128"><a href="#cb22-128" aria-hidden="true" tabindex="-1"></a>                 data_factorial<span class="sc">$</span>response,</span>
+<span id="cb22-129"><a href="#cb22-129" aria-hidden="true" tabindex="-1"></a>                 <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"red"</span>), <span class="at">lwd =</span> <span class="dv">2</span>,</span>
+<span id="cb22-130"><a href="#cb22-130" aria-hidden="true" tabindex="-1"></a>                 <span class="at">xlab =</span> <span class="st">"Factor A"</span>, <span class="at">ylab =</span> <span class="st">"Response"</span>,</span>
+<span id="cb22-131"><a href="#cb22-131" aria-hidden="true" tabindex="-1"></a>                 <span class="at">trace.label =</span> <span class="st">"Factor B"</span>)</span>
+<span id="cb22-132"><a href="#cb22-132" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-133"><a href="#cb22-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-134"><a href="#cb22-134" aria-hidden="true" tabindex="-1"></a>Non-parallel lines suggest an interaction. Parallel lines suggest additive (non-interacting) effects.</span>
+<span id="cb22-135"><a href="#cb22-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-136"><a href="#cb22-136" aria-hidden="true" tabindex="-1"></a><span class="al">![](../images/images_7a.022.jpeg)</span>{fig-align="center"}</span>
+<span id="cb22-137"><a href="#cb22-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-138"><a href="#cb22-138" aria-hidden="true" tabindex="-1"></a><span class="fu">## Nested Designs</span></span>
+<span id="cb22-139"><a href="#cb22-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-140"><a href="#cb22-140" aria-hidden="true" tabindex="-1"></a>In nested designs, levels of one factor exist only within levels of another. For example, technicians might be nested within labs—each technician works in only one lab.</span>
+<span id="cb22-141"><a href="#cb22-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-142"><a href="#cb22-142" aria-hidden="true" tabindex="-1"></a>Nested designs have no interaction term because not all combinations of factor levels exist. They are common when sampling is hierarchical.</span>
+<span id="cb22-143"><a href="#cb22-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-144"><a href="#cb22-144" aria-hidden="true" tabindex="-1"></a><span class="fu">## Practical Considerations</span></span>
+<span id="cb22-145"><a href="#cb22-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-146"><a href="#cb22-146" aria-hidden="true" tabindex="-1"></a>Report effect sizes (like $\eta^2$) alongside p-values. A significant ANOVA with tiny effect size may not be practically meaningful.</span>
+<span id="cb22-147"><a href="#cb22-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-148"><a href="#cb22-148" aria-hidden="true" tabindex="-1"></a>Check assumptions with residual plots. Consider transformations or nonparametric alternatives (Kruskal-Wallis) when assumptions are violated.</span>
+<span id="cb22-149"><a href="#cb22-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-150"><a href="#cb22-150" aria-hidden="true" tabindex="-1"></a>Plan your sample size using power analysis before collecting data, specifying the minimum effect size you want to detect.</span>
+<span id="cb22-151"><a href="#cb22-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-152"><a href="#cb22-152" aria-hidden="true" tabindex="-1"></a><span class="fu">## ANOVA as a General Linear Model</span></span>
+<span id="cb22-153"><a href="#cb22-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-154"><a href="#cb22-154" aria-hidden="true" tabindex="-1"></a>ANOVA is a special case of the general linear model (GLM). Both t-tests and ANOVA can be expressed as regression with indicator variables (dummy coding). This unified framework shows that these seemingly different methods are fundamentally the same.</span>
+<span id="cb22-155"><a href="#cb22-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-158"><a href="#cb22-158" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb22-159"><a href="#cb22-159" aria-hidden="true" tabindex="-1"></a><span class="co"># ANOVA using lm() with dummy coding</span></span>
+<span id="cb22-160"><a href="#cb22-160" aria-hidden="true" tabindex="-1"></a><span class="co"># Equivalent to aov()</span></span>
+<span id="cb22-161"><a href="#cb22-161" aria-hidden="true" tabindex="-1"></a>iris_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sepal.Length <span class="sc">~</span> Species, <span class="at">data =</span> iris)</span>
+<span id="cb22-162"><a href="#cb22-162" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(iris_lm)</span>
+<span id="cb22-163"><a href="#cb22-163" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-164"><a href="#cb22-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-165"><a href="#cb22-165" aria-hidden="true" tabindex="-1"></a>The connection becomes clear when you realize:</span>
+<span id="cb22-166"><a href="#cb22-166" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A one-sample t-test is regression on an intercept</span>
+<span id="cb22-167"><a href="#cb22-167" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A two-sample t-test is regression with one binary predictor</span>
+<span id="cb22-168"><a href="#cb22-168" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>One-way ANOVA is regression with multiple indicator variables</span>
+<span id="cb22-169"><a href="#cb22-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-170"><a href="#cb22-170" aria-hidden="true" tabindex="-1"></a>This unified view is powerful: once you understand regression, you understand the entire family of linear models.</span>
+<span id="cb22-171"><a href="#cb22-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-172"><a href="#cb22-172" aria-hidden="true" tabindex="-1"></a><span class="fu">## Effect Sizes in ANOVA</span></span>
+<span id="cb22-173"><a href="#cb22-173" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-174"><a href="#cb22-174" aria-hidden="true" tabindex="-1"></a>Beyond statistical significance, report how much of the variance is explained by your factors.</span>
+<span id="cb22-175"><a href="#cb22-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-176"><a href="#cb22-176" aria-hidden="true" tabindex="-1"></a>**Eta-squared ($\eta^2$)**: Proportion of total variance explained by the factor</span>
+<span id="cb22-177"><a href="#cb22-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-178"><a href="#cb22-178" aria-hidden="true" tabindex="-1"></a>$$\eta^2 = \frac{SS_{between}}{SS_{total}}$$</span>
+<span id="cb22-179"><a href="#cb22-179" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-180"><a href="#cb22-180" aria-hidden="true" tabindex="-1"></a>**Partial eta-squared ($\eta^2_p$)**: Proportion of variance explained after accounting for other factors</span>
+<span id="cb22-181"><a href="#cb22-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-182"><a href="#cb22-182" aria-hidden="true" tabindex="-1"></a>**Omega-squared ($\omega^2$)**: Less biased estimate of variance explained in the population</span>
+<span id="cb22-183"><a href="#cb22-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-186"><a href="#cb22-186" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb22-187"><a href="#cb22-187" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate effect sizes</span></span>
+<span id="cb22-188"><a href="#cb22-188" aria-hidden="true" tabindex="-1"></a>ss <span class="ot">&lt;-</span> <span class="fu">summary</span>(iris_aov)[[<span class="dv">1</span>]]</span>
+<span id="cb22-189"><a href="#cb22-189" aria-hidden="true" tabindex="-1"></a>ss_between <span class="ot">&lt;-</span> ss[<span class="st">"Species"</span>, <span class="st">"Sum Sq"</span>]</span>
+<span id="cb22-190"><a href="#cb22-190" aria-hidden="true" tabindex="-1"></a>ss_within <span class="ot">&lt;-</span> ss[<span class="st">"Residuals"</span>, <span class="st">"Sum Sq"</span>]</span>
+<span id="cb22-191"><a href="#cb22-191" aria-hidden="true" tabindex="-1"></a>ss_total <span class="ot">&lt;-</span> ss_between <span class="sc">+</span> ss_within</span>
+<span id="cb22-192"><a href="#cb22-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-193"><a href="#cb22-193" aria-hidden="true" tabindex="-1"></a>eta_squared <span class="ot">&lt;-</span> ss_between <span class="sc">/</span> ss_total</span>
+<span id="cb22-194"><a href="#cb22-194" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Eta-squared:"</span>, <span class="fu">round</span>(eta_squared, <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb22-195"><a href="#cb22-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-196"><a href="#cb22-196" aria-hidden="true" tabindex="-1"></a><span class="co"># Omega-squared (less biased)</span></span>
+<span id="cb22-197"><a href="#cb22-197" aria-hidden="true" tabindex="-1"></a>ms_within <span class="ot">&lt;-</span> ss[<span class="st">"Residuals"</span>, <span class="st">"Mean Sq"</span>]</span>
+<span id="cb22-198"><a href="#cb22-198" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(iris)</span>
+<span id="cb22-199"><a href="#cb22-199" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">unique</span>(iris<span class="sc">$</span>Species))</span>
+<span id="cb22-200"><a href="#cb22-200" aria-hidden="true" tabindex="-1"></a>omega_squared <span class="ot">&lt;-</span> (ss_between <span class="sc">-</span> (k<span class="dv">-1</span>) <span class="sc">*</span> ms_within) <span class="sc">/</span> (ss_total <span class="sc">+</span> ms_within)</span>
+<span id="cb22-201"><a href="#cb22-201" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Omega-squared:"</span>, <span class="fu">round</span>(omega_squared, <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb22-202"><a href="#cb22-202" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-203"><a href="#cb22-203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-204"><a href="#cb22-204" aria-hidden="true" tabindex="-1"></a><span class="fu">## Pseudoreplication</span></span>
+<span id="cb22-205"><a href="#cb22-205" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-206"><a href="#cb22-206" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning}</span>
+<span id="cb22-207"><a href="#cb22-207" aria-hidden="true" tabindex="-1"></a><span class="fu">## A Common Design Flaw</span></span>
+<span id="cb22-208"><a href="#cb22-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-209"><a href="#cb22-209" aria-hidden="true" tabindex="-1"></a>**Pseudoreplication** occurs when non-independent observations are treated as independent replicates. This inflates the apparent sample size and leads to artificially small p-values.</span>
+<span id="cb22-210"><a href="#cb22-210" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-211"><a href="#cb22-211" aria-hidden="true" tabindex="-1"></a>Common examples:</span>
+<span id="cb22-212"><a href="#cb22-212" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Multiple measurements from the same individual treated as independent</span>
+<span id="cb22-213"><a href="#cb22-213" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Multiple cells from the same culture dish</span>
+<span id="cb22-214"><a href="#cb22-214" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Multiple fish from the same tank when treatment was applied to tanks</span>
+<span id="cb22-215"><a href="#cb22-215" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Technical replicates confused with biological replicates</span>
+<span id="cb22-216"><a href="#cb22-216" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb22-217"><a href="#cb22-217" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-218"><a href="#cb22-218" aria-hidden="true" tabindex="-1"></a>The unit of replication must be the unit to which the treatment was independently applied. If you treat three tanks with drug A and three with drug B, you have n=3 per group regardless of how many fish are in each tank.</span>
+<span id="cb22-219"><a href="#cb22-219" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-222"><a href="#cb22-222" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb22-223"><a href="#cb22-223" aria-hidden="true" tabindex="-1"></a><span class="co"># Wrong: treats individual fish as independent</span></span>
+<span id="cb22-224"><a href="#cb22-224" aria-hidden="true" tabindex="-1"></a><span class="co"># If 10 fish per tank, and tanks are the true units:</span></span>
+<span id="cb22-225"><a href="#cb22-225" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb22-226"><a href="#cb22-226" aria-hidden="true" tabindex="-1"></a><span class="co"># This overstates the evidence because fish within tanks are correlated</span></span>
+<span id="cb22-227"><a href="#cb22-227" aria-hidden="true" tabindex="-1"></a>tank_A <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">12</span>, <span class="dv">11</span>), <span class="at">each =</span> <span class="dv">10</span>) <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">30</span>, <span class="at">sd =</span> <span class="dv">1</span>)  <span class="co"># 3 tanks, 10 fish each</span></span>
+<span id="cb22-228"><a href="#cb22-228" aria-hidden="true" tabindex="-1"></a>tank_B <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">9</span>, <span class="fl">8.5</span>), <span class="at">each =</span> <span class="dv">10</span>) <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">30</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span>
+<span id="cb22-229"><a href="#cb22-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-230"><a href="#cb22-230" aria-hidden="true" tabindex="-1"></a><span class="co"># Pseudoreplicated analysis (WRONG - n appears to be 30 per group)</span></span>
+<span id="cb22-231"><a href="#cb22-231" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Pseudoreplicated p-value:"</span>, <span class="fu">t.test</span>(tank_A, tank_B)<span class="sc">$</span>p.value, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb22-232"><a href="#cb22-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-233"><a href="#cb22-233" aria-hidden="true" tabindex="-1"></a><span class="co"># Correct analysis (using tank means, n = 3 per group)</span></span>
+<span id="cb22-234"><a href="#cb22-234" aria-hidden="true" tabindex="-1"></a>means_A <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">mean</span>(tank_A[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]), <span class="fu">mean</span>(tank_A[<span class="dv">11</span><span class="sc">:</span><span class="dv">20</span>]), <span class="fu">mean</span>(tank_A[<span class="dv">21</span><span class="sc">:</span><span class="dv">30</span>]))</span>
+<span id="cb22-235"><a href="#cb22-235" aria-hidden="true" tabindex="-1"></a>means_B <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">mean</span>(tank_B[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]), <span class="fu">mean</span>(tank_B[<span class="dv">11</span><span class="sc">:</span><span class="dv">20</span>]), <span class="fu">mean</span>(tank_B[<span class="dv">21</span><span class="sc">:</span><span class="dv">30</span>]))</span>
+<span id="cb22-236"><a href="#cb22-236" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Correct p-value:"</span>, <span class="fu">t.test</span>(means_A, means_B)<span class="sc">$</span>p.value, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb22-237"><a href="#cb22-237" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-238"><a href="#cb22-238" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-239"><a href="#cb22-239" aria-hidden="true" tabindex="-1"></a>The correct analysis has less power (larger p-value) because it honestly reflects the true sample size.</span>
+<span id="cb22-240"><a href="#cb22-240" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-241"><a href="#cb22-241" aria-hidden="true" tabindex="-1"></a><span class="fu">## Repeated Measures ANOVA</span></span>
+<span id="cb22-242"><a href="#cb22-242" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-243"><a href="#cb22-243" aria-hidden="true" tabindex="-1"></a>When the same subjects are measured under multiple conditions, observations are not independent—each subject creates correlated measurements. **Repeated measures ANOVA** accounts for this by partitioning out between-subject variability.</span>
+<span id="cb22-244"><a href="#cb22-244" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-247"><a href="#cb22-247" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb22-248"><a href="#cb22-248" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulated repeated measures data</span></span>
+<span id="cb22-249"><a href="#cb22-249" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb22-250"><a href="#cb22-250" aria-hidden="true" tabindex="-1"></a>n_subjects <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb22-251"><a href="#cb22-251" aria-hidden="true" tabindex="-1"></a>subject <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span>n_subjects, <span class="dv">3</span>))</span>
+<span id="cb22-252"><a href="#cb22-252" aria-hidden="true" tabindex="-1"></a>time <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"Before"</span>, <span class="st">"During"</span>, <span class="st">"After"</span>), <span class="at">each =</span> n_subjects))</span>
+<span id="cb22-253"><a href="#cb22-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-254"><a href="#cb22-254" aria-hidden="true" tabindex="-1"></a><span class="co"># Subjects have baseline differences, plus time effect</span></span>
+<span id="cb22-255"><a href="#cb22-255" aria-hidden="true" tabindex="-1"></a>baseline <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n_subjects, <span class="dv">50</span>, <span class="dv">10</span>)</span>
+<span id="cb22-256"><a href="#cb22-256" aria-hidden="true" tabindex="-1"></a>response <span class="ot">&lt;-</span> <span class="fu">c</span>(baseline, baseline <span class="sc">+</span> <span class="dv">5</span> <span class="sc">+</span> <span class="fu">rnorm</span>(n_subjects, <span class="dv">0</span>, <span class="dv">3</span>),</span>
+<span id="cb22-257"><a href="#cb22-257" aria-hidden="true" tabindex="-1"></a>              baseline <span class="sc">+</span> <span class="dv">2</span> <span class="sc">+</span> <span class="fu">rnorm</span>(n_subjects, <span class="dv">0</span>, <span class="dv">3</span>))</span>
+<span id="cb22-258"><a href="#cb22-258" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-259"><a href="#cb22-259" aria-hidden="true" tabindex="-1"></a>rm_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(subject, time, response)</span>
+<span id="cb22-260"><a href="#cb22-260" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-261"><a href="#cb22-261" aria-hidden="true" tabindex="-1"></a><span class="co"># Repeated measures ANOVA</span></span>
+<span id="cb22-262"><a href="#cb22-262" aria-hidden="true" tabindex="-1"></a>rm_aov <span class="ot">&lt;-</span> <span class="fu">aov</span>(response <span class="sc">~</span> time <span class="sc">+</span> <span class="fu">Error</span>(subject<span class="sc">/</span>time), <span class="at">data =</span> rm_data)</span>
+<span id="cb22-263"><a href="#cb22-263" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(rm_aov)</span>
+<span id="cb22-264"><a href="#cb22-264" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-265"><a href="#cb22-265" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-266"><a href="#cb22-266" aria-hidden="true" tabindex="-1"></a>Repeated measures designs are powerful because they control for individual differences, but require additional assumptions (sphericity) that should be checked.</span>
+<span id="cb22-267"><a href="#cb22-267" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-268"><a href="#cb22-268" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
+<span id="cb22-269"><a href="#cb22-269" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-270"><a href="#cb22-270" aria-hidden="true" tabindex="-1"></a>ANOVA provides a flexible framework for comparing groups:</span>
+<span id="cb22-271"><a href="#cb22-271" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-272"><a href="#cb22-272" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>One-way ANOVA compares means across multiple groups</span>
+<span id="cb22-273"><a href="#cb22-273" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The F-test assesses whether between-group variance exceeds within-group variance</span>
+<span id="cb22-274"><a href="#cb22-274" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Post-hoc tests identify which specific groups differ</span>
+<span id="cb22-275"><a href="#cb22-275" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Two-way ANOVA examines main effects and interactions</span>
+<span id="cb22-276"><a href="#cb22-276" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Fixed effects are specific treatments; random effects are sampled from populations</span>
+<span id="cb22-277"><a href="#cb22-277" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>ANOVA is part of the general linear model family</span>
+<span id="cb22-278"><a href="#cb22-278" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Always report effect sizes, not just p-values</span>
+<span id="cb22-279"><a href="#cb22-279" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Beware of pseudoreplication—the unit of analysis must match the unit of replication</span>
+<span id="cb22-280"><a href="#cb22-280" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-281"><a href="#cb22-281" aria-hidden="true" tabindex="-1"></a><span class="fu">## Additional Resources</span></span>
+<span id="cb22-282"><a href="#cb22-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-283"><a href="#cb22-283" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>@logan2010biostatistical - Comprehensive treatment of ANOVA designs in biological research</span>
+<span id="cb22-284"><a href="#cb22-284" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>@crawley2007r - Detailed coverage of linear models in R including ANOVA</span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
