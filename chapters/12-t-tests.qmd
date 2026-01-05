@@ -1,0 +1,244 @@
+# T-Tests {#sec-t-tests}
+
+```{r}
+#| echo: false
+#| message: false
+library(tidyverse)
+theme_set(theme_minimal())
+```
+
+## Comparing Means
+
+One of the most common questions in data analysis is whether two groups differ. Is the mean expression level different between treatment and control? Does the new material have different strength than the standard? Do patients on drug A have different outcomes than patients on drug B?
+
+The t-test is the classic method for comparing means. It compares the observed difference between groups to the variability expected by chance, producing a test statistic that follows a t-distribution under the null hypothesis of no difference.
+
+## The T-Distribution
+
+The t-distribution, discovered by William Sealy Gosset (who published under the pseudonym "Student"), resembles the normal distribution but has heavier tails. This accounts for the extra uncertainty that comes from estimating the population standard deviation from sample data.
+
+The t-distribution is characterized by its degrees of freedom (df). As df increases, the t-distribution approaches the normal distribution. For small samples, the heavier tails mean that extreme values are more likely, leading to wider confidence intervals and more conservative tests.
+
+```{r}
+#| fig-width: 7
+#| fig-height: 5
+# Compare t-distributions with different df
+x <- seq(-4, 4, length.out = 200)
+plot(x, dnorm(x), type = "l", lwd = 2, col = "black",
+     xlab = "x", ylab = "Density",
+     main = "T-distributions vs. Normal")
+lines(x, dt(x, df = 3), lwd = 2, col = "red")
+lines(x, dt(x, df = 10), lwd = 2, col = "blue")
+legend("topright", 
+       legend = c("Normal", "t (df=3)", "t (df=10)"),
+       col = c("black", "red", "blue"), lwd = 2)
+```
+
+## One-Sample T-Test
+
+The one-sample t-test compares a sample mean to a hypothesized population value. The null hypothesis is that the population mean equals the specified value: $H_0: \mu = \mu_0$.
+
+The test statistic is:
+
+$$t = \frac{\bar{x} - \mu_0}{s / \sqrt{n}}$$
+
+This is the difference between the sample mean and hypothesized value, divided by the standard error of the mean. Under the null hypothesis, this statistic follows a t-distribution with $n-1$ degrees of freedom.
+
+```{r}
+# One-sample t-test example
+# Does this sample come from a population with mean = 100?
+set.seed(42)
+sample_data <- rnorm(25, mean = 105, sd = 15)
+
+t.test(sample_data, mu = 100)
+```
+
+The output shows the t-statistic, degrees of freedom, p-value, confidence interval, and sample mean. The small p-value indicates evidence that the true mean differs from 100.
+
+## Two-Sample T-Test
+
+The two-sample (independent samples) t-test compares means from two independent groups. The null hypothesis is that the population means are equal: $H_0: \mu_1 = \mu_2$.
+
+The test assumes:
+- Independence of observations within and between groups
+- Normally distributed populations (or large samples)
+- Equal variances in both groups (for the standard version)
+
+```{r}
+#| fig-width: 8
+#| fig-height: 4
+# Two-sample t-test example
+set.seed(518)
+treatment <- rnorm(n = 30, mean = 12, sd = 3)
+control <- rnorm(n = 30, mean = 10, sd = 3)
+
+# Visualize the data
+par(mfrow = c(1, 2))
+boxplot(treatment, control, names = c("Treatment", "Control"),
+        col = c("lightblue", "lightgreen"), main = "Boxplot")
+        
+# Combined histogram
+hist(treatment, col = rgb(0, 0, 1, 0.5), xlim = c(0, 20),
+     main = "Histograms", xlab = "Value")
+hist(control, col = rgb(0, 1, 0, 0.5), add = TRUE)
+legend("topright", legend = c("Treatment", "Control"),
+       fill = c(rgb(0, 0, 1, 0.5), rgb(0, 1, 0, 0.5)))
+```
+
+```{r}
+# Perform the t-test
+t.test(treatment, control)
+```
+
+## Welch's T-Test
+
+The classic two-sample t-test assumes equal variances. When this assumption is violated, Welch's t-test provides a better alternative. It adjusts the degrees of freedom to account for unequal variances.
+
+R's `t.test()` function uses Welch's test by default. To use the equal-variance version, set `var.equal = TRUE`.
+
+```{r}
+# When variances are unequal
+set.seed(42)
+group1 <- rnorm(30, mean = 50, sd = 5)
+group2 <- rnorm(30, mean = 52, sd = 15)
+
+# Welch's test (default)
+t.test(group1, group2)
+
+# Equal variance assumed
+t.test(group1, group2, var.equal = TRUE)
+```
+
+## Paired T-Test
+
+When observations in two groups are naturally paired—the same subjects measured twice, matched pairs, or before-and-after measurements—the paired t-test is more appropriate. It tests whether the mean difference within pairs is zero.
+
+The paired t-test is more powerful than the two-sample test when pairs are positively correlated, because it removes between-subject variability.
+
+```{r}
+# Paired t-test example: before and after treatment
+set.seed(123)
+n <- 20
+before <- rnorm(n, mean = 100, sd = 15)
+# After measurements are correlated with before
+after <- before + rnorm(n, mean = 5, sd = 5)
+
+# Paired test (correct for this data)
+t.test(after, before, paired = TRUE)
+
+# Compare to unpaired (less power)
+t.test(after, before, paired = FALSE)
+```
+
+Notice that the paired test produces a smaller p-value because it accounts for the correlation between measurements on the same subject.
+
+## One-Tailed vs. Two-Tailed Tests
+
+By default, `t.test()` performs a two-tailed test. For a one-tailed test, specify the alternative hypothesis:
+
+```{r}
+# Two-tailed (default): H_A: treatment ≠ control
+t.test(treatment, control, alternative = "two.sided")$p.value
+
+# One-tailed: H_A: treatment > control
+t.test(treatment, control, alternative = "greater")$p.value
+
+# One-tailed: H_A: treatment < control
+t.test(treatment, control, alternative = "less")$p.value
+```
+
+Use one-tailed tests only when you have a strong prior reason to expect an effect in a specific direction and would not act on an effect in the opposite direction.
+
+## Checking Assumptions
+
+T-tests assume normally distributed data (or large samples) and, for the standard two-sample test, equal variances. Check these assumptions before interpreting results.
+
+**Normality**: Use histograms, Q-Q plots, or formal tests like Shapiro-Wilk.
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+# Check normality with Q-Q plot
+qqnorm(treatment)
+qqline(treatment, col = "red")
+```
+
+```{r}
+# Shapiro-Wilk test for normality
+shapiro.test(treatment)
+```
+
+A non-significant Shapiro-Wilk test suggests the data are consistent with normality. However, this test has low power for small samples and may reject normality for trivial deviations with large samples.
+
+**Equal variances**: Compare standard deviations or use Levene's test.
+
+```{r}
+# Compare standard deviations
+sd(treatment)
+sd(control)
+
+# Levene's test (from car package)
+# car::leveneTest(c(treatment, control), 
+#                 factor(rep(c("treatment", "control"), each = 30)))
+```
+
+## Effect Size: Cohen's d
+
+Statistical significance does not tell you how large an effect is. **Cohen's d** measures effect size as the standardized difference between means:
+
+$$d = \frac{\bar{x}_1 - \bar{x}_2}{s_{pooled}}$$
+
+where $s_{pooled}$ is the pooled standard deviation.
+
+Conventional interpretations: $|d| = 0.2$ is small, $|d| = 0.5$ is medium, $|d| = 0.8$ is large. However, context matters—a small d might be practically important in some fields.
+
+```{r}
+# Calculate Cohen's d
+mean_diff <- mean(treatment) - mean(control)
+s_pooled <- sqrt((var(treatment) + var(control)) / 2)
+cohens_d <- mean_diff / s_pooled
+
+cat("Cohen's d:", round(cohens_d, 2), "\n")
+```
+
+## Practical Example
+
+Let's work through a complete analysis comparing two groups:
+
+```{r}
+#| fig-width: 8
+#| fig-height: 6
+# Simulated drug trial data
+set.seed(999)
+drug <- rnorm(40, mean = 75, sd = 12)
+placebo <- rnorm(40, mean = 70, sd = 12)
+
+# Step 1: Visualize
+par(mfrow = c(2, 2))
+boxplot(drug, placebo, names = c("Drug", "Placebo"), 
+        col = c("coral", "lightblue"), main = "Response by Group")
+
+# Step 2: Check normality
+qqnorm(drug, main = "Q-Q Plot: Drug")
+qqline(drug, col = "red")
+qqnorm(placebo, main = "Q-Q Plot: Placebo")
+qqline(placebo, col = "red")
+
+# Combined histogram
+hist(drug, col = rgb(1, 0.5, 0.5, 0.5), xlim = c(40, 110),
+     main = "Distribution Comparison", xlab = "Response")
+hist(placebo, col = rgb(0.5, 0.5, 1, 0.5), add = TRUE)
+```
+
+```{r}
+# Step 3: Perform t-test
+result <- t.test(drug, placebo)
+print(result)
+
+# Step 4: Calculate effect size
+cohens_d <- (mean(drug) - mean(placebo)) / 
+            sqrt((var(drug) + var(placebo)) / 2)
+cat("\nCohen's d:", round(cohens_d, 2), "\n")
+```
+
+The t-test shows a significant difference (p < 0.05), and Cohen's d indicates a medium effect size. We can conclude that the drug group shows higher response than the placebo group, with the mean difference being about 0.4 standard deviations.

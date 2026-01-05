@@ -1,0 +1,277 @@
+# Tidy Data and Data Wrangling {#sec-tidy-data}
+
+```{r}
+#| echo: false
+#| message: false
+library(tidyverse)
+theme_set(theme_minimal())
+```
+
+![](../images/week_01.005.jpeg){fig-align="center"}
+
+## What is Tidy Data?
+
+Data comes in many shapes, and not all shapes are equally convenient for analysis. The concept of "tidy data" provides a standard way to organize data that works well with R and makes many analyses straightforward. In tidy data, each variable forms a column, each observation forms a row, and each type of observational unit forms a table.
+
+![](../images/week_01.006.jpeg){fig-align="center"}
+
+This structure might seem obvious, but real-world data rarely arrives in tidy form. Spreadsheets often encode information in column names, spread a single variable across multiple columns, or combine multiple variables in a single column. Data wrangling is the process of transforming messy data into tidy data.
+
+## Rules of Thumb for Data Organization
+
+Whether you are creating a new dataset or cleaning an existing one, following these principles will save you time and frustration.
+
+Store a copy of your data in nonproprietary formats like plain text CSV files. Proprietary formats can become unreadable as software changes. Keep an uncorrected copy of your original data separate from any cleaned or processed versions. Use descriptive names for files and variables that convey meaning without requiring external documentation. Include a header row with variable names. Maintain metadata—a data dictionary explaining what each variable means, how it was measured, and what units it uses.
+
+When you add new observations, add rows. When you add new variables, add columns. A column should contain only one data type—don't mix numbers and text in the same column. Dates should be in a consistent format. Missing values should be represented consistently, typically as empty cells or `NA` in R.
+
+## Types of Data
+
+Understanding the types of data you are working with guides how you analyze them.
+
+**Categorical data** classify observations into groups. Nominal categorical data have no inherent order—for example, species names, treatment groups, or colors. Ordinal categorical data have a meaningful order—ratings like "low," "medium," and "high," or educational levels. In R, categorical data are often represented as factors, which store both the values and the set of possible levels.
+
+**Quantitative data** are numerical measurements. Interval data have meaningful differences between values but no true zero point—temperature in Celsius, where 0° does not mean "no temperature." Ratio data have a true zero and meaningful ratios—mass, length, counts, where zero means "none" and twice as much is twice as much.
+
+| Categorical | | Quantitative | |
+|:--:|:--:|:--:|:--:|
+| Ordinal | Nominal | Ratio | Interval |
+| small, medium, large | apples, oranges | kilograms, dollars | temperature, calendar year |
+| ordered character | character | numeric | integer |
+
+## The Tidyverse
+
+The tidyverse is a collection of R packages designed for data science. These packages share a common philosophy and are designed to work together seamlessly. The core tidyverse packages include `ggplot2` for visualization, `dplyr` for data manipulation, `tidyr` for reshaping data, `readr` for reading data files, and several others.
+
+```{r}
+#| message: true
+library(tidyverse)
+```
+
+Loading the tidyverse loads all core packages at once. The message shows which packages are attached and notes any functions that conflict with base R or other packages.
+
+![](../images/week_3.011.jpeg){fig-align="center"}
+
+## Tibbles
+
+Tibbles are the tidyverse's enhanced data frames. They print more informatively, showing only the first few rows and as many columns as fit on screen, along with the dimensions and column types.
+
+![](../images/week_3.012.jpeg){fig-align="center"}
+
+```{r}
+# Create a tibble
+my_tibble <- tibble(
+  name = c("Alice", "Bob", "Carol"),
+  score = c(85, 92, 78),
+  passed = c(TRUE, TRUE, TRUE)
+)
+my_tibble
+```
+
+The column types are shown below the column names: `<chr>` for character, `<dbl>` for double (numeric), and `<lgl>` for logical.
+
+## Key dplyr Verbs
+
+The `dplyr` package provides a grammar for data manipulation. Five key verbs handle most data manipulation tasks.
+
+### filter(): Subset Rows
+
+`filter()` selects rows that meet specified conditions.
+
+```{r}
+#| eval: false
+# Flights in November or December
+filter(flights, month == 11 | month == 12)
+
+# Flights with arrival delay greater than 2 hours
+filter(flights, arr_delay > 120)
+```
+
+Conditions use comparison operators: `==` (equals), `!=` (not equals), `<`, `>`, `<=`, `>=`. Combine conditions with `&` (and) and `|` (or). The `%in%` operator checks membership in a set.
+
+### select(): Choose Columns
+
+`select()` picks columns by name.
+
+```{r}
+#| eval: false
+# Select specific columns
+select(flights, year, month, day)
+
+# Select a range of columns
+select(flights, year:day)
+
+# Drop columns
+select(flights, -year, -month)
+```
+
+### arrange(): Sort Rows
+
+`arrange()` reorders rows by column values.
+
+```{r}
+#| eval: false
+# Sort by year, then month, then day
+arrange(flights, year, month, day)
+
+# Sort in descending order
+arrange(flights, desc(dep_delay))
+```
+
+### mutate(): Create New Columns
+
+`mutate()` adds new columns that are functions of existing columns.
+
+```{r}
+#| eval: false
+mutate(flights,
+  gain = arr_delay - dep_delay,
+  hours = air_time / 60,
+  gain_per_hour = gain / hours
+)
+```
+
+### summarize(): Aggregate Data
+
+`summarize()` collapses multiple rows into summary values.
+
+```{r}
+#| eval: false
+summarize(flights, 
+  mean_delay = mean(dep_delay, na.rm = TRUE),
+  n = n()
+)
+```
+
+The `na.rm = TRUE` argument tells `mean()` to ignore missing values. The `n()` function counts rows.
+
+## Grouping with group_by()
+
+The real power of `summarize()` emerges when combined with `group_by()`, which splits data into groups for separate analysis.
+
+```{r}
+#| eval: false
+# Group by destination, then summarize
+by_dest <- group_by(flights, dest)
+summarize(by_dest, 
+  count = n(),
+  mean_delay = mean(arr_delay, na.rm = TRUE)
+)
+```
+
+This calculates summary statistics separately for each destination.
+
+## The Pipe Operator
+
+Chaining multiple operations together can become unwieldy with nested function calls. The pipe operator `|>` (or the tidyverse's `%>%`) passes the result of one operation as the first argument of the next, allowing you to read operations left-to-right, top-to-bottom.
+
+```{r}
+#| eval: false
+# Without pipe: nested and hard to read
+summarize(group_by(filter(flights, !is.na(arr_delay)), dest), 
+          mean_delay = mean(arr_delay))
+
+# With pipe: clear sequence of operations
+flights |>
+  filter(!is.na(arr_delay)) |>
+  group_by(dest) |>
+  summarize(mean_delay = mean(arr_delay))
+```
+
+Read the pipe as "then"—take flights, then filter, then group, then summarize.
+
+![](../images/week_3.015.jpeg){fig-align="center"}
+
+## Handling Missing Values
+
+Missing values are a fact of life in real data. In R, missing values are represented as `NA`. Most operations involving `NA` return `NA`, which can cause problems if you are not careful.
+
+```{r}
+x <- c(1, 2, NA, 4)
+mean(x)
+mean(x, na.rm = TRUE)
+```
+
+Check for missing values with `is.na()`:
+
+```{r}
+is.na(x)
+sum(is.na(x))  # count missing values
+```
+
+Filter out missing values:
+
+```{r}
+x[!is.na(x)]
+```
+
+Or use tidyr functions:
+
+```{r}
+#| eval: false
+# Remove rows with any missing values
+drop_na(data)
+
+# Remove rows with missing values in specific columns
+drop_na(data, column_name)
+```
+
+## Reshaping Data
+
+Sometimes data is not in the right shape for your analysis. The `tidyr` package provides functions to reshape data.
+
+`pivot_longer()` takes wide data (variables spread across columns) and makes it long (variables stacked in rows). `pivot_wider()` does the reverse.
+
+```{r}
+# Example: wide data
+wide_data <- tibble(
+  sample = c("A", "B", "C"),
+  treatment_1 = c(10, 15, 12),
+  treatment_2 = c(8, 14, 11)
+)
+wide_data
+
+# Convert to long format
+long_data <- wide_data |>
+  pivot_longer(
+    cols = starts_with("treatment"),
+    names_to = "treatment",
+    values_to = "response"
+  )
+long_data
+```
+
+## Joining Data
+
+Often data comes in multiple tables that need to be combined. Join operations merge tables based on matching values in key columns.
+
+```{r}
+# Example tables
+samples <- tibble(
+  sample_id = c("S1", "S2", "S3"),
+  concentration = c(0.1, 0.5, 1.0)
+)
+
+measurements <- tibble(
+  sample_id = c("S1", "S1", "S2", "S2", "S3", "S3"),
+  replicate = c(1, 2, 1, 2, 1, 2),
+  value = c(2.3, 2.1, 5.4, 5.6, 10.2, 10.8)
+)
+
+# Join tables
+left_join(measurements, samples, by = "sample_id")
+```
+
+## Practice Exercise
+
+Here is a workflow to practice these concepts:
+
+1. Read a dataset into R
+2. Convert it to a tibble with `as_tibble()`
+3. Select the columns you need
+4. Filter to the observations of interest
+5. Create new variables with mutate
+6. Group by categorical variables and summarize
+7. Visualize the results
+
+Working through this process with your own data will cement these concepts better than any number of examples.

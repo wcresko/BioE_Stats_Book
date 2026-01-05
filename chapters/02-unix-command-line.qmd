@@ -1,0 +1,216 @@
+# Unix and the Command Line {#sec-unix}
+
+```{r}
+#| echo: false
+#| message: false
+library(tidyverse)
+theme_set(theme_minimal())
+```
+
+![](../images/w1_code.jpeg){fig-align="center"}
+
+## What is Unix?
+
+Unix is a family of operating systems that originated at Bell Labs in 1969 and was released publicly in 1973. Its design philosophy emphasizes modularity—small programs that do one thing well and can be combined to accomplish complex tasks. This approach has proven remarkably durable, and Unix-based systems remain dominant in scientific computing, web servers, and high-performance computing environments.
+
+Linux is an open-source implementation of Unix that runs on everything from embedded devices to the world's fastest supercomputers. MacOS is built on a Unix foundation, which means Mac users have native access to Unix commands. Windows historically used a different approach, but recent versions include the Windows Subsystem for Linux (WSL), allowing Windows users to run Linux environments alongside their Windows applications.
+
+Understanding Unix is essential for modern data science. You will need it to access remote computing resources like supercomputer clusters, to run bioinformatics software that is only available through the command line, and to automate repetitive tasks. The skills you develop here will transfer across platforms and remain relevant throughout your career.
+
+## The Shell and Terminal
+
+The shell is a program that interprets your commands and communicates with the operating system. When you type a command, the shell parses it, figures out what you want to do, and tells the operating system to do it. The results are then displayed back to you.
+
+Bash (Bourne Again SHell) is the most common shell on Linux systems and was the default on MacOS until recently (MacOS now defaults to zsh, which is very similar). The shell runs inside a terminal application, which provides the window where you type commands and see output.
+
+![](../images/w1_shell.jpeg){fig-align="center"}
+
+On Mac, you can access the terminal by opening the Terminal app or a third-party alternative like iTerm2. On Linux, look for a Terminal application in your system menus. Windows users should install the Windows Subsystem for Linux following Microsoft's documentation, then access it through the Ubuntu app or similar.
+
+RStudio also includes a terminal pane, which can be convenient when you want shell access without leaving your R development environment.
+
+## Anatomy of a Shell Command
+
+Shell commands follow a consistent structure. You type a command name, possibly followed by options that modify its behavior, and arguments that specify what the command should operate on. The shell waits at a prompt—typically `$` for regular users or `#` for administrators—indicating it is ready to accept input.
+
+![](../images/w1_shell_command.jpeg){fig-align="center"}
+
+Consider the command `ls -l Documents`. Here, `ls` is the command (list directory contents), `-l` is an option (use long format), and `Documents` is the argument (the directory to list). Options usually begin with a dash and can often be combined: `ls -la` combines the `-l` (long format) and `-a` (show hidden files) options.
+
+## File System Organization
+
+Unix organizes files in a hierarchical structure of directories (folders) and files. The root directory, represented by a single forward slash `/`, sits at the top of this hierarchy and contains all other directories.
+
+![](../images/w1_file_structure.jpeg){fig-align="center"}
+
+Your home directory is your personal workspace, typically located at `/Users/yourusername` on Mac or `/home/yourusername` on Linux. The tilde character `~` serves as a shorthand for your home directory, so `~/Documents` refers to the Documents folder in your home directory.
+
+Every file and directory has a path—a specification of its location in the file system. Absolute paths start from the root directory and give the complete location, like `/Users/wcresko/Documents/data.csv`. Relative paths specify location relative to your current directory, so if you are in your home directory, `Documents/data.csv` refers to the same file.
+
+## Navigation Commands
+
+The most fundamental navigation command is `pwd` (print working directory), which tells you where you currently are in the file system. This is often the first thing you type when opening a terminal to orient yourself.
+
+![](../images/w1_navigation_1.jpeg){fig-align="center"}
+
+```bash
+pwd
+```
+
+The `ls` command lists the contents of a directory. Without arguments, it lists the current directory. With a path argument, it lists that location.
+
+```bash
+ls                  # list current directory
+ls Documents        # list the Documents folder
+ls -l               # long format with details
+ls -a               # include hidden files (starting with .)
+ls -la              # combine long format and hidden files
+ls -lS              # long format, sorted by size
+```
+
+![](../images/w1_navigation_2.jpeg){fig-align="center"}
+
+The `cd` command (change directory) moves you to a different location.
+
+```bash
+cd Documents        # move into Documents
+cd ..               # move up one level (parent directory)
+cd ~                # move to home directory
+cd /                # move to root directory
+cd -                # move to previous location
+```
+
+![](../images/w1_navigate.jpeg){fig-align="center"}
+
+## Working with Files and Directories
+
+Creating new directories uses the `mkdir` command.
+
+```bash
+mkdir project_data
+mkdir -p analysis/results/figures  # create nested directories
+```
+
+The `-p` flag tells `mkdir` to create parent directories as needed, which is useful for creating nested folder structures in one command.
+
+Moving and renaming files uses the `mv` command.
+
+```bash
+mv old_name.txt new_name.txt       # rename a file
+mv file.txt Documents/             # move file to Documents
+mv file.txt Documents/newname.txt  # move and rename
+```
+
+Copying files uses `cp`.
+
+```bash
+cp original.txt copy.txt           # copy a file
+cp -r folder/ backup/              # copy a directory recursively
+```
+
+Removing files uses `rm`. Be careful with this command—there is no trash can or undo in the shell.
+
+```bash
+rm unwanted_file.txt               # remove a file
+rm -r unwanted_folder/             # remove a directory and contents
+rm -i file.txt                     # ask for confirmation before removing
+```
+
+## Viewing File Contents
+
+Several commands let you examine file contents without opening them in an editor.
+
+The `cat` command displays the entire contents of a file.
+
+```bash
+cat data.txt
+```
+
+For longer files, `head` and `tail` show the beginning and end.
+
+```bash
+head data.csv          # first 10 lines
+head -n 20 data.csv    # first 20 lines
+tail data.csv          # last 10 lines
+tail -f logfile.txt    # follow a file as it grows
+```
+
+The `less` command opens an interactive viewer that lets you scroll through large files.
+
+```bash
+less large_data.txt
+```
+
+Inside `less`, use arrow keys to scroll, `/` to search, and `q` to quit.
+
+The `wc` command counts lines, words, and characters.
+
+```bash
+wc data.txt            # lines, words, characters
+wc -l data.txt         # just lines
+```
+
+## Getting Help
+
+Unix provides documentation through manual pages, accessible with the `man` command.
+
+```bash
+man ls                 # manual page for ls command
+```
+
+Manual pages can be dense, but they are comprehensive. Use the spacebar to page through, `/` to search, and `q` to exit. Many commands also accept a `--help` flag that provides a shorter summary.
+
+```bash
+ls --help
+```
+
+Of course, the internet provides extensive resources. When you encounter an unfamiliar command or error message, searching online often leads to helpful explanations and examples.
+
+## Pipes and Redirection
+
+One of Unix's most powerful features is the ability to combine simple commands into complex pipelines. The pipe operator `|` sends the output of one command to another command as input.
+
+```bash
+ls -l | head -n 5           # list files, show only first 5
+cat data.txt | wc -l        # count lines in file
+```
+
+Redirection operators send output to files instead of the screen.
+
+```bash
+ls -l > file_list.txt       # write output to file (overwrite)
+ls -l >> file_list.txt      # append output to file
+```
+
+These features enable powerful text processing. Combined with tools like `grep` (search for patterns), `sort`, and `cut` (extract columns), you can accomplish sophisticated data manipulation with compact commands.
+
+```bash
+grep "gene" data.txt                    # find lines containing "gene"
+grep -c "gene" data.txt                 # count matching lines
+sort data.txt                           # sort lines alphabetically
+sort -n numbers.txt                     # sort numerically
+cut -f1,3 data.tsv                      # extract columns 1 and 3 from tab-separated file
+```
+
+## Connecting to Remote Systems
+
+The `ssh` command (secure shell) lets you connect to remote computers.
+
+```bash
+ssh username@server.university.edu
+```
+
+You will use this to connect to computing clusters like Talapas for computationally intensive work. Once connected, you work in a shell environment on the remote system just as you would locally.
+
+The `scp` command copies files between your computer and remote systems.
+
+```bash
+scp local_file.txt username@server.edu:~/destination/
+scp username@server.edu:~/remote_file.txt ./local_copy.txt
+```
+
+## Practice Exercises
+
+The best way to learn command-line skills is through practice. Create a project folder structure for organizing your course work. Navigate through the file system and examine the contents of various directories. Create some text files and practice viewing, copying, moving, and removing them.
+
+Try combining commands with pipes. For example, you might list all files in a directory, filter for those with a particular extension, and count how many there are. Start simple and gradually build more complex pipelines as you become comfortable with the individual commands.

@@ -1,0 +1,118 @@
+# Simple Linear Regression {#sec-linear-regression}
+
+```{r}
+#| echo: false
+#| message: false
+library(tidyverse)
+theme_set(theme_minimal())
+```
+
+## From Correlation to Prediction
+
+Correlation tells us that two variables are related, but it does not allow us to predict one from the other or to describe the nature of that relationship. Linear regression goes further—it models the relationship between variables, allowing us to make predictions and to quantify how changes in one variable are associated with changes in another.
+
+In simple linear regression, we model a response variable Y as a linear function of a predictor variable X:
+
+$$y_i = \beta_0 + \beta_1 x_i + \epsilon_i$$
+
+Here $\beta_0$ is the intercept (the expected value of Y when X equals zero), $\beta_1$ is the slope (how much Y changes for a one-unit change in X), and $\epsilon_i$ represents the random error—the part of Y not explained by X.
+
+![](../images/images_4b.008.jpeg){fig-align="center"}
+
+## Origins of the Term "Regression"
+
+The term "regression" comes from Francis Galton's studies of heredity in the 1880s. He observed that tall parents tended to have children who were tall, but not as extremely tall as the parents—children's heights "regressed" toward the population mean. This phenomenon, now called regression to the mean, is a statistical artifact that appears whenever two variables are imperfectly correlated.
+
+![](../images/images_4b.002.jpeg){fig-align="center"}
+
+## Fitting the Model: Ordinary Least Squares
+
+The most common method for fitting a regression line is **ordinary least squares (OLS)**. OLS finds the line that minimizes the sum of squared residuals—the squared vertical distances between observed points and the fitted line.
+
+![](../images/images_4b.009.jpeg){fig-align="center"}
+
+The OLS estimates for the slope and intercept are:
+
+$$\hat{\beta}_1 = \frac{\sum(x_i - \bar{x})(y_i - \bar{y})}{\sum(x_i - \bar{x})^2} = r \frac{s_y}{s_x}$$
+
+$$\hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x}$$
+
+Notice that the slope equals the correlation coefficient times the ratio of standard deviations. This makes clear the connection between correlation and regression.
+
+## Linear Regression in R
+
+```{r}
+#| fig-width: 7
+#| fig-height: 5
+# Example: zebrafish size data
+set.seed(42)
+n <- 100
+length_cm <- runif(n, 0.5, 3.5)
+weight_mg <- 15 * length_cm^2 + rnorm(n, sd = 10)
+
+# Fit the model
+fish_lm <- lm(weight_mg ~ length_cm)
+summary(fish_lm)
+```
+
+The output shows the estimated coefficients with their standard errors, t-statistics, and p-values. The Multiple R-squared indicates how much of the variance in Y is explained by X.
+
+```{r}
+#| fig-width: 7
+#| fig-height: 5
+# Visualize the fit
+plot(length_cm, weight_mg, pch = 19, col = "blue",
+     xlab = "Length (cm)", ylab = "Weight (mg)",
+     main = "Linear Regression: Weight vs Length")
+abline(fish_lm, col = "red", lwd = 2)
+```
+
+## Interpretation of Coefficients
+
+The **intercept** $\hat{\beta}_0$ is the predicted value of Y when X equals zero. This may or may not be meaningful depending on whether X = 0 makes sense in your context.
+
+The **slope** $\hat{\beta}_1$ is the predicted change in Y for a one-unit increase in X. If the slope is 15, then each additional unit of X is associated with 15 more units of Y on average.
+
+## Hypothesis Testing in Regression
+
+The hypothesis test for the slope asks whether there is evidence of a relationship between X and Y:
+
+$$H_0: \beta_1 = 0 \quad \text{(no relationship)}$$
+$$H_A: \beta_1 \neq 0 \quad \text{(relationship exists)}$$
+
+The test uses a t-statistic, comparing the estimated slope to its standard error. The p-value indicates the probability of observing a slope this far from zero if the true slope were zero.
+
+![](../images/images_4b.011.jpeg){fig-align="center"}
+
+## R-Squared: Measuring Model Fit
+
+**R-squared** ($R^2$) measures the proportion of variance in Y explained by the model:
+
+$$R^2 = 1 - \frac{SS_{error}}{SS_{total}} = \frac{SS_{model}}{SS_{total}}$$
+
+In simple linear regression, $R^2$ equals the square of the correlation coefficient. An $R^2$ of 0.7 means the model explains 70% of the variance in Y; the remaining 30% is unexplained.
+
+Be cautious with $R^2$—it always increases when you add predictors, even useless ones. Adjusted $R^2$ penalizes for model complexity.
+
+## Making Predictions
+
+Once you have a fitted model, you can predict Y for new values of X:
+
+```{r}
+# Predict weight for new lengths
+new_lengths <- data.frame(length_cm = c(1.0, 2.0, 3.0))
+predict(fish_lm, newdata = new_lengths, interval = "confidence")
+```
+
+The confidence interval indicates uncertainty about the mean Y at each X value. A prediction interval (using `interval = "prediction"`) would be wider, accounting for individual variability around that mean.
+
+## Model Assumptions
+
+Linear regression assumptions include:
+
+1. **Linearity**: The relationship between X and Y is linear
+2. **Independence**: Observations are independent of each other
+3. **Normality**: Residuals are normally distributed
+4. **Homoscedasticity**: Residuals have constant variance across X
+
+These assumptions should be checked through residual analysis, which we cover in the next chapter.

@@ -1,0 +1,314 @@
+# R Quick Reference {#sec-r-reference}
+
+```{r}
+#| echo: false
+#| message: false
+library(tidyverse)
+```
+
+This appendix provides a quick reference for commonly used R functions and syntax covered in this book.
+
+## Basic Operations
+
+```{r}
+#| eval: false
+# Assignment
+x <- 5
+y = 10  # also works but <- is preferred
+
+# Arithmetic
+x + y   # addition
+x - y   # subtraction
+x * y   # multiplication
+x / y   # division
+x^2     # exponentiation
+x %% y  # modulo (remainder)
+
+# Comparison
+x == y  # equal
+x != y  # not equal
+x < y   # less than
+x > y   # greater than
+x <= y  # less than or equal
+x >= y  # greater than or equal
+```
+
+## Vectors
+
+```{r}
+#| eval: false
+# Create vectors
+c(1, 2, 3, 4, 5)
+1:10
+seq(0, 100, by = 10)
+rep(1, times = 5)
+
+# Access elements
+x[1]          # first element
+x[c(1, 3, 5)] # multiple elements
+x[-1]         # all except first
+x[x > 5]      # conditional selection
+
+# Vector operations
+length(x)
+sum(x)
+mean(x)
+sd(x)
+var(x)
+min(x)
+max(x)
+range(x)
+sort(x)
+rev(x)
+```
+
+## Data Frames
+
+```{r}
+#| eval: false
+# Create data frame
+data.frame(x = 1:5, y = c("a", "b", "c", "d", "e"))
+
+# Access columns
+df$column_name
+df[, "column_name"]
+df[, 1]
+
+# Access rows
+df[1, ]
+df[1:5, ]
+df[df$x > 2, ]
+
+# Dimensions
+nrow(df)
+ncol(df)
+dim(df)
+names(df)
+head(df)
+tail(df)
+str(df)
+summary(df)
+```
+
+## Reading and Writing Data
+
+```{r}
+#| eval: false
+# Read data
+read.csv("file.csv")
+read.table("file.txt", header = TRUE, sep = "\t")
+readRDS("file.rds")
+
+# With tidyverse
+read_csv("file.csv")
+read_tsv("file.tsv")
+
+# Write data
+write.csv(df, "file.csv", row.names = FALSE)
+write.table(df, "file.txt", sep = "\t", row.names = FALSE)
+saveRDS(df, "file.rds")
+```
+
+## dplyr Verbs
+
+```{r}
+#| eval: false
+library(dplyr)
+
+# Filter rows
+filter(df, condition)
+
+# Select columns
+select(df, col1, col2)
+
+# Arrange rows
+arrange(df, column)
+arrange(df, desc(column))
+
+# Create new columns
+mutate(df, new_col = expression)
+
+# Summarize
+summarize(df, mean_val = mean(x))
+
+# Group operations
+group_by(df, category) |>
+  summarize(mean = mean(value))
+
+# Pipe operator
+df |>
+  filter(x > 0) |>
+  mutate(y = x^2) |>
+  summarize(mean_y = mean(y))
+```
+
+## ggplot2 Graphics
+
+```{r}
+#| eval: false
+library(ggplot2)
+
+# Basic structure
+ggplot(data, aes(x = var1, y = var2)) +
+  geom_point()
+
+# Common geoms
+geom_point()      # scatter plot
+geom_line()       # line plot
+geom_bar()        # bar chart
+geom_histogram()  # histogram
+geom_boxplot()    # box plot
+geom_smooth()     # smoothed line
+
+# Aesthetics
+aes(x, y, color, fill, size, shape, alpha)
+
+# Faceting
+facet_wrap(~ variable)
+facet_grid(row ~ col)
+
+# Labels
+labs(title = "Title", x = "X axis", y = "Y axis")
+
+# Themes
+theme_minimal()
+theme_bw()
+theme_classic()
+```
+
+## Statistical Tests
+
+```{r}
+#| eval: false
+# T-tests
+t.test(x, mu = 0)                    # one-sample
+t.test(x, y)                         # two-sample (Welch)
+t.test(x, y, var.equal = TRUE)       # two-sample (equal var)
+t.test(x, y, paired = TRUE)          # paired
+
+# Nonparametric tests
+wilcox.test(x, y)                    # Mann-Whitney
+wilcox.test(x, y, paired = TRUE)     # Wilcoxon signed-rank
+kruskal.test(value ~ group, data)    # Kruskal-Wallis
+
+# Correlation
+cor(x, y)
+cor.test(x, y)
+cor.test(x, y, method = "spearman")
+
+# Linear models
+lm(y ~ x, data)
+lm(y ~ x1 + x2, data)
+lm(y ~ x1 * x2, data)
+
+# ANOVA
+aov(y ~ group, data)
+anova(model)
+TukeyHSD(aov_result)
+
+# Model summary
+summary(model)
+confint(model)
+predict(model, newdata)
+residuals(model)
+```
+
+## Probability Distributions
+
+```{r}
+#| eval: false
+# Pattern: d = density, p = cumulative, q = quantile, r = random
+
+# Normal
+dnorm(x, mean, sd)
+pnorm(q, mean, sd)
+qnorm(p, mean, sd)
+rnorm(n, mean, sd)
+
+# Binomial
+dbinom(x, size, prob)
+pbinom(q, size, prob)
+rbinom(n, size, prob)
+
+# Poisson
+dpois(x, lambda)
+ppois(q, lambda)
+rpois(n, lambda)
+
+# t-distribution
+dt(x, df)
+pt(q, df)
+qt(p, df)
+rt(n, df)
+
+# F-distribution
+df(x, df1, df2)
+pf(q, df1, df2)
+rf(n, df1, df2)
+
+# Chi-squared
+dchisq(x, df)
+pchisq(q, df)
+rchisq(n, df)
+```
+
+## Programming Constructs
+
+```{r}
+#| eval: false
+# If-else
+if (condition) {
+  # code if true
+} else {
+  # code if false
+}
+
+# For loop
+for (i in 1:10) {
+  print(i)
+}
+
+# While loop
+while (condition) {
+  # code
+}
+
+# Functions
+my_function <- function(arg1, arg2 = default) {
+  result <- arg1 + arg2
+  return(result)
+}
+
+# Apply functions
+apply(matrix, 1, mean)   # apply to rows
+apply(matrix, 2, mean)   # apply to columns
+sapply(list, function)   # simplify result
+lapply(list, function)   # return list
+replicate(n, expression) # repeat n times
+```
+
+## Useful Utilities
+
+```{r}
+#| eval: false
+# Help
+?function_name
+help(function_name)
+example(function_name)
+
+# Working directory
+getwd()
+setwd("path")
+
+# Packages
+install.packages("package_name")
+library(package_name)
+
+# Objects
+ls()           # list objects
+rm(x)          # remove object
+rm(list=ls())  # remove all
+
+# Set seed for reproducibility
+set.seed(42)
+```

@@ -1,0 +1,317 @@
+# Markdown and LaTeX {#sec-markdown-latex}
+
+```{r}
+#| echo: false
+#| message: false
+library(tidyverse)
+theme_set(theme_minimal())
+```
+
+## The Power of Plain Text
+
+Scientific communication requires more than just words—we need formatted text, mathematical equations, code, figures, and tables. Traditionally, researchers used word processors for this purpose, but word processors have significant limitations for technical writing. They obscure the structure of documents behind visual formatting. They make collaboration difficult because different versions become hard to reconcile. They separate code from the documents that describe it, making it easy for analyses and their descriptions to get out of sync.
+
+Markup languages offer a different approach. You write in plain text, adding simple annotations that specify how the document should be formatted. A processor then converts this annotated text into beautifully formatted output. Because the source is plain text, it can be version-controlled, compared across versions, and edited with any text editor.
+
+## What is Markdown?
+
+Markdown is a lightweight markup language designed to be easy to read and write. Created by John Gruber in 2004, it uses intuitive syntax that looks reasonable even before processing. A document written in Markdown can be rendered into HTML, PDF, Word documents, presentations, websites, and more.
+
+The basic philosophy is that common formatting should be quick to type and not interrupt the flow of writing. Bold text is wrapped in double asterisks. Italics use single asterisks. Headers are indicated by hash marks at the start of a line.
+
+### Text Formatting
+
+To make text italic, wrap it in single asterisks or underscores:
+
+```markdown
+*italic text* or _italic text_
+```
+
+For bold text, use double asterisks or underscores:
+
+```markdown
+**bold text** or __bold text__
+```
+
+You can combine them for bold italic:
+
+```markdown
+***bold and italic***
+```
+
+### Headers
+
+Headers structure your document into sections. Use hash marks at the start of a line, with more hashes indicating lower-level headers:
+
+```markdown
+# First-Level Header
+## Second-Level Header
+### Third-Level Header
+```
+
+### Lists
+
+Create bullet lists by starting lines with dashes, asterisks, or plus signs:
+
+```markdown
+- First item
+- Second item
+    - Sub-item (indent with spaces or tabs)
+    - Another sub-item
+- Third item
+```
+
+For numbered lists, use numbers followed by periods:
+
+```markdown
+1. First step
+2. Second step
+3. Third step
+```
+
+### Block Quotes
+
+Block quotes are useful for highlighting important passages or attributing quotes:
+
+```markdown
+> "You know the greatest danger facing us is ourselves, 
+> an irrational fear of the unknown. But there's no such 
+> thing as the unknown — only things temporarily hidden, 
+> temporarily not understood."
+>
+> --- Captain James T. Kirk
+```
+
+This renders as:
+
+> "You know the greatest danger facing us is ourselves, an irrational fear of the unknown. But there's no such thing as the unknown — only things temporarily hidden, temporarily not understood."
+>
+> --- Captain James T. Kirk
+
+### Links and Images
+
+Links use square brackets for the text and parentheses for the URL:
+
+```markdown
+[Link text](https://www.example.com)
+```
+
+Images use the same syntax with an exclamation mark prefix:
+
+```markdown
+![Image caption](path/to/image.png)
+```
+
+### Code
+
+Inline code is wrapped in single backticks: `` `code` ``. Code blocks use triple backticks, optionally specifying the language for syntax highlighting:
+
+````markdown
+```r
+x <- rnorm(100)
+mean(x)
+```
+````
+
+## What is LaTeX?
+
+LaTeX (pronounced "LAH-tek" or "LAY-tek") is a document preparation system for high-quality typesetting, particularly of technical and scientific documents. Originally created by Leslie Lamport in the 1980s, LaTeX builds on the TeX typesetting system developed by Donald Knuth.
+
+LaTeX excels at mathematical notation. Complex equations that would be tedious or impossible to create in a word processor can be expressed elegantly in LaTeX. The system handles numbering, cross-references, bibliographies, and other scholarly apparatus automatically.
+
+Most importantly for our purposes, LaTeX can be embedded directly in Markdown documents. This gives us the best of both worlds: the simplicity of Markdown for prose and the power of LaTeX for mathematics.
+
+## Mathematical Notation with LaTeX
+
+### Inline and Display Math
+
+Mathematical expressions can appear inline with text or as centered display equations. Inline math is wrapped in single dollar signs: `$x^2$` produces $x^2$. Display equations use double dollar signs:
+
+```latex
+$$E = mc^2$$
+```
+
+Produces:
+
+$$E = mc^2$$
+
+### Greek Letters and Symbols
+
+Greek letters are typed as their names preceded by a backslash:
+
+```latex
+$$\alpha, \beta, \gamma, \delta, \epsilon$$
+$$\mu, \sigma, \pi, \theta, \lambda$$
+```
+
+$$\alpha, \beta, \gamma, \delta, \epsilon$$
+$$\mu, \sigma, \pi, \theta, \lambda$$
+
+Common mathematical symbols:
+
+```latex
+$$\neq, \approx, \leq, \geq, \pm, \times, \div$$
+```
+
+$$\neq, \approx, \leq, \geq, \pm, \times, \div$$
+
+### Superscripts and Subscripts
+
+Superscripts use the caret `^` and subscripts use the underscore `_`:
+
+```latex
+$$x^2, x_i, x_i^2, x_{ij}$$
+```
+
+$$x^2, x_i, x_i^2, x_{ij}$$
+
+For multi-character superscripts or subscripts, use curly braces:
+
+```latex
+$$x^{n+1}, x_{i,j}$$
+```
+
+$$x^{n+1}, x_{i,j}$$
+
+### Fractions
+
+Fractions use the `\frac{numerator}{denominator}` command:
+
+```latex
+$$\frac{a}{b}, \frac{x^2 + 1}{x - 1}$$
+```
+
+$$\frac{a}{b}, \frac{x^2 + 1}{x - 1}$$
+
+### Square Roots
+
+Square roots and nth roots:
+
+```latex
+$$\sqrt{x}, \sqrt[3]{x}, \sqrt[n]{x}$$
+```
+
+$$\sqrt{x}, \sqrt[3]{x}, \sqrt[n]{x}$$
+
+### Summation and Products
+
+Sums and products with limits:
+
+```latex
+$$\sum_{i=1}^{n} x_i, \prod_{i=1}^{n} x_i$$
+```
+
+$$\sum_{i=1}^{n} x_i, \prod_{i=1}^{n} x_i$$
+
+### Integrals
+
+Integrals with limits:
+
+```latex
+$$\int_{a}^{b} f(x) \, dx$$
+$$\iint f(x,y) \, dx \, dy$$
+```
+
+$$\int_{a}^{b} f(x) \, dx$$
+$$\iint f(x,y) \, dx \, dy$$
+
+### Statistical Formulas
+
+Here are some common statistical formulas in LaTeX:
+
+The sample mean:
+```latex
+$$\bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i$$
+```
+$$\bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i$$
+
+The sample variance:
+```latex
+$$s^2 = \frac{1}{n-1}\sum_{i=1}^{n} (x_i - \bar{x})^2$$
+```
+$$s^2 = \frac{1}{n-1}\sum_{i=1}^{n} (x_i - \bar{x})^2$$
+
+The binomial probability formula:
+```latex
+$$P(X=k) = \binom{n}{k} p^{k} (1-p)^{n-k}$$
+```
+$$P(X=k) = \binom{n}{k} p^{k} (1-p)^{n-k}$$
+
+The Poisson probability formula:
+```latex
+$$P(Y=r) = \frac{e^{-\mu}\mu^r}{r!}$$
+```
+$$P(Y=r) = \frac{e^{-\mu}\mu^r}{r!}$$
+
+The normal distribution density:
+```latex
+$$f(x) = \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}$$
+```
+$$f(x) = \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}$$
+
+### Matrices
+
+Matrices are created with the matrix environment:
+
+```latex
+$$\begin{matrix}
+a & b \\
+c & d
+\end{matrix}$$
+```
+
+$$\begin{matrix}
+a & b \\
+c & d
+\end{matrix}$$
+
+For brackets around the matrix, use `pmatrix` (parentheses) or `bmatrix` (square brackets):
+
+```latex
+$$\begin{pmatrix}
+a & b \\
+c & d
+\end{pmatrix}$$
+```
+
+$$\begin{pmatrix}
+a & b \\
+c & d
+\end{pmatrix}$$
+
+## Quarto and R Markdown
+
+Quarto and R Markdown extend Markdown by allowing you to embed executable code chunks. When the document is rendered, the code runs and its output—whether text, tables, or figures—is automatically included in the final document.
+
+A code chunk in Quarto looks like this:
+
+````markdown
+```{{r}}
+x <- rnorm(100)
+mean(x)
+```
+````
+
+When rendered, this shows both the code and its output:
+
+```{r}
+x <- rnorm(100)
+mean(x)
+```
+
+Chunk options control how code is displayed and executed. Common options include `echo` (whether to show the code), `eval` (whether to run the code), and `fig-width` and `fig-height` (figure dimensions).
+
+````markdown
+```{{r}}
+#| echo: false
+#| fig-width: 6
+#| fig-height: 4
+hist(rnorm(1000))
+```
+````
+
+## Why This Matters
+
+The combination of Markdown, LaTeX, and executable code enables truly reproducible research. Your analysis code lives in the same document as your prose. When data change, you re-render the document and everything updates automatically. Collaborators can see exactly what you did. Future you can understand past you's work.
+
+These tools have become standard in data science. Learning them now will pay dividends throughout your career, whether you are writing homework assignments, thesis chapters, journal articles, or technical reports.

@@ -1,0 +1,176 @@
+# Generalized Linear Models {#sec-glm}
+
+```{r}
+#| echo: false
+#| message: false
+library(tidyverse)
+theme_set(theme_minimal())
+```
+
+## Beyond Normal Distributions
+
+Standard linear regression assumes that the response variable is continuous and normally distributed. But many important response variables violate these assumptions. Binary outcomes (success/failure, alive/dead) follow binomial distributions. Count data (number of events, cells, species) often follow Poisson distributions.
+
+Generalized Linear Models (GLMs) extend linear regression to handle these situations. They provide a unified framework for modeling responses that follow different distributions from the exponential family.
+
+## Components of a GLM
+
+GLMs have three components:
+
+**Random component**: Specifies the probability distribution of the response variable (e.g., binomial, Poisson, normal).
+
+**Systematic component**: The linear predictor, a linear combination of explanatory variables:
+$$\eta = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \ldots$$
+
+**Link function**: Connects the random and systematic components, transforming the expected value of the response to the scale of the linear predictor.
+
+## The Link Function
+
+Different distributions use different link functions:
+
+| Distribution | Typical Link | Link Function |
+|:-------------|:-------------|:--------------|
+| Normal | Identity | $\eta = \mu$ |
+| Binomial | Logit | $\eta = \log(\frac{\mu}{1-\mu})$ |
+| Poisson | Log | $\eta = \log(\mu)$ |
+
+## Logistic Regression
+
+Logistic regression models binary outcomes. The response is 0 or 1 (failure or success), and we model the probability of success as a function of predictors.
+
+The logistic function maps the linear predictor to probabilities:
+
+$$P(Y = 1 | X) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 X)}}$$
+
+Equivalently, we model the log-odds:
+
+$$\log\left(\frac{P}{1-P}\right) = \beta_0 + \beta_1 X$$
+
+```{r}
+#| fig-width: 7
+#| fig-height: 5
+# The logistic function
+curve(1 / (1 + exp(-x)), from = -6, to = 6, 
+      xlab = "Linear Predictor", ylab = "Probability",
+      main = "The Logistic Function", lwd = 2, col = "blue")
+```
+
+## Fitting Logistic Regression
+
+```{r}
+# Example: predicting transmission type from mpg
+data(mtcars)
+mtcars$am <- factor(mtcars$am, labels = c("automatic", "manual"))
+
+logit_model <- glm(am ~ mpg, data = mtcars, family = binomial)
+summary(logit_model)
+```
+
+## Interpreting Logistic Coefficients
+
+Coefficients are on the log-odds scale. To interpret them:
+
+**Exponentiate** to get odds ratios:
+
+```{r}
+exp(coef(logit_model))
+```
+
+The odds ratio for mpg (1.36) means that each additional mpg is associated with 36% higher odds of having a manual transmission.
+
+## Making Predictions
+
+```{r}
+# Predict probability for specific mpg values
+new_data <- data.frame(mpg = c(15, 20, 25, 30))
+predict(logit_model, newdata = new_data, type = "response")
+```
+
+The `type = "response"` argument returns probabilities rather than log-odds.
+
+## Poisson Regression
+
+Poisson regression models count data—the number of events in a fixed period or area. The response must be non-negative integers, and we assume events occur independently at a constant rate.
+
+$$\log(\mu) = \beta_0 + \beta_1 X$$
+
+```{r}
+# Example: modeling count data
+set.seed(42)
+exposure <- runif(100, 1, 10)
+counts <- rpois(100, lambda = exp(0.5 + 0.3 * exposure))
+
+pois_model <- glm(counts ~ exposure, family = poisson)
+summary(pois_model)
+```
+
+## Overdispersion
+
+A key assumption of Poisson regression is that the mean equals the variance. When variance exceeds the mean (overdispersion), standard errors are underestimated and p-values too small.
+
+Solutions include:
+- Quasi-Poisson (estimates dispersion from data)
+- Negative binomial regression
+- Zero-inflated models (for excess zeros)
+
+```{r}
+# Check for overdispersion
+# Ratio of residual deviance to df should be near 1
+pois_model$deviance / pois_model$df.residual
+```
+
+## Model Assessment
+
+GLMs use **deviance** rather than R² to assess fit. Deviance compares the fitted model to a saturated model (one parameter per observation).
+
+**Null deviance**: Deviance with only the intercept
+**Residual deviance**: Deviance of the fitted model
+
+A large drop from null to residual deviance indicates the predictors explain substantial variation.
+
+```{r}
+# Compare deviances
+with(logit_model, null.deviance - deviance)
+
+# Chi-square test for improvement
+with(logit_model, pchisq(null.deviance - deviance, 
+                         df.null - df.residual, 
+                         lower.tail = FALSE))
+```
+
+## Model Comparison with AIC
+
+As with linear models, AIC helps compare GLMs:
+
+```{r}
+# Compare models
+model1 <- glm(am ~ mpg, data = mtcars, family = binomial)
+model2 <- glm(am ~ mpg + wt, data = mtcars, family = binomial)
+model3 <- glm(am ~ mpg * wt, data = mtcars, family = binomial)
+
+AIC(model1, model2, model3)
+```
+
+## Assumptions and Diagnostics
+
+GLM assumptions include:
+- Correct specification of the distribution
+- Correct link function
+- Independence of observations
+- No extreme multicollinearity
+
+Diagnostic tools include:
+- Residual plots (deviance or Pearson residuals)
+- Influence measures
+- Goodness-of-fit tests
+
+```{r}
+#| fig-width: 8
+#| fig-height: 4
+par(mfrow = c(1, 2))
+plot(logit_model, which = c(1, 2))
+```
+
+## Summary
+
+GLMs provide a flexible framework for modeling non-normal response variables while maintaining the interpretability of linear models. Logistic regression for binary outcomes and Poisson regression for counts are the most common applications, but the framework extends to other distributions as needed.

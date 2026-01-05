@@ -1,0 +1,171 @@
+# Foundations of Probability {#sec-probability}
+
+```{r}
+#| echo: false
+#| message: false
+library(tidyverse)
+theme_set(theme_minimal())
+```
+
+## Why Probability Matters
+
+Statistics is fundamentally about quantifying and managing uncertainty. We rarely know the world perfectly, yet we need to draw conclusions and make decisions. Probability provides the mathematical language for reasoning about uncertainty.
+
+When you take a sample from a population, the values you obtain are subject to random variation. When you run an experiment, the outcomes vary even under identical conditions. Probability theory tells us what to expect from this variation and provides the foundation for statistical inference.
+
+## Two Interpretations of Probability
+
+There are two main ways to think about what probability means.
+
+The **frequentist interpretation** views probabilities as long-run relative frequencies. If we say the probability of heads when flipping a fair coin is 0.5, we mean that if we flipped the coin many, many times, about half the flips would come up heads. This interpretation grounds probability in observable, repeatable phenomena.
+
+The **subjective (Bayesian) interpretation** views probability as a measure of belief or uncertainty. A probability statement expresses how confident someone is that an event will occur, given their current information. This interpretation allows us to assign probabilities to one-time events and to update beliefs as we gather evidence.
+
+Both interpretations have their uses, and modern statistics draws on both perspectives. For now, the frequentist interpretation provides good intuition for the concepts we will develop.
+
+## Random Variables and Sample Spaces
+
+A **random variable** is a quantity that can take different values with different probabilities. The outcome of a coin flip, the number of bacterial colonies on a plate, and the expression level of a gene are all random variables.
+
+The **sample space** of a random variable is the set of all possible values it can take. For a coin flip, the sample space is {Heads, Tails}. For a die roll, it is {1, 2, 3, 4, 5, 6}. For the concentration of a protein, it might be any non-negative real number.
+
+A probability distribution describes how likely each value in the sample space is. For discrete random variables (those that take distinct values), we use a **probability mass function** that gives the probability of each possible value. For continuous random variables (those that can take any value in a range), we use a **probability density function** from which probabilities are calculated by integration.
+
+One fundamental rule: the probabilities across the entire sample space must sum (or integrate) to 1. Something from the sample space must happen.
+
+## The Bernoulli Distribution
+
+The simplest probability distribution describes a single event with two possible outcomes—success or failure, yes or no, heads or tails. This is the Bernoulli distribution.
+
+Consider flipping a fair coin once. The probability of heads is:
+
+$$P(X = \text{Head}) = \frac{1}{2} = 0.5 = p$$
+
+And the probability of tails is:
+
+$$P(X = \text{Tail}) = \frac{1}{2} = 0.5 = 1 - p = q$$
+
+If the coin is not fair, $p$ might differ from 0.5, but the probabilities still sum to 1:
+
+$$p + (1-p) = 1$$
+$$p + q = 1$$
+
+This same framework applies to any binary outcome: whether a patient responds to treatment, whether an electronic component fails, whether an allele is inherited from a parent.
+
+## Probability Rules
+
+Two fundamental rules govern how probabilities combine.
+
+### The AND Rule (Multiplication)
+
+The probability that two independent events both occur is the product of their individual probabilities. If you flip a coin twice:
+
+$$P(\text{First = Head AND Second = Head}) = p \times p = p^2$$
+
+More generally, for independent events A and B:
+
+$$P(A \text{ and } B) = P(A) \times P(B)$$
+
+For a fair coin with $p = 0.5$:
+
+$$P(\text{HH}) = 0.5 \times 0.5 = 0.25$$
+$$P(\text{HT}) = 0.5 \times 0.5 = 0.25$$
+$$P(\text{TH}) = 0.5 \times 0.5 = 0.25$$
+$$P(\text{TT}) = 0.5 \times 0.5 = 0.25$$
+
+### The OR Rule (Addition)
+
+The probability that at least one of two mutually exclusive events occurs is the sum of their probabilities. The probability of getting heads or tails on a single flip:
+
+$$P(\text{Head OR Tail}) = p + q = 1$$
+
+The probability of getting exactly one head in two flips (either HT or TH):
+
+$$P(\text{one head}) = P(\text{HT}) + P(\text{TH}) = 0.25 + 0.25 = 0.5$$
+
+For mutually exclusive events A and B:
+
+$$P(A \text{ or } B) = P(A) + P(B)$$
+
+These simple rules—AND means multiply, OR means add—underlie most probability calculations. Complex probability distributions can be built up from these basic principles.
+
+## Simulating Coin Flips in R
+
+We can explore these concepts through simulation:
+
+```{r}
+# Simulate a fair coin
+coin <- c("heads", "tails")
+
+# Flip once
+sample(coin, size = 1)
+```
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+# Flip many times and see the distribution
+set.seed(42)
+flips <- sample(coin, prob = c(0.5, 0.5), size = 100, replace = TRUE)
+barplot(table(flips), main = "100 Fair Coin Flips", col = "steelblue")
+```
+
+Try changing the probabilities or sample size to see how the results change. With small samples, randomness can produce results far from the expected proportions. With large samples, the observed proportions converge to the true probabilities—a manifestation of the law of large numbers.
+
+## Joint and Conditional Probability
+
+When we consider two random variables together, we encounter joint and conditional probabilities.
+
+The **joint probability** $P(X, Y)$ is the probability that both X and Y take particular values. For independent events:
+
+$$P(X, Y) = P(X) \times P(Y)$$
+
+However, many pairs of variables are not independent. The **conditional probability** $P(Y|X)$ is the probability of Y given that X has occurred. It captures how knowing X changes our beliefs about Y.
+
+For independent variables, knowing X tells us nothing about Y:
+
+$$P(Y|X) = P(Y) \quad \text{and} \quad P(X|Y) = P(X)$$
+
+For non-independent (dependent) variables:
+
+$$P(Y|X) \neq P(Y) \quad \text{and} \quad P(X|Y) \neq P(X)$$
+
+The relationship between joint and conditional probability is given by:
+
+$$P(X, Y) = P(Y|X) \times P(X) = P(X|Y) \times P(Y)$$
+
+## Bayes' Theorem
+
+Rearranging the above relationship yields Bayes' theorem, a cornerstone of probabilistic reasoning:
+
+$$P(X|Y) = \frac{P(Y|X) \times P(X)}{P(Y)}$$
+
+Bayes' theorem tells us how to update our beliefs about X after observing Y. It forms the foundation of Bayesian statistics, where we start with prior beliefs about parameters, observe data, and compute posterior beliefs.
+
+## Likelihood vs. Probability
+
+A subtle but important distinction exists between probability and likelihood.
+
+**Probability** refers to the chance of observing particular data given a model or parameter value. If we know a coin has $p = 0.5$, what is the probability of observing 7 heads in 10 flips?
+
+**Likelihood** refers to how well a parameter value explains observed data. Given that we observed 7 heads in 10 flips, how likely is it that the true probability is $p = 0.5$ versus $p = 0.7$?
+
+Mathematically, the likelihood function uses the same formula as probability, but we think of it differently:
+
+$$L(\text{parameter} | \text{data}) = P(\text{data} | \text{parameter})$$
+
+Maximum likelihood estimation finds the parameter value that makes the observed data most probable—the value that maximizes the likelihood function.
+
+## Covariance and Correlation
+
+When two variables are not independent, they share information—knowing one tells you something about the other. This shared information is quantified by **covariance**, a measure of how two variables vary together.
+
+If high values of X tend to occur with high values of Y (and low with low), the covariance is positive. If high values of X tend to occur with low values of Y, the covariance is negative. If there is no relationship, the covariance is near zero.
+
+**Correlation** is covariance standardized to fall between -1 and 1, making it easier to interpret. A correlation of 1 means perfect positive linear relationship; -1 means perfect negative linear relationship; 0 means no linear relationship.
+
+These concepts will become central when we discuss regression and other methods for relating variables to each other.
+
+## Looking Ahead
+
+This chapter introduced the language of probability—random variables, sample spaces, probability distributions, and rules for combining probabilities. In the following chapters, we will explore specific probability distributions that arise frequently in practice, both discrete (binomial, Poisson) and continuous (normal, exponential). Understanding these distributions provides the foundation for statistical inference.

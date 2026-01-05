@@ -1,0 +1,162 @@
+# High Performance Computing {#sec-hpc}
+
+```{r}
+#| echo: false
+#| message: false
+library(tidyverse)
+theme_set(theme_minimal())
+```
+
+## Why High Performance Computing?
+
+As datasets grow and analyses become more complex, your laptop may not be enough. Genomic datasets can be terabytes in size. Simulations might require millions of iterations. Machine learning models may need to be trained on billions of data points. High Performance Computing (HPC) provides the resources to tackle problems that exceed what personal computers can handle.
+
+HPC systems come in different forms. Computing clusters—collections of interconnected computers working together—are common at universities and research institutions. Cloud computing services from Amazon (AWS), Google, and Microsoft (Azure) provide on-demand access to computing resources. GPUs (Graphics Processing Units) accelerate certain types of parallel computations.
+
+## Computing Clusters
+
+A typical university computing cluster consists of a head node (login node) where you submit jobs, and many compute nodes where jobs actually run. The head node manages the queue of waiting jobs and allocates resources.
+
+At the University of Oregon, the Talapas cluster provides researchers with access to thousands of CPU cores and specialized hardware including GPUs. Access requires an account, which graduate students can request through their research groups.
+
+## Connecting to Remote Systems
+
+You access remote systems through SSH (Secure Shell):
+
+```bash
+ssh username@talapas-login.uoregon.edu
+```
+
+After authenticating, you are in a terminal on the remote system, working in a Unix environment just as you would locally. File transfer between your computer and the cluster uses `scp` or `rsync`:
+
+```bash
+# Copy file to cluster
+scp data.csv username@talapas-login.uoregon.edu:~/project/
+
+# Copy file from cluster
+scp username@talapas-login.uoregon.edu:~/project/results.csv ./
+```
+
+## Job Schedulers
+
+You do not run computationally intensive jobs directly on the login node. Instead, you submit them to a job scheduler (like SLURM on Talapas) that queues jobs and runs them when resources become available.
+
+A basic SLURM submission script:
+
+```bash
+#!/bin/bash
+#SBATCH --job-name=my_analysis
+#SBATCH --account=your_account
+#SBATCH --partition=short
+#SBATCH --time=2:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=4
+#SBATCH --mem=16G
+
+# Load required software
+module load R/4.2.1
+
+# Run your script
+Rscript my_analysis.R
+```
+
+Submit with `sbatch script.sh`. Check job status with `squeue -u username`. Cancel jobs with `scancel job_id`.
+
+## Resource Requests
+
+Jobs must request resources: time, memory, and CPUs. Request enough to complete your job but not so much that it waits unnecessarily in the queue. Start with conservative estimates and adjust based on actual usage.
+
+Common SLURM directives:
+- `--time`: Maximum runtime (job is killed if exceeded)
+- `--mem`: Memory per node
+- `--cpus-per-task`: Number of CPU cores
+- `--array`: For running many similar jobs
+
+## Environment Modules
+
+HPC systems use environment modules to manage software. Instead of installing software yourself, you load pre-installed modules:
+
+```bash
+module avail              # List available software
+module load R/4.2.1       # Load R
+module load python/3.10   # Load Python
+module list               # Show loaded modules
+module purge              # Unload all modules
+```
+
+## Running R on a Cluster
+
+R scripts run non-interactively on clusters. Instead of using RStudio, you write your analysis as a script and run it with `Rscript`:
+
+```r
+# my_analysis.R
+library(tidyverse)
+
+# Read data
+data <- read.csv("large_dataset.csv")
+
+# Perform analysis
+results <- data |>
+  group_by(category) |>
+  summarize(mean_value = mean(value))
+
+# Save results
+write.csv(results, "output.csv")
+```
+
+## Parallelization in R
+
+R can use multiple CPU cores to speed up computations. The `parallel` package provides tools for parallel processing:
+
+```r
+library(parallel)
+
+# Detect number of cores
+n_cores <- detectCores()
+
+# Create a cluster
+cl <- makeCluster(n_cores - 1)
+
+# Parallel apply
+results <- parLapply(cl, data_list, analysis_function)
+
+# Stop the cluster
+stopCluster(cl)
+```
+
+The `future` and `furrr` packages provide more user-friendly parallelization.
+
+## Cloud Computing
+
+Cloud platforms (AWS, Google Cloud, Azure) offer computing resources on demand. You pay for what you use rather than having fixed resources.
+
+Advantages:
+- Scale up quickly when needed
+- No hardware maintenance
+- Access to specialized hardware (GPUs, large memory instances)
+
+Disadvantages:
+- Costs can accumulate quickly
+- Requires learning platform-specific tools
+- Data transfer can be slow and expensive
+
+## Best Practices
+
+**Start small**: Test your code on a small subset before running on full data.
+
+**Use version control**: Keep your scripts in Git for reproducibility.
+
+**Document everything**: Future you (and others) need to understand what you did.
+
+**Save intermediate results**: If a job fails, you do not want to start from scratch.
+
+**Monitor resource usage**: Check how much time and memory your jobs actually use.
+
+**Clean up**: Delete unnecessary files; storage is shared.
+
+## Getting Help
+
+Most HPC systems have documentation and support staff. At UO, Research Advanced Computing Services (RACS) provides Talapas documentation and consultations. Reading the documentation before asking questions will make your interactions more productive.
+
+Learning to use HPC effectively takes time, but the ability to run large-scale analyses is essential for modern bioengineering research.

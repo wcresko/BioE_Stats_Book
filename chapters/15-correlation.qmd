@@ -1,0 +1,115 @@
+# Correlation {#sec-correlation}
+
+```{r}
+#| echo: false
+#| message: false
+library(tidyverse)
+theme_set(theme_minimal())
+```
+
+## Measuring Association
+
+When two variables vary together, we say they are correlated. Understanding whether and how variables are related is fundamental to science—it helps us identify potential causal relationships, make predictions, and understand systems.
+
+Correlation quantifies the strength and direction of the linear relationship between two variables. A positive correlation means that high values of one variable tend to occur with high values of the other. A negative correlation means that high values of one variable tend to occur with low values of the other.
+
+## Covariance
+
+The **covariance** measures how two variables vary together. If X and Y tend to be above their means at the same time (and below their means at the same time), the covariance is positive. If one tends to be above its mean when the other is below, the covariance is negative.
+
+$$Cov(X, Y) = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{n-1}$$
+
+The problem with covariance is that its magnitude depends on the scales of X and Y, making it hard to interpret. Is a covariance of 100 strong or weak? It depends entirely on the units of measurement.
+
+## Pearson's Correlation Coefficient
+
+The **Pearson correlation coefficient** standardizes covariance by dividing by the product of the standard deviations:
+
+$$r = \frac{Cov(X, Y)}{s_X s_Y} = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum(x_i - \bar{x})^2 \sum(y_i - \bar{y})^2}}$$
+
+This produces a value between -1 and +1:
+
+- $r = 1$: perfect positive linear relationship
+- $r = -1$: perfect negative linear relationship  
+- $r = 0$: no linear relationship
+
+![](../images/images_4b.006.jpeg){fig-align="center"}
+
+```{r}
+#| fig-width: 8
+#| fig-height: 6
+# Examples of different correlations
+set.seed(42)
+n <- 100
+
+par(mfrow = c(2, 2))
+
+# Strong positive
+x1 <- rnorm(n)
+y1 <- 0.9 * x1 + rnorm(n, sd = 0.4)
+plot(x1, y1, main = paste("r =", round(cor(x1, y1), 2)), pch = 19, col = "blue")
+
+# Moderate negative
+y2 <- -0.6 * x1 + rnorm(n, sd = 0.8)
+plot(x1, y2, main = paste("r =", round(cor(x1, y2), 2)), pch = 19, col = "red")
+
+# No correlation
+y3 <- rnorm(n)
+plot(x1, y3, main = paste("r =", round(cor(x1, y3), 2)), pch = 19, col = "gray")
+
+# Non-linear relationship (correlation misleading)
+x4 <- runif(n, -3, 3)
+y4 <- x4^2 + rnorm(n, sd = 0.5)
+plot(x4, y4, main = paste("r =", round(cor(x4, y4), 2), "(non-linear!)"), 
+     pch = 19, col = "purple")
+```
+
+## Anscombe's Quartet
+
+Francis Anscombe created a famous set of four datasets that all have nearly identical statistical properties—same means, variances, correlations, and regression lines—yet look completely different when plotted. This demonstrates why visualization is essential.
+
+![](../images/images_4b.007.jpeg){fig-align="center"}
+
+Always plot your data before calculating correlations. The correlation coefficient captures only linear relationships and can be misleading for non-linear patterns.
+
+## Testing Correlation
+
+The `cor.test()` function tests whether a correlation is significantly different from zero:
+
+```{r}
+# Example: zebrafish length and weight
+set.seed(123)
+length <- rnorm(50, mean = 2.5, sd = 0.5)
+weight <- 10 * length^2 + rnorm(50, sd = 5)
+
+cor.test(length, weight)
+```
+
+The null hypothesis is that the population correlation is zero ($H_0: \rho = 0$). A small p-value indicates evidence of a non-zero correlation.
+
+## Parametric Assumptions
+
+Pearson's correlation assumes that both variables are normally distributed (or at least that the relationship is linear and homoscedastic). When these assumptions are violated, nonparametric alternatives may be more appropriate.
+
+## Nonparametric Correlation
+
+**Spearman's rank correlation** replaces values with their ranks before calculating correlation. It measures monotonic (consistently increasing or decreasing) rather than strictly linear relationships and is robust to outliers.
+
+**Kendall's tau** is another rank-based measure that counts concordant and discordant pairs. It is particularly appropriate for small samples or data with many ties.
+
+```{r}
+# Compare methods on non-normal data
+set.seed(42)
+x <- rexp(30, rate = 0.1)
+y <- x + rexp(30, rate = 0.2)
+
+cat("Pearson:", round(cor(x, y, method = "pearson"), 3), "\n")
+cat("Spearman:", round(cor(x, y, method = "spearman"), 3), "\n")
+cat("Kendall:", round(cor(x, y, method = "kendall"), 3), "\n")
+```
+
+## Correlation Is Not Causation
+
+A correlation between X and Y might arise because X causes Y, because Y causes X, because a third variable Z causes both, or simply by chance. Correlation alone cannot distinguish these possibilities.
+
+To establish causation, you need experimental manipulation (changing X and observing Y), temporal precedence (X occurs before Y), and ruling out confounding variables. Observational correlations are valuable for generating hypotheses but insufficient for establishing causal relationships.

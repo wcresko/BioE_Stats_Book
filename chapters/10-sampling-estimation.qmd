@@ -1,0 +1,193 @@
+# Sampling and Parameter Estimation {#sec-sampling-estimation}
+
+```{r}
+#| echo: false
+#| message: false
+library(tidyverse)
+theme_set(theme_minimal())
+```
+
+## The Problem of Inference
+
+Science often works by measuring samples to learn about populations. We cannot measure every protein in a cell, every patient with a disease, or every fish in the ocean. Instead, we take samples and use statistical inference to draw conclusions about the larger populations from which they came.
+
+This creates a fundamental challenge: sample statistics vary from sample to sample, even when samples come from the same population. If you take two different random samples from a population and calculate their means, you will almost certainly get two different values. How, then, can we say anything reliable about the population?
+
+The answer lies in understanding the sampling distribution—the distribution of a statistic across all possible samples of a given size.
+
+## Parameters and Statistics
+
+A **parameter** is a numerical characteristic of a population—the true population mean $\mu$, the true population standard deviation $\sigma$, the true proportion $p$. Parameters are typically fixed but unknown.
+
+A **statistic** is a numerical characteristic of a sample—the sample mean $\bar{x}$, the sample standard deviation $s$, the sample proportion $\hat{p}$. Statistics are calculated from data and vary from sample to sample.
+
+We use statistics to estimate parameters. The sample mean $\bar{x}$ estimates the population mean $\mu$. The sample standard deviation $s$ estimates the population standard deviation $\sigma$. These estimates will rarely equal the true parameter values exactly, but we can quantify how close they are likely to be.
+
+## Point Estimates
+
+A **point estimate** is a single number used as our best guess for a parameter. The sample mean is a natural point estimate for the population mean:
+
+$$\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i$$
+
+What makes a good estimator? Ideally, an estimator should be:
+
+**Unbiased**: On average, across many samples, the estimator equals the true parameter. The sample mean is an unbiased estimator of the population mean.
+
+**Efficient**: Among unbiased estimators, it has the smallest variance. The sample mean is the most efficient estimator of a normal mean.
+
+**Consistent**: As sample size increases, the estimator converges to the true parameter value.
+
+## The Sampling Distribution of the Mean
+
+Imagine drawing all possible samples of size $n$ from a population and calculating the mean of each. The distribution of these means is the sampling distribution of the mean.
+
+The sampling distribution has remarkable properties:
+
+1. Its mean equals the population mean: $E[\bar{X}] = \mu$
+2. Its standard deviation (the **standard error**) equals: $SE = \frac{\sigma}{\sqrt{n}}$
+3. For large samples, it is approximately normal (Central Limit Theorem)
+
+```{r}
+#| fig-width: 8
+#| fig-height: 6
+# Demonstrate sampling distribution
+set.seed(32)
+
+# Create a population
+true_pop <- rpois(n = 10000, lambda = 3)
+pop_mean <- mean(true_pop)
+pop_sd <- sd(true_pop)
+
+# Take many samples and compute their means
+sample_sizes <- c(5, 20, 50, 200)
+par(mfrow = c(2, 2))
+
+for (n in sample_sizes) {
+  sample_means <- replicate(1000, mean(sample(true_pop, n)))
+  hist(sample_means, breaks = 30, main = paste("n =", n),
+       xlab = "Sample Mean", col = "steelblue",
+       xlim = c(1, 5))
+  abline(v = pop_mean, col = "red", lwd = 2)
+}
+```
+
+As sample size increases, the sampling distribution becomes narrower (smaller standard error) and more normal in shape. This is why larger samples give more precise estimates.
+
+## Standard Error
+
+The **standard error** (SE) measures the variability of a statistic across samples. For the sample mean:
+
+$$SE_{\bar{x}} = \frac{\sigma}{\sqrt{n}}$$
+
+Since we usually do not know $\sigma$, we estimate the standard error using the sample standard deviation:
+
+$$\widehat{SE}_{\bar{x}} = \frac{s}{\sqrt{n}}$$
+
+The standard error shrinks as sample size increases, but following a square root relationship. To halve the standard error, you need to quadruple the sample size.
+
+```{r}
+# Demonstrate how SE changes with sample size
+set.seed(32)
+true_pop <- rpois(n = 1000, lambda = 5)
+
+# Sample size of 5
+samps_5 <- replicate(n = 50, sample(true_pop, size = 5))
+means_5 <- apply(samps_5, 2, mean)
+se_5 <- sd(means_5)
+
+# Sample size of 50
+samps_50 <- replicate(n = 50, sample(true_pop, size = 50))
+means_50 <- apply(samps_50, 2, mean)
+se_50 <- sd(means_50)
+
+cat("Standard error with n=5:", round(se_5, 3), "\n")
+cat("Standard error with n=50:", round(se_50, 3), "\n")
+cat("Ratio:", round(se_5/se_50, 2), "(theoretical: √10 =", round(sqrt(10), 2), ")\n")
+```
+
+![](../images/week_2.026.jpeg){fig-align="center"}
+
+## Confidence Intervals
+
+A point estimate tells us our best guess, but not how uncertain we are. A **confidence interval** provides a range of plausible values for the parameter along with a measure of confidence.
+
+A 95% confidence interval for the population mean, when the population is normally distributed or the sample is large, is:
+
+$$\bar{x} \pm t_{\alpha/2} \times \frac{s}{\sqrt{n}}$$
+
+where $t_{\alpha/2}$ is the critical value from the t-distribution with $n-1$ degrees of freedom.
+
+![](../images/week_2.027.jpeg){fig-align="center"}
+
+The interpretation requires care: a 95% confidence interval means that if we repeated this procedure many times, 95% of the resulting intervals would contain the true parameter. Any particular interval either does or does not contain the true value—we just don't know which.
+
+```{r}
+# Calculate a confidence interval
+set.seed(42)
+sample_data <- rnorm(30, mean = 100, sd = 15)
+
+sample_mean <- mean(sample_data)
+sample_se <- sd(sample_data) / sqrt(length(sample_data))
+t_crit <- qt(0.975, df = length(sample_data) - 1)
+
+lower <- sample_mean - t_crit * sample_se
+upper <- sample_mean + t_crit * sample_se
+
+cat("Sample mean:", round(sample_mean, 2), "\n")
+cat("95% CI: [", round(lower, 2), ",", round(upper, 2), "]\n")
+
+# Or use t.test directly
+t.test(sample_data)$conf.int
+```
+
+![](../images/week_2.028.jpeg){fig-align="center"}
+
+## Coefficient of Variation
+
+When comparing variability across groups with different means, the standard deviation alone can be misleading. The **coefficient of variation** (CV) standardizes variability relative to the mean:
+
+$$CV = \frac{s}{\bar{x}} \times 100\%$$
+
+A CV of 10% means the standard deviation is 10% of the mean. This allows meaningful comparisons between groups or measurements on different scales.
+
+## Percentiles and Quantiles
+
+**Percentiles** describe the relative position of values within a distribution. The $p$th percentile is the value below which $p$% of the data falls. The 50th percentile is the median, the 25th percentile is the first quartile, and the 75th percentile is the third quartile.
+
+**Quantiles** divide data into equal parts. Quartiles divide into four parts, deciles into ten parts, percentiles into one hundred parts.
+
+```{r}
+# Calculate percentiles
+data <- c(12, 15, 18, 22, 25, 28, 32, 35, 40, 45)
+
+quantile(data, probs = c(0.25, 0.5, 0.75))
+summary(data)
+```
+
+Quantiles form the basis for many statistical procedures, including constructing confidence intervals and calculating p-values.
+
+## Bias and Variability
+
+Two distinct types of error affect estimates:
+
+**Bias** is systematic error—the tendency for an estimator to consistently over- or underestimate the true parameter. An unbiased estimator has zero bias: its average value across all possible samples equals the true parameter.
+
+**Variability** is random error—the spread of estimates around their average value. Low variability means estimates cluster tightly together.
+
+The ideal estimator has both low bias and low variability. Sometimes there is a tradeoff: a slightly biased estimator might have much lower variability, resulting in estimates that are closer to the truth on average.
+
+The **mean squared error** (MSE) combines both sources of error:
+
+$$MSE = Bias^2 + Variance$$
+
+## Key Takeaways
+
+Understanding sampling distributions and estimation is fundamental to statistical inference. Key points to remember:
+
+1. Statistics vary from sample to sample; this variability is quantified by the standard error
+2. Larger samples give more precise estimates (smaller standard errors)
+3. Confidence intervals quantify uncertainty about parameter estimates
+4. The Central Limit Theorem explains why the normal distribution appears so frequently
+5. Both bias and variability affect the quality of estimates
+
+These concepts provide the foundation for hypothesis testing and the statistical inference methods we develop in subsequent chapters.

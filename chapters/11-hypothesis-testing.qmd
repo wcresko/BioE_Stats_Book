@@ -1,0 +1,152 @@
+# Hypothesis Testing {#sec-hypothesis-testing}
+
+```{r}
+#| echo: false
+#| message: false
+library(tidyverse)
+theme_set(theme_minimal())
+```
+
+## What is a Hypothesis?
+
+A hypothesis is a statement of belief about the world—a claim that can be evaluated with data. In statistics, we formalize hypothesis testing as a framework for using data to decide between competing claims.
+
+The **null hypothesis** ($H_0$) represents a default position, typically stating that there is no effect, no difference, or no relationship. The **alternative hypothesis** ($H_A$) represents what we would conclude if we reject the null—typically that there is an effect, difference, or relationship.
+
+For example, consider testing whether an amino acid substitution changes the catalytic rate of an enzyme:
+
+- $H_0$: The substitution does not change the catalytic rate
+- $H_A$: The substitution does change the catalytic rate
+
+The alternative hypothesis might be directional (the substitution increases the rate) or non-directional (the substitution changes the rate, in either direction). This distinction affects how we calculate p-values.
+
+## The Logic of Hypothesis Testing
+
+Hypothesis testing follows a specific logic. We assume the null hypothesis is true and ask: how likely would we be to observe data as extreme as what we actually observed? If this probability is very small, we conclude that the null hypothesis is unlikely to be true and reject it in favor of the alternative.
+
+Key questions in hypothesis testing include:
+
+- What is the probability of rejecting a true null hypothesis?
+- What is the probability of failing to reject a false null hypothesis?
+- How do we decide when to reject the null hypothesis?
+- What can we conclude if we fail to reject?
+
+## Type I and Type II Errors
+
+Two types of mistakes are possible in hypothesis testing.
+
+![](../images/week_3.007.jpeg){fig-align="center"}
+
+A **Type I error** occurs when we reject a true null hypothesis—concluding there is an effect when there is not. The probability of a Type I error is denoted $\alpha$ and is called the significance level. By convention, $\alpha$ is often set to 0.05, meaning we accept a 5% chance of falsely rejecting a true null.
+
+A **Type II error** occurs when we fail to reject a false null hypothesis—concluding there is no effect when there actually is one. The probability of a Type II error is denoted $\beta$.
+
+**Power** is the probability of correctly rejecting a false null hypothesis: Power = $1 - \beta$. Power depends on the effect size (how big the true effect is), sample size, significance level, and variability in the data.
+
+| | $H_0$ True | $H_0$ False |
+|:--|:--|:--|
+| Reject $H_0$ | Type I Error ($\alpha$) | Correct Decision (Power) |
+| Fail to Reject $H_0$ | Correct Decision | Type II Error ($\beta$) |
+
+## P-Values
+
+The **p-value** is the probability of observing a test statistic as extreme or more extreme than the one calculated from the data, assuming the null hypothesis is true.
+
+A small p-value indicates that the observed data would be unlikely if the null hypothesis were true, providing evidence against the null. A large p-value indicates that the data are consistent with the null hypothesis.
+
+The p-value is NOT the probability that the null hypothesis is true. It is the probability of the data (or more extreme data) given the null hypothesis, not the probability of the null hypothesis given the data.
+
+## Significance Level and Decision Rules
+
+The **significance level** $\alpha$ is the threshold below which we reject the null hypothesis. If $p < \alpha$, we reject $H_0$. If $p \geq \alpha$, we fail to reject $H_0$.
+
+![](../images/week_3.008.jpeg){fig-align="center"}
+
+The conventional choice of $\alpha = 0.05$ is arbitrary but widely used. In contexts where Type I errors are particularly costly (e.g., approving an ineffective drug), smaller $\alpha$ values may be appropriate. In exploratory research, larger $\alpha$ values might be acceptable.
+
+Important: "fail to reject" is not the same as "accept." Failing to reject the null hypothesis means the data did not provide sufficient evidence against it, not that the null hypothesis is true.
+
+## Test Statistics and Statistical Distributions
+
+A **test statistic** summarizes the data in a way that allows comparison to a known distribution under the null hypothesis. Different tests use different statistics: the t-statistic for t-tests, the F-statistic for ANOVA, the chi-squared statistic for contingency tables.
+
+Just like raw data, test statistics are random variables with their own sampling distributions. Under the null hypothesis, we know what distribution the test statistic should follow. We can then calculate how unusual our observed statistic is under this distribution.
+
+![](../images/week_3.001.jpeg){fig-align="center"}
+
+## One-Tailed vs. Two-Tailed Tests
+
+A **two-tailed test** considers extreme values in both directions. The alternative hypothesis is non-directional: $H_A: \mu \neq \mu_0$. Extreme values in either tail of the distribution count as evidence against the null.
+
+A **one-tailed test** considers extreme values in only one direction. The alternative hypothesis is directional: $H_A: \mu > \mu_0$ or $H_A: \mu < \mu_0$. Only extreme values in the specified direction count as evidence against the null.
+
+![](../images/week_3.002.jpeg){fig-align="center"}
+
+Two-tailed tests are more conservative and are appropriate when you do not have a strong prior expectation about the direction of an effect. One-tailed tests have more power to detect effects in the specified direction but will miss effects in the opposite direction.
+
+## Multiple Testing
+
+When you perform many hypothesis tests, the probability of at least one Type I error increases. If you test 20 independent hypotheses at $\alpha = 0.05$, you expect about one false positive even when all null hypotheses are true.
+
+Several approaches address multiple testing:
+
+**Bonferroni correction** divides $\alpha$ by the number of tests. For 20 tests, use $\alpha = 0.05/20 = 0.0025$. This is conservative and may miss true effects.
+
+**False Discovery Rate (FDR)** control allows some false positives but controls their proportion among rejected hypotheses. This is less conservative than Bonferroni and widely used in genomics and other high-throughput applications.
+
+## Practical vs. Statistical Significance
+
+Statistical significance does not imply practical importance. With a large enough sample, even trivially small effects become statistically significant. Conversely, practically important effects may not reach statistical significance with small samples.
+
+Always consider effect sizes alongside p-values. Report confidence intervals, which convey both the magnitude of an effect and the uncertainty about it. A 95% confidence interval that excludes zero is equivalent to statistical significance at $\alpha = 0.05$, but also shows the range of plausible effect sizes.
+
+## Example: Null Distribution via Randomization
+
+We can create empirical null distributions through randomization, providing an alternative to parametric assumptions.
+
+```{r}
+#| fig-width: 7
+#| fig-height: 5
+# Two groups to compare
+set.seed(56)
+pop_1 <- rnorm(n = 50, mean = 20.1, sd = 2)
+pop_2 <- rnorm(n = 50, mean = 19.3, sd = 2)
+
+# Observed t-statistic
+t_obs <- t.test(x = pop_1, y = pop_2, alternative = "greater")$statistic
+
+# Create null distribution by randomization
+pops_comb <- c(pop_1, pop_2)
+
+t_rand <- replicate(1000, {
+  pops_shuf <- sample(pops_comb)
+  t.test(x = pops_shuf[1:50], y = pops_shuf[51:100], alternative = "greater")$statistic
+})
+
+# Plot null distribution
+hist(t_rand, breaks = 30, main = "Randomization Null Distribution",
+     xlab = "t-statistic", col = "lightblue")
+abline(v = t_obs, col = "red", lwd = 2)
+```
+
+```{r}
+# Calculate p-value
+p_value <- sum(t_rand >= t_obs) / 1000
+cat("Observed t:", round(t_obs, 3), "\n")
+cat("P-value:", p_value, "\n")
+```
+
+![](../images/week_3.009.jpeg){fig-align="center"}
+
+## Summary
+
+Hypothesis testing provides a framework for using data to evaluate claims about populations. Key concepts include:
+
+- Null and alternative hypotheses formalize competing claims
+- Type I errors (false positives) and Type II errors (false negatives) represent the two ways we can be wrong
+- P-values quantify evidence against the null hypothesis
+- Significance levels set thresholds for decision-making
+- Multiple testing requires adjustment to control error rates
+- Statistical significance does not imply practical importance
+
+In the following chapters, we apply this framework to specific tests: t-tests for comparing means, chi-squared tests for categorical data, and nonparametric alternatives when assumptions are violated.
