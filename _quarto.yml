@@ -54,7 +54,11 @@ book:
         - chapters/22-statistical-learning.qmd
         - chapters/23-dimensionality-reduction.qmd
         - chapters/24-high-performance-computing.qmd
-    
+
+    - part: "Scientific Communication"
+      chapters:
+        - chapters/25-presenting-results.qmd
+
     - part: "Appendices"
       chapters:
         - chapters/A1-eugenics-history.qmd
