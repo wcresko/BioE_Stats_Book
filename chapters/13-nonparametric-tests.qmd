@@ -78,3 +78,151 @@ When parametric assumptions are met, nonparametric tests are slightly less power
 The choice depends on your data and research question. If your data are reasonably normal (or your sample is large enough for the Central Limit Theorem to apply) and you care about means, parametric tests are appropriate and efficient. If your data are severely non-normal, contain outliers, or are ordinal in nature, nonparametric tests provide a safer alternative.
 
 With large samples, the Central Limit Theorem ensures that parametric tests are robust to non-normality, so the choice matters less. With small samples, checking assumptions becomes more important.
+
+## Frequency Analysis: Chi-Square Tests
+
+When data consist of counts in categories rather than continuous measurements, we need tests designed for categorical data. The chi-square ($\chi^2$) test compares observed frequencies to expected frequencies under a null hypothesis.
+
+### Goodness-of-Fit Test
+
+The chi-square goodness-of-fit test asks whether observed frequencies match expected proportions. For example, do offspring genotypes follow expected Mendelian ratios?
+
+```{r}
+# Test whether observed counts match expected 3:1 ratio
+observed <- c(75, 25)  # Dominant, Recessive phenotypes
+expected_ratio <- c(3, 1)
+expected <- sum(observed) * expected_ratio / sum(expected_ratio)
+
+# Chi-square test
+chisq.test(observed, p = expected_ratio / sum(expected_ratio))
+```
+
+The test statistic is:
+
+$$\chi^2 = \sum \frac{(O_i - E_i)^2}{E_i}$$
+
+where $O_i$ are observed counts and $E_i$ are expected counts. Under the null hypothesis (observed = expected), this follows a chi-square distribution with $k-1$ degrees of freedom, where $k$ is the number of categories.
+
+### Tests of Independence: Contingency Tables
+
+When we have counts cross-classified by two categorical variables, a contingency table displays the frequencies. The chi-square test of independence asks whether the two variables are associated.
+
+```{r}
+# Example: Is treatment outcome associated with gender?
+treatment_data <- matrix(c(
+  45, 35,   # Males: Success, Failure
+  55, 15    # Females: Success, Failure
+), nrow = 2, byrow = TRUE)
+rownames(treatment_data) <- c("Male", "Female")
+colnames(treatment_data) <- c("Success", "Failure")
+
+treatment_data
+
+# Chi-square test of independence
+chisq.test(treatment_data)
+```
+
+Expected counts under independence are calculated as:
+
+$$E_{ij} = \frac{(\text{Row Total}_i) \times (\text{Column Total}_j)}{\text{Grand Total}}$$
+
+::: {.callout-warning}
+## Assumptions of Chi-Square Tests
+
+- Observations must be independent
+- Expected counts should be at least 5 in each cell (some sources say 80% of cells should have expected counts ≥ 5)
+- For 2×2 tables with small expected counts, use Fisher's exact test instead
+:::
+
+### Fisher's Exact Test
+
+When sample sizes are small, Fisher's exact test provides exact p-values rather than relying on the chi-square approximation:
+
+```{r}
+# Small sample example
+small_table <- matrix(c(3, 1, 1, 3), nrow = 2)
+fisher.test(small_table)
+```
+
+### G-Test (Likelihood Ratio Test)
+
+The G-test is an alternative to the chi-square test based on the likelihood ratio. It has better theoretical properties and is preferred by some statisticians:
+
+$$G = 2 \sum O_i \ln\left(\frac{O_i}{E_i}\right)$$
+
+```{r}
+# G-test for the treatment data
+# Using observed and expected from chi-square
+test_result <- chisq.test(treatment_data)
+observed_counts <- as.vector(treatment_data)
+expected_counts <- as.vector(test_result$expected)
+
+G <- 2 * sum(observed_counts * log(observed_counts / expected_counts))
+p_value <- 1 - pchisq(G, df = 1)
+
+cat("G statistic:", round(G, 3), "\n")
+cat("p-value:", round(p_value, 4), "\n")
+```
+
+### Odds Ratios
+
+For 2×2 tables, the **odds ratio** quantifies the strength of association between two binary variables:
+
+$$OR = \frac{a/b}{c/d} = \frac{ad}{bc}$$
+
+where the table is:
+
+|  | Outcome+ | Outcome- |
+|:--|:--|:--|
+| Exposure+ | a | b |
+| Exposure- | c | d |
+
+An odds ratio of 1 indicates no association. OR > 1 indicates positive association; OR < 1 indicates negative association.
+
+```{r}
+# Calculate odds ratio for treatment data
+a <- treatment_data[1, 1]  # Male, Success
+b <- treatment_data[1, 2]  # Male, Failure
+c <- treatment_data[2, 1]  # Female, Success
+d <- treatment_data[2, 2]  # Female, Failure
+
+odds_ratio <- (a * d) / (b * c)
+cat("Odds ratio:", round(odds_ratio, 3), "\n")
+
+# Using fisher.test to get OR with confidence interval
+fisher.test(treatment_data)
+```
+
+An odds ratio of `r round(odds_ratio, 2)` indicates that males have lower odds of success compared to females in this example.
+
+### McNemar's Test for Paired Data
+
+When categorical data are paired (e.g., before/after measurements on the same subjects), McNemar's test is appropriate:
+
+```{r}
+# Before/after treatment: did opinion change?
+before_after <- matrix(c(
+  40, 10,  # Agree before: Agree after, Disagree after
+  25, 25   # Disagree before: Agree after, Disagree after
+), nrow = 2, byrow = TRUE)
+
+mcnemar.test(before_after)
+```
+
+The test focuses on the discordant pairs—cases where the response changed—and asks whether changes in one direction are more common than changes in the other direction.
+
+## Summary
+
+Nonparametric and frequency-based tests provide alternatives when parametric assumptions fail or data are categorical:
+
+- Mann-Whitney U and Kruskal-Wallis for comparing groups with non-normal data
+- Wilcoxon signed-rank for paired non-normal data
+- Chi-square tests for categorical data (goodness-of-fit and independence)
+- Fisher's exact test for small samples
+- Odds ratios to quantify association strength
+- McNemar's test for paired categorical data
+
+## Additional Resources
+
+- @logan2010biostatistical - Comprehensive coverage of nonparametric and categorical data analysis
+- @crawley2007r - Detailed treatment of chi-square and contingency table methods in R

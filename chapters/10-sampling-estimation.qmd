@@ -180,6 +180,291 @@ The **mean squared error** (MSE) combines both sources of error:
 
 $$MSE = Bias^2 + Variance$$
 
+## The Bootstrap: Resampling for Estimation
+
+The bootstrap, introduced by Bradley Efron in 1979, is a powerful resampling method for estimating standard errors and constructing confidence intervals when analytical formulas are unavailable or assumptions are questionable [@efron1979bootstrap].
+
+The key insight is elegant: we can estimate the sampling distribution of a statistic by repeatedly resampling from our observed data. If our sample is representative of the population, then samples drawn from our sample (with replacement) should behave like samples drawn from the population.
+
+### The Bootstrap Algorithm
+
+1. Take a random sample with replacement from your data (same size as original)
+2. Calculate the statistic of interest on this resampled data
+3. Repeat steps 1-2 many times (typically 1000-10000)
+4. The distribution of bootstrap statistics approximates the sampling distribution
+
+```{r}
+#| fig-width: 8
+#| fig-height: 5
+# Bootstrap estimation of the sampling distribution of the mean
+set.seed(123)
+
+# Our observed sample
+original_sample <- c(23, 31, 28, 35, 42, 29, 33, 27, 38, 31)
+n <- length(original_sample)
+
+# Bootstrap: resample with replacement
+n_bootstrap <- 5000
+bootstrap_means <- numeric(n_bootstrap)
+
+for (i in 1:n_bootstrap) {
+  boot_sample <- sample(original_sample, size = n, replace = TRUE)
+  bootstrap_means[i] <- mean(boot_sample)
+}
+
+# Compare bootstrap distribution to observed statistics
+hist(bootstrap_means, breaks = 40, col = "steelblue",
+     main = "Bootstrap Distribution of the Mean",
+     xlab = "Sample Mean")
+abline(v = mean(original_sample), col = "red", lwd = 2)
+abline(v = quantile(bootstrap_means, c(0.025, 0.975)), col = "darkgreen", lwd = 2, lty = 2)
+
+cat("Original sample mean:", mean(original_sample), "\n")
+cat("Bootstrap SE:", sd(bootstrap_means), "\n")
+cat("95% Bootstrap CI:", quantile(bootstrap_means, c(0.025, 0.975)), "\n")
+```
+
+### Bootstrap Confidence Intervals
+
+The bootstrap provides several methods for constructing confidence intervals:
+
+**Percentile method**: Use the 2.5th and 97.5th percentiles of the bootstrap distribution as the 95% CI bounds. This is the simplest approach shown above.
+
+**Basic (reverse percentile) method**: Reflects the percentiles around the original estimate to correct for certain types of bias.
+
+**BCa (bias-corrected and accelerated)**: A more sophisticated method that adjusts for both bias and skewness in the bootstrap distribution. This is often preferred when the sampling distribution is not symmetric.
+
+```{r}
+# Using the boot package for more sophisticated bootstrap CI
+library(boot)
+
+# Define statistic function
+mean_stat <- function(data, indices) {
+  mean(data[indices])
+}
+
+# Run bootstrap
+boot_result <- boot(original_sample, mean_stat, R = 5000)
+
+# Different CI methods
+boot.ci(boot_result, type = c("perc", "basic", "bca"))
+```
+
+### When to Use the Bootstrap
+
+The bootstrap is particularly valuable when:
+
+- The sampling distribution of your statistic is unknown or complex
+- Sample sizes are small and normality assumptions are questionable
+- You are estimating something other than a mean (e.g., median, correlation, regression coefficients)
+- Analytical formulas for standard errors do not exist
+
+However, the bootstrap has limitations. It assumes your sample is representative of the population and works poorly with very small samples (n < 10-15) or when estimating extreme quantiles.
+
+## Maximum Likelihood Estimation
+
+**Maximum likelihood estimation (MLE)** provides a principled framework for parameter estimation. The likelihood function measures how probable the observed data would be for different parameter values. MLE finds the parameter values that make the observed data most probable.
+
+For a sample $x_1, x_2, \ldots, x_n$ from a distribution with parameter $\theta$, the likelihood function is:
+
+$$L(\theta | x_1, \ldots, x_n) = \prod_{i=1}^{n} f(x_i | \theta)$$
+
+where $f(x_i | \theta)$ is the probability density (or mass) function. We typically work with the log-likelihood for computational convenience:
+
+$$\ell(\theta) = \sum_{i=1}^{n} \log f(x_i | \theta)$$
+
+The MLE $\hat{\theta}$ is the value that maximizes $\ell(\theta)$.
+
+```{r}
+# MLE example: estimating the rate parameter of an exponential distribution
+set.seed(42)
+exp_data <- rexp(100, rate = 0.5)  # True rate is 0.5
+
+# Log-likelihood function for exponential
+log_likelihood <- function(rate, data) {
+  sum(dexp(data, rate = rate, log = TRUE))
+}
+
+# Find MLE
+rates <- seq(0.1, 1, by = 0.01)
+ll_values <- sapply(rates, log_likelihood, data = exp_data)
+
+# Plot likelihood surface
+plot(rates, ll_values, type = "l", lwd = 2,
+     xlab = "Rate parameter", ylab = "Log-likelihood",
+     main = "Log-likelihood for Exponential Rate")
+abline(v = 1/mean(exp_data), col = "red", lwd = 2)  # MLE = 1/mean for exponential
+
+cat("True rate: 0.5\n")
+cat("MLE estimate:", round(1/mean(exp_data), 3), "\n")
+```
+
+MLEs have desirable properties: they are consistent (converge to true values as n increases) and asymptotically efficient (achieve the smallest possible variance for large samples).
+
+## Simulation-Based Understanding of Estimation
+
+Simulation provides powerful intuition for statistical concepts. By repeatedly sampling from known populations, we can directly observe sampling distributions.
+
+```{r}
+#| fig-width: 9
+#| fig-height: 6
+# Exploring properties of estimators through simulation
+set.seed(456)
+
+# True population parameters
+pop_mean <- 50
+pop_sd <- 10
+
+# Simulate many samples and compute estimates
+n_samples <- 2000
+sample_sizes <- c(5, 15, 50)
+
+par(mfrow = c(2, 3))
+
+for (n in sample_sizes) {
+  # Collect sample means
+  sample_means <- replicate(n_samples, {
+    samp <- rnorm(n, mean = pop_mean, sd = pop_sd)
+    mean(samp)
+  })
+
+  # Plot distribution of sample means
+  hist(sample_means, breaks = 40, col = "steelblue",
+       main = paste("Sample Means (n =", n, ")"),
+       xlab = "Sample Mean", xlim = c(35, 65))
+  abline(v = pop_mean, col = "red", lwd = 2)
+
+  # Calculate actual SE vs theoretical
+  actual_se <- sd(sample_means)
+  theoretical_se <- pop_sd / sqrt(n)
+
+  legend("topright", bty = "n", cex = 0.8,
+         legend = c(paste("Actual SE:", round(actual_se, 2)),
+                    paste("Theoretical:", round(theoretical_se, 2))))
+}
+
+# Now do the same for sample standard deviations
+for (n in sample_sizes) {
+  # Collect sample SDs
+  sample_sds <- replicate(n_samples, {
+    samp <- rnorm(n, mean = pop_mean, sd = pop_sd)
+    sd(samp)
+  })
+
+  hist(sample_sds, breaks = 40, col = "coral",
+       main = paste("Sample SDs (n =", n, ")"),
+       xlab = "Sample SD")
+  abline(v = pop_sd, col = "red", lwd = 2)
+}
+```
+
+This simulation reveals several important facts:
+1. Sample means are unbiased (centered on the population mean)
+2. The spread of sample means decreases as $\sqrt{n}$
+3. Sample standard deviations are slightly biased for small samples but become unbiased as n increases
+
+## Principles of Experimental Design
+
+Good statistical analysis cannot rescue a poorly designed study. The way you collect data fundamentally determines what conclusions you can draw. Understanding key design principles is essential for planning experiments that yield valid, interpretable results.
+
+### Randomization
+
+**Randomization** assigns subjects to treatment groups by chance, ensuring that treatment groups are comparable. Without randomization, systematic differences between groups (confounders) can bias results.
+
+```{r}
+# Randomly assign 20 subjects to treatment or control
+set.seed(42)
+subjects <- 1:20
+treatment_group <- sample(subjects, size = 10)
+control_group <- setdiff(subjects, treatment_group)
+
+cat("Treatment group:", treatment_group, "\n")
+cat("Control group:", control_group, "\n")
+```
+
+Randomization provides the foundation for causal inference. Without it, we can only establish associations, not causation.
+
+### Controls
+
+Every experiment needs **controls**—groups that differ from treatment groups only in the variable of interest:
+
+- **Negative control**: Receives no treatment; establishes baseline
+- **Positive control**: Receives a treatment known to work; confirms the experimental system is functioning
+- **Procedural control**: Receives all procedures except the active ingredient (e.g., sham surgery, vehicle-only injection)
+
+Without proper controls, you cannot determine whether observed effects are due to your treatment or some other factor.
+
+### Blinding
+
+**Blinding** prevents knowledge of group assignment from influencing results:
+
+- **Single-blind**: Subjects do not know which treatment they receive
+- **Double-blind**: Neither subjects nor experimenters know group assignments
+- **Triple-blind**: Subjects, experimenters, and data analysts are all blinded
+
+Blinding prevents both placebo effects (subjects' expectations influencing outcomes) and experimenter bias (conscious or unconscious influence on measurements).
+
+### Replication
+
+**Replication** means having multiple independent observations in each treatment group. Replication is essential because it:
+
+- Provides estimates of variability
+- Enables statistical inference
+- Increases precision of estimates
+- Allows detection of real effects
+
+The **unit of replication** must match the **unit of treatment**. If you treat tanks with different water temperatures and measure multiple fish per tank, your replicates are tanks, not fish.
+
+::: {.callout-warning}
+## Technical vs. Biological Replicates
+
+- **Technical replicates**: Repeated measurements of the same sample (e.g., running the same sample through a machine twice)
+- **Biological replicates**: Independent samples from different individuals or experimental units
+
+Technical replicates measure precision of the measurement process. Biological replicates measure biological variability and enable inference to the population. Do not confuse them!
+:::
+
+### Blocking
+
+**Blocking** groups experimental units that are similar to each other, then applies all treatments within each block. This reduces variability by accounting for known sources of heterogeneity.
+
+Common blocking factors:
+- Time (experimental batches, days)
+- Location (different incubators, growth chambers)
+- Individual (paired designs, repeated measures)
+
+```{r}
+# Randomized complete block design
+# 4 treatments applied within each of 3 blocks
+set.seed(123)
+blocks <- 1:3
+treatments <- c("A", "B", "C", "D")
+
+design <- expand.grid(Block = blocks, Treatment = treatments)
+design$Order <- NA
+
+for (b in blocks) {
+  block_rows <- design$Block == b
+  design$Order[block_rows] <- sample(1:4)
+}
+
+design[order(design$Block, design$Order), ]
+```
+
+Blocking is particularly valuable when blocks correspond to major sources of variation (e.g., different labs, experimental days, genetic backgrounds).
+
+### Sample Size Considerations
+
+Determining appropriate sample size before collecting data is crucial. Too few samples waste resources by producing inconclusive results; too many waste resources by studying effects that were detectable with smaller samples.
+
+Sample size depends on:
+- **Effect size**: The minimum meaningful difference you want to detect
+- **Variability**: The expected noise in your measurements
+- **Significance level ($\alpha$)**: Usually 0.05
+- **Power**: Usually 0.80 (80% chance of detecting a real effect)
+
+Power analysis (covered in detail in a later chapter) formalizes these considerations.
+
 ## Key Takeaways
 
 Understanding sampling distributions and estimation is fundamental to statistical inference. Key points to remember:
@@ -189,5 +474,13 @@ Understanding sampling distributions and estimation is fundamental to statistica
 3. Confidence intervals quantify uncertainty about parameter estimates
 4. The Central Limit Theorem explains why the normal distribution appears so frequently
 5. Both bias and variability affect the quality of estimates
+6. The bootstrap provides a flexible, computer-intensive approach to estimation when analytical methods are limited
+7. Maximum likelihood provides a principled framework for parameter estimation
+8. Good experimental design—randomization, controls, blinding, proper replication—is essential for valid inference
 
 These concepts provide the foundation for hypothesis testing and the statistical inference methods we develop in subsequent chapters.
+
+## Additional Resources
+
+- @efron1979bootstrap - The original bootstrap paper, a landmark in modern statistics
+- @irizarry2019introduction - Excellent chapters on sampling and estimation with R examples

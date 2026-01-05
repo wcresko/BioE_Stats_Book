@@ -242,3 +242,91 @@ cat("\nCohen's d:", round(cohens_d, 2), "\n")
 ```
 
 The t-test shows a significant difference (p < 0.05), and Cohen's d indicates a medium effect size. We can conclude that the drug group shows higher response than the placebo group, with the mean difference being about 0.4 standard deviations.
+
+## Randomization Tests as an Alternative
+
+When normality assumptions are questionable and sample sizes are small, randomization (permutation) tests provide a non-parametric alternative to the t-test. The logic is elegant: if there is no difference between groups, then the group labels are arbitrary and could be shuffled without affecting the distribution of the test statistic.
+
+```{r}
+#| fig-width: 7
+#| fig-height: 5
+# Randomization test example
+set.seed(42)
+group_A <- c(23, 25, 28, 31, 35, 29)
+group_B <- c(18, 20, 22, 19, 21, 23)
+
+# Observed difference
+obs_diff <- mean(group_A) - mean(group_B)
+
+# Combine all observations
+all_data <- c(group_A, group_B)
+n_A <- length(group_A)
+n_B <- length(group_B)
+
+# Generate null distribution by permutation
+n_perms <- 10000
+perm_diffs <- numeric(n_perms)
+
+for (i in 1:n_perms) {
+  shuffled <- sample(all_data)
+  perm_diffs[i] <- mean(shuffled[1:n_A]) - mean(shuffled[(n_A+1):(n_A+n_B)])
+}
+
+# Plot null distribution
+hist(perm_diffs, breaks = 50, col = "lightblue",
+     main = "Randomization Null Distribution",
+     xlab = "Difference in Means")
+abline(v = obs_diff, col = "red", lwd = 2)
+abline(v = -obs_diff, col = "red", lwd = 2, lty = 2)
+
+# Two-tailed p-value
+p_value <- mean(abs(perm_diffs) >= abs(obs_diff))
+cat("Observed difference:", round(obs_diff, 2), "\n")
+cat("Permutation p-value:", p_value, "\n")
+```
+
+The randomization test makes no assumptions about the underlying distribution—it only assumes that observations are exchangeable under the null hypothesis. This makes it robust to non-normality and outliers.
+
+::: {.callout-tip}
+## When to Use Randomization Tests
+
+- Sample sizes are small (n < 20 per group)
+- Data are clearly non-normal or contain outliers
+- You want to avoid distributional assumptions
+- As a sensitivity analysis to complement parametric results
+:::
+
+## Choosing the Right T-Test
+
+| Scenario | Test | R Function |
+|:---------|:-----|:-----------|
+| Compare sample mean to known value | One-sample | `t.test(x, mu = value)` |
+| Compare two independent groups | Two-sample (Welch's) | `t.test(x, y)` |
+| Compare two independent groups (equal variance) | Two-sample (Student's) | `t.test(x, y, var.equal = TRUE)` |
+| Compare paired measurements | Paired | `t.test(x, y, paired = TRUE)` |
+
+**Decision guidelines:**
+
+1. If comparing to a fixed, known value: **one-sample t-test**
+2. If observations in groups are naturally paired: **paired t-test**
+3. If groups are independent with potentially unequal variances: **Welch's t-test** (the default)
+4. If groups are independent and you have strong evidence of equal variances: **Student's t-test**
+
+When in doubt, use Welch's t-test—it performs nearly as well as Student's t-test when variances are equal and much better when they are not.
+
+## Summary
+
+The t-test family provides essential tools for comparing means:
+
+- One-sample tests compare a sample to a hypothesized value
+- Two-sample tests compare independent groups
+- Paired tests compare matched or repeated measurements
+- Welch's version handles unequal variances (recommended default)
+- Randomization tests provide a distribution-free alternative
+
+Always visualize your data, check assumptions, and report effect sizes alongside p-values. A statistically significant result is only meaningful if the underlying assumptions are reasonable and the effect size is practically relevant.
+
+## Additional Resources
+
+- @logan2010biostatistical - Detailed coverage of t-tests with biological examples
+- @irizarry2019introduction - Excellent treatment of randomization and permutation methods

@@ -48,6 +48,70 @@ A **Type II error** occurs when we fail to reject a false null hypothesis—conc
 | Reject $H_0$ | Type I Error ($\alpha$) | Correct Decision (Power) |
 | Fail to Reject $H_0$ | Correct Decision | Type II Error ($\beta$) |
 
+### Understanding Statistical Power
+
+Power analysis is essential for designing experiments that can actually detect effects of interest. A study with low power is unlikely to find real effects even when they exist—wasting resources and potentially leading to incorrect conclusions.
+
+The key factors affecting power are:
+
+1. **Effect size**: Larger effects are easier to detect
+2. **Sample size**: More data provides more information
+3. **Significance level ($\alpha$)**: Higher $\alpha$ increases power but also increases Type I error rate
+4. **Variability**: Less noise makes signals easier to detect
+
+For a two-sample t-test, the relationship between these factors can be expressed approximately as:
+
+$$\text{Power} \approx \Phi\left(\frac{|\mu_1 - \mu_2|}{\sigma}\sqrt{\frac{n}{2}} - z_{1-\alpha/2}\right)$$
+
+where $\Phi$ is the standard normal CDF, and $z_{1-\alpha/2}$ is the critical value.
+
+```{r}
+#| fig-width: 8
+#| fig-height: 5
+# Visualize how power depends on effect size and sample size
+library(pwr)
+
+# Power curves for different effect sizes
+effect_sizes <- c(0.2, 0.5, 0.8)  # Cohen's d: small, medium, large
+sample_sizes <- seq(5, 100, by = 5)
+
+par(mfrow = c(1, 1))
+colors <- c("blue", "darkgreen", "red")
+
+plot(NULL, xlim = c(5, 100), ylim = c(0, 1),
+     xlab = "Sample Size (per group)", ylab = "Power",
+     main = "Power Curves for Two-Sample t-Test")
+abline(h = 0.8, lty = 2, col = "gray")
+
+for (i in 1:3) {
+  powers <- sapply(sample_sizes, function(n) {
+    pwr.t.test(n = n, d = effect_sizes[i], sig.level = 0.05, type = "two.sample")$power
+  })
+  lines(sample_sizes, powers, col = colors[i], lwd = 2)
+}
+
+legend("bottomright",
+       legend = c("Small (d=0.2)", "Medium (d=0.5)", "Large (d=0.8)"),
+       col = colors, lwd = 2)
+```
+
+### A Priori Power Analysis
+
+Before conducting an experiment, power analysis helps determine the necessary sample size. The question is: "How many observations do I need to have an 80% chance of detecting an effect of a given size?"
+
+```{r}
+# Sample size calculation for 80% power
+# Detecting a medium effect (d = 0.5) with alpha = 0.05
+power_result <- pwr.t.test(d = 0.5, sig.level = 0.05, power = 0.8, type = "two.sample")
+cat("Required sample size per group:", ceiling(power_result$n), "\n")
+
+# For a small effect (d = 0.2)
+power_small <- pwr.t.test(d = 0.2, sig.level = 0.05, power = 0.8, type = "two.sample")
+cat("For small effect (d=0.2):", ceiling(power_small$n), "per group\n")
+```
+
+Notice how detecting small effects requires substantially larger samples. This is why pilot studies and literature-based effect size estimates are valuable for planning.
+
 ## P-Values
 
 The **p-value** is the probability of observing a test statistic as extreme or more extreme than the one calculated from the data, assuming the null hypothesis is true.
@@ -100,6 +164,64 @@ Statistical significance does not imply practical importance. With a large enoug
 
 Always consider effect sizes alongside p-values. Report confidence intervals, which convey both the magnitude of an effect and the uncertainty about it. A 95% confidence interval that excludes zero is equivalent to statistical significance at $\alpha = 0.05$, but also shows the range of plausible effect sizes.
 
+### Standardized Effect Sizes
+
+Effect sizes quantify the magnitude of an effect in a standardized way, allowing comparison across studies.
+
+**Cohen's d** measures the difference between two means in standard deviation units:
+
+$$d = \frac{\bar{x}_1 - \bar{x}_2}{s_{\text{pooled}}}$$
+
+where $s_{\text{pooled}} = \sqrt{\frac{(n_1-1)s_1^2 + (n_2-1)s_2^2}{n_1 + n_2 - 2}}$
+
+Cohen's guidelines suggest $d = 0.2$ is small, $d = 0.5$ is medium, and $d = 0.8$ is large, though these benchmarks should be interpreted in context [@cohen1988statistical].
+
+```{r}
+# Calculate Cohen's d
+group1 <- c(23, 25, 28, 31, 27, 29)
+group2 <- c(18, 20, 22, 19, 21, 23)
+
+# Pooled standard deviation
+n1 <- length(group1)
+n2 <- length(group2)
+s_pooled <- sqrt(((n1-1)*var(group1) + (n2-1)*var(group2)) / (n1 + n2 - 2))
+
+# Cohen's d
+cohens_d <- (mean(group1) - mean(group2)) / s_pooled
+cat("Cohen's d:", round(cohens_d, 3), "\n")
+```
+
+Other effect sizes include:
+- **Pearson's r**: Correlation coefficient (-1 to 1)
+- **$\eta^2$ (eta-squared)**: Proportion of variance explained in ANOVA
+- **Odds ratio**: Effect size for binary outcomes
+
+## Critiques of NHST
+
+The Null Hypothesis Significance Testing (NHST) framework, while widely used, has important limitations that researchers should understand.
+
+::: {.callout-warning}
+## Limitations of P-Values
+
+1. **P-values do not measure effect size**: A tiny, meaningless effect can have p < 0.001 with enough data
+2. **P-values do not measure probability that $H_0$ is true**: This is a common misinterpretation
+3. **The 0.05 threshold is arbitrary**: There is nothing magical about $\alpha = 0.05$
+4. **Dichotomous thinking**: Treating p = 0.049 and p = 0.051 as fundamentally different is misleading
+5. **Publication bias**: Studies with p < 0.05 are more likely to be published, distorting the literature
+:::
+
+### Alternatives and Complements to NHST
+
+**Confidence intervals** provide more information than p-values alone, showing both the estimated effect and uncertainty.
+
+**Effect sizes** communicate the practical magnitude of results.
+
+**Bayesian methods** provide probability statements about hypotheses themselves (not just the data given the hypothesis).
+
+**Equivalence testing** can demonstrate that an effect is negligibly small, not just "not significantly different from zero."
+
+The American Statistical Association's 2016 statement on p-values emphasizes that p-values should not be used in isolation and that scientific conclusions should not be based solely on whether a p-value crosses a threshold.
+
 ## Example: Null Distribution via Randomization
 
 We can create empirical null distributions through randomization, providing an alternative to parametric assumptions.
@@ -150,3 +272,8 @@ Hypothesis testing provides a framework for using data to evaluate claims about 
 - Statistical significance does not imply practical importance
 
 In the following chapters, we apply this framework to specific tests: t-tests for comparing means, chi-squared tests for categorical data, and nonparametric alternatives when assumptions are violated.
+
+## Additional Resources
+
+- @cohen1988statistical - The classic reference on statistical power analysis
+- @logan2010biostatistical - Comprehensive treatment of hypothesis testing in biological contexts
