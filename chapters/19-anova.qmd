@@ -17,11 +17,11 @@ Analysis of Variance (ANOVA) provides a solution. It tests whether any of the gr
 
 ANOVA partitions the total variation in the data into components: variation between groups (due to treatment effects) and variation within groups (due to random error).
 
-![](../images/images_5b.016.jpeg){fig-align="center"}
+![](../images/Images_5b.016.jpeg){fig-align="center"}
 
 The key insight is that if groups have equal means, the between-group variation should be similar to the within-group variation. If the between-group variation is much larger, the group means probably differ.
 
-![](../images/images_5b.015.jpeg){fig-align="center"}
+![](../images/Images_5b.015.jpeg){fig-align="center"}
 
 ## The F-Test
 
