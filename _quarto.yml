@@ -59,6 +59,7 @@ book:
       chapters:
         - chapters/A1-eugenics-history.qmd
         - chapters/A2-r-reference.qmd
+        - chapters/A3-probability-distributions.qmd
     
     - references.qmd
 
