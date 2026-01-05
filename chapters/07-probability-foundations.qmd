@@ -4,34 +4,71 @@
 #| echo: false
 #| message: false
 library(tidyverse)
+library(gtools)
 theme_set(theme_minimal())
 ```
 
 ## Why Probability Matters
 
-Statistics is fundamentally about quantifying and managing uncertainty. We rarely know the world perfectly, yet we need to draw conclusions and make decisions. Probability provides the mathematical language for reasoning about uncertainty.
+In games of chance, probability has a very intuitive definition. We know what it means that the chance of a pair of dice coming up seven is 1 in 6. However, probability is used much more broadly today, with the word commonly appearing in everyday language. Google's auto-complete of "What are the chances of" gives us: "having twins", "rain today", "getting struck by lightning", and "getting cancer". One goal of this chapter is to help us understand how probability is useful to understand and describe real-world events when performing data analysis.
 
-When you take a sample from a population, the values you obtain are subject to random variation. When you run an experiment, the outcomes vary even under identical conditions. Probability theory tells us what to expect from this variation and provides the foundation for statistical inference.
+Because knowing how to compute probabilities gives you an edge in games of chance, throughout history many smart individuals—including famous mathematicians such as Cardano, Fermat, and Pascal—spent time and energy thinking through the math of these games. As a result, Probability Theory was born. Probability continues to be highly useful in modern games of chance. For example, in poker, we can compute the probability of winning a hand based on the cards on the table. Casinos rely on probability theory to develop games that almost certainly guarantee a profit.
+
+Probability theory is useful in many other contexts and, in particular, in areas that depend on data affected by chance in some way. All of the other chapters in this part build upon probability theory. Knowledge of probability is therefore indispensable for data science.
 
 ## Two Interpretations of Probability
 
 There are two main ways to think about what probability means.
 
-The **frequentist interpretation** views probabilities as long-run relative frequencies. If we say the probability of heads when flipping a fair coin is 0.5, we mean that if we flipped the coin many, many times, about half the flips would come up heads. This interpretation grounds probability in observable, repeatable phenomena.
+The **frequentist interpretation** views probability as mathematically convenient approximations to long-run relative frequencies. If we say the probability of heads when flipping a fair coin is 0.5, we mean that if we flipped the coin many, many times, about half the flips would come up heads. This interpretation grounds probability in observable, repeatable phenomena.
 
-The **subjective (Bayesian) interpretation** views probability as a measure of belief or uncertainty. A probability statement expresses how confident someone is that an event will occur, given their current information. This interpretation allows us to assign probabilities to one-time events and to update beliefs as we gather evidence.
+The **subjective (Bayesian) interpretation** views probability as a measure of belief or uncertainty. A probability statement expresses the opinion of some individual regarding how certain an event is to occur, given their current information. This interpretation allows us to assign probabilities to one-time events and to update beliefs as we gather evidence.
 
 Both interpretations have their uses, and modern statistics draws on both perspectives. For now, the frequentist interpretation provides good intuition for the concepts we will develop.
 
 ## Random Variables and Sample Spaces
 
-A **random variable** is a quantity that can take different values with different probabilities. The outcome of a coin flip, the number of bacterial colonies on a plate, and the expression level of a gene are all random variables.
+A **random variable** is a quantity that can take on different values with different probabilities. The outcome of a coin flip, the number of bacterial colonies on a plate, and the expression level of a gene are all random variables.
 
 The **sample space** of a random variable is the set of all possible values it can take. For a coin flip, the sample space is {Heads, Tails}. For a die roll, it is {1, 2, 3, 4, 5, 6}. For the concentration of a protein, it might be any non-negative real number.
 
-A probability distribution describes how likely each value in the sample space is. For discrete random variables (those that take distinct values), we use a **probability mass function** that gives the probability of each possible value. For continuous random variables (those that can take any value in a range), we use a **probability density function** from which probabilities are calculated by integration.
+A **probability distribution** describes how likely each value in the sample space is:
+
+- For discrete random variables (those that take distinct values), we use a **probability mass function** that gives the probability of each possible value
+- For continuous random variables (those that can take any value in a range), we use a **probability density function** from which probabilities are calculated by integration
 
 One fundamental rule: the probabilities across the entire sample space must sum (or integrate) to 1. Something from the sample space must happen.
+
+## Discrete Probability
+
+We start by covering some basic principles related to categorical data. This subset of probability is referred to as *discrete probability*. It will help us understand the probability theory we will later introduce for numeric and continuous data, which is much more common in data science applications.
+
+### Relative Frequency
+
+A precise definition of probability can be given by noting all possible outcomes and counting how many satisfy the condition for our event. For example, if we have 2 red beads and 3 blue beads inside an urn and we pick one at random, what is the probability of picking a red one?
+
+Our intuition tells us that the answer is 2/5 or 40%. There are five possible outcomes, of which two satisfy the condition necessary for the event "pick a red bead". Since each of the five outcomes has the same chance of occurring, we conclude that the probability is 0.4 for red and 0.6 for blue.
+
+A more tangible way to think about the probability of an event is as the proportion of times the event occurs when we repeat the experiment an infinite number of times, independently, and under the same conditions.
+
+### Notation
+
+We use the notation $\mbox{Pr}(A)$ to denote the probability of event $A$ happening. We use the very general term *event* to refer to things that can happen when something occurs by chance. In our previous example, the event was "picking a red bead". In a political poll in which we call 100 likely voters at random, an example of an event is "calling 48 Democrats and 52 Republicans".
+
+In data science applications, we will often deal with continuous variables. These events will often be things like "is this person taller than 6 feet". In this case, we write events in a more mathematical form: $X \geq 6$.
+
+### Probability Distributions for Categorical Data
+
+If we know the relative frequency of the different categories, defining a distribution for categorical outcomes is straightforward. We simply assign a probability to each category. In cases that can be thought of as beads in an urn, for each bead type, their proportion defines the distribution.
+
+If we are randomly calling likely voters from a population that is 44% Democrat, 44% Republican, 10% undecided, and 2% Green Party, these proportions define the probability for each group:
+
+| Group | Probability |
+|:------|:------------|
+| Republican | 0.44 |
+| Democrat | 0.44 |
+| Undecided | 0.10 |
+| Green | 0.02 |
 
 ## Distribution Moments and Parameters
 
@@ -52,22 +89,66 @@ $$\text{Var}(X) = E[(X - \mu)^2] = \sigma^2$$
 
 These parameters are crucial because they describe real properties of the systems we study. In biology, for example, the mean height of a population tells us about the typical value, while the variance tells us about the diversity of heights among individuals.
 
-## Populations and Samples
+## Monte Carlo Simulations
 
-In statistics, we distinguish between **populations** and **samples**:
+Computers provide a way to actually perform random experiments. Random number generators permit us to mimic the process of picking at random. An example is the `sample` function in R.
 
-- A **population** is the complete collection of all individuals or observations of interest
-- A **sample** is a subset drawn from the population
+First, we use the function `rep` to generate the urn:
 
-We rarely observe entire populations. Instead, we take samples and use them to estimate population parameters. The mean of our sample ($\bar{x}$) estimates the true population mean ($\mu$). The sample variance ($s^2$) estimates the population variance ($\sigma^2$).
+```{r}
+beads <- rep(c("red", "blue"), times = c(2, 3))
+beads
+```
 
-The process of statistical inference involves using sample statistics to draw conclusions about population parameters—while quantifying the uncertainty in those conclusions.
+Then use `sample` to pick a bead at random:
+
+```{r}
+sample(beads, 1)
+```
+
+This line of code produces one random outcome. We want to repeat this experiment a large enough number of times to make the results practically equivalent to repeating forever. **This is an example of a Monte Carlo simulation**.
+
+To perform our first Monte Carlo simulation, we use the `replicate` function, which permits us to repeat the same task any number of times. Here, we repeat the random event B = 10,000 times:
+
+```{r}
+set.seed(1986)  # For reproducibility
+B <- 10000
+events <- replicate(B, sample(beads, 1))
+```
+
+We can now see if our definition actually agrees with this Monte Carlo simulation approximation:
+
+```{r}
+tab <- table(events)
+prop.table(tab)
+```
+
+The numbers above are the estimated probabilities provided by this Monte Carlo simulation. Statistical theory tells us that as $B$ gets larger, the estimates get closer to 3/5 = 0.6 and 2/5 = 0.4.
+
+### With and Without Replacement
+
+The function `sample` has an argument that permits us to pick more than one element from the urn. By default, this selection occurs *without replacement*: after a bead is selected, it is not put back in the bag.
+
+```{r}
+sample(beads, 5)
+```
+
+This results in rearrangements that always have three blue and two red beads because we can't select more beads than exist.
+
+However, we can sample *with replacement*: return the bead back to the urn after selecting it:
+
+```{r}
+events <- sample(beads, B, replace = TRUE)
+prop.table(table(events))
+```
+
+Not surprisingly, we get results very similar to those previously obtained with `replicate`.
 
 ## The Bernoulli Distribution
 
-The simplest probability distribution describes a single event with two possible outcomes—success or failure, yes or no, heads or tails. This is the Bernoulli distribution.
+The simplest probability distribution describes a single event with two possible outcomes—success or failure, yes or no, heads or tails. This is the **Bernoulli distribution**.
 
-Consider flipping a fair coin once. The probability of heads is:
+Consider flipping a fair coin once:
 
 $$P(X = \text{Head}) = \frac{1}{2} = 0.5 = p$$
 
@@ -78,33 +159,27 @@ $$P(X = \text{Tail}) = \frac{1}{2} = 0.5 = 1 - p = q$$
 If the coin is not fair, $p$ might differ from 0.5, but the probabilities still sum to 1:
 
 $$p + (1-p) = 1$$
-$$p + q = 1$$
 
-This same framework applies to any binary outcome: whether a patient responds to treatment, whether an electronic component fails, whether an allele is inherited from a parent.
-
-We can estimate the Bernoulli distribution empirically by flipping a coin many times:
+This same framework applies to any binary outcome: whether a patient responds to treatment, whether an allele is inherited from a parent, or whether a product passes quality control.
 
 ```{r}
-#| fig-width: 4
+#| fig-width: 5
 #| fig-height: 4
-#| fig-align: center
 # Flip a coin 1000 times
 set.seed(42)
 flips <- rbinom(1000, 1, 0.5)
 
 barplot(table(flips) / 1000,
-        names.arg = c("Heads", "Tails"),
+        names.arg = c("Tails", "Heads"),
         ylab = "Probability",
         ylim = c(0, 0.75),
         col = "steelblue",
         main = "Estimated Bernoulli Distribution")
 ```
 
-The observed proportions are very close to the theoretical probability of 0.5 for a fair coin.
-
 ## Probability Rules
 
-Two fundamental rules govern how probabilities combine.
+Two fundamental rules govern how probabilities combine. Most probability distributions can be built up from these simple rules.
 
 ### The AND Rule (Multiplication)
 
@@ -118,93 +193,240 @@ $$P(A \text{ and } B) = P(A) \times P(B)$$
 
 For a fair coin with $p = 0.5$:
 
-$$P(\text{HH}) = 0.5 \times 0.5 = 0.25$$
-$$P(\text{HT}) = 0.5 \times 0.5 = 0.25$$
-$$P(\text{TH}) = 0.5 \times 0.5 = 0.25$$
-$$P(\text{TT}) = 0.5 \times 0.5 = 0.25$$
+- $P(\text{HH}) = 0.5 \times 0.5 = 0.25$
+- $P(\text{HT}) = 0.5 \times 0.5 = 0.25$
+- $P(\text{TH}) = 0.5 \times 0.5 = 0.25$
+- $P(\text{TT}) = 0.5 \times 0.5 = 0.25$
 
 ### The OR Rule (Addition)
 
-The probability that at least one of two mutually exclusive events occurs is the sum of their probabilities. The probability of getting heads or tails on a single flip:
+The probability that at least one of two mutually exclusive events occurs is the sum of their probabilities:
 
-$$P(\text{Head OR Tail}) = p + q = 1$$
+$$P(A \text{ or } B) = P(A) + P(B) - P(A \text{ and } B)$$
+
+For mutually exclusive events (those that cannot both occur), the intersection is empty:
+
+$$P(A \text{ or } B) = P(A) + P(B)$$
 
 The probability of getting exactly one head in two flips (either HT or TH):
 
 $$P(\text{one head}) = P(\text{HT}) + P(\text{TH}) = 0.25 + 0.25 = 0.5$$
 
-For mutually exclusive events A and B:
+### Multiplication Rule Under Independence
 
-$$P(A \text{ or } B) = P(A) + P(B)$$
+When events are independent, the multiplication rule simplifies:
 
-These simple rules—AND means multiply, OR means add—underlie most probability calculations. Complex probability distributions can be built up from these basic principles.
+$$P(A \text{ and } B \text{ and } C) = P(A) \times P(B) \times P(C)$$
 
-## Simulating Coin Flips in R
+But we must be careful—assuming independence can result in very different and incorrect probability calculations when we don't actually have independence.
 
-We can explore these concepts through simulation:
+::: {.callout-warning}
+## Independence Matters
+
+Imagine a court case where the suspect was described as having a mustache and a beard. The defendant has both, and the prosecution brings in an "expert" who testifies that 1/10 men have beards and 1/5 have mustaches, concluding that only $1/10 \times 1/5 = 0.02$ have both.
+
+But to multiply like this we need to assume independence! If the conditional probability of a man having a mustache given that he has a beard is 0.95, then the correct probability is much higher: $1/10 \times 0.95 = 0.095$.
+:::
+
+## Independence
+
+We say two events are **independent** if the outcome of one does not affect the other. The classic example is coin tosses. Every time we toss a fair coin, the probability of seeing heads is 1/2 regardless of what previous tosses have revealed. The same is true when we pick beads from an urn with replacement.
+
+Many examples of events that are not independent come from card games. When we deal the first card, the probability of getting a King is 1/13 since there are thirteen possibilities. Now if we deal a King for the first card and don't replace it into the deck, the probability of a second card being a King is only 3/51. These events are **not independent**: the first outcome affected the next one.
 
 ```{r}
-# Simulate a fair coin
-coin <- c("heads", "tails")
-
-# Flip once
-sample(coin, size = 1)
+# Demonstrate non-independence with sequential draws
+set.seed(1)
+x <- sample(beads, 5)
+x[1:4]  # First four draws
+x[5]    # If first four are blue, the fifth must be...
 ```
 
-```{r}
-#| fig-width: 6
-#| fig-height: 4
-# Flip many times and see the distribution
-set.seed(42)
-flips <- sample(coin, prob = c(0.5, 0.5), size = 100, replace = TRUE)
-barplot(table(flips), main = "100 Fair Coin Flips", col = "steelblue")
-```
+If you have to guess the color of the first bead, you would predict blue since blue has a 60% chance. But if you know the first four were blue, the probability of the fifth being red is now 100%, not 40%. The events are not independent, so the probabilities change.
 
-Try changing the probabilities or sample size to see how the results change. With small samples, randomness can produce results far from the expected proportions. With large samples, the observed proportions converge to the true probabilities—a manifestation of the law of large numbers.
+## Conditional Probabilities
 
-## Joint and Conditional Probability
+When events are not independent, *conditional probabilities* are useful. The conditional probability $P(B|A)$ is the probability of B given that A has occurred:
 
-When we consider two random variables together, we encounter joint and conditional probabilities.
+$$P(\text{Card 2 is a King} \mid \text{Card 1 is a King}) = \frac{3}{51}$$
 
-The **joint probability** $P(X, Y)$ is the probability that both X and Y take particular values. For independent events:
+We use the $\mid$ as shorthand for "given that" or "conditional on".
 
-$$P(X, Y) = P(X) \times P(Y)$$
+When two events A and B are independent:
 
-However, many pairs of variables are not independent. The **conditional probability** $P(Y|X)$ is the probability of Y given that X has occurred. It captures how knowing X changes our beliefs about Y.
+$$P(A \mid B) = P(A)$$
 
-For independent variables, knowing X tells us nothing about Y:
+This is the mathematical definition of independence: the fact that B happened does not affect the probability of A happening.
 
-$$P(Y|X) = P(Y) \quad \text{and} \quad P(X|Y) = P(X)$$
+The general multiplication rule relates joint and conditional probability:
 
-For non-independent (dependent) variables:
+$$P(A \text{ and } B) = P(A) \times P(B \mid A)$$
 
-$$P(Y|X) \neq P(Y) \quad \text{and} \quad P(X|Y) \neq P(X)$$
+This can be extended to more events:
 
-The relationship between joint and conditional probability is given by:
-
-$$P(X, Y) = P(Y|X) \times P(X) = P(X|Y) \times P(Y)$$
+$$P(A \text{ and } B \text{ and } C) = P(A) \times P(B \mid A) \times P(C \mid A \text{ and } B)$$
 
 ## Bayes' Theorem
 
-Rearranging the above relationship yields Bayes' theorem, a cornerstone of probabilistic reasoning:
+Rearranging the multiplication rule yields Bayes' theorem, a cornerstone of probabilistic reasoning:
 
-$$P(X|Y) = \frac{P(Y|X) \times P(X)}{P(Y)}$$
+$$P(A|B) = \frac{P(B|A) \times P(A)}{P(B)}$$
 
-Bayes' theorem tells us how to update our beliefs about X after observing Y. It forms the foundation of Bayesian statistics, where we start with prior beliefs about parameters, observe data, and compute posterior beliefs.
+Bayes' theorem tells us how to update our beliefs about A after observing B. In Bayesian statistics, this is written as:
+
+$$P(\theta|d) = \frac{P(d|\theta) \times P(\theta)}{P(d)}$$
+
+where:
+
+- $P(\theta|d)$ = posterior probability distribution
+- $P(d|\theta)$ = likelihood function for $\theta$
+- $P(\theta)$ = prior probability distribution
+- $P(d)$ = marginal likelihood (normalizing constant)
 
 ## Likelihood vs. Probability
 
 A subtle but important distinction exists between probability and likelihood.
 
-**Probability** refers to the chance of observing particular data given a model or parameter value. If we know a coin has $p = 0.5$, what is the probability of observing 7 heads in 10 flips?
+**Probability** is the chance of observing particular data given a model or parameter value. If we know a coin has $p = 0.5$, what is the probability of observing 7 heads in 10 flips?
 
-**Likelihood** refers to how well a parameter value explains observed data. Given that we observed 7 heads in 10 flips, how likely is it that the true probability is $p = 0.5$ versus $p = 0.7$?
+**Likelihood** is how well a parameter value explains observed data. Given that we observed 7 heads in 10 flips, how likely is it that the true probability is $p = 0.5$ versus $p = 0.7$?
 
 Mathematically, the likelihood function uses the same formula as probability, but we think of it differently:
 
 $$L(\text{parameter} | \text{data}) = P(\text{data} | \text{parameter})$$
 
 Maximum likelihood estimation finds the parameter value that makes the observed data most probable—the value that maximizes the likelihood function.
+
+## Combinations and Permutations
+
+For more complicated probability calculations, we need to count possibilities systematically. The `gtools` package provides useful functions.
+
+### Permutations (Order Matters)
+
+A **permutation** is an arrangement where order matters. For any list of size `n`, the `permutations` function computes all different arrangements when selecting `r` items:
+
+```{r}
+# All ways to arrange 2 items from {1, 2, 3}
+permutations(3, 2)
+```
+
+Notice that order matters: 3,1 is different than 1,3. Also, (1,1), (2,2), and (3,3) do not appear because once we pick a number, it can't appear again.
+
+### Combinations (Order Doesn't Matter)
+
+A **combination** is a selection where order doesn't matter:
+
+```{r}
+combinations(3, 2)
+```
+
+The outcome (2,1) doesn't appear because (1,2) already represents the same combination.
+
+### Example: Blackjack
+
+Let's compute the probability of getting a "Natural 21" in Blackjack—an Ace and a face card in the first two cards:
+
+```{r}
+# Build a deck
+suits <- c("Diamonds", "Clubs", "Hearts", "Spades")
+numbers <- c("Ace", "Deuce", "Three", "Four", "Five", "Six", "Seven",
+             "Eight", "Nine", "Ten", "Jack", "Queen", "King")
+deck <- expand.grid(number = numbers, suit = suits)
+deck <- paste(deck$number, deck$suit)
+
+# Define aces and face cards
+aces <- paste("Ace", suits)
+facecard <- c("King", "Queen", "Jack", "Ten")
+facecard <- expand.grid(number = facecard, suit = suits)
+facecard <- paste(facecard$number, facecard$suit)
+
+# All possible two-card hands (order doesn't matter)
+hands <- combinations(52, 2, v = deck)
+
+# Probability of Natural 21
+mean((hands[,1] %in% aces & hands[,2] %in% facecard) |
+     (hands[,2] %in% aces & hands[,1] %in% facecard))
+```
+
+## Classic Examples
+
+### The Monty Hall Problem
+
+In the game show "Let's Make a Deal," contestants pick one of three doors. Behind one door is a car; behind the others are goats. After you pick a door, Monty Hall opens one of the remaining doors to reveal a goat. Then he asks: "Do you want to switch doors?"
+
+Intuition suggests it shouldn't matter—you're choosing between two doors, so shouldn't the probability be 50-50? Let's use Monte Carlo simulation:
+
+```{r}
+B <- 10000
+monty_hall <- function(strategy) {
+  doors <- as.character(1:3)
+  prize <- sample(c("car", "goat", "goat"))
+  prize_door <- doors[prize == "car"]
+  my_pick <- sample(doors, 1)
+  show <- sample(doors[!doors %in% c(my_pick, prize_door)], 1)
+
+  if (strategy == "stick") {
+    choice <- my_pick
+  } else {
+    choice <- doors[!doors %in% c(my_pick, show)]
+  }
+  choice == prize_door
+}
+
+stick_wins <- replicate(B, monty_hall("stick"))
+switch_wins <- replicate(B, monty_hall("switch"))
+
+cat("Probability of winning when sticking:", mean(stick_wins), "\n")
+cat("Probability of winning when switching:", mean(switch_wins), "\n")
+```
+
+Switching doubles your chances! The key insight: when you first pick, you have a 1/3 chance of being right. Monty's reveal doesn't change that. Since the probability the car is behind one of the other doors was 2/3, and Monty showed you which one doesn't have it, switching gives you that 2/3 probability.
+
+### The Birthday Problem
+
+In a room with 50 people, what's the probability that at least two share a birthday?
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+# Monte Carlo simulation
+B <- 10000
+same_birthday <- function(n) {
+  bdays <- sample(1:365, n, replace = TRUE)
+  any(duplicated(bdays))
+}
+
+results <- replicate(B, same_birthday(50))
+cat("Probability with 50 people:", mean(results), "\n")
+
+# How does this change with group size?
+compute_prob <- function(n, B = 10000) {
+  results <- replicate(B, same_birthday(n))
+  mean(results)
+}
+
+n <- seq(1, 60)
+prob <- sapply(n, compute_prob)
+qplot(n, prob, geom = "line") +
+  geom_hline(yintercept = 0.5, linetype = "dashed", color = "red") +
+  labs(x = "Group Size", y = "Probability of Shared Birthday",
+       title = "The Birthday Problem")
+```
+
+With just 23 people, there's already a 50% chance of a shared birthday! People tend to underestimate these probabilities because they think about the probability that someone shares *their* birthday, not the probability that *any two people* share a birthday.
+
+We can also compute this exactly using the multiplication rule:
+
+```{r}
+# Probability that all n people have UNIQUE birthdays
+exact_prob <- function(n) {
+  prob_unique <- seq(365, 365 - n + 1) / 365
+  1 - prod(prob_unique)
+}
+
+eprob <- sapply(n, exact_prob)
+cat("Exact probability with 50 people:", exact_prob(50), "\n")
+```
 
 ## Covariance and Correlation
 
@@ -216,11 +438,48 @@ If high values of X tend to occur with high values of Y (and low with low), the 
 
 These concepts will become central when we discuss regression and other methods for relating variables to each other.
 
-## Looking Ahead
+## How Large is "Large Enough" for Monte Carlo?
 
-This chapter introduced the language of probability—random variables, sample spaces, probability distributions, and rules for combining probabilities. In the following chapters, we will explore specific probability distributions that arise frequently in practice, both discrete (binomial, Poisson) and continuous (normal, exponential). Understanding these distributions provides the foundation for statistical inference.
+The theory described here requires repeating experiments over and over forever. In practice, we can't do this. In the examples above, we used $B = 10,000$ Monte Carlo experiments and it turned out to provide accurate estimates.
+
+One practical approach is to check for the stability of the estimate:
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+B_values <- 10^seq(1, 5, len = 100)
+compute_prob_B <- function(B, n = 25) {
+  same_day <- replicate(B, same_birthday(n))
+  mean(same_day)
+}
+
+prob <- sapply(B_values, compute_prob_B)
+qplot(log10(B_values), prob, geom = "line") +
+  geom_hline(yintercept = exact_prob(25), color = "red", linetype = "dashed") +
+  labs(x = "log10(Number of Simulations)", y = "Estimated Probability",
+       title = "Monte Carlo Convergence")
+```
+
+The values start to stabilize (vary less than 0.01) around 1000 simulations. The exact probability is shown in red.
+
+## Summary
+
+This chapter introduced the language of probability:
+
+- **Random variables** can take different values with different probabilities
+- The **sample space** contains all possible outcomes
+- **Probability distributions** describe how likely each outcome is
+- The **AND rule** (multiply) and **OR rule** (add) combine probabilities
+- **Independence** means one event doesn't affect another's probability
+- **Conditional probability** describes probability given other information
+- **Bayes' theorem** updates beliefs based on new evidence
+- **Monte Carlo simulations** estimate probabilities through repeated random sampling
+- Classic problems like Monty Hall and birthdays reveal counterintuitive probability results
+
+Understanding these foundations is essential for all statistical inference that follows.
 
 ## Additional Resources
 
 - @irizarry2019introduction - A gitbook by a statistician with excellent introductions to key topics in statistical inference
 - @logan2010biostatistical - A comprehensive introduction to R for statistical analysis
+- For a detailed reference of common probability distributions, see @sec-probability-distributions
