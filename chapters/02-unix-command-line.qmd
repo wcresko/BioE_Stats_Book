@@ -632,6 +632,15 @@ The best way to learn command-line skills is through practice. Create a project 
 
 Try combining commands with pipes. For example, you might list all files in a directory, filter for those with a particular extension, and count how many there are. Start simple and gradually build more complex pipelines as you become comfortable with the individual commands.
 
+## Practice Exercises
+
+For hands-on practice with the concepts covered in this chapter, see @sec-ex-unix in the Practice Exercises appendix. The exercises include:
+
+- Basic navigation and file operations
+- Working with data files using `grep`, `cut`, `sort`, and `awk`
+- Building command pipelines
+- File permissions and shell scripts
+
 ## Additional Resources
 
 - [Unix/Linux Command Reference](http://mally.stanford.edu/~sr/computing/basic-unix.html) - A comprehensive cheat sheet of common commands

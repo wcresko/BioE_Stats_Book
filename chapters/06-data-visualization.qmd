@@ -691,6 +691,15 @@ ggsave("my_plot.pdf", p, width = 8, height = 6)
 
 The function infers the format from the file extension. Specify dimensions and resolution for publication-quality output.
 
-## Practice
+## Practice Exercises
 
 The best way to learn ggplot2 is to use it. Take a dataset you care about and try different visualizations. Experiment with aesthetics, geoms, and facets. Read error messages carefully—they often point directly to the problem. The ggplot2 documentation and the R Graph Gallery (r-graph-gallery.com) provide extensive examples to learn from.
+
+For structured practice with visualization concepts, see @sec-ex-viz in the Practice Exercises appendix. The exercises include:
+
+- Creating basic ggplot2 visualizations
+- Working with different geometric objects
+- Mapping variables to aesthetics
+- Creating faceted plots (small multiples)
+- Combining layers for complex visualizations
+- Creating publication-quality figures

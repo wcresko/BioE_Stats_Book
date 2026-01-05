@@ -324,6 +324,15 @@ Simple linear regression models the relationship between a predictor and respons
 - Model II regression is appropriate when both variables have measurement error
 - Avoid extrapolating beyond the range of observed data
 
+## Practice Exercises
+
+For hands-on practice with regression concepts, see @sec-ex-linear in the Practice Exercises appendix. The exercises include:
+
+- Fitting and interpreting linear models
+- Visualizing regression lines and residuals
+- Checking model assumptions
+- ANOVA for comparing group means
+
 ## Additional Resources
 
 - @james2023islr - Excellent introduction to regression in the context of statistical learning

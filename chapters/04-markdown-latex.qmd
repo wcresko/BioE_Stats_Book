@@ -449,3 +449,12 @@ quarto render document.qmd --to docx
 The combination of Markdown, LaTeX, and executable code enables truly reproducible research. Your analysis code lives in the same document as your prose. When data change, you re-render the document and everything updates automatically. Collaborators can see exactly what you did. Future you can understand past you's work.
 
 These tools have become standard in data science. Learning them now will pay dividends throughout your career, whether you are writing homework assignments, thesis chapters, journal articles, or technical reports.
+
+## Practice Exercises
+
+For hands-on practice with Markdown and LaTeX, see @sec-ex-markdown in the Practice Exercises appendix. The exercises include:
+
+- Creating and formatting R Markdown documents
+- Working with code chunk options
+- Writing mathematical equations in LaTeX
+- Creating tables and formatted output

@@ -477,7 +477,7 @@ observations |>
   complete(site, year, fill = list(count = 0))
 ```
 
-## Practice Exercise
+## Practice Exercises
 
 Here is a workflow to practice these concepts:
 
@@ -490,3 +490,11 @@ Here is a workflow to practice these concepts:
 7. Visualize the results
 
 Working through this process with your own data will cement these concepts better than any number of examples.
+
+For additional hands-on practice with data wrangling, see @sec-ex-tidy in the Practice Exercises appendix. The exercises include:
+
+- Practice with the five core dplyr verbs
+- Grouping and summarizing data
+- Building data wrangling pipelines
+- Reshaping data with pivot operations
+- Joining multiple data tables

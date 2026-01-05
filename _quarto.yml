@@ -69,6 +69,7 @@ book:
         - chapters/A6-unix-reference.qmd
         - chapters/A7-latex-reference.qmd
         - chapters/A8-keyboard-shortcuts.qmd
+        - chapters/A9-exercises.qmd
     
     - references.qmd
 
