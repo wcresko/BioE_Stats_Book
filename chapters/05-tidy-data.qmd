@@ -262,6 +262,221 @@ measurements <- tibble(
 left_join(measurements, samples, by = "sample_id")
 ```
 
+### Types of Joins
+
+Different joins handle non-matching rows differently. Understanding when to use each type is important for correct data analysis:
+
+| Join Type | Result |
+|:----------|:-------|
+| `left_join()` | Keep all rows from left table, add matching data from right |
+| `right_join()` | Keep all rows from right table, add matching data from left |
+| `inner_join()` | Keep only rows with matches in both tables |
+| `full_join()` | Keep all rows from both tables |
+| `semi_join()` | Keep rows from left table that have matches in right |
+| `anti_join()` | Keep rows from left table with NO matches in right |
+
+The `anti_join()` is particularly useful for finding data quality issues—rows that should have matches but don't:
+
+```{r}
+#| eval: false
+# Which measurements have no sample information?
+anti_join(measurements, samples, by = "sample_id")
+```
+
+## Additional dplyr Functions
+
+Beyond the five core verbs, dplyr provides many useful functions for common data manipulation tasks.
+
+### Conditional Logic with case_when()
+
+The `case_when()` function is a vectorized if-else that handles multiple conditions:
+
+```{r}
+# Create sample data
+expression_data <- tibble(
+  gene = c("gene_A", "gene_B", "gene_C", "gene_D"),
+  fold_change = c(0.5, 1.2, 3.5, -2.1)
+)
+
+expression_data |>
+  mutate(
+    regulation = case_when(
+      fold_change > 2 ~ "strongly up",
+      fold_change > 1 ~ "up",
+      fold_change < -1 ~ "down",
+      TRUE ~ "unchanged"  # default case
+    )
+  )
+```
+
+### Counting with count() and n_distinct()
+
+The `count()` function is a shortcut for grouping and counting:
+
+```{r}
+#| eval: false
+# Equivalent to: group_by(x) |> summarize(n = n())
+data |> count(treatment)
+
+# Sort by count
+data |> count(treatment, sort = TRUE)
+```
+
+Use `n_distinct()` inside `summarize()` to count unique values:
+
+```{r}
+#| eval: false
+# Count unique samples per treatment group
+data |>
+  group_by(treatment) |>
+  summarize(n_samples = n_distinct(sample_id))
+```
+
+### Selecting Rows by Position with slice()
+
+While `filter()` selects rows by condition, `slice()` selects by position:
+
+```{r}
+# First 3 rows
+head(iris, 3)
+
+# Using slice variants
+iris |> slice_head(n = 3)    # First 3 rows
+iris |> slice_tail(n = 3)    # Last 3 rows
+iris |> slice_sample(n = 5)  # Random 5 rows
+iris |> slice_max(Sepal.Length, n = 3)  # Top 3 by value
+```
+
+### Extracting Columns with pull()
+
+To extract a single column as a vector (rather than a data frame), use `pull()`:
+
+```{r}
+# Returns a vector, not a data frame
+iris |>
+  filter(Species == "setosa") |>
+  pull(Sepal.Length) |>
+  mean()
+```
+
+### Distinct Values with distinct()
+
+Remove duplicate rows based on specified columns:
+
+```{r}
+#| eval: false
+# Unique values in one column
+data |> distinct(treatment)
+
+# Unique combinations of multiple columns
+data |> distinct(treatment, time_point)
+```
+
+## Working with Factors
+
+Factors are R's way of representing categorical data with a fixed set of possible values (called levels). The **forcats** package (part of tidyverse) provides tools for working with factors.
+
+### Reordering Factor Levels
+
+For visualization, you often want factor levels ordered by a value rather than alphabetically:
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+# Sample data
+gene_data <- tibble(
+  gene = c("BRCA1", "TP53", "EGFR", "KRAS", "MYC"),
+  expression = c(5.2, 8.1, 3.4, 6.7, 9.2)
+)
+
+# Default: alphabetical order
+ggplot(gene_data, aes(x = gene, y = expression)) +
+  geom_col() +
+  labs(title = "Default (Alphabetical) Order")
+```
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+# Reorder by expression value
+library(forcats)
+gene_data |>
+  mutate(gene = fct_reorder(gene, expression)) |>
+  ggplot(aes(x = gene, y = expression)) +
+  geom_col() +
+  labs(title = "Ordered by Expression")
+```
+
+### Recoding Factor Levels
+
+Use `fct_recode()` to change level names:
+
+```{r}
+# Original factor
+status <- factor(c("WT", "WT", "KO", "HET", "KO"))
+
+# Recode to more descriptive names
+fct_recode(status,
+  "Wild Type" = "WT",
+  "Knockout" = "KO",
+  "Heterozygous" = "HET"
+)
+```
+
+### Collapsing Rare Levels
+
+Use `fct_lump_n()` to combine infrequent categories into "Other":
+
+```{r}
+# Sample with many categories
+many_categories <- factor(rep(c("A", "B", "C", "D", "E", "F"),
+                               c(50, 30, 10, 5, 3, 2)))
+
+# Keep only the top 3 most common
+fct_lump_n(many_categories, n = 3)
+```
+
+## Additional tidyr Functions
+
+### Separating and Combining Columns
+
+`separate()` splits one column into multiple columns; `unite()` combines columns:
+
+```{r}
+# Data with combined values
+combined_data <- tibble(
+  sample = c("control_rep1", "control_rep2", "treatment_rep1"),
+  value = c(10, 12, 25)
+)
+
+# Separate into treatment and replicate
+combined_data |>
+  separate(sample, into = c("treatment", "replicate"), sep = "_")
+```
+
+```{r}
+# Combine columns
+tibble(year = 2024, month = 3, day = 15) |>
+  unite(date, year, month, day, sep = "-")
+```
+
+### Handling Implicit Missing Values with complete()
+
+Sometimes data has implicit missing values—combinations that should exist but don't appear. `complete()` makes them explicit:
+
+```{r}
+# Implicit missing: no observation for site B in year 2021
+observations <- tibble(
+  site = c("A", "A", "B"),
+  year = c(2020, 2021, 2020),
+  count = c(10, 15, 8)
+)
+
+# Make all combinations explicit
+observations |>
+  complete(site, year, fill = list(count = 0))
+```
+
 ## Practice Exercise
 
 Here is a workflow to practice these concepts:
