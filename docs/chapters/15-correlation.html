@@ -429,7 +429,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
- <span class="menu-text">Appendices</span></a>
+ <span class="menu-text">Historical Context</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -441,6 +441,17 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">The Eugenics History of Statistics</span></span></a>
   </div>
 </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/A2-r-reference.html" class="sidebar-item-text sidebar-link">
@@ -483,12 +494,6 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Keyboard Shortcuts Reference</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../chapters/A9-exercises.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Practice Exercises</span></span></a>
-  </div>
-</li>
       </ul>
   </li>
         <li class="sidebar-item">
@@ -528,7 +533,12 @@ window.Quarto = {
   </ul></li>
   <li><a href="#common-pitfalls-with-correlation" id="toc-common-pitfalls-with-correlation" class="nav-link" data-scroll-target="#common-pitfalls-with-correlation"><span class="header-section-number">16.11</span> Common Pitfalls with Correlation</a></li>
   <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">16.12</span> Summary</a></li>
-  <li><a href="#practice-exercises" id="toc-practice-exercises" class="nav-link" data-scroll-target="#practice-exercises"><span class="header-section-number">16.13</span> Practice Exercises</a></li>
+  <li><a href="#practice-exercises" id="toc-practice-exercises" class="nav-link" data-scroll-target="#practice-exercises"><span class="header-section-number">16.13</span> Practice Exercises</a>
+  <ul class="collapse">
+  <li><a href="#exercise-l.1-correlation" id="toc-exercise-l.1-correlation" class="nav-link" data-scroll-target="#exercise-l.1-correlation"><span class="header-section-number">16.13.1</span> Exercise L.1: Correlation</a></li>
+  <li><a href="#exercise-l.2-pearson-vs.-spearman" id="toc-exercise-l.2-pearson-vs.-spearman" class="nav-link" data-scroll-target="#exercise-l.2-pearson-vs.-spearman"><span class="header-section-number">16.13.2</span> Exercise L.2: Pearson vs.&nbsp;Spearman</a></li>
+  <li><a href="#exercise-l.3-effect-of-outliers" id="toc-exercise-l.3-effect-of-outliers" class="nav-link" data-scroll-target="#exercise-l.3-effect-of-outliers"><span class="header-section-number">16.13.3</span> Exercise L.3: Effect of Outliers</a></li>
+  </ul></li>
   <li><a href="#additional-resources" id="toc-additional-resources" class="nav-link" data-scroll-target="#additional-resources"><span class="header-section-number">16.14</span> Additional Resources</a></li>
   </ul>
 </nav>
@@ -1069,13 +1079,71 @@ Watch Out For These Mistakes
 </section>
 <section id="practice-exercises" class="level2" data-number="16.13">
 <h2 data-number="16.13" class="anchored" data-anchor-id="practice-exercises"><span class="header-section-number">16.13</span> Practice Exercises</h2>
-<p>For hands-on practice with correlation and linear models, see <a href="A9-exercises.html#sec-ex-linear" class="quarto-xref"><span>Section 35.10</span></a> in the Practice Exercises appendix. The exercises include:</p>
-<ul>
-<li>Calculating and interpreting correlation coefficients</li>
-<li>Creating scatterplots with trend lines</li>
-<li>Understanding the effect of outliers on correlation</li>
-<li>Simple linear regression analysis</li>
-</ul>
+<section id="exercise-l.1-correlation" class="level3" data-number="16.13.1">
+<h3 data-number="16.13.1" class="anchored" data-anchor-id="exercise-l.1-correlation"><span class="header-section-number">16.13.1</span> Exercise L.1: Correlation</h3>
+<ol type="1">
+<li>Create two correlated variables using simulation</li>
+<li>Calculate the Pearson correlation coefficient</li>
+<li>Create a scatterplot and add the correlation value</li>
+<li>What happens to the correlation when you add outliers?</li>
+</ol>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">50</span>)</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fl">0.7</span><span class="sc">*</span>x <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">50</span>, <span class="at">sd =</span> <span class="fl">0.5</span>)  <span class="co"># Correlated with x</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(x, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.8400841</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y, <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">"Correlation:"</span>, <span class="fu">round</span>(<span class="fu">cor</span>(x, y), <span class="dv">2</span>)))</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="fu">lm</span>(y <span class="sc">~</span> x), <span class="at">col =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="15-correlation_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-l.2-pearson-vs.-spearman" class="level3" data-number="16.13.2">
+<h3 data-number="16.13.2" class="anchored" data-anchor-id="exercise-l.2-pearson-vs.-spearman"><span class="header-section-number">16.13.2</span> Exercise L.2: Pearson vs.&nbsp;Spearman</h3>
+<p>Compare Pearson and Spearman correlations:</p>
+<ol type="1">
+<li>Generate data with a monotonic but non-linear relationship</li>
+<li>Calculate both Pearson and Spearman correlations</li>
+<li>Which is more appropriate for your data and why?</li>
+</ol>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Monotonic but non-linear</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">50</span></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">log</span>(x) <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">50</span>, <span class="at">sd =</span> <span class="fl">0.3</span>)</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(x, y, <span class="at">method =</span> <span class="st">"pearson"</span>)</span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(x, y, <span class="at">method =</span> <span class="st">"spearman"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="exercise-l.3-effect-of-outliers" class="level3" data-number="16.13.3">
+<h3 data-number="16.13.3" class="anchored" data-anchor-id="exercise-l.3-effect-of-outliers"><span class="header-section-number">16.13.3</span> Exercise L.3: Effect of Outliers</h3>
+<p>Explore how outliers affect correlation:</p>
+<ol type="1">
+<li>Generate correlated data with no outliers—calculate r</li>
+<li>Add one extreme outlier—recalculate r</li>
+<li>Use Spearman’s correlation on the data with the outlier</li>
+<li>What do you conclude about robustness?</li>
+</ol>
+</section>
 </section>
 <section id="additional-resources" class="level2" data-number="16.14">
 <h2 data-number="16.14" class="anchored" data-anchor-id="additional-resources"><span class="header-section-number">16.14</span> Additional Resources</h2>
@@ -1560,362 +1628,402 @@ Logan, Murray. 2010. <em>Biostatistical Design and Analysis Using r</em>. Wiley-
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb43" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Correlation {#sec-correlation}</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_minimal</span>())</span>
-<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a><span class="fu">## Measuring Association</span></span>
-<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a>When two variables vary together, we say they are correlated. Understanding whether and how variables are related is fundamental to science—it helps us identify potential causal relationships, make predictions, and understand systems.</span>
-<span id="cb43-15"><a href="#cb43-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-16"><a href="#cb43-16" aria-hidden="true" tabindex="-1"></a>Correlation quantifies the strength and direction of the linear relationship between two variables. A positive correlation means that high values of one variable tend to occur with high values of the other. A negative correlation means that high values of one variable tend to occur with low values of the other.</span>
-<span id="cb43-17"><a href="#cb43-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-18"><a href="#cb43-18" aria-hidden="true" tabindex="-1"></a><span class="fu">## Covariance</span></span>
-<span id="cb43-19"><a href="#cb43-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-20"><a href="#cb43-20" aria-hidden="true" tabindex="-1"></a>The **covariance** measures how two variables vary together. If X and Y tend to be above their means at the same time (and below their means at the same time), the covariance is positive. If one tends to be above its mean when the other is below, the covariance is negative.</span>
-<span id="cb43-21"><a href="#cb43-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-22"><a href="#cb43-22" aria-hidden="true" tabindex="-1"></a>$$Cov(X, Y) = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{n-1}$$</span>
-<span id="cb43-23"><a href="#cb43-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-24"><a href="#cb43-24" aria-hidden="true" tabindex="-1"></a><span class="fu">### Understanding Covariance Visually</span></span>
-<span id="cb43-25"><a href="#cb43-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-26"><a href="#cb43-26" aria-hidden="true" tabindex="-1"></a>The covariance formula involves products of deviations from the mean. Consider each point in a scatterplot:</span>
-<span id="cb43-27"><a href="#cb43-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-28"><a href="#cb43-28" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>If a point is in the **upper-right quadrant** (both X and Y above their means), the product of deviations is positive</span>
-<span id="cb43-29"><a href="#cb43-29" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>If a point is in the **lower-left quadrant** (both below their means), the product is also positive</span>
-<span id="cb43-30"><a href="#cb43-30" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>If a point is in the **upper-left** or **lower-right** (one above, one below), the product is negative</span>
-<span id="cb43-31"><a href="#cb43-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-34"><a href="#cb43-34" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb43-35"><a href="#cb43-35" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 7</span></span>
-<span id="cb43-36"><a href="#cb43-36" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 6</span></span>
-<span id="cb43-37"><a href="#cb43-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualizing covariance with quadrants</span></span>
-<span id="cb43-38"><a href="#cb43-38" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
-<span id="cb43-39"><a href="#cb43-39" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">50</span>, <span class="at">mean =</span> <span class="dv">10</span>, <span class="at">sd =</span> <span class="dv">2</span>)</span>
-<span id="cb43-40"><a href="#cb43-40" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fl">0.8</span> <span class="sc">*</span> x <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">50</span>, <span class="at">sd =</span> <span class="fl">1.5</span>)</span>
-<span id="cb43-41"><a href="#cb43-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-42"><a href="#cb43-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate means</span></span>
-<span id="cb43-43"><a href="#cb43-43" aria-hidden="true" tabindex="-1"></a>mean_x <span class="ot">&lt;-</span> <span class="fu">mean</span>(x)</span>
-<span id="cb43-44"><a href="#cb43-44" aria-hidden="true" tabindex="-1"></a>mean_y <span class="ot">&lt;-</span> <span class="fu">mean</span>(y)</span>
-<span id="cb43-45"><a href="#cb43-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-46"><a href="#cb43-46" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot with quadrants</span></span>
-<span id="cb43-47"><a href="#cb43-47" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"steelblue"</span>,</span>
-<span id="cb43-48"><a href="#cb43-48" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"X"</span>, <span class="at">ylab =</span> <span class="st">"Y"</span>,</span>
-<span id="cb43-49"><a href="#cb43-49" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Covariance: Products of Deviations from Means"</span>)</span>
-<span id="cb43-50"><a href="#cb43-50" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> mean_x, <span class="at">h =</span> mean_y, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
-<span id="cb43-51"><a href="#cb43-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-52"><a href="#cb43-52" aria-hidden="true" tabindex="-1"></a><span class="co"># Add quadrant labels</span></span>
-<span id="cb43-53"><a href="#cb43-53" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="fu">max</span>(x) <span class="sc">-</span> <span class="fl">0.5</span>, <span class="fu">max</span>(y) <span class="sc">-</span> <span class="fl">0.5</span>, <span class="st">"(+)(+) = +"</span>, <span class="at">col =</span> <span class="st">"darkgreen"</span>, <span class="at">cex =</span> <span class="fl">0.9</span>)</span>
-<span id="cb43-54"><a href="#cb43-54" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="fu">min</span>(x) <span class="sc">+</span> <span class="fl">0.5</span>, <span class="fu">min</span>(y) <span class="sc">+</span> <span class="fl">0.5</span>, <span class="st">"(-)(−) = +"</span>, <span class="at">col =</span> <span class="st">"darkgreen"</span>, <span class="at">cex =</span> <span class="fl">0.9</span>)</span>
-<span id="cb43-55"><a href="#cb43-55" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="fu">max</span>(x) <span class="sc">-</span> <span class="fl">0.5</span>, <span class="fu">min</span>(y) <span class="sc">+</span> <span class="fl">0.5</span>, <span class="st">"(+)(−) = −"</span>, <span class="at">col =</span> <span class="st">"darkred"</span>, <span class="at">cex =</span> <span class="fl">0.9</span>)</span>
-<span id="cb43-56"><a href="#cb43-56" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="fu">min</span>(x) <span class="sc">+</span> <span class="fl">0.5</span>, <span class="fu">max</span>(y) <span class="sc">-</span> <span class="fl">0.5</span>, <span class="st">"(−)(+) = −"</span>, <span class="at">col =</span> <span class="st">"darkred"</span>, <span class="at">cex =</span> <span class="fl">0.9</span>)</span>
-<span id="cb43-57"><a href="#cb43-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-58"><a href="#cb43-58" aria-hidden="true" tabindex="-1"></a><span class="co"># Report covariance</span></span>
-<span id="cb43-59"><a href="#cb43-59" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Covariance:"</span>, <span class="fu">round</span>(<span class="fu">cov</span>(x, y), <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb43-60"><a href="#cb43-60" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb43-61"><a href="#cb43-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-62"><a href="#cb43-62" aria-hidden="true" tabindex="-1"></a>When points cluster in the positive quadrants (upper-right and lower-left), the covariance is positive. When points cluster in the negative quadrants, the covariance is negative. When points are evenly distributed, covariance is near zero.</span>
-<span id="cb43-63"><a href="#cb43-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-64"><a href="#cb43-64" aria-hidden="true" tabindex="-1"></a>The problem with covariance is that its magnitude depends on the scales of X and Y, making it hard to interpret. Is a covariance of 100 strong or weak? It depends entirely on the units of measurement.</span>
-<span id="cb43-65"><a href="#cb43-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-66"><a href="#cb43-66" aria-hidden="true" tabindex="-1"></a><span class="fu">## Pearson's Correlation Coefficient</span></span>
-<span id="cb43-67"><a href="#cb43-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-68"><a href="#cb43-68" aria-hidden="true" tabindex="-1"></a>The **Pearson correlation coefficient** standardizes covariance by dividing by the product of the standard deviations:</span>
-<span id="cb43-69"><a href="#cb43-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-70"><a href="#cb43-70" aria-hidden="true" tabindex="-1"></a>$$r = \frac{Cov(X, Y)}{s_X s_Y} = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum(x_i - \bar{x})^2 \sum(y_i - \bar{y})^2}}$$</span>
-<span id="cb43-71"><a href="#cb43-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-72"><a href="#cb43-72" aria-hidden="true" tabindex="-1"></a>This produces a value between -1 and +1:</span>
-<span id="cb43-73"><a href="#cb43-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-74"><a href="#cb43-74" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$r = 1$: perfect positive linear relationship</span>
-<span id="cb43-75"><a href="#cb43-75" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$r = -1$: perfect negative linear relationship  </span>
-<span id="cb43-76"><a href="#cb43-76" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$r = 0$: no linear relationship</span>
-<span id="cb43-77"><a href="#cb43-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-78"><a href="#cb43-78" aria-hidden="true" tabindex="-1"></a><span class="al">![](../images/images_4b.006.jpeg)</span>{fig-align="center"}</span>
-<span id="cb43-79"><a href="#cb43-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-82"><a href="#cb43-82" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb43-83"><a href="#cb43-83" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 8</span></span>
-<span id="cb43-84"><a href="#cb43-84" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 6</span></span>
-<span id="cb43-85"><a href="#cb43-85" aria-hidden="true" tabindex="-1"></a><span class="co"># Examples of different correlations</span></span>
-<span id="cb43-86"><a href="#cb43-86" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
-<span id="cb43-87"><a href="#cb43-87" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb43-88"><a href="#cb43-88" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-89"><a href="#cb43-89" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb43-90"><a href="#cb43-90" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-91"><a href="#cb43-91" aria-hidden="true" tabindex="-1"></a><span class="co"># Strong positive</span></span>
-<span id="cb43-92"><a href="#cb43-92" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
-<span id="cb43-93"><a href="#cb43-93" aria-hidden="true" tabindex="-1"></a>y1 <span class="ot">&lt;-</span> <span class="fl">0.9</span> <span class="sc">*</span> x1 <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="at">sd =</span> <span class="fl">0.4</span>)</span>
-<span id="cb43-94"><a href="#cb43-94" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x1, y1, <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">"r ="</span>, <span class="fu">round</span>(<span class="fu">cor</span>(x1, y1), <span class="dv">2</span>)), <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"blue"</span>)</span>
-<span id="cb43-95"><a href="#cb43-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-96"><a href="#cb43-96" aria-hidden="true" tabindex="-1"></a><span class="co"># Moderate negative</span></span>
-<span id="cb43-97"><a href="#cb43-97" aria-hidden="true" tabindex="-1"></a>y2 <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fl">0.6</span> <span class="sc">*</span> x1 <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="at">sd =</span> <span class="fl">0.8</span>)</span>
-<span id="cb43-98"><a href="#cb43-98" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x1, y2, <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">"r ="</span>, <span class="fu">round</span>(<span class="fu">cor</span>(x1, y2), <span class="dv">2</span>)), <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"red"</span>)</span>
-<span id="cb43-99"><a href="#cb43-99" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-100"><a href="#cb43-100" aria-hidden="true" tabindex="-1"></a><span class="co"># No correlation</span></span>
-<span id="cb43-101"><a href="#cb43-101" aria-hidden="true" tabindex="-1"></a>y3 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
-<span id="cb43-102"><a href="#cb43-102" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x1, y3, <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">"r ="</span>, <span class="fu">round</span>(<span class="fu">cor</span>(x1, y3), <span class="dv">2</span>)), <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"gray"</span>)</span>
-<span id="cb43-103"><a href="#cb43-103" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-104"><a href="#cb43-104" aria-hidden="true" tabindex="-1"></a><span class="co"># Non-linear relationship (correlation misleading)</span></span>
-<span id="cb43-105"><a href="#cb43-105" aria-hidden="true" tabindex="-1"></a>x4 <span class="ot">&lt;-</span> <span class="fu">runif</span>(n, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>)</span>
-<span id="cb43-106"><a href="#cb43-106" aria-hidden="true" tabindex="-1"></a>y4 <span class="ot">&lt;-</span> x4<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="at">sd =</span> <span class="fl">0.5</span>)</span>
-<span id="cb43-107"><a href="#cb43-107" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x4, y4, <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">"r ="</span>, <span class="fu">round</span>(<span class="fu">cor</span>(x4, y4), <span class="dv">2</span>), <span class="st">"(non-linear!)"</span>), </span>
-<span id="cb43-108"><a href="#cb43-108" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"purple"</span>)</span>
-<span id="cb43-109"><a href="#cb43-109" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb43-110"><a href="#cb43-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-111"><a href="#cb43-111" aria-hidden="true" tabindex="-1"></a><span class="fu">## Anscombe's Quartet</span></span>
-<span id="cb43-112"><a href="#cb43-112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-113"><a href="#cb43-113" aria-hidden="true" tabindex="-1"></a>Francis Anscombe created a famous set of four datasets that all have nearly identical statistical properties—same means, variances, correlations, and regression lines—yet look completely different when plotted. This demonstrates why visualization is essential.</span>
-<span id="cb43-114"><a href="#cb43-114" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-115"><a href="#cb43-115" aria-hidden="true" tabindex="-1"></a><span class="al">![](../images/images_4b.007.jpeg)</span>{fig-align="center"}</span>
-<span id="cb43-116"><a href="#cb43-116" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-117"><a href="#cb43-117" aria-hidden="true" tabindex="-1"></a>Always plot your data before calculating correlations. The correlation coefficient captures only linear relationships and can be misleading for non-linear patterns.</span>
-<span id="cb43-118"><a href="#cb43-118" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-119"><a href="#cb43-119" aria-hidden="true" tabindex="-1"></a><span class="fu">## Testing Correlation</span></span>
-<span id="cb43-120"><a href="#cb43-120" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-121"><a href="#cb43-121" aria-hidden="true" tabindex="-1"></a>The <span class="in">`cor.test()`</span> function tests whether a correlation is significantly different from zero:</span>
-<span id="cb43-122"><a href="#cb43-122" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-125"><a href="#cb43-125" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb43-126"><a href="#cb43-126" aria-hidden="true" tabindex="-1"></a><span class="co"># Example: zebrafish length and weight</span></span>
-<span id="cb43-127"><a href="#cb43-127" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb43-128"><a href="#cb43-128" aria-hidden="true" tabindex="-1"></a>length <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">50</span>, <span class="at">mean =</span> <span class="fl">2.5</span>, <span class="at">sd =</span> <span class="fl">0.5</span>)</span>
-<span id="cb43-129"><a href="#cb43-129" aria-hidden="true" tabindex="-1"></a>weight <span class="ot">&lt;-</span> <span class="dv">10</span> <span class="sc">*</span> length<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">50</span>, <span class="at">sd =</span> <span class="dv">5</span>)</span>
-<span id="cb43-130"><a href="#cb43-130" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-131"><a href="#cb43-131" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(length, weight)</span>
-<span id="cb43-132"><a href="#cb43-132" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb43-133"><a href="#cb43-133" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-134"><a href="#cb43-134" aria-hidden="true" tabindex="-1"></a>The null hypothesis is that the population correlation is zero ($H_0: \rho = 0$). A small p-value indicates evidence of a non-zero correlation.</span>
-<span id="cb43-135"><a href="#cb43-135" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-136"><a href="#cb43-136" aria-hidden="true" tabindex="-1"></a><span class="fu">## Sample Correlation as a Random Variable</span></span>
-<span id="cb43-137"><a href="#cb43-137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-138"><a href="#cb43-138" aria-hidden="true" tabindex="-1"></a>Just like the sample mean, the sample correlation coefficient is a **random variable**—it varies from sample to sample. If we could repeatedly draw samples from the same population and compute r for each, we would get a distribution of r values centered around the true population correlation $\rho$.</span>
-<span id="cb43-139"><a href="#cb43-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-140"><a href="#cb43-140" aria-hidden="true" tabindex="-1"></a>This sampling variability has important implications for interpretation. A sample correlation of r = 0.3 from a small study might arise even when the true correlation is zero (or is actually 0.5). Understanding this uncertainty is essential for proper inference.</span>
-<span id="cb43-141"><a href="#cb43-141" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-144"><a href="#cb43-144" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb43-145"><a href="#cb43-145" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 9</span></span>
-<span id="cb43-146"><a href="#cb43-146" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 6</span></span>
-<span id="cb43-147"><a href="#cb43-147" aria-hidden="true" tabindex="-1"></a><span class="co"># Demonstrate sampling variability of correlation</span></span>
-<span id="cb43-148"><a href="#cb43-148" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
-<span id="cb43-149"><a href="#cb43-149" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-150"><a href="#cb43-150" aria-hidden="true" tabindex="-1"></a><span class="co"># True population parameters</span></span>
-<span id="cb43-151"><a href="#cb43-151" aria-hidden="true" tabindex="-1"></a>rho_true <span class="ot">&lt;-</span> <span class="fl">0.5</span>  <span class="co"># True population correlation</span></span>
-<span id="cb43-152"><a href="#cb43-152" aria-hidden="true" tabindex="-1"></a>n_small <span class="ot">&lt;-</span> <span class="dv">20</span></span>
-<span id="cb43-153"><a href="#cb43-153" aria-hidden="true" tabindex="-1"></a>n_large <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb43-154"><a href="#cb43-154" aria-hidden="true" tabindex="-1"></a>n_reps <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
-<span id="cb43-155"><a href="#cb43-155" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-156"><a href="#cb43-156" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to generate correlated data</span></span>
-<span id="cb43-157"><a href="#cb43-157" aria-hidden="true" tabindex="-1"></a>generate_correlated_data <span class="ot">&lt;-</span> <span class="cf">function</span>(n, rho) {</span>
-<span id="cb43-158"><a href="#cb43-158" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
-<span id="cb43-159"><a href="#cb43-159" aria-hidden="true" tabindex="-1"></a>  y <span class="ot">&lt;-</span> rho <span class="sc">*</span> x <span class="sc">+</span> <span class="fu">sqrt</span>(<span class="dv">1</span> <span class="sc">-</span> rho<span class="sc">^</span><span class="dv">2</span>) <span class="sc">*</span> <span class="fu">rnorm</span>(n)</span>
-<span id="cb43-160"><a href="#cb43-160" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">cor</span>(x, y))</span>
-<span id="cb43-161"><a href="#cb43-161" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb43-162"><a href="#cb43-162" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-163"><a href="#cb43-163" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate sampling distributions for different sample sizes</span></span>
-<span id="cb43-164"><a href="#cb43-164" aria-hidden="true" tabindex="-1"></a>r_small <span class="ot">&lt;-</span> <span class="fu">replicate</span>(n_reps, <span class="fu">generate_correlated_data</span>(n_small, rho_true))</span>
-<span id="cb43-165"><a href="#cb43-165" aria-hidden="true" tabindex="-1"></a>r_large <span class="ot">&lt;-</span> <span class="fu">replicate</span>(n_reps, <span class="fu">generate_correlated_data</span>(n_large, rho_true))</span>
-<span id="cb43-166"><a href="#cb43-166" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-167"><a href="#cb43-167" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot sampling distributions</span></span>
-<span id="cb43-168"><a href="#cb43-168" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb43-169"><a href="#cb43-169" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-170"><a href="#cb43-170" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(r_small, <span class="at">breaks =</span> <span class="dv">30</span>, <span class="at">col =</span> <span class="st">"lightblue"</span>,</span>
-<span id="cb43-171"><a href="#cb43-171" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">"Sampling Distribution of r</span><span class="sc">\n</span><span class="st">(n ="</span>, n_small, <span class="st">")"</span>),</span>
-<span id="cb43-172"><a href="#cb43-172" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Sample Correlation"</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.2</span>, <span class="dv">1</span>))</span>
-<span id="cb43-173"><a href="#cb43-173" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> rho_true, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb43-174"><a href="#cb43-174" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">mean</span>(r_small), <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
-<span id="cb43-175"><a href="#cb43-175" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topleft"</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="fu">paste</span>(<span class="st">"True ρ ="</span>, rho_true),</span>
-<span id="cb43-176"><a href="#cb43-176" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">paste</span>(<span class="st">"Mean r ="</span>, <span class="fu">round</span>(<span class="fu">mean</span>(r_small), <span class="dv">3</span>))),</span>
-<span id="cb43-177"><a href="#cb43-177" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"blue"</span>), <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>), <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">cex =</span> <span class="fl">0.8</span>)</span>
-<span id="cb43-178"><a href="#cb43-178" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-179"><a href="#cb43-179" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(r_large, <span class="at">breaks =</span> <span class="dv">30</span>, <span class="at">col =</span> <span class="st">"lightgreen"</span>,</span>
-<span id="cb43-180"><a href="#cb43-180" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">"Sampling Distribution of r</span><span class="sc">\n</span><span class="st">(n ="</span>, n_large, <span class="st">")"</span>),</span>
-<span id="cb43-181"><a href="#cb43-181" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Sample Correlation"</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.2</span>, <span class="dv">1</span>))</span>
-<span id="cb43-182"><a href="#cb43-182" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> rho_true, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb43-183"><a href="#cb43-183" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">mean</span>(r_large), <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
-<span id="cb43-184"><a href="#cb43-184" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topleft"</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="fu">paste</span>(<span class="st">"True ρ ="</span>, rho_true),</span>
-<span id="cb43-185"><a href="#cb43-185" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">paste</span>(<span class="st">"Mean r ="</span>, <span class="fu">round</span>(<span class="fu">mean</span>(r_large), <span class="dv">3</span>))),</span>
-<span id="cb43-186"><a href="#cb43-186" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"blue"</span>), <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>), <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">cex =</span> <span class="fl">0.8</span>)</span>
-<span id="cb43-187"><a href="#cb43-187" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb43-188"><a href="#cb43-188" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-189"><a href="#cb43-189" aria-hidden="true" tabindex="-1"></a>Notice the dramatic difference in variability. With n = 20, sample correlations range widely around the true value—sometimes even appearing negative when the true correlation is 0.5! With n = 100, the distribution is much tighter, and our sample r is a more reliable estimate of $\rho$.</span>
-<span id="cb43-190"><a href="#cb43-190" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-193"><a href="#cb43-193" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb43-194"><a href="#cb43-194" aria-hidden="true" tabindex="-1"></a><span class="co"># Quantify the variability</span></span>
-<span id="cb43-195"><a href="#cb43-195" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"True population correlation: ρ ="</span>, rho_true, <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
-<span id="cb43-196"><a href="#cb43-196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-197"><a href="#cb43-197" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"With n ="</span>, n_small, <span class="st">":</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb43-198"><a href="#cb43-198" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  Mean of sample r:"</span>, <span class="fu">round</span>(<span class="fu">mean</span>(r_small), <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb43-199"><a href="#cb43-199" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  SD of sample r:"</span>, <span class="fu">round</span>(<span class="fu">sd</span>(r_small), <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb43-200"><a href="#cb43-200" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  95% of samples give r between"</span>, <span class="fu">round</span>(<span class="fu">quantile</span>(r_small, <span class="fl">0.025</span>), <span class="dv">3</span>),</span>
-<span id="cb43-201"><a href="#cb43-201" aria-hidden="true" tabindex="-1"></a>    <span class="st">"and"</span>, <span class="fu">round</span>(<span class="fu">quantile</span>(r_small, <span class="fl">0.975</span>), <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
-<span id="cb43-202"><a href="#cb43-202" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-203"><a href="#cb43-203" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"With n ="</span>, n_large, <span class="st">":</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb43-204"><a href="#cb43-204" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  Mean of sample r:"</span>, <span class="fu">round</span>(<span class="fu">mean</span>(r_large), <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb43-205"><a href="#cb43-205" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  SD of sample r:"</span>, <span class="fu">round</span>(<span class="fu">sd</span>(r_large), <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb43-206"><a href="#cb43-206" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  95% of samples give r between"</span>, <span class="fu">round</span>(<span class="fu">quantile</span>(r_large, <span class="fl">0.025</span>), <span class="dv">3</span>),</span>
-<span id="cb43-207"><a href="#cb43-207" aria-hidden="true" tabindex="-1"></a>    <span class="st">"and"</span>, <span class="fu">round</span>(<span class="fu">quantile</span>(r_large, <span class="fl">0.975</span>), <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb43-208"><a href="#cb43-208" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb43-209"><a href="#cb43-209" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-210"><a href="#cb43-210" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
-<span id="cb43-211"><a href="#cb43-211" aria-hidden="true" tabindex="-1"></a><span class="fu">## Practical Implications</span></span>
-<span id="cb43-212"><a href="#cb43-212" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-213"><a href="#cb43-213" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Small samples yield unreliable correlations**: With n &lt; 30, sample r can differ substantially from $\rho$</span>
-<span id="cb43-214"><a href="#cb43-214" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Confidence intervals are essential**: Report CIs to communicate uncertainty, not just the point estimate</span>
-<span id="cb43-215"><a href="#cb43-215" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Replication matters**: A single study with r = 0.4 (n = 25) is consistent with true correlations anywhere from near-zero to quite strong</span>
-<span id="cb43-216"><a href="#cb43-216" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Publication bias distorts the literature**: Studies with "significant" correlations are more likely to be published, inflating effect sizes in the literature</span>
-<span id="cb43-217"><a href="#cb43-217" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb43-218"><a href="#cb43-218" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-219"><a href="#cb43-219" aria-hidden="true" tabindex="-1"></a><span class="fu">### Fisher's Z-Transformation</span></span>
-<span id="cb43-220"><a href="#cb43-220" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-221"><a href="#cb43-221" aria-hidden="true" tabindex="-1"></a>The sampling distribution of r is not symmetric, especially when $\rho$ is far from zero. Fisher's z-transformation stabilizes the variance and makes the distribution approximately normal:</span>
-<span id="cb43-222"><a href="#cb43-222" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-223"><a href="#cb43-223" aria-hidden="true" tabindex="-1"></a>$$z = \frac{1}{2} \ln\left(\frac{1 + r}{1 - r}\right) = \text{arctanh}(r)$$</span>
-<span id="cb43-224"><a href="#cb43-224" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-225"><a href="#cb43-225" aria-hidden="true" tabindex="-1"></a>The standard error of z is approximately $\frac{1}{\sqrt{n-3}}$, which depends only on sample size—not on the true correlation. This transformation is used to construct confidence intervals for correlation and to compare correlations across groups.</span>
-<span id="cb43-226"><a href="#cb43-226" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-229"><a href="#cb43-229" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb43-230"><a href="#cb43-230" aria-hidden="true" tabindex="-1"></a><span class="co"># Fisher's z-transformation for confidence interval</span></span>
-<span id="cb43-231"><a href="#cb43-231" aria-hidden="true" tabindex="-1"></a>r_observed <span class="ot">&lt;-</span> <span class="fl">0.6</span></span>
-<span id="cb43-232"><a href="#cb43-232" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">50</span></span>
-<span id="cb43-233"><a href="#cb43-233" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-234"><a href="#cb43-234" aria-hidden="true" tabindex="-1"></a><span class="co"># Transform to z</span></span>
-<span id="cb43-235"><a href="#cb43-235" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">atanh</span>(r_observed)  <span class="co"># Same as 0.5 * log((1 + r) / (1 - r))</span></span>
-<span id="cb43-236"><a href="#cb43-236" aria-hidden="true" tabindex="-1"></a>se_z <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">/</span> <span class="fu">sqrt</span>(n <span class="sc">-</span> <span class="dv">3</span>)</span>
-<span id="cb43-237"><a href="#cb43-237" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-238"><a href="#cb43-238" aria-hidden="true" tabindex="-1"></a><span class="co"># 95% CI in z scale</span></span>
-<span id="cb43-239"><a href="#cb43-239" aria-hidden="true" tabindex="-1"></a>z_lower <span class="ot">&lt;-</span> z <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> se_z</span>
-<span id="cb43-240"><a href="#cb43-240" aria-hidden="true" tabindex="-1"></a>z_upper <span class="ot">&lt;-</span> z <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> se_z</span>
-<span id="cb43-241"><a href="#cb43-241" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-242"><a href="#cb43-242" aria-hidden="true" tabindex="-1"></a><span class="co"># Transform back to r scale</span></span>
-<span id="cb43-243"><a href="#cb43-243" aria-hidden="true" tabindex="-1"></a>r_lower <span class="ot">&lt;-</span> <span class="fu">tanh</span>(z_lower)</span>
-<span id="cb43-244"><a href="#cb43-244" aria-hidden="true" tabindex="-1"></a>r_upper <span class="ot">&lt;-</span> <span class="fu">tanh</span>(z_upper)</span>
-<span id="cb43-245"><a href="#cb43-245" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-246"><a href="#cb43-246" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Observed r:"</span>, r_observed, <span class="st">"with n ="</span>, n, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb43-247"><a href="#cb43-247" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"95% CI for ρ: ["</span>, <span class="fu">round</span>(r_lower, <span class="dv">3</span>), <span class="st">","</span>, <span class="fu">round</span>(r_upper, <span class="dv">3</span>), <span class="st">"]</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb43-248"><a href="#cb43-248" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb43-249"><a href="#cb43-249" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-250"><a href="#cb43-250" aria-hidden="true" tabindex="-1"></a><span class="fu">## Parametric Assumptions</span></span>
-<span id="cb43-251"><a href="#cb43-251" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-252"><a href="#cb43-252" aria-hidden="true" tabindex="-1"></a>Pearson's correlation assumes that both variables are normally distributed (or at least that the relationship is linear and homoscedastic). When these assumptions are violated, nonparametric alternatives may be more appropriate.</span>
-<span id="cb43-253"><a href="#cb43-253" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-254"><a href="#cb43-254" aria-hidden="true" tabindex="-1"></a><span class="fu">## Nonparametric Correlation</span></span>
-<span id="cb43-255"><a href="#cb43-255" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-256"><a href="#cb43-256" aria-hidden="true" tabindex="-1"></a>**Spearman's rank correlation** replaces values with their ranks before calculating correlation. It measures monotonic (consistently increasing or decreasing) rather than strictly linear relationships and is robust to outliers.</span>
-<span id="cb43-257"><a href="#cb43-257" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-258"><a href="#cb43-258" aria-hidden="true" tabindex="-1"></a>**Kendall's tau** is another rank-based measure that counts concordant and discordant pairs. It is particularly appropriate for small samples or data with many ties.</span>
-<span id="cb43-259"><a href="#cb43-259" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-262"><a href="#cb43-262" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb43-263"><a href="#cb43-263" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare methods on non-normal data</span></span>
-<span id="cb43-264"><a href="#cb43-264" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
-<span id="cb43-265"><a href="#cb43-265" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rexp</span>(<span class="dv">30</span>, <span class="at">rate =</span> <span class="fl">0.1</span>)</span>
-<span id="cb43-266"><a href="#cb43-266" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> x <span class="sc">+</span> <span class="fu">rexp</span>(<span class="dv">30</span>, <span class="at">rate =</span> <span class="fl">0.2</span>)</span>
-<span id="cb43-267"><a href="#cb43-267" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-268"><a href="#cb43-268" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Pearson:"</span>, <span class="fu">round</span>(<span class="fu">cor</span>(x, y, <span class="at">method =</span> <span class="st">"pearson"</span>), <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb43-269"><a href="#cb43-269" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Spearman:"</span>, <span class="fu">round</span>(<span class="fu">cor</span>(x, y, <span class="at">method =</span> <span class="st">"spearman"</span>), <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb43-270"><a href="#cb43-270" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Kendall:"</span>, <span class="fu">round</span>(<span class="fu">cor</span>(x, y, <span class="at">method =</span> <span class="st">"kendall"</span>), <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb43-271"><a href="#cb43-271" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb43-272"><a href="#cb43-272" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-273"><a href="#cb43-273" aria-hidden="true" tabindex="-1"></a><span class="fu">## Correlation Is Not Causation</span></span>
-<span id="cb43-274"><a href="#cb43-274" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-275"><a href="#cb43-275" aria-hidden="true" tabindex="-1"></a>A correlation between X and Y might arise because X causes Y, because Y causes X, because a third variable Z causes both, or simply by chance. Correlation alone cannot distinguish these possibilities.</span>
-<span id="cb43-276"><a href="#cb43-276" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-277"><a href="#cb43-277" aria-hidden="true" tabindex="-1"></a>To establish causation, you need experimental manipulation (changing X and observing Y), temporal precedence (X occurs before Y), and ruling out confounding variables. Observational correlations are valuable for generating hypotheses but insufficient for establishing causal relationships.</span>
-<span id="cb43-278"><a href="#cb43-278" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-279"><a href="#cb43-279" aria-hidden="true" tabindex="-1"></a><span class="fu">## Interpreting Correlation Magnitude</span></span>
-<span id="cb43-280"><a href="#cb43-280" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-281"><a href="#cb43-281" aria-hidden="true" tabindex="-1"></a>While there are no universal standards, these guidelines provide rough interpretation:</span>
-<span id="cb43-282"><a href="#cb43-282" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-283"><a href="#cb43-283" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="pp">|</span>r<span class="pp">|</span> <span class="pp">|</span> Interpretation <span class="pp">|</span></span>
-<span id="cb43-284"><a href="#cb43-284" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>:--<span class="pp">|</span>:--<span class="pp">|</span></span>
-<span id="cb43-285"><a href="#cb43-285" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 0.00 - 0.19 <span class="pp">|</span> Negligible <span class="pp">|</span></span>
-<span id="cb43-286"><a href="#cb43-286" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 0.20 - 0.39 <span class="pp">|</span> Weak <span class="pp">|</span></span>
-<span id="cb43-287"><a href="#cb43-287" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 0.40 - 0.59 <span class="pp">|</span> Moderate <span class="pp">|</span></span>
-<span id="cb43-288"><a href="#cb43-288" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 0.60 - 0.79 <span class="pp">|</span> Strong <span class="pp">|</span></span>
-<span id="cb43-289"><a href="#cb43-289" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 0.80 - 1.00 <span class="pp">|</span> Very strong <span class="pp">|</span></span>
-<span id="cb43-290"><a href="#cb43-290" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-291"><a href="#cb43-291" aria-hidden="true" tabindex="-1"></a>Context matters greatly. In physics, correlations below 0.99 might be disappointing. In psychology or ecology, correlations of 0.3 can be considered meaningful.</span>
-<span id="cb43-292"><a href="#cb43-292" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-293"><a href="#cb43-293" aria-hidden="true" tabindex="-1"></a><span class="fu">### Coefficient of Determination</span></span>
-<span id="cb43-294"><a href="#cb43-294" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-295"><a href="#cb43-295" aria-hidden="true" tabindex="-1"></a>The square of the correlation coefficient, $r^2$, is called the **coefficient of determination**. It represents the proportion of variance in one variable that is explained by its linear relationship with the other.</span>
-<span id="cb43-296"><a href="#cb43-296" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-297"><a href="#cb43-297" aria-hidden="true" tabindex="-1"></a>If $r = 0.7$, then $r^2 = 0.49$, meaning about 49% of the variance in Y is explained by its relationship with X. This leaves 51% unexplained—due to other factors, measurement error, or the relationship not being perfectly linear.</span>
-<span id="cb43-298"><a href="#cb43-298" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-301"><a href="#cb43-301" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb43-302"><a href="#cb43-302" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize explained vs unexplained variance</span></span>
-<span id="cb43-303"><a href="#cb43-303" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb43-304"><a href="#cb43-304" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">50</span></span>
-<span id="cb43-305"><a href="#cb43-305" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> x <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">50</span>, <span class="at">sd =</span> <span class="dv">15</span>)</span>
-<span id="cb43-306"><a href="#cb43-306" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-307"><a href="#cb43-307" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">cor</span>(x, y)</span>
-<span id="cb43-308"><a href="#cb43-308" aria-hidden="true" tabindex="-1"></a>r_squared <span class="ot">&lt;-</span> r<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb43-309"><a href="#cb43-309" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-310"><a href="#cb43-310" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Correlation (r):"</span>, <span class="fu">round</span>(r, <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb43-311"><a href="#cb43-311" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"R-squared (r²):"</span>, <span class="fu">round</span>(r_squared, <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb43-312"><a href="#cb43-312" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Variance explained:"</span>, <span class="fu">round</span>(r_squared <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>), <span class="st">"%</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb43-313"><a href="#cb43-313" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb43-314"><a href="#cb43-314" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-315"><a href="#cb43-315" aria-hidden="true" tabindex="-1"></a><span class="fu">## Common Pitfalls with Correlation</span></span>
-<span id="cb43-316"><a href="#cb43-316" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-317"><a href="#cb43-317" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning}</span>
-<span id="cb43-318"><a href="#cb43-318" aria-hidden="true" tabindex="-1"></a><span class="fu">## Watch Out For These Mistakes</span></span>
-<span id="cb43-319"><a href="#cb43-319" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-320"><a href="#cb43-320" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Restricted range**: If you only sample part of the range of X or Y, correlation will appear weaker than it truly is</span>
-<span id="cb43-321"><a href="#cb43-321" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Outliers**: A single extreme point can dramatically inflate or deflate the correlation</span>
-<span id="cb43-322"><a href="#cb43-322" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Non-linearity**: Correlation only measures linear relationships; a perfect curved relationship can have r ≈ 0</span>
-<span id="cb43-323"><a href="#cb43-323" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Aggregation effects**: Correlations computed on grouped data (e.g., country averages) are often much stronger than correlations on individual data (ecological fallacy)</span>
-<span id="cb43-324"><a href="#cb43-324" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>**Confounding**: A third variable may create a spurious correlation between X and Y</span>
-<span id="cb43-325"><a href="#cb43-325" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb43-326"><a href="#cb43-326" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-329"><a href="#cb43-329" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb43-330"><a href="#cb43-330" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 8</span></span>
-<span id="cb43-331"><a href="#cb43-331" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4</span></span>
-<span id="cb43-332"><a href="#cb43-332" aria-hidden="true" tabindex="-1"></a><span class="co"># Demonstrating the effect of outliers</span></span>
-<span id="cb43-333"><a href="#cb43-333" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
-<span id="cb43-334"><a href="#cb43-334" aria-hidden="true" tabindex="-1"></a>x_base <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">30</span>)</span>
-<span id="cb43-335"><a href="#cb43-335" aria-hidden="true" tabindex="-1"></a>y_base <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">30</span>)</span>
-<span id="cb43-336"><a href="#cb43-336" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-337"><a href="#cb43-337" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb43-338"><a href="#cb43-338" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-339"><a href="#cb43-339" aria-hidden="true" tabindex="-1"></a><span class="co"># Without outlier</span></span>
-<span id="cb43-340"><a href="#cb43-340" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x_base, y_base, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"blue"</span>,</span>
-<span id="cb43-341"><a href="#cb43-341" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">"Without outlier: r ="</span>, <span class="fu">round</span>(<span class="fu">cor</span>(x_base, y_base), <span class="dv">3</span>)),</span>
-<span id="cb43-342"><a href="#cb43-342" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"X"</span>, <span class="at">ylab =</span> <span class="st">"Y"</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">5</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">5</span>))</span>
-<span id="cb43-343"><a href="#cb43-343" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-344"><a href="#cb43-344" aria-hidden="true" tabindex="-1"></a><span class="co"># With outlier</span></span>
-<span id="cb43-345"><a href="#cb43-345" aria-hidden="true" tabindex="-1"></a>x_out <span class="ot">&lt;-</span> <span class="fu">c</span>(x_base, <span class="dv">4</span>)</span>
-<span id="cb43-346"><a href="#cb43-346" aria-hidden="true" tabindex="-1"></a>y_out <span class="ot">&lt;-</span> <span class="fu">c</span>(y_base, <span class="dv">4</span>)</span>
-<span id="cb43-347"><a href="#cb43-347" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x_out, y_out, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"blue"</span>, <span class="dv">30</span>), <span class="st">"red"</span>),</span>
-<span id="cb43-348"><a href="#cb43-348" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">"With outlier: r ="</span>, <span class="fu">round</span>(<span class="fu">cor</span>(x_out, y_out), <span class="dv">3</span>)),</span>
-<span id="cb43-349"><a href="#cb43-349" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"X"</span>, <span class="at">ylab =</span> <span class="st">"Y"</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">5</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">5</span>))</span>
-<span id="cb43-350"><a href="#cb43-350" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb43-351"><a href="#cb43-351" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-352"><a href="#cb43-352" aria-hidden="true" tabindex="-1"></a>A single outlier has shifted the correlation from near zero to moderately positive. Always visualize your data and consider robust alternatives like Spearman's correlation when outliers are present.</span>
-<span id="cb43-353"><a href="#cb43-353" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-354"><a href="#cb43-354" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
-<span id="cb43-355"><a href="#cb43-355" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-356"><a href="#cb43-356" aria-hidden="true" tabindex="-1"></a>Correlation quantifies the strength and direction of linear relationships between variables:</span>
-<span id="cb43-357"><a href="#cb43-357" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-358"><a href="#cb43-358" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Covariance measures how variables move together, but depends on units</span>
-<span id="cb43-359"><a href="#cb43-359" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Pearson's r standardizes covariance to range from -1 to +1</span>
-<span id="cb43-360"><a href="#cb43-360" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Spearman and Kendall provide robust rank-based alternatives</span>
-<span id="cb43-361"><a href="#cb43-361" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Correlation does not imply causation</span>
-<span id="cb43-362"><a href="#cb43-362" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Always visualize data and check for non-linearity and outliers</span>
-<span id="cb43-363"><a href="#cb43-363" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-364"><a href="#cb43-364" aria-hidden="true" tabindex="-1"></a><span class="fu">## Practice Exercises</span></span>
-<span id="cb43-365"><a href="#cb43-365" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-366"><a href="#cb43-366" aria-hidden="true" tabindex="-1"></a>For hands-on practice with correlation and linear models, see @sec-ex-linear in the Practice Exercises appendix. The exercises include:</span>
-<span id="cb43-367"><a href="#cb43-367" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-368"><a href="#cb43-368" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Calculating and interpreting correlation coefficients</span>
-<span id="cb43-369"><a href="#cb43-369" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Creating scatterplots with trend lines</span>
-<span id="cb43-370"><a href="#cb43-370" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Understanding the effect of outliers on correlation</span>
-<span id="cb43-371"><a href="#cb43-371" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Simple linear regression analysis</span>
-<span id="cb43-372"><a href="#cb43-372" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-373"><a href="#cb43-373" aria-hidden="true" tabindex="-1"></a><span class="fu">## Additional Resources</span></span>
-<span id="cb43-374"><a href="#cb43-374" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-375"><a href="#cb43-375" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>@logan2010biostatistical - Detailed coverage of correlation with biological examples</span>
-<span id="cb43-376"><a href="#cb43-376" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>@james2023islr - Excellent discussion of correlation in the context of statistical learning</span>
+<div class="sourceCode" id="cb47" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Correlation {#sec-correlation}</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_minimal</span>())</span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-12"><a href="#cb47-12" aria-hidden="true" tabindex="-1"></a><span class="fu">## Measuring Association</span></span>
+<span id="cb47-13"><a href="#cb47-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-14"><a href="#cb47-14" aria-hidden="true" tabindex="-1"></a>When two variables vary together, we say they are correlated. Understanding whether and how variables are related is fundamental to science—it helps us identify potential causal relationships, make predictions, and understand systems.</span>
+<span id="cb47-15"><a href="#cb47-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-16"><a href="#cb47-16" aria-hidden="true" tabindex="-1"></a>Correlation quantifies the strength and direction of the linear relationship between two variables. A positive correlation means that high values of one variable tend to occur with high values of the other. A negative correlation means that high values of one variable tend to occur with low values of the other.</span>
+<span id="cb47-17"><a href="#cb47-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-18"><a href="#cb47-18" aria-hidden="true" tabindex="-1"></a><span class="fu">## Covariance</span></span>
+<span id="cb47-19"><a href="#cb47-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-20"><a href="#cb47-20" aria-hidden="true" tabindex="-1"></a>The **covariance** measures how two variables vary together. If X and Y tend to be above their means at the same time (and below their means at the same time), the covariance is positive. If one tends to be above its mean when the other is below, the covariance is negative.</span>
+<span id="cb47-21"><a href="#cb47-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-22"><a href="#cb47-22" aria-hidden="true" tabindex="-1"></a>$$Cov(X, Y) = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{n-1}$$</span>
+<span id="cb47-23"><a href="#cb47-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-24"><a href="#cb47-24" aria-hidden="true" tabindex="-1"></a><span class="fu">### Understanding Covariance Visually</span></span>
+<span id="cb47-25"><a href="#cb47-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-26"><a href="#cb47-26" aria-hidden="true" tabindex="-1"></a>The covariance formula involves products of deviations from the mean. Consider each point in a scatterplot:</span>
+<span id="cb47-27"><a href="#cb47-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-28"><a href="#cb47-28" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>If a point is in the **upper-right quadrant** (both X and Y above their means), the product of deviations is positive</span>
+<span id="cb47-29"><a href="#cb47-29" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>If a point is in the **lower-left quadrant** (both below their means), the product is also positive</span>
+<span id="cb47-30"><a href="#cb47-30" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>If a point is in the **upper-left** or **lower-right** (one above, one below), the product is negative</span>
+<span id="cb47-31"><a href="#cb47-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-34"><a href="#cb47-34" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb47-35"><a href="#cb47-35" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 7</span></span>
+<span id="cb47-36"><a href="#cb47-36" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 6</span></span>
+<span id="cb47-37"><a href="#cb47-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualizing covariance with quadrants</span></span>
+<span id="cb47-38"><a href="#cb47-38" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb47-39"><a href="#cb47-39" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">50</span>, <span class="at">mean =</span> <span class="dv">10</span>, <span class="at">sd =</span> <span class="dv">2</span>)</span>
+<span id="cb47-40"><a href="#cb47-40" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fl">0.8</span> <span class="sc">*</span> x <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">50</span>, <span class="at">sd =</span> <span class="fl">1.5</span>)</span>
+<span id="cb47-41"><a href="#cb47-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-42"><a href="#cb47-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate means</span></span>
+<span id="cb47-43"><a href="#cb47-43" aria-hidden="true" tabindex="-1"></a>mean_x <span class="ot">&lt;-</span> <span class="fu">mean</span>(x)</span>
+<span id="cb47-44"><a href="#cb47-44" aria-hidden="true" tabindex="-1"></a>mean_y <span class="ot">&lt;-</span> <span class="fu">mean</span>(y)</span>
+<span id="cb47-45"><a href="#cb47-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-46"><a href="#cb47-46" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot with quadrants</span></span>
+<span id="cb47-47"><a href="#cb47-47" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"steelblue"</span>,</span>
+<span id="cb47-48"><a href="#cb47-48" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"X"</span>, <span class="at">ylab =</span> <span class="st">"Y"</span>,</span>
+<span id="cb47-49"><a href="#cb47-49" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Covariance: Products of Deviations from Means"</span>)</span>
+<span id="cb47-50"><a href="#cb47-50" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> mean_x, <span class="at">h =</span> mean_y, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb47-51"><a href="#cb47-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-52"><a href="#cb47-52" aria-hidden="true" tabindex="-1"></a><span class="co"># Add quadrant labels</span></span>
+<span id="cb47-53"><a href="#cb47-53" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="fu">max</span>(x) <span class="sc">-</span> <span class="fl">0.5</span>, <span class="fu">max</span>(y) <span class="sc">-</span> <span class="fl">0.5</span>, <span class="st">"(+)(+) = +"</span>, <span class="at">col =</span> <span class="st">"darkgreen"</span>, <span class="at">cex =</span> <span class="fl">0.9</span>)</span>
+<span id="cb47-54"><a href="#cb47-54" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="fu">min</span>(x) <span class="sc">+</span> <span class="fl">0.5</span>, <span class="fu">min</span>(y) <span class="sc">+</span> <span class="fl">0.5</span>, <span class="st">"(-)(−) = +"</span>, <span class="at">col =</span> <span class="st">"darkgreen"</span>, <span class="at">cex =</span> <span class="fl">0.9</span>)</span>
+<span id="cb47-55"><a href="#cb47-55" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="fu">max</span>(x) <span class="sc">-</span> <span class="fl">0.5</span>, <span class="fu">min</span>(y) <span class="sc">+</span> <span class="fl">0.5</span>, <span class="st">"(+)(−) = −"</span>, <span class="at">col =</span> <span class="st">"darkred"</span>, <span class="at">cex =</span> <span class="fl">0.9</span>)</span>
+<span id="cb47-56"><a href="#cb47-56" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="fu">min</span>(x) <span class="sc">+</span> <span class="fl">0.5</span>, <span class="fu">max</span>(y) <span class="sc">-</span> <span class="fl">0.5</span>, <span class="st">"(−)(+) = −"</span>, <span class="at">col =</span> <span class="st">"darkred"</span>, <span class="at">cex =</span> <span class="fl">0.9</span>)</span>
+<span id="cb47-57"><a href="#cb47-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-58"><a href="#cb47-58" aria-hidden="true" tabindex="-1"></a><span class="co"># Report covariance</span></span>
+<span id="cb47-59"><a href="#cb47-59" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Covariance:"</span>, <span class="fu">round</span>(<span class="fu">cov</span>(x, y), <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb47-60"><a href="#cb47-60" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb47-61"><a href="#cb47-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-62"><a href="#cb47-62" aria-hidden="true" tabindex="-1"></a>When points cluster in the positive quadrants (upper-right and lower-left), the covariance is positive. When points cluster in the negative quadrants, the covariance is negative. When points are evenly distributed, covariance is near zero.</span>
+<span id="cb47-63"><a href="#cb47-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-64"><a href="#cb47-64" aria-hidden="true" tabindex="-1"></a>The problem with covariance is that its magnitude depends on the scales of X and Y, making it hard to interpret. Is a covariance of 100 strong or weak? It depends entirely on the units of measurement.</span>
+<span id="cb47-65"><a href="#cb47-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-66"><a href="#cb47-66" aria-hidden="true" tabindex="-1"></a><span class="fu">## Pearson's Correlation Coefficient</span></span>
+<span id="cb47-67"><a href="#cb47-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-68"><a href="#cb47-68" aria-hidden="true" tabindex="-1"></a>The **Pearson correlation coefficient** standardizes covariance by dividing by the product of the standard deviations:</span>
+<span id="cb47-69"><a href="#cb47-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-70"><a href="#cb47-70" aria-hidden="true" tabindex="-1"></a>$$r = \frac{Cov(X, Y)}{s_X s_Y} = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum(x_i - \bar{x})^2 \sum(y_i - \bar{y})^2}}$$</span>
+<span id="cb47-71"><a href="#cb47-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-72"><a href="#cb47-72" aria-hidden="true" tabindex="-1"></a>This produces a value between -1 and +1:</span>
+<span id="cb47-73"><a href="#cb47-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-74"><a href="#cb47-74" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$r = 1$: perfect positive linear relationship</span>
+<span id="cb47-75"><a href="#cb47-75" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$r = -1$: perfect negative linear relationship  </span>
+<span id="cb47-76"><a href="#cb47-76" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$r = 0$: no linear relationship</span>
+<span id="cb47-77"><a href="#cb47-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-78"><a href="#cb47-78" aria-hidden="true" tabindex="-1"></a><span class="al">![](../images/images_4b.006.jpeg)</span>{fig-align="center"}</span>
+<span id="cb47-79"><a href="#cb47-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-82"><a href="#cb47-82" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb47-83"><a href="#cb47-83" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 8</span></span>
+<span id="cb47-84"><a href="#cb47-84" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 6</span></span>
+<span id="cb47-85"><a href="#cb47-85" aria-hidden="true" tabindex="-1"></a><span class="co"># Examples of different correlations</span></span>
+<span id="cb47-86"><a href="#cb47-86" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb47-87"><a href="#cb47-87" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb47-88"><a href="#cb47-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-89"><a href="#cb47-89" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb47-90"><a href="#cb47-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-91"><a href="#cb47-91" aria-hidden="true" tabindex="-1"></a><span class="co"># Strong positive</span></span>
+<span id="cb47-92"><a href="#cb47-92" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
+<span id="cb47-93"><a href="#cb47-93" aria-hidden="true" tabindex="-1"></a>y1 <span class="ot">&lt;-</span> <span class="fl">0.9</span> <span class="sc">*</span> x1 <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="at">sd =</span> <span class="fl">0.4</span>)</span>
+<span id="cb47-94"><a href="#cb47-94" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x1, y1, <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">"r ="</span>, <span class="fu">round</span>(<span class="fu">cor</span>(x1, y1), <span class="dv">2</span>)), <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"blue"</span>)</span>
+<span id="cb47-95"><a href="#cb47-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-96"><a href="#cb47-96" aria-hidden="true" tabindex="-1"></a><span class="co"># Moderate negative</span></span>
+<span id="cb47-97"><a href="#cb47-97" aria-hidden="true" tabindex="-1"></a>y2 <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fl">0.6</span> <span class="sc">*</span> x1 <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="at">sd =</span> <span class="fl">0.8</span>)</span>
+<span id="cb47-98"><a href="#cb47-98" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x1, y2, <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">"r ="</span>, <span class="fu">round</span>(<span class="fu">cor</span>(x1, y2), <span class="dv">2</span>)), <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"red"</span>)</span>
+<span id="cb47-99"><a href="#cb47-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-100"><a href="#cb47-100" aria-hidden="true" tabindex="-1"></a><span class="co"># No correlation</span></span>
+<span id="cb47-101"><a href="#cb47-101" aria-hidden="true" tabindex="-1"></a>y3 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
+<span id="cb47-102"><a href="#cb47-102" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x1, y3, <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">"r ="</span>, <span class="fu">round</span>(<span class="fu">cor</span>(x1, y3), <span class="dv">2</span>)), <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"gray"</span>)</span>
+<span id="cb47-103"><a href="#cb47-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-104"><a href="#cb47-104" aria-hidden="true" tabindex="-1"></a><span class="co"># Non-linear relationship (correlation misleading)</span></span>
+<span id="cb47-105"><a href="#cb47-105" aria-hidden="true" tabindex="-1"></a>x4 <span class="ot">&lt;-</span> <span class="fu">runif</span>(n, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>)</span>
+<span id="cb47-106"><a href="#cb47-106" aria-hidden="true" tabindex="-1"></a>y4 <span class="ot">&lt;-</span> x4<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="at">sd =</span> <span class="fl">0.5</span>)</span>
+<span id="cb47-107"><a href="#cb47-107" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x4, y4, <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">"r ="</span>, <span class="fu">round</span>(<span class="fu">cor</span>(x4, y4), <span class="dv">2</span>), <span class="st">"(non-linear!)"</span>), </span>
+<span id="cb47-108"><a href="#cb47-108" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"purple"</span>)</span>
+<span id="cb47-109"><a href="#cb47-109" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb47-110"><a href="#cb47-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-111"><a href="#cb47-111" aria-hidden="true" tabindex="-1"></a><span class="fu">## Anscombe's Quartet</span></span>
+<span id="cb47-112"><a href="#cb47-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-113"><a href="#cb47-113" aria-hidden="true" tabindex="-1"></a>Francis Anscombe created a famous set of four datasets that all have nearly identical statistical properties—same means, variances, correlations, and regression lines—yet look completely different when plotted. This demonstrates why visualization is essential.</span>
+<span id="cb47-114"><a href="#cb47-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-115"><a href="#cb47-115" aria-hidden="true" tabindex="-1"></a><span class="al">![](../images/images_4b.007.jpeg)</span>{fig-align="center"}</span>
+<span id="cb47-116"><a href="#cb47-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-117"><a href="#cb47-117" aria-hidden="true" tabindex="-1"></a>Always plot your data before calculating correlations. The correlation coefficient captures only linear relationships and can be misleading for non-linear patterns.</span>
+<span id="cb47-118"><a href="#cb47-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-119"><a href="#cb47-119" aria-hidden="true" tabindex="-1"></a><span class="fu">## Testing Correlation</span></span>
+<span id="cb47-120"><a href="#cb47-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-121"><a href="#cb47-121" aria-hidden="true" tabindex="-1"></a>The <span class="in">`cor.test()`</span> function tests whether a correlation is significantly different from zero:</span>
+<span id="cb47-122"><a href="#cb47-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-125"><a href="#cb47-125" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb47-126"><a href="#cb47-126" aria-hidden="true" tabindex="-1"></a><span class="co"># Example: zebrafish length and weight</span></span>
+<span id="cb47-127"><a href="#cb47-127" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb47-128"><a href="#cb47-128" aria-hidden="true" tabindex="-1"></a>length <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">50</span>, <span class="at">mean =</span> <span class="fl">2.5</span>, <span class="at">sd =</span> <span class="fl">0.5</span>)</span>
+<span id="cb47-129"><a href="#cb47-129" aria-hidden="true" tabindex="-1"></a>weight <span class="ot">&lt;-</span> <span class="dv">10</span> <span class="sc">*</span> length<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">50</span>, <span class="at">sd =</span> <span class="dv">5</span>)</span>
+<span id="cb47-130"><a href="#cb47-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-131"><a href="#cb47-131" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(length, weight)</span>
+<span id="cb47-132"><a href="#cb47-132" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb47-133"><a href="#cb47-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-134"><a href="#cb47-134" aria-hidden="true" tabindex="-1"></a>The null hypothesis is that the population correlation is zero ($H_0: \rho = 0$). A small p-value indicates evidence of a non-zero correlation.</span>
+<span id="cb47-135"><a href="#cb47-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-136"><a href="#cb47-136" aria-hidden="true" tabindex="-1"></a><span class="fu">## Sample Correlation as a Random Variable</span></span>
+<span id="cb47-137"><a href="#cb47-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-138"><a href="#cb47-138" aria-hidden="true" tabindex="-1"></a>Just like the sample mean, the sample correlation coefficient is a **random variable**—it varies from sample to sample. If we could repeatedly draw samples from the same population and compute r for each, we would get a distribution of r values centered around the true population correlation $\rho$.</span>
+<span id="cb47-139"><a href="#cb47-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-140"><a href="#cb47-140" aria-hidden="true" tabindex="-1"></a>This sampling variability has important implications for interpretation. A sample correlation of r = 0.3 from a small study might arise even when the true correlation is zero (or is actually 0.5). Understanding this uncertainty is essential for proper inference.</span>
+<span id="cb47-141"><a href="#cb47-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-144"><a href="#cb47-144" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb47-145"><a href="#cb47-145" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 9</span></span>
+<span id="cb47-146"><a href="#cb47-146" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 6</span></span>
+<span id="cb47-147"><a href="#cb47-147" aria-hidden="true" tabindex="-1"></a><span class="co"># Demonstrate sampling variability of correlation</span></span>
+<span id="cb47-148"><a href="#cb47-148" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb47-149"><a href="#cb47-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-150"><a href="#cb47-150" aria-hidden="true" tabindex="-1"></a><span class="co"># True population parameters</span></span>
+<span id="cb47-151"><a href="#cb47-151" aria-hidden="true" tabindex="-1"></a>rho_true <span class="ot">&lt;-</span> <span class="fl">0.5</span>  <span class="co"># True population correlation</span></span>
+<span id="cb47-152"><a href="#cb47-152" aria-hidden="true" tabindex="-1"></a>n_small <span class="ot">&lt;-</span> <span class="dv">20</span></span>
+<span id="cb47-153"><a href="#cb47-153" aria-hidden="true" tabindex="-1"></a>n_large <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb47-154"><a href="#cb47-154" aria-hidden="true" tabindex="-1"></a>n_reps <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb47-155"><a href="#cb47-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-156"><a href="#cb47-156" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to generate correlated data</span></span>
+<span id="cb47-157"><a href="#cb47-157" aria-hidden="true" tabindex="-1"></a>generate_correlated_data <span class="ot">&lt;-</span> <span class="cf">function</span>(n, rho) {</span>
+<span id="cb47-158"><a href="#cb47-158" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
+<span id="cb47-159"><a href="#cb47-159" aria-hidden="true" tabindex="-1"></a>  y <span class="ot">&lt;-</span> rho <span class="sc">*</span> x <span class="sc">+</span> <span class="fu">sqrt</span>(<span class="dv">1</span> <span class="sc">-</span> rho<span class="sc">^</span><span class="dv">2</span>) <span class="sc">*</span> <span class="fu">rnorm</span>(n)</span>
+<span id="cb47-160"><a href="#cb47-160" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">cor</span>(x, y))</span>
+<span id="cb47-161"><a href="#cb47-161" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb47-162"><a href="#cb47-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-163"><a href="#cb47-163" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate sampling distributions for different sample sizes</span></span>
+<span id="cb47-164"><a href="#cb47-164" aria-hidden="true" tabindex="-1"></a>r_small <span class="ot">&lt;-</span> <span class="fu">replicate</span>(n_reps, <span class="fu">generate_correlated_data</span>(n_small, rho_true))</span>
+<span id="cb47-165"><a href="#cb47-165" aria-hidden="true" tabindex="-1"></a>r_large <span class="ot">&lt;-</span> <span class="fu">replicate</span>(n_reps, <span class="fu">generate_correlated_data</span>(n_large, rho_true))</span>
+<span id="cb47-166"><a href="#cb47-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-167"><a href="#cb47-167" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot sampling distributions</span></span>
+<span id="cb47-168"><a href="#cb47-168" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb47-169"><a href="#cb47-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-170"><a href="#cb47-170" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(r_small, <span class="at">breaks =</span> <span class="dv">30</span>, <span class="at">col =</span> <span class="st">"lightblue"</span>,</span>
+<span id="cb47-171"><a href="#cb47-171" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">"Sampling Distribution of r</span><span class="sc">\n</span><span class="st">(n ="</span>, n_small, <span class="st">")"</span>),</span>
+<span id="cb47-172"><a href="#cb47-172" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Sample Correlation"</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.2</span>, <span class="dv">1</span>))</span>
+<span id="cb47-173"><a href="#cb47-173" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> rho_true, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb47-174"><a href="#cb47-174" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">mean</span>(r_small), <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb47-175"><a href="#cb47-175" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topleft"</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="fu">paste</span>(<span class="st">"True ρ ="</span>, rho_true),</span>
+<span id="cb47-176"><a href="#cb47-176" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">paste</span>(<span class="st">"Mean r ="</span>, <span class="fu">round</span>(<span class="fu">mean</span>(r_small), <span class="dv">3</span>))),</span>
+<span id="cb47-177"><a href="#cb47-177" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"blue"</span>), <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>), <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">cex =</span> <span class="fl">0.8</span>)</span>
+<span id="cb47-178"><a href="#cb47-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-179"><a href="#cb47-179" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(r_large, <span class="at">breaks =</span> <span class="dv">30</span>, <span class="at">col =</span> <span class="st">"lightgreen"</span>,</span>
+<span id="cb47-180"><a href="#cb47-180" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">"Sampling Distribution of r</span><span class="sc">\n</span><span class="st">(n ="</span>, n_large, <span class="st">")"</span>),</span>
+<span id="cb47-181"><a href="#cb47-181" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Sample Correlation"</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.2</span>, <span class="dv">1</span>))</span>
+<span id="cb47-182"><a href="#cb47-182" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> rho_true, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb47-183"><a href="#cb47-183" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">mean</span>(r_large), <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb47-184"><a href="#cb47-184" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topleft"</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="fu">paste</span>(<span class="st">"True ρ ="</span>, rho_true),</span>
+<span id="cb47-185"><a href="#cb47-185" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">paste</span>(<span class="st">"Mean r ="</span>, <span class="fu">round</span>(<span class="fu">mean</span>(r_large), <span class="dv">3</span>))),</span>
+<span id="cb47-186"><a href="#cb47-186" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"blue"</span>), <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>), <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">cex =</span> <span class="fl">0.8</span>)</span>
+<span id="cb47-187"><a href="#cb47-187" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb47-188"><a href="#cb47-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-189"><a href="#cb47-189" aria-hidden="true" tabindex="-1"></a>Notice the dramatic difference in variability. With n = 20, sample correlations range widely around the true value—sometimes even appearing negative when the true correlation is 0.5! With n = 100, the distribution is much tighter, and our sample r is a more reliable estimate of $\rho$.</span>
+<span id="cb47-190"><a href="#cb47-190" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-193"><a href="#cb47-193" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb47-194"><a href="#cb47-194" aria-hidden="true" tabindex="-1"></a><span class="co"># Quantify the variability</span></span>
+<span id="cb47-195"><a href="#cb47-195" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"True population correlation: ρ ="</span>, rho_true, <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
+<span id="cb47-196"><a href="#cb47-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-197"><a href="#cb47-197" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"With n ="</span>, n_small, <span class="st">":</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb47-198"><a href="#cb47-198" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  Mean of sample r:"</span>, <span class="fu">round</span>(<span class="fu">mean</span>(r_small), <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb47-199"><a href="#cb47-199" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  SD of sample r:"</span>, <span class="fu">round</span>(<span class="fu">sd</span>(r_small), <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb47-200"><a href="#cb47-200" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  95% of samples give r between"</span>, <span class="fu">round</span>(<span class="fu">quantile</span>(r_small, <span class="fl">0.025</span>), <span class="dv">3</span>),</span>
+<span id="cb47-201"><a href="#cb47-201" aria-hidden="true" tabindex="-1"></a>    <span class="st">"and"</span>, <span class="fu">round</span>(<span class="fu">quantile</span>(r_small, <span class="fl">0.975</span>), <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
+<span id="cb47-202"><a href="#cb47-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-203"><a href="#cb47-203" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"With n ="</span>, n_large, <span class="st">":</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb47-204"><a href="#cb47-204" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  Mean of sample r:"</span>, <span class="fu">round</span>(<span class="fu">mean</span>(r_large), <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb47-205"><a href="#cb47-205" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  SD of sample r:"</span>, <span class="fu">round</span>(<span class="fu">sd</span>(r_large), <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb47-206"><a href="#cb47-206" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  95% of samples give r between"</span>, <span class="fu">round</span>(<span class="fu">quantile</span>(r_large, <span class="fl">0.025</span>), <span class="dv">3</span>),</span>
+<span id="cb47-207"><a href="#cb47-207" aria-hidden="true" tabindex="-1"></a>    <span class="st">"and"</span>, <span class="fu">round</span>(<span class="fu">quantile</span>(r_large, <span class="fl">0.975</span>), <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb47-208"><a href="#cb47-208" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb47-209"><a href="#cb47-209" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-210"><a href="#cb47-210" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb47-211"><a href="#cb47-211" aria-hidden="true" tabindex="-1"></a><span class="fu">## Practical Implications</span></span>
+<span id="cb47-212"><a href="#cb47-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-213"><a href="#cb47-213" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Small samples yield unreliable correlations**: With n &lt; 30, sample r can differ substantially from $\rho$</span>
+<span id="cb47-214"><a href="#cb47-214" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Confidence intervals are essential**: Report CIs to communicate uncertainty, not just the point estimate</span>
+<span id="cb47-215"><a href="#cb47-215" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Replication matters**: A single study with r = 0.4 (n = 25) is consistent with true correlations anywhere from near-zero to quite strong</span>
+<span id="cb47-216"><a href="#cb47-216" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Publication bias distorts the literature**: Studies with "significant" correlations are more likely to be published, inflating effect sizes in the literature</span>
+<span id="cb47-217"><a href="#cb47-217" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb47-218"><a href="#cb47-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-219"><a href="#cb47-219" aria-hidden="true" tabindex="-1"></a><span class="fu">### Fisher's Z-Transformation</span></span>
+<span id="cb47-220"><a href="#cb47-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-221"><a href="#cb47-221" aria-hidden="true" tabindex="-1"></a>The sampling distribution of r is not symmetric, especially when $\rho$ is far from zero. Fisher's z-transformation stabilizes the variance and makes the distribution approximately normal:</span>
+<span id="cb47-222"><a href="#cb47-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-223"><a href="#cb47-223" aria-hidden="true" tabindex="-1"></a>$$z = \frac{1}{2} \ln\left(\frac{1 + r}{1 - r}\right) = \text{arctanh}(r)$$</span>
+<span id="cb47-224"><a href="#cb47-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-225"><a href="#cb47-225" aria-hidden="true" tabindex="-1"></a>The standard error of z is approximately $\frac{1}{\sqrt{n-3}}$, which depends only on sample size—not on the true correlation. This transformation is used to construct confidence intervals for correlation and to compare correlations across groups.</span>
+<span id="cb47-226"><a href="#cb47-226" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-229"><a href="#cb47-229" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb47-230"><a href="#cb47-230" aria-hidden="true" tabindex="-1"></a><span class="co"># Fisher's z-transformation for confidence interval</span></span>
+<span id="cb47-231"><a href="#cb47-231" aria-hidden="true" tabindex="-1"></a>r_observed <span class="ot">&lt;-</span> <span class="fl">0.6</span></span>
+<span id="cb47-232"><a href="#cb47-232" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">50</span></span>
+<span id="cb47-233"><a href="#cb47-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-234"><a href="#cb47-234" aria-hidden="true" tabindex="-1"></a><span class="co"># Transform to z</span></span>
+<span id="cb47-235"><a href="#cb47-235" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">atanh</span>(r_observed)  <span class="co"># Same as 0.5 * log((1 + r) / (1 - r))</span></span>
+<span id="cb47-236"><a href="#cb47-236" aria-hidden="true" tabindex="-1"></a>se_z <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">/</span> <span class="fu">sqrt</span>(n <span class="sc">-</span> <span class="dv">3</span>)</span>
+<span id="cb47-237"><a href="#cb47-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-238"><a href="#cb47-238" aria-hidden="true" tabindex="-1"></a><span class="co"># 95% CI in z scale</span></span>
+<span id="cb47-239"><a href="#cb47-239" aria-hidden="true" tabindex="-1"></a>z_lower <span class="ot">&lt;-</span> z <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> se_z</span>
+<span id="cb47-240"><a href="#cb47-240" aria-hidden="true" tabindex="-1"></a>z_upper <span class="ot">&lt;-</span> z <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> se_z</span>
+<span id="cb47-241"><a href="#cb47-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-242"><a href="#cb47-242" aria-hidden="true" tabindex="-1"></a><span class="co"># Transform back to r scale</span></span>
+<span id="cb47-243"><a href="#cb47-243" aria-hidden="true" tabindex="-1"></a>r_lower <span class="ot">&lt;-</span> <span class="fu">tanh</span>(z_lower)</span>
+<span id="cb47-244"><a href="#cb47-244" aria-hidden="true" tabindex="-1"></a>r_upper <span class="ot">&lt;-</span> <span class="fu">tanh</span>(z_upper)</span>
+<span id="cb47-245"><a href="#cb47-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-246"><a href="#cb47-246" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Observed r:"</span>, r_observed, <span class="st">"with n ="</span>, n, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb47-247"><a href="#cb47-247" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"95% CI for ρ: ["</span>, <span class="fu">round</span>(r_lower, <span class="dv">3</span>), <span class="st">","</span>, <span class="fu">round</span>(r_upper, <span class="dv">3</span>), <span class="st">"]</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb47-248"><a href="#cb47-248" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb47-249"><a href="#cb47-249" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-250"><a href="#cb47-250" aria-hidden="true" tabindex="-1"></a><span class="fu">## Parametric Assumptions</span></span>
+<span id="cb47-251"><a href="#cb47-251" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-252"><a href="#cb47-252" aria-hidden="true" tabindex="-1"></a>Pearson's correlation assumes that both variables are normally distributed (or at least that the relationship is linear and homoscedastic). When these assumptions are violated, nonparametric alternatives may be more appropriate.</span>
+<span id="cb47-253"><a href="#cb47-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-254"><a href="#cb47-254" aria-hidden="true" tabindex="-1"></a><span class="fu">## Nonparametric Correlation</span></span>
+<span id="cb47-255"><a href="#cb47-255" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-256"><a href="#cb47-256" aria-hidden="true" tabindex="-1"></a>**Spearman's rank correlation** replaces values with their ranks before calculating correlation. It measures monotonic (consistently increasing or decreasing) rather than strictly linear relationships and is robust to outliers.</span>
+<span id="cb47-257"><a href="#cb47-257" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-258"><a href="#cb47-258" aria-hidden="true" tabindex="-1"></a>**Kendall's tau** is another rank-based measure that counts concordant and discordant pairs. It is particularly appropriate for small samples or data with many ties.</span>
+<span id="cb47-259"><a href="#cb47-259" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-262"><a href="#cb47-262" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb47-263"><a href="#cb47-263" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare methods on non-normal data</span></span>
+<span id="cb47-264"><a href="#cb47-264" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb47-265"><a href="#cb47-265" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rexp</span>(<span class="dv">30</span>, <span class="at">rate =</span> <span class="fl">0.1</span>)</span>
+<span id="cb47-266"><a href="#cb47-266" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> x <span class="sc">+</span> <span class="fu">rexp</span>(<span class="dv">30</span>, <span class="at">rate =</span> <span class="fl">0.2</span>)</span>
+<span id="cb47-267"><a href="#cb47-267" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-268"><a href="#cb47-268" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Pearson:"</span>, <span class="fu">round</span>(<span class="fu">cor</span>(x, y, <span class="at">method =</span> <span class="st">"pearson"</span>), <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb47-269"><a href="#cb47-269" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Spearman:"</span>, <span class="fu">round</span>(<span class="fu">cor</span>(x, y, <span class="at">method =</span> <span class="st">"spearman"</span>), <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb47-270"><a href="#cb47-270" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Kendall:"</span>, <span class="fu">round</span>(<span class="fu">cor</span>(x, y, <span class="at">method =</span> <span class="st">"kendall"</span>), <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb47-271"><a href="#cb47-271" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb47-272"><a href="#cb47-272" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-273"><a href="#cb47-273" aria-hidden="true" tabindex="-1"></a><span class="fu">## Correlation Is Not Causation</span></span>
+<span id="cb47-274"><a href="#cb47-274" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-275"><a href="#cb47-275" aria-hidden="true" tabindex="-1"></a>A correlation between X and Y might arise because X causes Y, because Y causes X, because a third variable Z causes both, or simply by chance. Correlation alone cannot distinguish these possibilities.</span>
+<span id="cb47-276"><a href="#cb47-276" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-277"><a href="#cb47-277" aria-hidden="true" tabindex="-1"></a>To establish causation, you need experimental manipulation (changing X and observing Y), temporal precedence (X occurs before Y), and ruling out confounding variables. Observational correlations are valuable for generating hypotheses but insufficient for establishing causal relationships.</span>
+<span id="cb47-278"><a href="#cb47-278" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-279"><a href="#cb47-279" aria-hidden="true" tabindex="-1"></a><span class="fu">## Interpreting Correlation Magnitude</span></span>
+<span id="cb47-280"><a href="#cb47-280" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-281"><a href="#cb47-281" aria-hidden="true" tabindex="-1"></a>While there are no universal standards, these guidelines provide rough interpretation:</span>
+<span id="cb47-282"><a href="#cb47-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-283"><a href="#cb47-283" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="pp">|</span>r<span class="pp">|</span> <span class="pp">|</span> Interpretation <span class="pp">|</span></span>
+<span id="cb47-284"><a href="#cb47-284" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>:--<span class="pp">|</span>:--<span class="pp">|</span></span>
+<span id="cb47-285"><a href="#cb47-285" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 0.00 - 0.19 <span class="pp">|</span> Negligible <span class="pp">|</span></span>
+<span id="cb47-286"><a href="#cb47-286" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 0.20 - 0.39 <span class="pp">|</span> Weak <span class="pp">|</span></span>
+<span id="cb47-287"><a href="#cb47-287" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 0.40 - 0.59 <span class="pp">|</span> Moderate <span class="pp">|</span></span>
+<span id="cb47-288"><a href="#cb47-288" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 0.60 - 0.79 <span class="pp">|</span> Strong <span class="pp">|</span></span>
+<span id="cb47-289"><a href="#cb47-289" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 0.80 - 1.00 <span class="pp">|</span> Very strong <span class="pp">|</span></span>
+<span id="cb47-290"><a href="#cb47-290" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-291"><a href="#cb47-291" aria-hidden="true" tabindex="-1"></a>Context matters greatly. In physics, correlations below 0.99 might be disappointing. In psychology or ecology, correlations of 0.3 can be considered meaningful.</span>
+<span id="cb47-292"><a href="#cb47-292" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-293"><a href="#cb47-293" aria-hidden="true" tabindex="-1"></a><span class="fu">### Coefficient of Determination</span></span>
+<span id="cb47-294"><a href="#cb47-294" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-295"><a href="#cb47-295" aria-hidden="true" tabindex="-1"></a>The square of the correlation coefficient, $r^2$, is called the **coefficient of determination**. It represents the proportion of variance in one variable that is explained by its linear relationship with the other.</span>
+<span id="cb47-296"><a href="#cb47-296" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-297"><a href="#cb47-297" aria-hidden="true" tabindex="-1"></a>If $r = 0.7$, then $r^2 = 0.49$, meaning about 49% of the variance in Y is explained by its relationship with X. This leaves 51% unexplained—due to other factors, measurement error, or the relationship not being perfectly linear.</span>
+<span id="cb47-298"><a href="#cb47-298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-301"><a href="#cb47-301" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb47-302"><a href="#cb47-302" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize explained vs unexplained variance</span></span>
+<span id="cb47-303"><a href="#cb47-303" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb47-304"><a href="#cb47-304" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">50</span></span>
+<span id="cb47-305"><a href="#cb47-305" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> x <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">50</span>, <span class="at">sd =</span> <span class="dv">15</span>)</span>
+<span id="cb47-306"><a href="#cb47-306" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-307"><a href="#cb47-307" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">cor</span>(x, y)</span>
+<span id="cb47-308"><a href="#cb47-308" aria-hidden="true" tabindex="-1"></a>r_squared <span class="ot">&lt;-</span> r<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb47-309"><a href="#cb47-309" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-310"><a href="#cb47-310" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Correlation (r):"</span>, <span class="fu">round</span>(r, <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb47-311"><a href="#cb47-311" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"R-squared (r²):"</span>, <span class="fu">round</span>(r_squared, <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb47-312"><a href="#cb47-312" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Variance explained:"</span>, <span class="fu">round</span>(r_squared <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>), <span class="st">"%</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb47-313"><a href="#cb47-313" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb47-314"><a href="#cb47-314" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-315"><a href="#cb47-315" aria-hidden="true" tabindex="-1"></a><span class="fu">## Common Pitfalls with Correlation</span></span>
+<span id="cb47-316"><a href="#cb47-316" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-317"><a href="#cb47-317" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning}</span>
+<span id="cb47-318"><a href="#cb47-318" aria-hidden="true" tabindex="-1"></a><span class="fu">## Watch Out For These Mistakes</span></span>
+<span id="cb47-319"><a href="#cb47-319" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-320"><a href="#cb47-320" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Restricted range**: If you only sample part of the range of X or Y, correlation will appear weaker than it truly is</span>
+<span id="cb47-321"><a href="#cb47-321" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Outliers**: A single extreme point can dramatically inflate or deflate the correlation</span>
+<span id="cb47-322"><a href="#cb47-322" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Non-linearity**: Correlation only measures linear relationships; a perfect curved relationship can have r ≈ 0</span>
+<span id="cb47-323"><a href="#cb47-323" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Aggregation effects**: Correlations computed on grouped data (e.g., country averages) are often much stronger than correlations on individual data (ecological fallacy)</span>
+<span id="cb47-324"><a href="#cb47-324" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>**Confounding**: A third variable may create a spurious correlation between X and Y</span>
+<span id="cb47-325"><a href="#cb47-325" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb47-326"><a href="#cb47-326" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-329"><a href="#cb47-329" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb47-330"><a href="#cb47-330" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 8</span></span>
+<span id="cb47-331"><a href="#cb47-331" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4</span></span>
+<span id="cb47-332"><a href="#cb47-332" aria-hidden="true" tabindex="-1"></a><span class="co"># Demonstrating the effect of outliers</span></span>
+<span id="cb47-333"><a href="#cb47-333" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb47-334"><a href="#cb47-334" aria-hidden="true" tabindex="-1"></a>x_base <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">30</span>)</span>
+<span id="cb47-335"><a href="#cb47-335" aria-hidden="true" tabindex="-1"></a>y_base <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">30</span>)</span>
+<span id="cb47-336"><a href="#cb47-336" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-337"><a href="#cb47-337" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb47-338"><a href="#cb47-338" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-339"><a href="#cb47-339" aria-hidden="true" tabindex="-1"></a><span class="co"># Without outlier</span></span>
+<span id="cb47-340"><a href="#cb47-340" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x_base, y_base, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"blue"</span>,</span>
+<span id="cb47-341"><a href="#cb47-341" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">"Without outlier: r ="</span>, <span class="fu">round</span>(<span class="fu">cor</span>(x_base, y_base), <span class="dv">3</span>)),</span>
+<span id="cb47-342"><a href="#cb47-342" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"X"</span>, <span class="at">ylab =</span> <span class="st">"Y"</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">5</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">5</span>))</span>
+<span id="cb47-343"><a href="#cb47-343" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-344"><a href="#cb47-344" aria-hidden="true" tabindex="-1"></a><span class="co"># With outlier</span></span>
+<span id="cb47-345"><a href="#cb47-345" aria-hidden="true" tabindex="-1"></a>x_out <span class="ot">&lt;-</span> <span class="fu">c</span>(x_base, <span class="dv">4</span>)</span>
+<span id="cb47-346"><a href="#cb47-346" aria-hidden="true" tabindex="-1"></a>y_out <span class="ot">&lt;-</span> <span class="fu">c</span>(y_base, <span class="dv">4</span>)</span>
+<span id="cb47-347"><a href="#cb47-347" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x_out, y_out, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"blue"</span>, <span class="dv">30</span>), <span class="st">"red"</span>),</span>
+<span id="cb47-348"><a href="#cb47-348" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">"With outlier: r ="</span>, <span class="fu">round</span>(<span class="fu">cor</span>(x_out, y_out), <span class="dv">3</span>)),</span>
+<span id="cb47-349"><a href="#cb47-349" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"X"</span>, <span class="at">ylab =</span> <span class="st">"Y"</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">5</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">5</span>))</span>
+<span id="cb47-350"><a href="#cb47-350" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb47-351"><a href="#cb47-351" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-352"><a href="#cb47-352" aria-hidden="true" tabindex="-1"></a>A single outlier has shifted the correlation from near zero to moderately positive. Always visualize your data and consider robust alternatives like Spearman's correlation when outliers are present.</span>
+<span id="cb47-353"><a href="#cb47-353" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-354"><a href="#cb47-354" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
+<span id="cb47-355"><a href="#cb47-355" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-356"><a href="#cb47-356" aria-hidden="true" tabindex="-1"></a>Correlation quantifies the strength and direction of linear relationships between variables:</span>
+<span id="cb47-357"><a href="#cb47-357" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-358"><a href="#cb47-358" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Covariance measures how variables move together, but depends on units</span>
+<span id="cb47-359"><a href="#cb47-359" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Pearson's r standardizes covariance to range from -1 to +1</span>
+<span id="cb47-360"><a href="#cb47-360" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Spearman and Kendall provide robust rank-based alternatives</span>
+<span id="cb47-361"><a href="#cb47-361" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Correlation does not imply causation</span>
+<span id="cb47-362"><a href="#cb47-362" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Always visualize data and check for non-linearity and outliers</span>
+<span id="cb47-363"><a href="#cb47-363" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-364"><a href="#cb47-364" aria-hidden="true" tabindex="-1"></a><span class="fu">## Practice Exercises</span></span>
+<span id="cb47-365"><a href="#cb47-365" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-366"><a href="#cb47-366" aria-hidden="true" tabindex="-1"></a><span class="fu">### Exercise L.1: Correlation</span></span>
+<span id="cb47-367"><a href="#cb47-367" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-368"><a href="#cb47-368" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Create two correlated variables using simulation</span>
+<span id="cb47-369"><a href="#cb47-369" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Calculate the Pearson correlation coefficient</span>
+<span id="cb47-370"><a href="#cb47-370" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Create a scatterplot and add the correlation value</span>
+<span id="cb47-371"><a href="#cb47-371" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>What happens to the correlation when you add outliers?</span>
+<span id="cb47-372"><a href="#cb47-372" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-375"><a href="#cb47-375" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb47-376"><a href="#cb47-376" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 6</span></span>
+<span id="cb47-377"><a href="#cb47-377" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5</span></span>
+<span id="cb47-378"><a href="#cb47-378" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb47-379"><a href="#cb47-379" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">50</span>)</span>
+<span id="cb47-380"><a href="#cb47-380" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fl">0.7</span><span class="sc">*</span>x <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">50</span>, <span class="at">sd =</span> <span class="fl">0.5</span>)  <span class="co"># Correlated with x</span></span>
+<span id="cb47-381"><a href="#cb47-381" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-382"><a href="#cb47-382" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(x, y)</span>
+<span id="cb47-383"><a href="#cb47-383" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y, <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">"Correlation:"</span>, <span class="fu">round</span>(<span class="fu">cor</span>(x, y), <span class="dv">2</span>)))</span>
+<span id="cb47-384"><a href="#cb47-384" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="fu">lm</span>(y <span class="sc">~</span> x), <span class="at">col =</span> <span class="st">"red"</span>)</span>
+<span id="cb47-385"><a href="#cb47-385" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb47-386"><a href="#cb47-386" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-387"><a href="#cb47-387" aria-hidden="true" tabindex="-1"></a><span class="fu">### Exercise L.2: Pearson vs. Spearman</span></span>
+<span id="cb47-388"><a href="#cb47-388" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-389"><a href="#cb47-389" aria-hidden="true" tabindex="-1"></a>Compare Pearson and Spearman correlations:</span>
+<span id="cb47-390"><a href="#cb47-390" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-391"><a href="#cb47-391" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Generate data with a monotonic but non-linear relationship</span>
+<span id="cb47-392"><a href="#cb47-392" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Calculate both Pearson and Spearman correlations</span>
+<span id="cb47-393"><a href="#cb47-393" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Which is more appropriate for your data and why?</span>
+<span id="cb47-394"><a href="#cb47-394" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-397"><a href="#cb47-397" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb47-398"><a href="#cb47-398" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb47-399"><a href="#cb47-399" aria-hidden="true" tabindex="-1"></a><span class="co"># Monotonic but non-linear</span></span>
+<span id="cb47-400"><a href="#cb47-400" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb47-401"><a href="#cb47-401" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">50</span></span>
+<span id="cb47-402"><a href="#cb47-402" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">log</span>(x) <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">50</span>, <span class="at">sd =</span> <span class="fl">0.3</span>)</span>
+<span id="cb47-403"><a href="#cb47-403" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-404"><a href="#cb47-404" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(x, y, <span class="at">method =</span> <span class="st">"pearson"</span>)</span>
+<span id="cb47-405"><a href="#cb47-405" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(x, y, <span class="at">method =</span> <span class="st">"spearman"</span>)</span>
+<span id="cb47-406"><a href="#cb47-406" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb47-407"><a href="#cb47-407" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-408"><a href="#cb47-408" aria-hidden="true" tabindex="-1"></a><span class="fu">### Exercise L.3: Effect of Outliers</span></span>
+<span id="cb47-409"><a href="#cb47-409" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-410"><a href="#cb47-410" aria-hidden="true" tabindex="-1"></a>Explore how outliers affect correlation:</span>
+<span id="cb47-411"><a href="#cb47-411" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-412"><a href="#cb47-412" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Generate correlated data with no outliers—calculate r</span>
+<span id="cb47-413"><a href="#cb47-413" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Add one extreme outlier—recalculate r</span>
+<span id="cb47-414"><a href="#cb47-414" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Use Spearman's correlation on the data with the outlier</span>
+<span id="cb47-415"><a href="#cb47-415" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>What do you conclude about robustness?</span>
+<span id="cb47-416"><a href="#cb47-416" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-417"><a href="#cb47-417" aria-hidden="true" tabindex="-1"></a><span class="fu">## Additional Resources</span></span>
+<span id="cb47-418"><a href="#cb47-418" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-419"><a href="#cb47-419" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>@logan2010biostatistical - Detailed coverage of correlation with biological examples</span>
+<span id="cb47-420"><a href="#cb47-420" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>@james2023islr - Excellent discussion of correlation in the context of statistical learning</span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
