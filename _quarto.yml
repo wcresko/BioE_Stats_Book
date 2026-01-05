@@ -59,9 +59,12 @@ book:
       chapters:
         - chapters/25-presenting-results.qmd
 
-    - part: "Appendices"
+    - part: "Historical Context"
       chapters:
         - chapters/A1-eugenics-history.qmd
+
+    - part: "Appendices"
+      chapters:
         - chapters/A2-r-reference.qmd
         - chapters/A3-probability-distributions.qmd
         - chapters/A4-greek-letters.qmd
@@ -69,7 +72,6 @@ book:
         - chapters/A6-unix-reference.qmd
         - chapters/A7-latex-reference.qmd
         - chapters/A8-keyboard-shortcuts.qmd
-        - chapters/A9-exercises.qmd
     
     - references.qmd
 

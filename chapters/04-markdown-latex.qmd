@@ -452,9 +452,44 @@ These tools have become standard in data science. Learning them now will pay div
 
 ## Practice Exercises
 
-For hands-on practice with Markdown and LaTeX, see @sec-ex-markdown in the Practice Exercises appendix. The exercises include:
+### Exercise M.1: R Markdown Basics
 
-- Creating and formatting R Markdown documents
-- Working with code chunk options
-- Writing mathematical equations in LaTeX
-- Creating tables and formatted output
+Create a new R Markdown document and practice:
+
+1. Creating headers at different levels using `#`, `##`, and `###`
+2. Making text *italic* and **bold**
+3. Creating ordered and unordered lists
+4. Inserting a hyperlink
+5. Creating a code chunk that generates output
+6. Knitting the document to HTML
+
+### Exercise M.2: Code Chunk Options
+
+Experiment with code chunk options:
+
+1. Create a code chunk with `echo=TRUE` and `eval=TRUE` (default behavior)
+2. Create the same code chunk with `echo=FALSE`—what happens?
+3. Try `eval=FALSE`—what happens?
+4. Use `fig.width` and `fig.height` to control plot dimensions
+
+### Exercise M.3: LaTeX Mathematical Notation
+
+Practice writing equations in LaTeX:
+
+1. Write the equation for the mean: $\bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i$
+2. Write the equation for variance
+3. Write the normal distribution probability density function
+4. Use both inline math (`$...$`) and display math (`$$...$$`)
+
+### Exercise M.4: Tables in Markdown
+
+Create tables using:
+
+1. Basic Markdown table syntax
+2. The `kable()` function from the `knitr` package
+
+```{r}
+#| eval: false
+library(knitr)
+kable(head(iris, 5))
+```

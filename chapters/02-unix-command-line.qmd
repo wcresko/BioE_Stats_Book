@@ -628,18 +628,67 @@ Perhaps the most important principle is to never modify your original raw data f
 
 ## Practice Exercises
 
-The best way to learn command-line skills is through practice. Create a project folder structure for organizing your course work. Navigate through the file system and examine the contents of various directories. Create some text files and practice viewing, copying, moving, and removing them.
+The best way to learn command-line skills is through practice. Save a digital record of your work so that you can study it later if you need to.
 
-Try combining commands with pipes. For example, you might list all files in a directory, filter for those with a particular extension, and count how many there are. Start simple and gradually build more complex pipelines as you become comfortable with the individual commands.
+### Exercise U.1: Basic Navigation and File Operations
 
-## Practice Exercises
+Open up a terminal and execute the following using Unix commands:
 
-For hands-on practice with the concepts covered in this chapter, see @sec-ex-unix in the Practice Exercises appendix. The exercises include:
+1. Print your working directory using `pwd`
+2. Navigate to a directory somewhere below your home directory where you want to practice writing files
+3. Make 5 directories called `dir_1`, `dir_2`, `dir_3`, `dir_4`, and `dir_5` using `mkdir`
+4. Within each of those directories, create files called `file_1.txt`, `file_2.txt`, and `file_3.txt` using `touch`
+5. Open `file_1.txt` in `dir_1` using a plain text editor (such as `nano` or `vim`), type a few words, and save it
+6. Print `file_1.txt` in `dir_1` to the terminal using `cat`
+7. Delete all files in `dir_3` using `rm`
+8. List all of the contents of your current directory line-by-line using `ls -l`
+9. Delete `dir_3` using `rmdir`
 
-- Basic navigation and file operations
-- Working with data files using `grep`, `cut`, `sort`, and `awk`
-- Building command pipelines
-- File permissions and shell scripts
+### Exercise U.2: Working with Data Files
+
+For this exercise, create a sample tab-separated file or download a GFF file from a genomics database.
+
+1. Navigate to `dir_1`
+2. Copy a data file (using its absolute path) to your current directory
+3. Delete the copy that is in your current directory, then copy it again using a relative path this time
+4. Use at least 3 different Unix commands to examine all or parts of your data file (try `cat`, `head`, `tail`, `less`, and `wc`)
+5. What is the file size? Use `ls -lh` to find out
+6. How many lines does the file have? Use `wc -l`
+7. How many lines begin with a specific pattern (like a chromosome name)? Use `grep -c "^pattern"`
+8. How many unique entries are there in a specific column? Use `cut` and `sort -u | wc -l`
+9. Sort the file based on reverse numeric order in a specific field using `sort -k -nr`
+10. Capture specific fields and write to a new file using `cut` and redirection
+11. Replace all instances of one string with another using `sed 's/old/new/g'`
+
+### Exercise U.3: Building Pipelines
+
+Practice combining commands with pipes to answer questions about your data:
+
+1. Count the number of unique values in the third column of a tab-separated file:
+   ```bash
+   cut -f3 data.tsv | sort | uniq | wc -l
+   ```
+
+2. Find all lines containing a pattern, extract specific columns, and sort the results:
+   ```bash
+   grep "pattern" data.tsv | cut -f1,2,5 | sort -k3,3 -n
+   ```
+
+3. Create a pipeline that filters rows based on a condition, extracts columns, and saves to a new file
+
+4. Use `awk` to filter rows where a numeric column exceeds a threshold:
+   ```bash
+   awk '$5 > 1000 {print $1, $2, $5}' data.tsv
+   ```
+
+### Exercise U.4: File Permissions and Scripts
+
+1. Create a simple shell script that prints "Hello, World!" and the current date
+2. Try to run the script—what error do you get?
+3. Make the script executable using `chmod +x`
+4. Run the script and verify it works
+5. Examine the permissions of various files in your system using `ls -l`
+6. Practice changing permissions using both symbolic notation (`chmod u+x`) and octal notation (`chmod 755`)
 
 ## Additional Resources
 

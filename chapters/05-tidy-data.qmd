@@ -479,22 +479,127 @@ observations |>
 
 ## Practice Exercises
 
-Here is a workflow to practice these concepts:
+### Exercise T.1: Tidyverse Basics
 
-1. Read a dataset into R
-2. Convert it to a tibble with `as_tibble()`
-3. Select the columns you need
-4. Filter to the observations of interest
-5. Create new variables with mutate
-6. Group by categorical variables and summarize
-7. Visualize the results
+Load the tidyverse and practice with a dataset:
 
-Working through this process with your own data will cement these concepts better than any number of examples.
+```{r}
+#| eval: false
+library(tidyverse)
+data(mpg)
+```
 
-For additional hands-on practice with data wrangling, see @sec-ex-tidy in the Practice Exercises appendix. The exercises include:
+1. Convert the `mpg` data frame to a tibble using `as_tibble()`
+2. What differences do you notice in how it prints?
+3. Use `glimpse()` to get an overview of the data
 
-- Practice with the five core dplyr verbs
-- Grouping and summarizing data
-- Building data wrangling pipelines
-- Reshaping data with pivot operations
-- Joining multiple data tables
+### Exercise T.2: The Five dplyr Verbs
+
+Using the `mpg` dataset, practice each core verb:
+
+1. **filter()**: Select only cars with highway mpg greater than 30
+2. **select()**: Choose only the manufacturer, model, and highway mpg columns
+3. **arrange()**: Sort by highway mpg in descending order
+4. **mutate()**: Create a new column that calculates the ratio of highway to city mpg
+5. **summarize()**: Calculate the mean highway mpg for the entire dataset
+
+```{r}
+#| eval: false
+# Example solutions:
+mpg |> filter(hwy > 30)
+mpg |> select(manufacturer, model, hwy)
+mpg |> arrange(desc(hwy))
+mpg |> mutate(hwy_city_ratio = hwy / cty)
+mpg |> summarize(mean_hwy = mean(hwy))
+```
+
+### Exercise T.3: Grouping and Summarizing
+
+1. Group the `mpg` data by manufacturer and calculate the mean highway mpg for each
+2. Find the manufacturer with the highest average highway mpg
+3. Count how many models each manufacturer has in the dataset
+4. Calculate both mean and standard deviation of highway mpg by vehicle class
+
+```{r}
+#| eval: false
+mpg |>
+  group_by(manufacturer) |>
+  summarize(
+    mean_hwy = mean(hwy),
+    n_models = n()
+  ) |>
+  arrange(desc(mean_hwy))
+```
+
+### Exercise T.4: Data Wrangling Pipeline
+
+Construct a pipeline that:
+
+1. Filters for a subset of manufacturers (e.g., "audi", "toyota", "honda")
+2. Selects relevant columns
+3. Creates a new calculated column
+4. Groups by a categorical variable
+5. Summarizes with multiple statistics
+
+```{r}
+#| eval: false
+mpg |>
+  filter(manufacturer %in% c("audi", "toyota", "honda")) |>
+  select(manufacturer, model, year, cty, hwy) |>
+  mutate(avg_mpg = (cty + hwy) / 2) |>
+  group_by(manufacturer) |>
+  summarize(
+    mean_mpg = mean(avg_mpg),
+    sd_mpg = sd(avg_mpg),
+    n = n()
+  )
+```
+
+### Exercise T.5: Reshaping Data
+
+Practice with `pivot_longer()` and `pivot_wider()`:
+
+1. Create a wide dataset with measurements across multiple time points
+2. Convert it to long format using `pivot_longer()`
+3. Convert it back to wide format using `pivot_wider()`
+
+```{r}
+# Example wide data
+wide_data <- tibble(
+  sample = c("A", "B", "C"),
+  time_0 = c(10, 12, 8),
+  time_1 = c(15, 18, 12),
+  time_2 = c(22, 25, 18)
+)
+
+# Convert to long format
+long_data <- wide_data |>
+  pivot_longer(
+    cols = starts_with("time"),
+    names_to = "timepoint",
+    values_to = "measurement"
+  )
+print(long_data)
+```
+
+### Exercise T.6: Joining Data
+
+Create two related tibbles and practice joins:
+
+```{r}
+# Sample data
+experiments <- tibble(
+  sample_id = c("S1", "S2", "S3", "S4"),
+  treatment = c("control", "low", "medium", "high")
+)
+
+measurements <- tibble(
+  sample_id = c("S1", "S1", "S2", "S3"),
+  replicate = c(1, 2, 1, 1),
+  value = c(10.2, 9.8, 15.3, 18.7)
+)
+```
+
+1. Perform a `left_join()` to add treatment information to measurements
+2. Use `anti_join()` to find samples that have no measurements
+3. Explain the difference between `inner_join()` and `full_join()`

@@ -480,13 +480,97 @@ Understanding these foundations is essential for all statistical inference that 
 
 ## Practice Exercises
 
-For hands-on practice with probability concepts, see @sec-ex-prob in the Practice Exercises appendix. The exercises include:
+### Exercise P.1: Simulating Coin Flips
 
-- Simulating coin flips and exploring the law of large numbers
-- Working with the binomial distribution
-- Exploring the birthday problem through Monte Carlo simulation
-- Understanding conditional probability with card simulations
-- Simulating the Monty Hall problem
+Use R to simulate coin flips:
+
+```{r}
+set.seed(123)
+```
+
+1. Simulate 100 fair coin flips using `rbinom()` or `sample()`
+2. Calculate the proportion of heads
+3. Repeat with 1000 and 10000 flips—how does the proportion change?
+4. Create a histogram of results from many simulations
+
+```{r}
+#| eval: false
+# Simulate coin flips
+n_flips <- 1000
+flips <- rbinom(n_flips, size = 1, prob = 0.5)
+mean(flips)  # Proportion of heads (1s)
+
+# Or using sample
+flips <- sample(c("H", "T"), n_flips, replace = TRUE)
+mean(flips == "H")
+```
+
+### Exercise P.2: Binomial Distribution
+
+Explore the binomial distribution:
+
+1. Use `rbinom()` to simulate 1000 experiments, each with 20 coin flips
+2. Create a histogram of the number of heads per experiment
+3. What is the most common outcome? Does this match your expectation?
+4. Change the probability to simulate an unfair coin
+5. How does the distribution change with 200 or 2000 flips per experiment?
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+# 1000 experiments, 20 flips each, fair coin
+set.seed(42)
+results <- rbinom(1000, size = 20, prob = 0.5)
+hist(results, breaks = 20, col = "steelblue",
+     main = "Number of Heads in 20 Flips",
+     xlab = "Number of Heads")
+```
+
+### Exercise P.3: The Birthday Problem
+
+Use Monte Carlo simulation to explore the birthday problem:
+
+1. Write a function that simulates whether any two people in a group share a birthday
+2. Estimate the probability for groups of size 10, 23, and 50
+3. Plot the probability as a function of group size
+4. At what group size does the probability exceed 50%?
+
+```{r}
+#| eval: false
+# Birthday simulation function
+same_birthday <- function(n, B = 10000) {
+  matches <- replicate(B, {
+    birthdays <- sample(1:365, n, replace = TRUE)
+    any(duplicated(birthdays))
+  })
+  mean(matches)
+}
+
+# Test for different group sizes
+sizes <- 2:50
+probs <- sapply(sizes, same_birthday)
+plot(sizes, probs, type = "l",
+     xlab = "Group Size", ylab = "Probability of Shared Birthday")
+abline(h = 0.5, col = "red", lty = 2)
+```
+
+### Exercise P.4: Conditional Probability
+
+Explore conditional probability with card simulations:
+
+1. Create a virtual deck of 52 cards
+2. Calculate the probability of drawing a King
+3. Given that the first card drawn is a King, what is the probability the second card is also a King?
+4. Use simulation to verify your calculation
+
+### Exercise P.5: The Monty Hall Problem
+
+Simulate the Monty Hall problem:
+
+1. Write a function that simulates one round of the game
+2. Compare the win rate when you stick versus when you switch
+3. Run 10,000 simulations for each strategy
+4. Does switching really double your chances?
 
 ## Additional Resources
 
