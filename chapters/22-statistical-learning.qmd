@@ -170,128 +170,24 @@ Traditional statistical methods may be preferable when:
 - You need confidence intervals and hypothesis tests
 - Interpretability is essential
 
-## Dimensionality Reduction
+## Connection to Dimensionality Reduction
 
-When datasets have many variables, visualization and analysis become difficult. **Dimensionality reduction** creates a smaller set of new variables that capture most of the information in the original data.
+High-dimensional data often benefit from dimensionality reduction before applying statistical learning methods. Techniques like PCA, clustering, and discriminant analysis are covered in detail in @sec-dimensionality-reduction.
 
-### Principal Component Analysis (PCA)
+## Summary
 
-**Principal Component Analysis (PCA)** is the most widely used dimensionality reduction technique. It finds new variables (principal components) that are linear combinations of the originals, chosen to capture maximum variance.
+Statistical learning provides powerful tools for prediction and pattern discovery:
 
-The key insight involves **eigenanalysis**: decomposing the covariance (or correlation) matrix of variables to find directions of maximum variation.
+- Overfitting is the central challenge—models that fit training data too well predict poorly
+- Cross-validation provides honest estimates of predictive performance
+- The bias-variance tradeoff governs model complexity choices
+- LOESS offers flexible non-parametric smoothing
+- Classification methods (decision trees, random forests) handle categorical outcomes
+- Confusion matrices summarize classification performance
+- The choice between traditional statistics and machine learning depends on goals
 
-```{r}
-#| fig-width: 8
-#| fig-height: 6
-# PCA on iris data
-iris_pca <- prcomp(iris[, 1:4], scale. = TRUE)
+## Additional Resources
 
-# Variance explained
-summary(iris_pca)
-
-# Scree plot
-par(mfrow = c(1, 2))
-plot(iris_pca, type = "l", main = "Scree Plot")
-
-# PC scores colored by species
-plot(iris_pca$x[, 1:2],
-     col = c("red", "green", "blue")[iris$Species],
-     pch = 19, xlab = "PC1", ylab = "PC2",
-     main = "PCA of Iris Data")
-legend("topright", levels(iris$Species),
-       col = c("red", "green", "blue"), pch = 19)
-```
-
-Each principal component is defined by its **loadings**—the coefficients showing how much each original variable contributes:
-
-```{r}
-# Loadings (rotation matrix)
-iris_pca$rotation
-```
-
-### Interpreting PCA Results
-
-Key elements of PCA output:
-
-- **Eigenvalues**: Variance explained by each component (shown in scree plot)
-- **Proportion of variance**: How much of total variance each PC captures
-- **Loadings**: Coefficients relating original variables to PCs
-- **Scores**: Values of the new variables for each observation
-
-The first few PCs often capture most of the meaningful variation, allowing you to reduce many variables to just 2-3 for visualization and analysis.
-
-::: {.callout-tip}
-## How Many Components to Keep?
-
-Common approaches:
-- Keep components with eigenvalues > 1 (Kaiser criterion)
-- Keep enough to explain 80-90% of variance
-- Look for an "elbow" in the scree plot
-- Use cross-validation if using PCs for prediction
-:::
-
-### Principal Coordinate Analysis (PCoA)
-
-While PCA uses correlations among variables, **Principal Coordinate Analysis (PCoA)** starts with a dissimilarity matrix among observations. This is valuable when:
-
-- You have a meaningful distance metric (e.g., genetic distances)
-- Variables are mixed types or non-numeric
-- The data are counts (e.g., microbiome data)
-
-```{r}
-#| fig-width: 7
-#| fig-height: 5
-# PCoA example using Euclidean distances
-dist_matrix <- dist(iris[, 1:4])
-pcoa_result <- cmdscale(dist_matrix, k = 2, eig = TRUE)
-
-# Plot
-plot(pcoa_result$points,
-     col = c("red", "green", "blue")[iris$Species],
-     pch = 19, xlab = "PCoA1", ylab = "PCoA2",
-     main = "PCoA of Iris Data")
-```
-
-### Cluster Analysis
-
-**Cluster analysis** groups observations based on their similarity. Unlike PCA, which creates new continuous variables, clustering assigns observations to discrete groups.
-
-**Hierarchical clustering** builds a tree (dendrogram) of nested clusters:
-
-```{r}
-#| fig-width: 8
-#| fig-height: 5
-# Hierarchical clustering
-iris_scaled <- scale(iris[, 1:4])
-hc <- hclust(dist(iris_scaled), method = "complete")
-plot(hc, labels = FALSE, main = "Hierarchical Clustering of Iris")
-rect.hclust(hc, k = 3, border = "red")
-```
-
-**K-means clustering** partitions data into k groups by minimizing within-cluster variance:
-
-```{r}
-set.seed(42)
-km <- kmeans(iris_scaled, centers = 3, nstart = 20)
-
-# Compare to true species
-table(km$cluster, iris$Species)
-```
-
-### Using PCA Scores in Further Analyses
-
-PC scores are legitimate new variables that can be used in any downstream analysis:
-
-- Regression of PCs on other continuous variables
-- ANOVA comparing groups on PC scores
-- Correlation of PCs with environmental gradients
-
-This is valuable when you have many correlated variables and want to reduce dimensionality before hypothesis testing.
-
-::: {.callout-warning}
-## Metric vs. Non-Metric Methods
-
-PCA and metric PCoA produce scores on a ratio scale—differences between scores are meaningful. These can be used directly in linear models.
-
-Non-metric multidimensional scaling (NMDS) produces ordinal rankings only. NMDS scores should **not** be used in parametric analyses like ANOVA or regression.
-:::
+- @james2023islr - The standard introduction to statistical learning
+- @thulin2025msr - Modern perspectives on statistics with R
+- @crawley2007r - Practical statistical methods in R
