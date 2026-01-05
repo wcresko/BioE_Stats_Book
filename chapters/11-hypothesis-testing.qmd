@@ -164,6 +164,65 @@ Statistical significance does not imply practical importance. With a large enoug
 
 Always consider effect sizes alongside p-values. Report confidence intervals, which convey both the magnitude of an effect and the uncertainty about it. A 95% confidence interval that excludes zero is equivalent to statistical significance at $\alpha = 0.05$, but also shows the range of plausible effect sizes.
 
+### The Connection Between P-Values and Confidence Intervals
+
+P-values and confidence intervals are mathematically linked. Understanding this connection deepens your grasp of both concepts.
+
+For testing whether a parameter equals some null value $\theta_0$ (e.g., testing if $\mu = 0$ or $\mu_1 - \mu_2 = 0$):
+
+::: {.callout-tip}
+## The P-Value / CI Duality
+
+- If the $(1-\alpha)$ confidence interval **excludes** $\theta_0$, then $p < \alpha$
+- If the $(1-\alpha)$ confidence interval **includes** $\theta_0$, then $p \geq \alpha$
+
+A 95% CI that doesn't contain zero corresponds to p < 0.05 for a two-tailed test.
+:::
+
+This relationship makes sense when you think about it: the confidence interval represents the range of parameter values that are "compatible" with the data. If the null value falls outside this range, the data provide evidence against it (small p-value). If the null value falls inside, the data are consistent with it (large p-value).
+
+```{r}
+#| fig-width: 8
+#| fig-height: 5
+# Demonstrate the CI-pvalue relationship
+set.seed(42)
+
+# Three scenarios
+scenarios <- list(
+  list(true_mean = 5, label = "CI excludes 0"),
+  list(true_mean = 2, label = "CI barely excludes 0"),
+  list(true_mean = 0.5, label = "CI includes 0")
+)
+
+par(mfrow = c(1, 3))
+
+for (scenario in scenarios) {
+  sample_data <- rnorm(30, mean = scenario$true_mean, sd = 5)
+  result <- t.test(sample_data)
+
+  # Plot CI
+  ci <- result$conf.int
+  mean_est <- result$estimate
+
+  plot(1, mean_est, xlim = c(0.5, 1.5), ylim = c(-4, 12),
+       pch = 19, cex = 1.5, xaxt = "n", xlab = "",
+       ylab = "Estimated Mean",
+       main = paste0(scenario$label, "\np = ", round(result$p.value, 4)))
+
+  arrows(1, ci[1], 1, ci[2], angle = 90, code = 3, length = 0.1, lwd = 2)
+  abline(h = 0, col = "red", lty = 2, lwd = 2)
+}
+```
+
+The beauty of confidence intervals is that they provide *more* information than p-values alone:
+
+1. **Direction**: You see whether the effect is positive or negative
+2. **Magnitude**: You see the estimated size of the effect
+3. **Precision**: The width shows your uncertainty
+4. **Significance**: Whether zero is included tells you if p < 0.05
+
+This is why many statisticians advocate for reporting confidence intervals as the primary summary, with p-values as secondary.
+
 ### Standardized Effect Sizes
 
 Effect sizes quantify the magnitude of an effect in a standardized way, allowing comparison across studies.

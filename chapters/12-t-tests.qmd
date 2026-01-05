@@ -29,10 +29,65 @@ plot(x, dnorm(x), type = "l", lwd = 2, col = "black",
      main = "T-distributions vs. Normal")
 lines(x, dt(x, df = 3), lwd = 2, col = "red")
 lines(x, dt(x, df = 10), lwd = 2, col = "blue")
-legend("topright", 
+legend("topright",
        legend = c("Normal", "t (df=3)", "t (df=10)"),
        col = c("black", "red", "blue"), lwd = 2)
 ```
+
+### Why Heavier Tails Matter in Practice
+
+The heavier tails of the t-distribution have real practical consequences. When you estimate the standard deviation from a small sample, you might underestimate or overestimate the true value. The t-distribution accounts for this uncertainty by assigning more probability to extreme values.
+
+Consider this concrete example: suppose you're estimating voter support from a poll of 25 likely voters. With the true population proportion unknown and estimated from the sample, how wide should your confidence interval be?
+
+```{r}
+#| fig-width: 8
+#| fig-height: 5
+# Demonstrate the practical difference between normal and t-based intervals
+set.seed(2016)
+
+# Simulate: true support is 48.5%, poll 25 people
+true_support <- 0.485
+n_poll <- 25
+
+# One poll result
+poll_result <- rbinom(1, n_poll, true_support) / n_poll
+poll_se <- sqrt(poll_result * (1 - poll_result) / n_poll)
+
+# Compare critical values
+z_crit <- qnorm(0.975)      # Normal: 1.96
+t_crit <- qt(0.975, df = n_poll - 1)  # t with 24 df: 2.06
+
+# Calculate intervals
+normal_ci <- c(poll_result - z_crit * poll_se, poll_result + z_crit * poll_se)
+t_ci <- c(poll_result - t_crit * poll_se, poll_result + t_crit * poll_se)
+
+cat("Poll result:", round(poll_result * 100, 1), "%\n")
+cat("Standard error:", round(poll_se * 100, 1), "%\n")
+cat("\nNormal-based 95% CI: [", round(normal_ci[1]*100, 1), "%, ",
+    round(normal_ci[2]*100, 1), "%]\n")
+cat("t-based 95% CI:      [", round(t_ci[1]*100, 1), "%, ",
+    round(t_ci[2]*100, 1), "%]\n")
+cat("\nDifference in width:", round((t_ci[2] - t_ci[1] - (normal_ci[2] - normal_ci[1]))*100, 2),
+    "percentage points\n")
+```
+
+With only 25 observations, the t-distribution gives a critical value of about 2.06 instead of 1.96. This ~5% wider interval provides better coverage when the sample standard deviation might deviate substantially from the population value.
+
+The difference matters most in the tails. For extreme values (like being 2.5+ standard errors away from the mean), the t-distribution assigns noticeably more probability:
+
+```{r}
+# Probability of being more than 2.5 SE from the mean
+prob_extreme_normal <- 2 * pnorm(-2.5)
+prob_extreme_t <- 2 * pt(-2.5, df = 24)
+
+cat("P(|Z| > 2.5) with normal distribution:", round(prob_extreme_normal, 4), "\n")
+cat("P(|T| > 2.5) with t(df=24):", round(prob_extreme_t, 4), "\n")
+cat("The t-distribution gives", round(prob_extreme_t/prob_extreme_normal, 1),
+    "times higher probability to extreme values\n")
+```
+
+This is why using the normal distribution instead of the t-distribution for small samples leads to confidence intervals that are too narrow and p-values that are too small—both resulting in overconfident conclusions.
 
 ## One-Sample T-Test
 
