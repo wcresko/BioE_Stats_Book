@@ -66,6 +66,9 @@ book:
         - chapters/A3-probability-distributions.qmd
         - chapters/A4-greek-letters.qmd
         - chapters/A5-sampling-distributions.qmd
+        - chapters/A6-unix-reference.qmd
+        - chapters/A7-latex-reference.qmd
+        - chapters/A8-keyboard-shortcuts.qmd
     
     - references.qmd
 
