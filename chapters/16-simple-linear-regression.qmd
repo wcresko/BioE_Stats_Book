@@ -326,12 +326,61 @@ Simple linear regression models the relationship between a predictor and respons
 
 ## Practice Exercises
 
-For hands-on practice with regression concepts, see @sec-ex-linear in the Practice Exercises appendix. The exercises include:
+### Exercise R.1: Simple Linear Regression
 
-- Fitting and interpreting linear models
-- Visualizing regression lines and residuals
-- Checking model assumptions
-- ANOVA for comparing group means
+1. Using a dataset of your choice (or the built-in `mtcars`), fit a linear model with `lm()`
+2. Examine the model summary
+3. Create a scatterplot with the regression line
+4. Plot the residuals—do they appear randomly distributed?
+
+```{r}
+#| eval: false
+# Example with built-in data
+data(mtcars)
+model <- lm(mpg ~ wt, data = mtcars)
+summary(model)
+
+# Regression plot
+plot(mpg ~ wt, data = mtcars)
+abline(model, col = "red")
+
+# Residual plot
+plot(model$fitted.values, model$residuals)
+abline(h = 0, col = "red", lty = 2)
+```
+
+### Exercise R.2: Interpreting Coefficients
+
+Using your model from Exercise R.1:
+
+1. What does the intercept represent?
+2. What does the slope represent?
+3. What is the R-squared value and what does it mean?
+4. Is the relationship statistically significant?
+
+### Exercise R.3: Model Diagnostics
+
+Check the assumptions of your linear model:
+
+1. Use `plot(model)` to generate diagnostic plots
+2. Are the residuals normally distributed? (Q-Q plot)
+3. Is there constant variance? (Residuals vs. Fitted)
+4. Are there influential points? (Cook's distance)
+
+### Exercise R.4: Prediction
+
+Using your fitted model:
+
+1. Predict the response for a new observation
+2. Calculate the confidence interval for the prediction
+3. What happens when you extrapolate beyond the range of your data?
+
+```{r}
+#| eval: false
+# Predict for a new value
+new_data <- data.frame(wt = 3.5)
+predict(model, newdata = new_data, interval = "confidence")
+```
 
 ## Additional Resources
 

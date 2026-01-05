@@ -799,13 +799,168 @@ For comprehensive R Markdown documentation, see the [R Markdown introduction](ht
 
 ## Practice Exercises
 
-For hands-on practice with the concepts covered in this chapter, see @sec-ex-r in the Practice Exercises appendix. The exercises include:
+### Exercise R.1: Exploring RStudio
 
-- Exploring the RStudio environment
-- Basic mathematics and variable assignment
-- Working with vectors, factors, and data frames
-- Creating visualizations
-- Data import and export
+Take a few minutes to familiarize yourself with the RStudio environment:
+
+1. Locate the four main panes:
+   - The code editor (top left)
+   - The workspace and history (top right)
+   - The plots and files window (bottom right)
+   - The R console (bottom left)
+
+2. In the plots and files window, click on the Packages and Help tabs to see what they offer
+
+3. See what types of new files can be made in RStudio by clicking File → New File
+
+4. Open a new R script and a new R Markdown file to see the difference
+
+### Exercise R.2: Basic Mathematics in R
+
+Insert a code chunk and complete the following tasks:
+
+1. Add and subtract numbers
+2. Multiply and divide numbers
+3. Raise a number to a power using the `^` symbol
+4. Create a more complex equation involving all of these operations to convince yourself that R follows the normal priority of mathematical evaluation (PEMDAS)
+
+```{r}
+#| eval: false
+# Example:
+(4 + 3 * 2^2) / 5 - 1
+```
+
+### Exercise R.3: Assigning Variables and Functions
+
+1. Assign three variables using basic mathematical operations
+2. Take the log of your three variables using `log()`
+3. Use the `print()` function to display your most complex variable
+4. Use the `c()` (concatenate) function combined with `paste()` to create and print a sentence
+
+```{r}
+#| eval: false
+# Example:
+x <- 10
+y <- x * 2
+z <- sqrt(x + y)
+print(paste("The value of z is", z))
+```
+
+### Exercise R.4: Vectors and Factors
+
+1. Create a numeric vector using the `c()` function with at least 5 elements
+2. Create a character vector and convert it to a factor using `as.factor()`
+
+```{r}
+# Example:
+vec1 <- c("control", "treatment", "control", "treatment", "control")
+fac1 <- as.factor(vec1)
+print(fac1)
+levels(fac1)
+```
+
+3. Use `str()` and `class()` to evaluate your variables
+4. What is the difference between a character vector and a factor?
+
+### Exercise R.5: Basic Statistics
+
+1. Create a numeric vector with at least 10 elements
+2. Calculate the `mean()`, `sd()`, `sum()`, `length()`, and `var()` of your vector
+3. Use the `log()` and `sqrt()` functions on your vector
+4. What happens when you try to apply `mean()` to a factor? Try it and explain the result
+
+```{r}
+#| eval: false
+# Example:
+my_vector <- c(12, 15, 18, 22, 25, 28, 31, 35, 38, 42)
+mean(my_vector)
+sd(my_vector)
+```
+
+### Exercise R.6: Creating Sequences and Random Sampling
+
+Set the random seed for reproducibility, then:
+
+```{r}
+set.seed(42)
+```
+
+1. Create a vector with 100 elements using `seq()` and calculate the mean and standard deviation
+2. Create a variable and `sample()` it with equal probability—experiment with the `size` and `replace` arguments
+3. Create a normally distributed variable of 10000 elements using `rnorm()`, then sample that distribution with and without replacement
+4. Use `hist()` to plot your normally distributed variable
+
+### Exercise R.7: Basic Visualization
+
+Create visualizations with proper axis labels and colors:
+
+1. Create a sequence variable using `seq()` and make two different plots by changing the `type` argument (`"p"` for points, `"l"` for lines, `"b"` for both)
+
+2. Create a normally distributed variable using `rnorm()` and make histograms with different `breaks` values—what does `breaks` control?
+
+3. Use `par(mfrow = c(2, 2))` to create a 2×2 grid of plots
+
+```{r}
+#| fig-width: 8
+#| fig-height: 6
+#| eval: false
+par(mfrow = c(2, 2))
+x <- seq(1, 100, by = 1)
+plot(x, type = "p", main = "Points", col = "blue")
+plot(x, type = "l", main = "Lines", col = "red")
+y <- rnorm(1000)
+hist(y, breaks = 10, main = "10 Breaks", col = "lightblue")
+hist(y, breaks = 50, main = "50 Breaks", col = "lightgreen")
+```
+
+### Exercise R.8: Creating Data Frames
+
+1. Create a data frame with at least three columns: one character/factor, one numeric, and one logical
+2. Assign row names to your data frame using `rownames()`
+3. Examine your data frame structure using `str()`
+4. Calculate the mean of each numeric variable
+5. Use `head()` and `tail()` to view portions of your data frame
+
+```{r}
+#| eval: false
+# Example:
+treatment <- c("control", "low", "medium", "high", "control", "low")
+response <- c(12.3, 15.6, 18.9, 24.2, 11.8, 16.1)
+significant <- c(FALSE, TRUE, TRUE, TRUE, FALSE, TRUE)
+my_data <- data.frame(treatment, response, significant)
+str(my_data)
+```
+
+### Exercise R.9: Data Import and Indexing
+
+1. Create a simple CSV file or use a built-in dataset like `iris`
+2. Use `read.csv()` to read in your file (or access `iris` directly)
+3. Use `str()` and `head()` to examine the data structure
+4. Use `$` and `[ ]` operators to select different parts of the data frame
+5. Create a plot of two numeric variables
+6. Use `tapply()` to calculate summary statistics grouped by a categorical variable
+7. Export your data frame using `write.csv()`
+
+```{r}
+#| eval: false
+# Example with iris:
+data(iris)
+str(iris)
+head(iris)
+iris$Sepal.Length[1:5]  # First 5 sepal lengths
+iris[1:3, ]  # First 3 rows
+plot(iris$Sepal.Length, iris$Petal.Length, col = iris$Species)
+tapply(iris$Sepal.Length, iris$Species, mean)
+```
+
+### Exercise R.10: Understanding Object Types
+
+Explore how R handles different data types:
+
+1. Create variables of different classes: numeric, character, logical, and factor
+2. What happens when you try to perform arithmetic on character data?
+3. Experiment with type coercion using `as.numeric()`, `as.character()`, and `as.factor()`
+4. What happens when you add a character element to a numeric vector?
 
 ## Additional Resources
 

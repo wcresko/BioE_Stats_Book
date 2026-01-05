@@ -383,12 +383,80 @@ Always visualize your data, check assumptions, and report effect sizes alongside
 
 ## Practice Exercises
 
-For hands-on practice with t-tests and hypothesis testing, see @sec-ex-hypothesis in the Practice Exercises appendix. The exercises include:
+### Exercise H.1: One-Sample t-test
 
-- Performing one-sample and two-sample t-tests
-- Exploring the effects of sample size on statistical power
-- Chi-square tests for categorical data
-- Testing for Hardy-Weinberg equilibrium
+1. Generate a sample of 30 observations from a normal distribution with mean 105 and SD 15
+2. Test whether the mean differs significantly from 100
+3. Interpret the p-value and confidence interval
+4. What happens to the p-value when you increase the sample size?
+
+```{r}
+#| eval: false
+set.seed(42)
+sample_data <- rnorm(30, mean = 105, sd = 15)
+t.test(sample_data, mu = 100)
+```
+
+### Exercise H.2: Two-Sample t-test
+
+Create a dummy dataset with one continuous and one categorical variable:
+
+1. Draw samples of 100 observations from two normal distributions with slightly different means but equal standard deviations
+2. Perform a two-sample t-test
+3. Visualize the data with a boxplot
+4. Repeat with sample sizes of 10, 100, and 1000—how does sample size affect the results?
+5. What happens when you make the means more different?
+
+```{r}
+#| eval: false
+set.seed(42)
+group_a <- rnorm(100, mean = 10, sd = 2)
+group_b <- rnorm(100, mean = 11, sd = 2)
+
+# Combine into data frame
+data <- data.frame(
+  value = c(group_a, group_b),
+  group = rep(c("A", "B"), each = 100)
+)
+
+# t-test
+t.test(value ~ group, data = data)
+
+# Visualization
+boxplot(value ~ group, data = data)
+```
+
+### Exercise H.3: Chi-Square Test for Hardy-Weinberg Equilibrium
+
+Test whether a population is in Hardy-Weinberg equilibrium:
+
+```{r}
+# Observed genotype counts
+AA_counts <- 50
+Aa_counts <- 40
+aa_counts <- 10
+
+# Calculate allele frequencies
+total <- AA_counts + Aa_counts + aa_counts
+p <- (2*AA_counts + Aa_counts) / (2*total)
+q <- 1 - p
+
+# Expected counts under HWE
+expected <- c(p^2, 2*p*q, q^2) * total
+
+# Chi-square test
+observed <- c(AA_counts, Aa_counts, aa_counts)
+chisq.test(observed, p = c(p^2, 2*p*q, q^2))
+```
+
+1. Modify the observed counts and see how it affects the test result
+2. What genotype frequencies would indicate strong departure from HWE?
+
+### Exercise H.4: Effect Size and Power
+
+1. Using the two-sample t-test from Exercise H.2, calculate Cohen's d effect size
+2. How does effect size change when you increase the difference between means?
+3. How does effect size change when you increase the standard deviation?
 
 ## Additional Resources
 

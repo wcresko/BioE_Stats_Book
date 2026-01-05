@@ -343,12 +343,52 @@ Correlation quantifies the strength and direction of linear relationships betwee
 
 ## Practice Exercises
 
-For hands-on practice with correlation and linear models, see @sec-ex-linear in the Practice Exercises appendix. The exercises include:
+### Exercise L.1: Correlation
 
-- Calculating and interpreting correlation coefficients
-- Creating scatterplots with trend lines
-- Understanding the effect of outliers on correlation
-- Simple linear regression analysis
+1. Create two correlated variables using simulation
+2. Calculate the Pearson correlation coefficient
+3. Create a scatterplot and add the correlation value
+4. What happens to the correlation when you add outliers?
+
+```{r}
+#| fig-width: 6
+#| fig-height: 5
+set.seed(42)
+x <- rnorm(50)
+y <- 0.7*x + rnorm(50, sd = 0.5)  # Correlated with x
+
+cor(x, y)
+plot(x, y, main = paste("Correlation:", round(cor(x, y), 2)))
+abline(lm(y ~ x), col = "red")
+```
+
+### Exercise L.2: Pearson vs. Spearman
+
+Compare Pearson and Spearman correlations:
+
+1. Generate data with a monotonic but non-linear relationship
+2. Calculate both Pearson and Spearman correlations
+3. Which is more appropriate for your data and why?
+
+```{r}
+#| eval: false
+# Monotonic but non-linear
+set.seed(42)
+x <- 1:50
+y <- log(x) + rnorm(50, sd = 0.3)
+
+cor(x, y, method = "pearson")
+cor(x, y, method = "spearman")
+```
+
+### Exercise L.3: Effect of Outliers
+
+Explore how outliers affect correlation:
+
+1. Generate correlated data with no outliers—calculate r
+2. Add one extreme outlier—recalculate r
+3. Use Spearman's correlation on the data with the outlier
+4. What do you conclude about robustness?
 
 ## Additional Resources
 
