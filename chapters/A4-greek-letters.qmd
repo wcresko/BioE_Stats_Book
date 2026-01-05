@@ -1,0 +1,173 @@
+# Greek Letters in Mathematics and Statistics {#sec-greek-letters}
+
+Greek letters are ubiquitous in mathematics and statistics. This appendix provides a reference for the Greek alphabet, including pronunciation and common uses in statistical contexts.
+
+## The Greek Alphabet
+
+| Letter | Lowercase | Uppercase | Name | Pronunciation | Common Statistical Uses |
+|:------:|:---------:|:---------:|:-----|:--------------|:------------------------|
+| 1 | α | Α | Alpha | AL-fah | Significance level (Type I error rate); regression intercept |
+| 2 | β | Β | Beta | BAY-tah | Type II error rate; regression coefficients; slope parameters |
+| 3 | γ | Γ | Gamma | GAM-ah | Gamma distribution; shape parameter |
+| 4 | δ | Δ | Delta | DEL-tah | Change or difference; effect size (Cohen's d uses Roman d) |
+| 5 | ε | Ε | Epsilon | EP-si-lon | Error term in models; small quantity approaching zero |
+| 6 | ζ | Ζ | Zeta | ZAY-tah | Rarely used in statistics |
+| 7 | η | Η | Eta | AY-tah | Effect size (η²); learning rate |
+| 8 | θ | Θ | Theta | THAY-tah | Generic parameter; angle |
+| 9 | ι | Ι | Iota | eye-OH-tah | Rarely used in statistics |
+| 10 | κ | Κ | Kappa | KAP-ah | Cohen's kappa (agreement); condition number |
+| 11 | λ | Λ | Lambda | LAM-dah | Rate parameter (Poisson, exponential); eigenvalue; Wilks' lambda |
+| 12 | μ | Μ | Mu | MYOO | Population mean |
+| 13 | ν | Ν | Nu | NOO | Degrees of freedom |
+| 14 | ξ | Ξ | Xi | KSEE or ZIGH | Rarely used; sometimes for random variables |
+| 15 | ο | Ο | Omicron | OM-i-kron | Rarely used (resembles Roman O) |
+| 16 | π | Π | Pi | PIE | Mathematical constant (≈ 3.14159); product notation (Π) |
+| 17 | ρ | Ρ | Rho | ROW | Population correlation coefficient; autocorrelation |
+| 18 | σ | Σ | Sigma | SIG-mah | Population standard deviation (σ); summation (Σ) |
+| 19 | τ | Τ | Tau | TAW (rhymes with cow) | Kendall's tau; time constant |
+| 20 | υ | Υ | Upsilon | OOP-si-lon | Rarely used in statistics |
+| 21 | φ | Φ | Phi | FYE or FEE | Phi coefficient; standard normal PDF (φ); golden ratio |
+| 22 | χ | Χ | Chi | KYE (rhymes with sky) | Chi-square distribution and test (χ²) |
+| 23 | ψ | Ψ | Psi | SIGH or PSEE | Rarely used; sometimes for angles or wave functions |
+| 24 | ω | Ω | Omega | oh-MAY-gah | Effect size (ω²); angular frequency |
+
+## Most Commonly Used Letters in Statistics
+
+### Population Parameters
+
+The following Greek letters conventionally represent **population parameters** (true but unknown values):
+
+- **μ (mu)**: Population mean
+- **σ (sigma)**: Population standard deviation
+- **σ² (sigma squared)**: Population variance
+- **ρ (rho)**: Population correlation coefficient
+- **π (pi)**: Population proportion (also the mathematical constant)
+- **β (beta)**: Population regression coefficients
+
+### Hypothesis Testing
+
+- **α (alpha)**: Significance level; probability of Type I error (rejecting a true null hypothesis). Commonly set to 0.05.
+- **β (beta)**: Probability of Type II error (failing to reject a false null hypothesis). Power = 1 - β.
+- **χ² (chi-square)**: Test statistic for categorical data analysis
+
+### Effect Sizes
+
+- **η² (eta squared)**: Proportion of variance explained in ANOVA
+- **ω² (omega squared)**: Less biased estimate of variance explained
+- **φ (phi)**: Effect size for 2×2 contingency tables
+
+### Distributions
+
+- **λ (lambda)**: Rate parameter for Poisson and exponential distributions
+- **Γ (Gamma)**: The Gamma function and Gamma distribution
+- **θ (theta)**: Generic parameter in probability distributions
+
+### Summation and Products
+
+- **Σ (capital sigma)**: Summation notation: $\sum_{i=1}^{n} x_i$
+- **Π (capital pi)**: Product notation: $\prod_{i=1}^{n} x_i$
+
+## Writing Greek Letters
+
+### In LaTeX and Quarto
+
+Greek letters are written in LaTeX (and thus in Quarto documents) using backslash commands:
+
+```latex
+$\alpha$    → α        $\Alpha$    → Α
+$\beta$     → β        $\Beta$     → Β
+$\gamma$    → γ        $\Gamma$    → Γ
+$\delta$    → δ        $\Delta$    → Δ
+$\epsilon$  → ε        $\mu$       → μ
+$\sigma$    → σ        $\Sigma$    → Σ
+$\chi$      → χ        $\lambda$   → λ
+$\theta$    → θ        $\rho$      → ρ
+```
+
+### In R
+
+R supports Greek letters in plots using the `expression()` function:
+
+```{r}
+#| eval: false
+# Axis labels with Greek letters
+plot(x, y,
+     xlab = expression(mu),
+     ylab = expression(sigma^2))
+
+# More complex expressions
+title(expression(paste("Mean = ", mu, ", SD = ", sigma)))
+
+# In ggplot2
+library(ggplot2)
+ggplot(data, aes(x, y)) +
+  geom_point() +
+  labs(x = expression(alpha),
+       y = expression(beta))
+```
+
+## Conventions and Mnemonics
+
+### Roman vs. Greek Letters
+
+A useful convention in statistics:
+
+- **Greek letters** represent **population parameters** (unknown, fixed values)
+- **Roman (Latin) letters** represent **sample statistics** (calculated from data)
+
+| Population Parameter | Sample Statistic |
+|:---------------------|:-----------------|
+| μ (mu) - population mean | $\bar{x}$ - sample mean |
+| σ (sigma) - population SD | s - sample SD |
+| ρ (rho) - population correlation | r - sample correlation |
+| β (beta) - population slope | b - sample slope |
+| π (pi) - population proportion | p̂ - sample proportion |
+
+### Memory Aids
+
+- **α (alpha)** for significance level: "A" comes first, and we set alpha first before testing
+- **β (beta)** for slope: "B" is for the coefficient "B" in y = a + bx
+- **μ (mu)** for mean: Think "μ" looks like a "u" turned sideways—"u" for "average of you all"
+- **σ (sigma)** for standard deviation: "S" for Sigma, "S" for Standard deviation
+- **Σ (capital sigma)** for sum: "S" for Sum
+- **ρ (rho)** for correlation: "R" for Rho, "R" for R-value (correlation)
+- **χ (chi)** for chi-square: Looks like an "X"—think "X marks the spot" for testing categories
+
+## Common Formulas Using Greek Letters
+
+### Normal Distribution
+
+$$f(x) = \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}$$
+
+### Z-score
+
+$$z = \frac{x - \mu}{\sigma}$$
+
+### Linear Regression Model
+
+$$Y_i = \beta_0 + \beta_1 X_i + \epsilon_i$$
+
+where $\epsilon_i \sim N(0, \sigma^2)$
+
+### Correlation Coefficient
+
+$$\rho = \frac{\text{Cov}(X, Y)}{\sigma_X \sigma_Y}$$
+
+### Chi-Square Test Statistic
+
+$$\chi^2 = \sum \frac{(O - E)^2}{E}$$
+
+### ANOVA F-ratio
+
+$$F = \frac{MS_{\text{between}}}{MS_{\text{within}}} = \frac{\sigma^2_{\text{between}}}{\sigma^2_{\text{within}}}$$
+
+## Summary
+
+Mastering Greek letters is essential for reading and writing statistical notation. The most important letters to memorize are:
+
+- **μ, σ, ρ**: Population mean, standard deviation, and correlation
+- **α, β**: Significance level and Type II error (or regression coefficients)
+- **Σ**: Summation
+- **χ²**: Chi-square
+
+With practice, these symbols become as natural as the Roman alphabet, and they provide a universal language for expressing statistical concepts precisely and concisely.

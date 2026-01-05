@@ -64,6 +64,7 @@ book:
         - chapters/A1-eugenics-history.qmd
         - chapters/A2-r-reference.qmd
         - chapters/A3-probability-distributions.qmd
+        - chapters/A4-greek-letters.qmd
     
     - references.qmd
 
