@@ -37,7 +37,8 @@ book:
         - chapters/12-t-tests.qmd
         - chapters/13-nonparametric-tests.qmd
         - chapters/14-bootstrapping.qmd
-    
+        - chapters/14b-what-are-models.qmd
+
     - part: "Linear Models"
       chapters:
         - chapters/15-correlation.qmd
@@ -51,7 +52,8 @@ book:
         - chapters/20-multiple-regression.qmd
         - chapters/21-glm.qmd
         - chapters/22-statistical-learning.qmd
-        - chapters/23-high-performance-computing.qmd
+        - chapters/23-dimensionality-reduction.qmd
+        - chapters/24-high-performance-computing.qmd
     
     - part: "Appendices"
       chapters:
