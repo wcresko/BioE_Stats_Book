@@ -68,7 +68,7 @@ PCA projects the data onto the directions of maximum variance, but it cannot "un
 
 ## t-SNE: t-distributed Stochastic Neighbor Embedding
 
-**t-SNE** (t-distributed Stochastic Neighbor Embedding) is a non-linear dimensionality reduction technique designed specifically for visualization. It was introduced by van der Maaten and Hinton in 2008 and has become one of the most popular methods for visualizing high-dimensional data.
+**t-SNE** (t-distributed Stochastic Neighbor Embedding) [@vandermaaten2008visualizing] is a non-linear dimensionality reduction technique designed specifically for visualization. It was introduced by van der Maaten and Hinton in 2008 and has become one of the most popular methods for visualizing high-dimensional data.
 
 ### How t-SNE Works
 
@@ -189,7 +189,7 @@ ggplot(df_tsne, aes(tSNE1, tSNE2, color = digit)) +
 
 ## UMAP: Uniform Manifold Approximation and Projection
 
-**UMAP** (Uniform Manifold Approximation and Projection) is a more recent algorithm (McInnes et al., 2018) that has become increasingly popular, especially in single-cell genomics. UMAP is often faster than t-SNE and may better preserve global structure.
+**UMAP** (Uniform Manifold Approximation and Projection) [@mcinnes2018umap] is a more recent algorithm that has become increasingly popular, especially in single-cell genomics. UMAP is often faster than t-SNE and may better preserve global structure.
 
 ### How UMAP Works
 

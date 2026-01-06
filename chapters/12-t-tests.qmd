@@ -15,7 +15,7 @@ The t-test is the classic method for comparing means. It compares the observed d
 
 ## The T-Distribution
 
-The t-distribution, discovered by William Sealy Gosset (who published under the pseudonym "Student"), resembles the normal distribution but has heavier tails. This accounts for the extra uncertainty that comes from estimating the population standard deviation from sample data.
+The t-distribution, introduced by William Sealy Gosset writing under the pseudonym "Student" [@student1908probable], resembles the normal distribution but has heavier tails. This accounts for the extra uncertainty that comes from estimating the population standard deviation from sample data.
 
 The t-distribution is characterized by its degrees of freedom (df). As df increases, the t-distribution approaches the normal distribution. For small samples, the heavier tails mean that extreme values are more likely, leading to wider confidence intervals and more conservative tests.
 

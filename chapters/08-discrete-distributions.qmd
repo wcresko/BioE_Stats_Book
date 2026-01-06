@@ -226,3 +226,86 @@ cat("Theoretical var:", 20 * 0.3 * 0.7, "  Observed:", var(binom_sample), "\n")
 ```
 
 This kind of simulation-based exploration builds intuition that complements formal mathematical understanding.
+
+## Exercises
+
+### Exercise D.1: Binomial Probabilities in Genetics
+
+A genetic cross is expected to produce offspring with a particular trait with probability 0.25 (following Mendelian ratios). You observe 30 offspring from this cross.
+
+a) What is the expected number of offspring showing the trait?
+b) What is the probability of observing exactly 10 offspring with the trait?
+c) What is the probability of observing 10 or more offspring with the trait?
+d) Simulate 1000 experiments of this cross and plot the distribution of the number of offspring with the trait. Compare to the theoretical binomial distribution.
+
+```{r}
+#| eval: false
+# Your code here
+```
+
+### Exercise D.2: Poisson Process in Ecology
+
+The number of seedlings germinating per square meter follows a Poisson distribution with an average of 4.5 seedlings per m².
+
+a) What is the probability of finding exactly 5 seedlings in a randomly selected square meter?
+b) What is the probability of finding fewer than 3 seedlings?
+c) What is the variance of this distribution?
+d) If the variance you observe in your actual data is 12, what does this suggest about the Poisson model?
+
+```{r}
+#| eval: false
+# Your code here
+```
+
+### Exercise D.3: Comparing Distributions
+
+A researcher is counting bacterial colonies on petri dishes. In one experiment with 50 dishes, she found:
+- 5 dishes with 0 colonies
+- 12 dishes with 1 colony
+- 18 dishes with 2 colonies
+- 10 dishes with 3 colonies
+- 5 dishes with 4 or more colonies
+
+a) Calculate the mean and variance of these counts
+b) Does a Poisson distribution seem appropriate? Why or why not?
+c) Estimate the Poisson parameter λ from the data and plot the expected vs. observed frequencies
+d) What biological processes might explain any discrepancies you observe?
+
+```{r}
+#| eval: false
+# Your code here
+```
+
+### Exercise D.4: Negative Binomial Application
+
+You are screening patients for eligibility in a clinical trial. Each patient has a 0.15 probability of meeting the eligibility criteria.
+
+a) What is the expected number of patients you need to screen to find 5 eligible patients?
+b) What is the probability that you find your 5th eligible patient on the 40th screening?
+c) Simulate this screening process 1000 times and create a histogram of the number of screenings needed to find 5 eligible patients
+d) Calculate the 95th percentile of your simulation—what does this number mean in practical terms?
+
+```{r}
+#| eval: false
+# Your code here
+```
+
+### Exercise D.5: Choosing the Right Distribution
+
+For each scenario below, identify which discrete distribution (binomial, Poisson, geometric, or negative binomial) is most appropriate and explain why:
+
+a) The number of mutations in a 1000 base pair DNA sequence, where mutations occur randomly at a rate of 0.001 per base pair
+b) The number of successful PCR reactions out of 20 attempts, where each attempt has a 90% success rate
+c) The number of attempts needed to successfully culture a difficult cell line for the first time, when each attempt has a 5% success rate
+d) The number of times you need to flip a coin until you get 3 heads
+e) The number of fish caught per hour in a lake, where the average catch rate is 2.5 fish per hour
+
+For one of these scenarios, write R code to:
+- Simulate the process
+- Calculate relevant probabilities
+- Create an appropriate visualization
+
+```{r}
+#| eval: false
+# Your code here
+```

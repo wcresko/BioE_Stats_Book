@@ -15,7 +15,7 @@ Nonparametric methods are sometimes called distribution-free methods because the
 
 ## The Mann-Whitney U Test
 
-The Mann-Whitney U test (also called the Wilcoxon rank-sum test) is the nonparametric equivalent of the two-sample t-test. It tests whether two independent groups tend to have different values, based on comparing the ranks of observations rather than the observations themselves.
+The Mann-Whitney U test [@mann1947test] (also called the Wilcoxon rank-sum test) is the nonparametric equivalent of the two-sample t-test. It tests whether two independent groups tend to have different values, based on comparing the ranks of observations rather than the observations themselves.
 
 The null hypothesis is that the distributions of the two groups are identical. The alternative is that one group tends to have larger values than the other.
 
@@ -33,7 +33,7 @@ The test works by combining all observations, ranking them, and comparing the su
 
 ## Wilcoxon Signed-Rank Test
 
-For paired data, the Wilcoxon signed-rank test is the nonparametric alternative to the paired t-test. It tests whether the median difference between pairs is zero.
+For paired data, the Wilcoxon signed-rank test [@wilcoxon1945individual] is the nonparametric alternative to the paired t-test. It tests whether the median difference between pairs is zero.
 
 ```{r}
 # Paired data example
@@ -221,6 +221,108 @@ Nonparametric and frequency-based tests provide alternatives when parametric ass
 - Fisher's exact test for small samples
 - Odds ratios to quantify association strength
 - McNemar's test for paired categorical data
+
+## Exercises
+
+### Exercise N.1: Mann-Whitney U Test
+
+You measure enzyme activity (in arbitrary units) in two groups of transgenic plants:
+
+```
+control <- c(23.1, 25.4, 22.8, 26.3, 24.1, 25.9, 23.7, 24.8, 22.5, 26.1)
+transgenic <- c(28.4, 31.2, 29.6, 30.1, 27.8, 32.3, 29.9, 28.7, 30.5, 31.8)
+```
+
+a) Create side-by-side boxplots to visualize the two groups
+b) Assess whether the data appear normally distributed (use Q-Q plots or Shapiro-Wilk test)
+c) Perform a Mann-Whitney U test to compare the two groups
+d) Perform a two-sample t-test for comparison
+e) Which test is more appropriate for these data and why?
+f) Calculate the median and IQR for each group and report these along with your test results
+
+```{r}
+#| eval: false
+# Your code here
+```
+
+### Exercise N.2: Wilcoxon Signed-Rank Test
+
+A researcher measures blood pressure before and after a stress reduction intervention in 12 participants:
+
+```
+before <- c(142, 138, 155, 148, 162, 140, 151, 139, 156, 145, 149, 158)
+after <- c(136, 132, 149, 142, 150, 138, 145, 135, 151, 140, 143, 152)
+```
+
+a) Calculate the paired differences (after - before) and visualize their distribution
+b) Test whether the differences are normally distributed
+c) Perform a Wilcoxon signed-rank test
+d) Perform a paired t-test for comparison
+e) Calculate the median reduction in blood pressure and construct an approximate 95% CI using a bootstrap approach
+f) Report your conclusions about the intervention's effectiveness
+
+```{r}
+#| eval: false
+# Your code here
+```
+
+### Exercise N.3: Chi-Square Goodness-of-Fit
+
+A genetics experiment produces offspring with four phenotypes. According to Mendelian theory, these should occur in a 9:3:3:1 ratio. You observe the following counts:
+
+```
+observed <- c(315, 108, 101, 32)  # Phenotypes: AB, Ab, aB, ab
+```
+
+a) Calculate the expected counts based on the 9:3:3:1 ratio
+b) Perform a chi-square goodness-of-fit test
+c) Visualize the observed vs. expected counts with a barplot
+d) Calculate the contribution of each category to the total chi-square statistic
+e) Do the data support the theoretical prediction? Explain your reasoning
+
+```{r}
+#| eval: false
+# Your code here
+```
+
+### Exercise N.4: Chi-Square Test of Independence
+
+A clinical trial tests a new treatment for bacterial infections. Results are classified by treatment group and outcome:
+
+|  | Cured | Not Cured |
+|:--|:------|:----------|
+| Treatment | 48 | 12 |
+| Control | 32 | 28 |
+
+a) Create this 2×2 table in R
+b) Perform a chi-square test of independence
+c) Calculate and interpret the odds ratio
+d) Use Fisher's exact test and compare the p-value to the chi-square test
+e) Check the expected cell counts—is the chi-square approximation appropriate?
+f) Report your conclusions about treatment effectiveness
+
+```{r}
+#| eval: false
+# Your code here
+```
+
+### Exercise N.5: Choosing the Right Test
+
+For each scenario below, indicate which test is most appropriate (Mann-Whitney U, Wilcoxon signed-rank, Kruskal-Wallis, chi-square, Fisher's exact, or McNemar's test) and explain why:
+
+a) Comparing survival times of patients on three different chemotherapy regimens (n = 15 per group, data are heavily right-skewed)
+b) Testing whether a coin is fair after observing 65 heads in 100 flips
+c) Comparing patient satisfaction ratings (on a scale of 1-5) before and after a hospital redesign
+d) Testing whether smoking status (yes/no) is associated with lung disease (yes/no) in a sample of 30 patients
+e) Comparing memory test scores in four age groups (n = 50 per group, scores range 0-100 but are not normally distributed)
+f) Analyzing a before/after survey where respondents indicate support (yes/no) for a policy
+
+For two of these scenarios, write complete R code to perform the analysis with simulated or provided data.
+
+```{r}
+#| eval: false
+# Your code here
+```
 
 ## Additional Resources
 

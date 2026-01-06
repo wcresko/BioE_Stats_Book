@@ -49,6 +49,22 @@ data.frame(
   labs(title = "Bernoulli Distribution", y = "Probability", fill = "p")
 ```
 
+### Sampling Process Example
+
+Consider recording whether a neuron fires in response to a stimulus. Each trial represents exposing the neuron to a brief stimulus pulse and observing whether it fires (success = 1) or not (failure = 0). If the neuron has a baseline firing probability of $p = 0.3$ in response to the stimulus, each observation is a Bernoulli trial.
+
+```{r}
+# Simulate 10 neuron stimulation trials
+set.seed(123)
+p_fire <- 0.3
+n_trials <- 10
+
+# Sample from Bernoulli distribution
+neuron_responses <- rbinom(n_trials, size = 1, prob = p_fire)
+cat("Neuron firing pattern (1=fire, 0=no fire):", neuron_responses, "\n")
+cat("Total fires:", sum(neuron_responses), "out of", n_trials, "trials")
+```
+
 ### Binomial Distribution
 
 The binomial distribution describes the number of successes in $n$ independent Bernoulli trials.
@@ -88,6 +104,27 @@ for (p in c(0.2, 0.5, 0.8)) {
 
 **R functions:** `dbinom()`, `pbinom()`, `qbinom()`, `rbinom()`
 
+### Sampling Process Example
+
+A plant biologist plants 100 seeds of a particular species and wants to know how many will germinate. Based on previous experiments, each seed has a probability $p = 0.75$ of germinating independently. The number of seeds that germinate follows a binomial distribution with $n = 100$ and $p = 0.75$.
+
+```{r}
+# Simulate seed germination experiment
+set.seed(456)
+n_seeds <- 100
+p_germinate <- 0.75
+
+# Sample from binomial distribution
+germinated_seeds <- rbinom(1, size = n_seeds, prob = p_germinate)
+cat("Number of seeds germinated:", germinated_seeds, "out of", n_seeds, "\n")
+
+# Simulate multiple experiments
+n_experiments <- 1000
+germination_counts <- rbinom(n_experiments, size = n_seeds, prob = p_germinate)
+cat("Mean across", n_experiments, "experiments:", mean(germination_counts), "\n")
+cat("Expected value (np):", n_seeds * p_germinate)
+```
+
 ### Geometric Distribution
 
 The geometric distribution describes the number of trials needed to get the first success.
@@ -122,6 +159,26 @@ plot(x, dgeom(x-1, p), type = "h", lwd = 2, col = "steelblue",
 ```
 
 **R functions:** `dgeom()`, `pgeom()`, `qgeom()`, `rgeom()`
+
+### Sampling Process Example
+
+In a PCR amplification experiment, a researcher is attempting to amplify a rare target sequence. Each PCR cycle has a probability $p = 0.15$ of successfully amplifying the target to detectable levels. The number of cycles until the first successful amplification follows a geometric distribution.
+
+```{r}
+# Simulate PCR amplification trials
+set.seed(789)
+p_success <- 0.15
+
+# Sample number of cycles until first success
+cycles_to_success <- rgeom(1, prob = p_success) + 1  # +1 because rgeom gives failures before success
+cat("Cycles until first successful amplification:", cycles_to_success, "\n")
+
+# Simulate multiple PCR experiments
+n_experiments <- 1000
+cycles_distribution <- rgeom(n_experiments, prob = p_success) + 1
+cat("Mean cycles across", n_experiments, "experiments:", mean(cycles_distribution), "\n")
+cat("Expected value (1/p):", 1/p_success)
+```
 
 ### Negative Binomial Distribution
 
@@ -162,6 +219,28 @@ plot(x, dnbinom(x - r, size = r, prob = p), type = "h", lwd = 2, col = "steelblu
 
 **R functions:** `dnbinom()`, `pnbinom()`, `qnbinom()`, `rnbinom()`
 
+### Sampling Process Example
+
+A genomics researcher is sequencing DNA to identify rare somatic mutations. Each sequencing read has a probability $p = 0.05$ of covering a region containing a mutation of interest. The researcher needs to find $r = 10$ such mutations to have sufficient statistical power. The number of reads required follows a negative binomial distribution.
+
+```{r}
+# Simulate sequencing until finding r mutations
+set.seed(101)
+r_mutations <- 10
+p_mutation <- 0.05
+
+# Sample number of reads until r mutations found
+# rnbinom gives number of failures before r successes
+reads_needed <- rnbinom(1, size = r_mutations, prob = p_mutation) + r_mutations
+cat("Reads needed to find", r_mutations, "mutations:", reads_needed, "\n")
+
+# Simulate multiple sequencing experiments
+n_simulations <- 1000
+reads_distribution <- rnbinom(n_simulations, size = r_mutations, prob = p_mutation) + r_mutations
+cat("Mean reads across", n_simulations, "simulations:", mean(reads_distribution), "\n")
+cat("Expected value (r/p):", r_mutations/p_mutation)
+```
+
 ### Poisson Distribution
 
 The Poisson distribution describes the number of events occurring in a fixed interval when events occur independently at a constant average rate.
@@ -200,6 +279,28 @@ for (lambda in c(1, 5, 15)) {
 ```
 
 **R functions:** `dpois()`, `ppois()`, `qpois()`, `rpois()`
+
+### Sampling Process Example
+
+In evolutionary genomics, mutations occur randomly along a gene sequence. Consider a gene of fixed length where mutations occur at an average rate of $\lambda = 3.5$ mutations per gene per million years. The number of mutations observed in a particular gene follows a Poisson distribution.
+
+```{r}
+# Simulate mutation counts in genes
+set.seed(202)
+lambda_mutations <- 3.5
+
+# Sample mutation count for a single gene
+mutations_in_gene <- rpois(1, lambda = lambda_mutations)
+cat("Mutations observed in one gene:", mutations_in_gene, "\n")
+
+# Simulate mutation counts across multiple genes
+n_genes <- 100
+mutation_counts <- rpois(n_genes, lambda = lambda_mutations)
+cat("Mean mutations across", n_genes, "genes:", mean(mutation_counts), "\n")
+cat("Variance across", n_genes, "genes:", var(mutation_counts), "\n")
+cat("Expected value (λ):", lambda_mutations, "\n")
+cat("Note: For Poisson, mean ≈ variance")
+```
 
 ## Continuous Distributions
 
@@ -241,6 +342,24 @@ polygon(c(0, 0, 5, 5), c(0, 0.2, 0.2, 0), col = rgb(0, 0, 1, 0.3), border = NA)
 
 **R functions:** `dunif()`, `punif()`, `qunif()`, `runif()`
 
+### Sampling Process Example
+
+In a cell culture experiment, cells are synchronized to divide during a specific 60-minute window. Within this window, the exact timing of any individual cell's division is equally likely at any moment. If we measure the time (in minutes from the start of the window) when each cell divides, these times follow a uniform distribution between $a = 0$ and $b = 60$ minutes.
+
+```{r}
+# Simulate cell division times within a synchronized window
+set.seed(303)
+window_start <- 0
+window_end <- 60
+
+# Sample division times for 20 cells
+n_cells <- 20
+division_times <- runif(n_cells, min = window_start, max = window_end)
+cat("Division times (minutes):", round(division_times, 1), "\n")
+cat("Mean division time:", round(mean(division_times), 1), "minutes\n")
+cat("Expected mean:", (window_start + window_end)/2, "minutes")
+```
+
 ### Exponential Distribution
 
 The exponential distribution describes the time between events in a Poisson process.
@@ -277,6 +396,26 @@ legend("topright", c("λ = 0.5", "λ = 1", "λ = 2"),
 ```
 
 **R functions:** `dexp()`, `pexp()`, `qexp()`, `rexp()`
+
+### Sampling Process Example
+
+Bacterial cells divide asynchronously in exponential growth phase. If cells divide at a constant average rate of $\lambda = 0.5$ divisions per hour (one division every 2 hours on average), the waiting time between successive cell divisions follows an exponential distribution.
+
+```{r}
+# Simulate times between cell divisions
+set.seed(404)
+lambda_rate <- 0.5  # divisions per hour
+
+# Sample inter-division times for 10 successive divisions
+n_divisions <- 10
+inter_division_times <- rexp(n_divisions, rate = lambda_rate)
+cat("Time between divisions (hours):", round(inter_division_times, 2), "\n")
+cat("Mean inter-division time:", round(mean(inter_division_times), 2), "hours\n")
+cat("Expected mean (1/λ):", 1/lambda_rate, "hours\n")
+
+# Total time for all divisions
+cat("Total time for", n_divisions, "divisions:", round(sum(inter_division_times), 2), "hours")
+```
 
 ### Gamma Distribution
 
@@ -317,6 +456,24 @@ legend("topright", c("shape = 1", "shape = 2", "shape = 5"),
 ```
 
 **R functions:** `dgamma()`, `pgamma()`, `qgamma()`, `rgamma()`
+
+### Sampling Process Example
+
+In developmental biology, a cell must complete $r = 5$ distinct checkpoints before differentiating into a specialized cell type. Each checkpoint is passed at an average rate of $\lambda = 2$ checkpoints per day. The total time until the cell completes all 5 checkpoints and differentiates follows a gamma distribution.
+
+```{r}
+# Simulate time to complete multiple checkpoints
+set.seed(505)
+r_checkpoints <- 5
+lambda_rate <- 2  # checkpoints per day
+
+# Sample differentiation times for 15 cells
+n_cells <- 15
+differentiation_times <- rgamma(n_cells, shape = r_checkpoints, rate = lambda_rate)
+cat("Time to differentiation (days):", round(differentiation_times, 2), "\n")
+cat("Mean differentiation time:", round(mean(differentiation_times), 2), "days\n")
+cat("Expected mean (r/λ):", r_checkpoints/lambda_rate, "days")
+```
 
 ### Normal (Gaussian) Distribution
 
@@ -365,6 +522,25 @@ legend("topright", c("μ=2, σ=1", "μ=2, σ=0.5", "μ=2, σ=2"),
 - 99.7% of values fall within 3 SDs of the mean
 
 **R functions:** `dnorm()`, `pnorm()`, `qnorm()`, `rnorm()`
+
+### Sampling Process Example
+
+Human height is influenced by many genetic and environmental factors that contribute additively. In a population of adult males, height follows approximately a normal distribution with mean $\mu = 175$ cm and standard deviation $\sigma = 7$ cm. When we measure heights of individuals, we are sampling from this distribution.
+
+```{r}
+# Simulate measuring heights in a population
+set.seed(606)
+mu_height <- 175  # cm
+sigma_height <- 7  # cm
+
+# Sample heights of 30 individuals
+n_individuals <- 30
+heights <- rnorm(n_individuals, mean = mu_height, sd = sigma_height)
+cat("Sample heights (cm):", round(heights, 1), "\n")
+cat("Sample mean:", round(mean(heights), 1), "cm\n")
+cat("Sample SD:", round(sd(heights), 1), "cm\n")
+cat("Population parameters: μ =", mu_height, "cm, σ =", sigma_height, "cm")
+```
 
 ### Standard Normal Distribution
 
@@ -450,6 +626,29 @@ curve(dnorm(x, mean = 1, sd = 0.5), add = TRUE, col = "red", lwd = 2)
 
 **R functions:** `dlnorm()`, `plnorm()`, `qlnorm()`, `rlnorm()`
 
+### Sampling Process Example
+
+Gene expression levels often follow a log-normal distribution because they result from multiplicative processes (transcription, translation, and degradation rates). When measuring mRNA levels of a particular gene across cells, if the log-transformed expression follows $\mathcal{N}(\mu = 2, \sigma = 0.6)$, the raw expression levels follow a log-normal distribution.
+
+```{r}
+# Simulate gene expression measurements
+set.seed(707)
+mu_log <- 2
+sigma_log <- 0.6
+
+# Sample expression levels from 50 cells
+n_cells <- 50
+expression_levels <- rlnorm(n_cells, meanlog = mu_log, sdlog = sigma_log)
+cat("Expression levels (arbitrary units):", round(expression_levels, 2), "\n")
+cat("Mean expression:", round(mean(expression_levels), 2), "\n")
+cat("Median expression:", round(median(expression_levels), 2), "\n")
+
+# Log-transformed data should be approximately normal
+log_expression <- log(expression_levels)
+cat("Mean of log-expression:", round(mean(log_expression), 2), "\n")
+cat("SD of log-expression:", round(sd(log_expression), 2))
+```
+
 ### Chi-Square Distribution
 
 The chi-square distribution is the distribution of a sum of squared standard normal variables. It is fundamental to many statistical tests.
@@ -483,6 +682,32 @@ legend("topright", c("df = 2", "df = 5", "df = 10"),
 
 **R functions:** `dchisq()`, `pchisq()`, `qchisq()`, `rchisq()`
 
+### Sampling Process Example
+
+In a quality control study, a bioengineering lab measures the precision of a fabrication process by taking repeated measurements of device dimensions. The sample variance $s^2$ from $n = 10$ measurements is related to the chi-square distribution. Specifically, $(n-1)s^2/\sigma^2$ follows a chi-square distribution with $k = n-1 = 9$ degrees of freedom.
+
+```{r}
+# Simulate sampling process to understand variance distribution
+set.seed(808)
+n_measurements <- 10
+true_sigma <- 2.5  # true population standard deviation
+
+# Generate many samples and compute their variances
+n_samples <- 1000
+sample_variances <- replicate(n_samples, {
+  measurements <- rnorm(n_measurements, mean = 100, sd = true_sigma)
+  var(measurements)
+})
+
+# The scaled variances follow chi-square
+scaled_variances <- (n_measurements - 1) * sample_variances / true_sigma^2
+cat("Sample variance from one experiment:", round(sample_variances[1], 2), "\n")
+cat("Mean of", n_samples, "sample variances:", round(mean(sample_variances), 2), "\n")
+cat("True variance (σ²):", true_sigma^2, "\n")
+cat("Mean of scaled variances:", round(mean(scaled_variances), 2), "\n")
+cat("Expected (df = ", n_measurements - 1, "):", n_measurements - 1)
+```
+
 ### Student's t Distribution
 
 The t-distribution arises when estimating the mean of a normally distributed population when the sample size is small and the population standard deviation is unknown.
@@ -513,6 +738,34 @@ legend("topright", c("Normal", "t (df=2)", "t (df=5)", "t (df=30)"),
 ```
 
 **R functions:** `dt()`, `pt()`, `qt()`, `rt()`
+
+### Sampling Process Example
+
+A pharmacologist is testing the effect of a new drug on blood pressure. She samples $n = 8$ patients and measures their blood pressure after treatment. The population mean $\mu$ and standard deviation $\sigma$ are unknown. To test whether the mean differs from a reference value, she computes a t-statistic: $t = \frac{\bar{x} - \mu_0}{s/\sqrt{n}}$, which follows a t-distribution with $\nu = n-1 = 7$ degrees of freedom under the null hypothesis.
+
+```{r}
+# Simulate t-statistic sampling distribution
+set.seed(909)
+n_patients <- 8
+true_mu <- 120  # true mean blood pressure
+true_sigma <- 12  # true SD
+mu_0 <- 120  # null hypothesis value (no change)
+
+# Simulate many experiments
+n_experiments <- 1000
+t_statistics <- replicate(n_experiments, {
+  blood_pressures <- rnorm(n_patients, mean = true_mu, sd = true_sigma)
+  sample_mean <- mean(blood_pressures)
+  sample_sd <- sd(blood_pressures)
+  # Compute t-statistic
+  (sample_mean - mu_0) / (sample_sd / sqrt(n_patients))
+})
+
+cat("First 10 t-statistics:", round(t_statistics[1:10], 2), "\n")
+cat("Mean of t-statistics:", round(mean(t_statistics), 2), "\n")
+cat("SD of t-statistics:", round(sd(t_statistics), 2), "\n")
+cat("Expected SD for t with df=7:", round(sqrt(7/(7-2)), 2))
+```
 
 ### F Distribution
 
@@ -545,6 +798,34 @@ legend("topright", c("F(5,20)", "F(10,20)", "F(20,20)"),
 ```
 
 **R functions:** `df()`, `pf()`, `qf()`, `rf()`
+
+### Sampling Process Example
+
+An ecologist is comparing the variability in body mass between two populations of birds. Population 1 has $n_1 = 12$ individuals and population 2 has $n_2 = 15$ individuals. To test whether the two populations have equal variances, she computes the F-statistic: $F = \frac{s_1^2}{s_2^2}$, which follows an F-distribution with $d_1 = n_1 - 1 = 11$ and $d_2 = n_2 - 1 = 14$ degrees of freedom when the true variances are equal.
+
+```{r}
+# Simulate F-statistic sampling distribution
+set.seed(1010)
+n1 <- 12
+n2 <- 15
+true_sigma1 <- 5  # true SD for population 1
+true_sigma2 <- 5  # true SD for population 2 (equal variances)
+
+# Simulate many paired samples
+n_comparisons <- 1000
+F_statistics <- replicate(n_comparisons, {
+  pop1_masses <- rnorm(n1, mean = 100, sd = true_sigma1)
+  pop2_masses <- rnorm(n2, mean = 100, sd = true_sigma2)
+  var1 <- var(pop1_masses)
+  var2 <- var(pop2_masses)
+  # Compute F-statistic
+  var1 / var2
+})
+
+cat("First 10 F-statistics:", round(F_statistics[1:10], 2), "\n")
+cat("Mean of F-statistics:", round(mean(F_statistics), 2), "\n")
+cat("Expected mean for F(11,14):", round(14/(14-2), 2))
+```
 
 ### Beta Distribution
 
@@ -582,6 +863,27 @@ legend("top", c("Beta(2,5)", "Beta(5,2)", "Beta(2,2)", "Beta(0.5,0.5)"),
 ```
 
 **R functions:** `dbeta()`, `pbeta()`, `qbeta()`, `rbeta()`
+
+### Sampling Process Example
+
+In population genetics, a researcher is estimating the frequency of a particular allele in a population. Based on prior studies, she has some information about the likely allele frequency, which can be encoded as a beta prior distribution. For example, if previous evidence suggests the allele is moderately common but variable, she might use a Beta(5, 3) distribution to represent her prior beliefs about the allele frequency $p$ before collecting new data.
+
+```{r}
+# Simulate prior distributions for allele frequencies
+set.seed(1111)
+alpha_param <- 5
+beta_param <- 3
+
+# Sample possible allele frequencies from prior
+n_simulations <- 1000
+prior_frequencies <- rbeta(n_simulations, shape1 = alpha_param, shape2 = beta_param)
+cat("Sample of prior allele frequencies:", round(prior_frequencies[1:10], 3), "\n")
+cat("Mean prior frequency:", round(mean(prior_frequencies), 3), "\n")
+cat("Expected mean (α/(α+β)):", round(alpha_param/(alpha_param + beta_param), 3), "\n")
+
+# In practice, these could be updated with observed data using Bayesian inference
+# For example: observing 15 allele A and 5 allele B would update to Beta(5+15, 3+5)
+```
 
 ## Summary Table
 

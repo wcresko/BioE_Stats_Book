@@ -421,19 +421,11 @@ for (k_val in c(3, 10, 30)) {
 
 ### Advantages
 
-- **Simple and intuitive**: Easy to understand and explain
-- **No training phase**: All computation happens at prediction time ("lazy learning")
-- **Non-parametric**: Makes no assumptions about data distribution
-- **Naturally handles multiclass problems**: No modification needed
-- **Captures complex patterns**: Can model non-linear decision boundaries
+KNN offers several appealing properties that make it a valuable tool in the classification toolkit. The algorithm is **simple and intuitive**—it's easy to understand the logic and explain predictions to non-technical audiences. Unlike many machine learning methods, KNN has **no training phase**; all computation happens at prediction time, a property sometimes called "lazy learning." This makes it trivial to update the model with new training data. The method is **non-parametric**, making no assumptions about the underlying data distribution, which allows it to adapt to complex patterns in the data. KNN **naturally handles multiclass problems** without any modification to the basic algorithm—simply take the majority vote among k neighbors regardless of how many classes exist. Finally, KNN can **capture complex, non-linear patterns** and decision boundaries that linear methods would miss entirely.
 
 ### Limitations
 
-- **Computationally expensive for large datasets**: Must compute distances to all training points for each prediction
-- **Sensitive to irrelevant features**: All features contribute equally to distance
-- **Requires feature scaling**: Variables on different scales bias the results
-- **Curse of dimensionality**: In high dimensions, all points become approximately equidistant
-- **No model to interpret**: Cannot identify which features are most important
+Despite these strengths, KNN has important limitations that restrict its applicability. The method is **computationally expensive for large datasets** because each prediction requires computing distances to all training points, which becomes prohibitive as datasets grow. KNN is **sensitive to irrelevant features**—since all features contribute equally to distance calculations, adding noise variables degrades performance. This sensitivity also means the method **requires careful feature scaling**; variables on different scales will dominate distance calculations and bias results. The algorithm suffers from the **curse of dimensionality**: in high-dimensional spaces, all points become approximately equidistant, making the notion of "nearest" neighbors less meaningful. Finally, KNN provides **no interpretable model**—unlike decision trees or linear models, you cannot easily identify which features are most important for making predictions, limiting its use when interpretability matters.
 
 ## Exercises
 

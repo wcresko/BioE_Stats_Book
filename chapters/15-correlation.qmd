@@ -400,6 +400,64 @@ Explore how outliers affect correlation:
 3. Use Spearman's correlation on the data with the outlier
 4. What do you conclude about robustness?
 
+```{r}
+#| eval: false
+# Your code here
+```
+
+### Exercise L.4: Partial Correlation
+
+You have three variables: temperature (T), enzyme activity (E), and pH (P). Both temperature and pH affect enzyme activity.
+
+```
+temperature <- c(20, 25, 30, 35, 40, 45, 50, 55, 60)
+pH <- c(5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 7.5, 7.0, 6.5)
+enzyme_activity <- c(12, 18, 25, 35, 42, 38, 28, 20, 15)
+```
+
+a) Calculate the correlation between temperature and enzyme activity
+b) Calculate the correlation between pH and enzyme activity
+c) Calculate the correlation between temperature and pH
+d) Fit a multiple regression model predicting enzyme activity from both temperature and pH
+e) Calculate the partial correlation between temperature and enzyme activity (controlling for pH) using the `ppcor` package or manually from residuals
+f) Interpret the difference between the simple and partial correlations
+
+```{r}
+#| eval: false
+# Your code here
+# install.packages("ppcor")  # if needed
+library(ppcor)
+```
+
+### Exercise L.5: Correlation Matrix and Visualization
+
+You have measurements of four morphological traits in a sample of fish:
+
+```
+set.seed(123)
+n <- 50
+body_length <- rnorm(n, mean = 150, sd = 20)
+body_weight <- 0.001 * body_length^3 + rnorm(n, sd = 50)
+fin_length <- 0.15 * body_length + rnorm(n, sd = 3)
+eye_diameter <- 8 + 0.05 * body_length + rnorm(n, sd = 1)
+
+fish_data <- data.frame(body_length, body_weight, fin_length, eye_diameter)
+```
+
+a) Calculate the correlation matrix for all four variables
+b) Create a pairs plot (scatterplot matrix) to visualize all pairwise relationships
+c) Use the `corrplot` package to create a correlation heatmap
+d) Which pairs of variables are most strongly correlated?
+e) For the pair with the strongest correlation, test whether it is significantly different from zero
+f) Are any of the relationships clearly non-linear? How does this affect the correlation coefficient?
+
+```{r}
+#| eval: false
+# Your code here
+# install.packages("corrplot")  # if needed
+library(corrplot)
+```
+
 ## Additional Resources
 
 - @logan2010biostatistical - Detailed coverage of correlation with biological examples

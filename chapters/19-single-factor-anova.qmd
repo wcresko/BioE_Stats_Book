@@ -15,7 +15,7 @@ Analysis of Variance (ANOVA) provides a solution. It tests whether any of the gr
 
 ## The ANOVA Framework
 
-ANOVA partitions the total variation in the data into components: variation between groups (due to treatment effects) and variation within groups (due to random error).
+Analysis of Variance (ANOVA), developed by Ronald A. Fisher [@fisher1925statistical], partitions the total variation in the data into components: variation between groups (due to treatment effects) and variation within groups (due to random error).
 
 ![ANOVA partitions total variation into between-group and within-group components](../images/Images_5b.016.jpeg){#fig-anova-partition fig-align="center"}
 

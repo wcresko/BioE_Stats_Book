@@ -24,12 +24,7 @@ The alternative hypothesis might be directional (the substitution increases the 
 
 Hypothesis testing follows a specific logic. We assume the null hypothesis is true and ask: how likely would we be to observe data as extreme as what we actually observed? If this probability is very small, we conclude that the null hypothesis is unlikely to be true and reject it in favor of the alternative.
 
-Key questions in hypothesis testing include:
-
-- What is the probability of rejecting a true null hypothesis?
-- What is the probability of failing to reject a false null hypothesis?
-- How do we decide when to reject the null hypothesis?
-- What can we conclude if we fail to reject?
+This framework naturally raises several key questions. What is the probability that we might reject a true null hypothesis, committing a false positive error? Conversely, what is the probability that we might fail to reject a false null hypothesis, missing a real effect? How do we decide when the evidence is strong enough to reject the null hypothesis? And perhaps most subtly, what can we legitimately conclude when we fail to reject the null—does this mean we've proven it true, or merely that we lack sufficient evidence against it?
 
 ## Type I and Type II Errors
 
@@ -52,12 +47,7 @@ A **Type II error** occurs when we fail to reject a false null hypothesis—conc
 
 Power analysis is essential for designing experiments that can actually detect effects of interest. A study with low power is unlikely to find real effects even when they exist—wasting resources and potentially leading to incorrect conclusions.
 
-The key factors affecting power are:
-
-1. **Effect size**: Larger effects are easier to detect
-2. **Sample size**: More data provides more information
-3. **Significance level ($\alpha$)**: Higher $\alpha$ increases power but also increases Type I error rate
-4. **Variability**: Less noise makes signals easier to detect
+Several key factors determine statistical power. **Effect size** matters fundamentally—larger effects are easier to detect than subtle ones. **Sample size** directly affects power because more data provides more information about the true state of nature. The chosen **significance level ($\alpha$)** creates a trade-off: higher $\alpha$ increases power to detect true effects but also increases the Type I error rate. Finally, **variability** in the data affects how clearly we can see signals; less noise makes true effects easier to detect, while high variability obscures even substantial effects.
 
 For a two-sample t-test, the relationship between these factors can be expressed approximately as:
 
@@ -275,13 +265,7 @@ The Null Hypothesis Significance Testing (NHST) framework, while widely used, ha
 
 ### Alternatives and Complements to NHST
 
-**Confidence intervals** provide more information than p-values alone, showing both the estimated effect and uncertainty.
-
-**Effect sizes** communicate the practical magnitude of results.
-
-**Bayesian methods** provide probability statements about hypotheses themselves (not just the data given the hypothesis).
-
-**Equivalence testing** can demonstrate that an effect is negligibly small, not just "not significantly different from zero."
+Several approaches complement or provide alternatives to traditional null hypothesis significance testing. **Confidence intervals** offer richer information than p-values alone, communicating both the estimated effect size and the uncertainty surrounding it in a single, interpretable summary. **Effect sizes** quantify the practical magnitude of results in standardized units, allowing comparison across studies and helping distinguish statistical significance from practical importance. **Bayesian methods** reframe inference entirely, providing direct probability statements about hypotheses themselves rather than about the data conditional on a hypothesis. Finally, **equivalence testing** allows researchers to demonstrate that an effect is negligibly small—actively supporting the conclusion that groups are practically equivalent rather than merely failing to find a significant difference.
 
 The American Statistical Association's 2016 statement on p-values emphasizes that p-values should not be used in isolation and that scientific conclusions should not be based solely on whether a p-value crosses a threshold.
 
@@ -337,6 +321,105 @@ Hypothesis testing provides a framework for using data to evaluate claims about 
 - Statistical significance does not imply practical importance
 
 In the following chapters, we apply this framework to specific tests: t-tests for comparing means, chi-squared tests for categorical data, and nonparametric alternatives when assumptions are violated.
+
+## Exercises
+
+### Exercise H.1: Understanding Type I and Type II Errors
+
+Consider a diagnostic test for a rare disease that affects 1% of the population. The test has a false positive rate (Type I error) of 5% and a false negative rate (Type II error) of 10%.
+
+a) Define the null and alternative hypotheses for this diagnostic test
+b) What does a Type I error mean in this context? What are the consequences?
+c) What does a Type II error mean in this context? What are the consequences?
+d) If 10,000 people are tested, how many false positives and false negatives would you expect?
+e) Of the people who test positive, what proportion actually have the disease? (This is related to the positive predictive value)
+
+```{r}
+#| eval: false
+# Your code here
+```
+
+### Exercise H.2: P-Values and Interpretation
+
+For each statement below, indicate whether it is a correct interpretation of p = 0.03:
+
+a) The probability that the null hypothesis is true is 0.03
+b) The probability of observing data this extreme or more extreme, given that the null hypothesis is true, is 0.03
+c) The probability that the result occurred by chance is 0.03
+d) There is a 97% probability that the alternative hypothesis is true
+e) If we repeated this experiment many times, we would expect to see results this extreme about 3% of the time if the null hypothesis were true
+
+For the correct interpretation(s), explain why they are correct. For the incorrect ones, explain the mistake.
+
+### Exercise H.3: Power Analysis
+
+You are planning a study to compare the effectiveness of two fertilizers on plant growth. Based on pilot data, you estimate the standard deviation of plant heights to be 12 cm. You want to detect a difference of 8 cm between treatments with 80% power at α = 0.05.
+
+a) Calculate the required sample size per group using the `pwr.t.test()` function
+b) Create a power curve showing how power changes with sample size for this effect size
+c) How much would the required sample size change if you wanted 90% power instead of 80%?
+d) If your budget only allows for 20 plants per group, what is the smallest effect size (in Cohen's d units) you could detect with 80% power?
+e) Discuss the trade-offs between sample size, power, and minimum detectable effect size
+
+```{r}
+#| eval: false
+# Your code here
+library(pwr)
+```
+
+### Exercise H.4: Multiple Testing Correction
+
+A genomics study tests 20,000 genes for differential expression between two conditions, using α = 0.05 for each test.
+
+a) If all null hypotheses are true (no genes are differentially expressed), how many false positives (Type I errors) would you expect on average?
+b) Apply the Bonferroni correction. What significance threshold should be used for each individual test?
+c) Why might the Bonferroni correction be too conservative in this context?
+d) Simulate a scenario where 100 genes are truly differentially expressed (with effect size d = 0.8, n = 10 per group) and 19,900 are not. How many true positives and false positives do you get with:
+   - No correction (α = 0.05)
+   - Bonferroni correction
+   - Use the `p.adjust()` function with method "fdr" for False Discovery Rate control
+
+```{r}
+#| eval: false
+# Your code here
+```
+
+### Exercise H.5: Confidence Intervals vs. P-Values
+
+You conduct an experiment measuring the effect of a drug on blood glucose levels. You measure 15 patients before and after treatment and find:
+- Mean difference: -12.3 mg/dL
+- 95% CI: [-22.1, -2.5]
+- p-value: 0.018
+
+a) Based on the confidence interval alone, what can you conclude about the null hypothesis that the drug has no effect?
+b) Explain the relationship between the confidence interval and the p-value in this example
+c) If you calculated a 99% confidence interval instead, would it include zero? Would the p-value be less than 0.01? Explain your reasoning.
+d) Generate simulated data consistent with these results and verify the relationship between the CI and p-value
+
+```{r}
+#| eval: false
+# Your code here
+```
+
+### Exercise H.6: Randomization Test
+
+You have two groups of seedlings grown under different light conditions:
+```
+group_A <- c(12.3, 14.1, 13.5, 15.2, 13.8, 14.9, 13.2, 14.5)
+group_B <- c(10.8, 11.5, 12.1, 11.2, 10.9, 12.4, 11.8, 11.3)
+```
+
+a) Calculate the observed difference in means (group A - group B)
+b) Perform a randomization test with 10,000 permutations to generate a null distribution
+c) Calculate the p-value from your randomization test
+d) Compare this to the p-value from a two-sample t-test
+e) Create a histogram of the null distribution with a vertical line showing the observed difference
+f) Under what circumstances might the randomization test be preferable to the t-test?
+
+```{r}
+#| eval: false
+# Your code here
+```
 
 ## Additional Resources
 
