@@ -10,22 +10,153 @@ theme_set(theme_minimal())
 
 ## The Challenge of High-Dimensional Data
 
-Modern biology generates datasets with many variables: gene expression across thousands of genes, metabolomic profiles with hundreds of compounds, morphological measurements on many traits. When datasets have many variables, visualization becomes impossible and statistical analysis becomes complicated.
+Modern biology generates datasets with many variables: gene expression across thousands of genes, metabolomic profiles with hundreds of compounds, morphological measurements on many traits. When datasets have many variables, visualization becomes challenging and statistical analysis becomes complicated.
 
-**Dimensionality reduction** creates a smaller set of new variables that capture most of the information in the original data. These techniques help us:
+A typical machine learning challenge might include hundreds or thousands of predictors. For example, to compare each of the 784 features in a digit recognition problem, we would need to create 306,936 scatterplots! Creating a single scatter-plot of all the data is impossible due to the high dimensionality.
+
+**Dimensionality reduction** creates a smaller set of new variables that capture most of the information in the original data. The general idea is to reduce the dimension of the dataset while preserving important characteristics, such as the distance between features or observations. These techniques help us:
 
 - Visualize high-dimensional data in 2D or 3D
 - Identify patterns and clusters
 - Remove noise and redundancy
-- Create composite variables for downstream analysis
+- Reduce complexity of downstream models
+- Create composite variables for analysis
 
 ## Principal Component Analysis (PCA)
 
-**Principal Component Analysis (PCA)** is the most widely used dimensionality reduction technique. It finds new variables (principal components) that are linear combinations of the originals, chosen to capture maximum variance.
+**Principal Component Analysis (PCA)** is the most widely used dimensionality reduction technique. It finds new variables (principal components) that are linear combinations of the originals, chosen to capture maximum variance. The technique behind it—the singular value decomposition—is also useful in many other contexts.
+
+### Intuition: Preserving Distance
+
+Before diving into the mathematics, let's build intuition with a simple example. Consider twin heights data where we have height measurements for 100 pairs of twins—some adults, some children.
+
+```{r}
+#| label: fig-twin-heights
+#| fig-cap: "Simulated twin heights showing two groups (adults and children) with high correlation between twins"
+#| fig-width: 6
+#| fig-height: 6
+set.seed(1988)
+n <- 100
+Sigma <- matrix(c(9, 9 * 0.9, 9 * 0.92, 9 * 1), 2, 2)
+x <- rbind(mvrnorm(n / 2, c(69, 69), Sigma),
+           mvrnorm(n / 2, c(55, 55), Sigma))
+
+lim <- c(48, 78)
+rafalib::mypar()
+plot(x, xlim = lim, ylim = lim,
+     xlab = "Twin 1 Height", ylab = "Twin 2 Height",
+     main = "Twin Heights: Adults and Children")
+lines(x[c(1, 2), ], col = "blue", lwd = 2)
+lines(x[c(2, 51), ], col = "red", lwd = 2)
+points(x[c(1, 2, 51), ], pch = 16)
+```
+
+The scatterplot reveals high correlation and two clear groups: adults (upper right) and children (lower left). We can compute distances between observations:
+
+```{r}
+d <- dist(x)
+cat("Distance between observations 1 and 2:", round(as.matrix(d)[1, 2], 2), "\n")
+cat("Distance between observations 2 and 51:", round(as.matrix(d)[2, 51], 2), "\n")
+```
+
+Now suppose we want to reduce from two dimensions to one while preserving these distances. A naive approach is to simply use one of the original variables:
+
+```{r}
+#| label: fig-naive-reduction
+#| fig-cap: "Using only one dimension (Twin 1 height) underestimates the true distances"
+#| fig-width: 6
+#| fig-height: 5
+z <- x[, 1]
+rafalib::mypar()
+plot(dist(x) / sqrt(2), dist(z),
+     xlab = "Original distance (scaled)", ylab = "One-dimension distance",
+     main = "Distance Approximation Using One Variable")
+abline(0, 1, col = "red")
+```
+
+This works reasonably well, but we can do better. Notice that the variation in the data lies mostly along the diagonal. If we transform to the average and difference:
+
+```{r}
+#| label: fig-better-reduction
+#| fig-cap: "After rotating to average and difference coordinates, distances are mostly explained by the first dimension"
+#| fig-width: 6
+#| fig-height: 6
+z <- cbind((x[, 2] + x[, 1]) / 2, x[, 2] - x[, 1])
+rafalib::mypar()
+plot(z, xlim = lim, ylim = lim - mean(lim),
+     xlab = "Average Height", ylab = "Difference",
+     main = "Transformed Coordinates")
+lines(z[c(1, 2), ], col = "blue", lwd = 2)
+lines(z[c(2, 51), ], col = "red", lwd = 2)
+points(z[c(1, 2, 51), ], pch = 16)
+```
+
+Now the distances are mostly explained by the first dimension (the average). Using just this one dimension gives better distance approximation:
+
+```{r}
+cat("Typical error with original variable:",
+    round(sd(dist(x) - dist(x[, 1]) * sqrt(2)), 2), "\n")
+cat("Typical error with average:",
+    round(sd(dist(x) - dist(z[, 1]) * sqrt(2)), 2), "\n")
+```
+
+The average of the twin heights is essentially the first principal component! PCA finds these optimal linear combinations automatically.
+
+### Linear Transformations
+
+Each row of the original matrix $X$ was transformed using a linear transformation to create $Z$:
+
+$$Z_{i,1} = a_{1,1} X_{i,1} + a_{2,1} X_{i,2}$$
+
+with $a_{1,1} = 0.5$ and $a_{2,1} = 0.5$ (the average).
+
+In matrix notation:
+$$
+Z = X A
+\mbox{ with }
+A = \begin{pmatrix}
+1/2 & 1 \\
+1/2 & -1
+\end{pmatrix}
+$$
+
+**Dimension reduction** can be described as applying a transformation $A$ to a matrix $X$ that moves the information to the first few columns of $Z = XA$, then keeping just these informative columns.
+
+### Orthogonal Transformations
+
+To preserve distances exactly, we need an **orthogonal transformation**—one where the columns of $A$ have unit length and are perpendicular:
+
+```{r}
+# Orthogonal transformation
+z[, 1] <- (x[, 1] + x[, 2]) / sqrt(2)
+z[, 2] <- (x[, 2] - x[, 1]) / sqrt(2)
+
+# This preserves the original distances exactly
+cat("Maximum distance difference:", max(abs(dist(z) - dist(x))), "\n")
+```
+
+An orthogonal rotation preserves all distances while reorganizing the variance. Now most variance is in the first dimension:
+
+```{r}
+#| label: fig-variance-concentration
+#| fig-cap: "After orthogonal rotation, the first dimension clearly separates adults from children"
+#| fig-width: 6
+#| fig-height: 4
+qplot(z[, 1], bins = 20, color = I("black"), fill = I("steelblue")) +
+  labs(x = "First Principal Component", y = "Count",
+       title = "PC1 Separates Adults from Children")
+```
+
+The first PC clearly shows the two groups. We've reduced two dimensions to one with minimal information loss because the original variables were highly correlated:
+
+```{r}
+cat("Correlation between twin heights:", round(cor(x[, 1], x[, 2]), 3), "\n")
+cat("Correlation between PCs:", round(cor(z[, 1], z[, 2]), 3), "\n")
+```
 
 ### The Eigenanalysis Foundation
 
-The key insight involves **eigenanalysis**: decomposing the covariance (or correlation) matrix of variables to find directions of maximum variation.
+The mathematical foundation involves **eigenanalysis**: decomposing the covariance (or correlation) matrix to find directions of maximum variation.
 
 Given a covariance matrix $\Sigma$, eigenanalysis finds:
 
@@ -33,6 +164,13 @@ Given a covariance matrix $\Sigma$, eigenanalysis finds:
 - **Eigenvalues**: The variance explained by each component
 
 The first principal component points in the direction of maximum variance. Each subsequent component is orthogonal (uncorrelated) and captures remaining variance in decreasing order.
+
+The total variability can be defined as the sum of variances:
+$$
+v_1 + v_2 + \cdots + v_p
+$$
+
+An orthogonal transformation preserves total variability but redistributes it. PCA finds the transformation that concentrates variance in the first few components.
 
 ![Geometric interpretation of principal components as directions of maximum variance](../images/Images_7a.006.jpeg){#fig-pca-geometry fig-align="center"}
 
@@ -110,6 +248,103 @@ biplot(iris_pca, col = c("gray50", "red"), cex = 0.7,
 
 Arrows show variable loadings—their direction and length indicate how each variable relates to the principal components.
 
+### MNIST Example: High-Dimensional Image Data
+
+The real power of PCA becomes apparent with truly high-dimensional data. The MNIST dataset of handwritten digits has 784 features (28×28 pixels). Can we reduce this dimensionality while preserving useful information?
+
+```{r}
+#| message: false
+library(dslabs)
+if (!exists("mnist")) mnist <- read_mnist()
+```
+
+Because pixels near each other on the image grid are correlated, we expect dimension reduction to work well:
+
+```{r}
+#| label: fig-mnist-pca
+#| fig-cap: "Variance explained by principal components of MNIST digit images. The first few PCs capture substantial variance."
+#| fig-width: 7
+#| fig-height: 5
+#| cache: true
+col_means <- colMeans(mnist$test$images)
+pca <- prcomp(mnist$train$images)
+
+# Scree plot
+pc <- 1:ncol(mnist$test$images)
+qplot(pc[1:50], pca$sdev[1:50], geom = "line") +
+  labs(x = "Principal Component", y = "Standard Deviation",
+       title = "MNIST Scree Plot (first 50 PCs)")
+```
+
+The first few PCs capture substantial variance:
+
+```{r}
+summary(pca)$importance[, 1:5]
+```
+
+Even with just two dimensions, we can see structure related to digit class:
+
+```{r}
+#| label: fig-mnist-pca-scores
+#| fig-cap: "First two principal components of MNIST data colored by digit label. Different digits occupy different regions of PC space."
+#| fig-width: 8
+#| fig-height: 6
+data.frame(PC1 = pca$x[, 1], PC2 = pca$x[, 2],
+           label = factor(mnist$train$label)) %>%
+  sample_n(2000) %>%
+  ggplot(aes(PC1, PC2, fill = label)) +
+  geom_point(cex = 3, pch = 21, alpha = 0.7) +
+  labs(title = "MNIST Digits in PC Space")
+```
+
+We can visualize what each PC "looks for" by reshaping the loadings back to the 28×28 grid:
+
+```{r}
+#| label: fig-mnist-loadings
+#| fig-cap: "First four principal component loadings visualized as images. Each PC captures different aspects of digit structure."
+#| fig-width: 9
+#| fig-height: 3
+library(RColorBrewer)
+tmp <- lapply(1:4, function(i) {
+  expand.grid(Row = 1:28, Column = 1:28) %>%
+    mutate(id = i, label = paste0("PC", i),
+           value = pca$rotation[, i])
+})
+tmp <- Reduce(rbind, tmp)
+
+tmp %>%
+  ggplot(aes(Row, Column, fill = value)) +
+  geom_raster() +
+  scale_y_reverse() +
+  scale_fill_gradientn(colors = brewer.pal(9, "RdBu")) +
+  facet_wrap(~label, nrow = 1) +
+  theme_minimal() +
+  labs(title = "PCA Loadings as Images")
+```
+
+### Applying PCA to Improve Classification
+
+PCA can reduce model complexity while maintaining predictive performance. Let's use 36 PCs (explaining ~80% of variance) for kNN classification:
+
+```{r}
+#| cache: true
+library(caret)
+k <- 36
+x_train <- pca$x[, 1:k]
+y <- factor(mnist$train$labels)
+fit <- knn3(x_train, y)
+
+# Transform test set using training PCA
+x_test <- sweep(mnist$test$images, 2, col_means) %*% pca$rotation
+x_test <- x_test[, 1:k]
+
+# Predict and evaluate
+y_hat <- predict(fit, x_test, type = "class")
+confusionMatrix(y_hat, factor(mnist$test$labels))$overall["Accuracy"]
+```
+
+With just 36 dimensions (instead of 784), we achieve excellent accuracy. This demonstrates the power of PCA for both visualization and model simplification.
+
 ## Principal Coordinate Analysis (PCoA)
 
 While PCA uses correlations among variables, **Principal Coordinate Analysis (PCoA)** (also called Metric Multidimensional Scaling) starts with a dissimilarity matrix among observations. This is valuable when:
@@ -182,77 +417,6 @@ PCA and metric PCoA produce scores on a ratio scale—differences between scores
 
 Non-metric multidimensional scaling (NMDS) produces ordinal rankings only. NMDS scores should **not** be used in parametric analyses like ANOVA or regression.
 :::
-
-## Cluster Analysis
-
-**Cluster analysis** groups observations based on their similarity. Unlike PCA, which creates new continuous variables, clustering assigns observations to discrete groups.
-
-### Hierarchical Clustering
-
-**Hierarchical clustering** builds a tree (dendrogram) of nested clusters. At each step, it either combines the most similar observations/clusters (agglomerative) or splits the most dissimilar (divisive).
-
-```{r}
-#| label: fig-hierarchical-clustering
-#| fig-cap: "Hierarchical clustering dendrogram of iris data with three clusters highlighted"
-#| fig-width: 8
-#| fig-height: 5
-# Hierarchical clustering
-iris_scaled <- scale(iris[, 1:4])
-hc <- hclust(dist(iris_scaled), method = "complete")
-plot(hc, labels = FALSE, main = "Hierarchical Clustering of Iris")
-rect.hclust(hc, k = 3, border = "red")
-```
-
-Different **linkage methods** define how cluster distances are calculated:
-
-- **Complete**: Maximum distance between points in different clusters
-- **Single**: Minimum distance (tends to chain)
-- **Average**: Mean distance between all pairs
-- **Ward's**: Minimizes within-cluster variance
-
-### K-Means Clustering
-
-**K-means** partitions data into K groups by minimizing within-cluster variance. It requires specifying K in advance.
-
-```{r}
-set.seed(42)
-km <- kmeans(iris_scaled, centers = 3, nstart = 20)
-
-# Compare to true species
-table(Cluster = km$cluster, Species = iris$Species)
-```
-
-The `nstart` parameter runs the algorithm multiple times with different starting points, reducing sensitivity to initialization.
-
-### Choosing the Number of Clusters
-
-Several methods help determine the optimal number of clusters:
-
-```{r}
-#| label: fig-cluster-optimization
-#| fig-cap: "Elbow method and silhouette analysis for determining optimal number of clusters"
-#| fig-width: 8
-#| fig-height: 4
-# Elbow method: look for bend in within-cluster sum of squares
-wss <- sapply(1:10, function(k) {
-  kmeans(iris_scaled, centers = k, nstart = 20)$tot.withinss
-})
-
-par(mfrow = c(1, 2))
-plot(1:10, wss, type = "b", pch = 19,
-     xlab = "Number of Clusters", ylab = "Within-cluster SS",
-     main = "Elbow Method")
-
-# Silhouette method
-library(cluster)
-sil_width <- sapply(2:10, function(k) {
-  km <- kmeans(iris_scaled, centers = k, nstart = 20)
-  mean(silhouette(km$cluster, dist(iris_scaled))[, "sil_width"])
-})
-plot(2:10, sil_width, type = "b", pch = 19,
-     xlab = "Number of Clusters", ylab = "Average Silhouette Width",
-     main = "Silhouette Method")
-```
 
 ## MANOVA: Multivariate Analysis of Variance
 
@@ -453,9 +617,10 @@ barplot(scaling_df$LD1, names.arg = scaling_df$Variable,
 | PCA | Variables | Continuous scores | None | Reducing correlated variables |
 | PCoA | Distance matrix | Continuous scores | None | Preserving sample distances |
 | NMDS | Distance matrix | Ordinal scores | None | Ecological community data |
-| Cluster Analysis | Variables or distances | Group assignments | None | Finding natural groupings |
 | MANOVA | Variables + groups | Test statistics | Groups known | Testing group differences |
 | DFA | Variables + groups | Discriminant scores | Groups known | Classifying observations |
+
+For clustering methods (hierarchical, k-means) that group observations based on similarity, see @sec-clustering.
 
 ## Using Ordination Scores in Further Analyses
 
@@ -492,15 +657,51 @@ summary(aov(PC1 ~ Species, data = pc_scores))
 
 6. **Interpret biologically**: What do the patterns mean in your system?
 
+## Exercises
+
+1. We want to explore the `tissue_gene_expression` predictors by plotting them.
+
+```{r}
+#| eval: false
+data("tissue_gene_expression")
+dim(tissue_gene_expression$x)
+```
+
+We want to get an idea of which observations are close to each other, but the predictors are 500-dimensional so plotting is difficult. Plot the first two principal components with color representing tissue type.
+
+2. The predictors for each observation are measured on the same device and experimental procedure. This introduces biases that can affect all the predictors from one observation. For each observation, compute the average across all predictors and then plot this against the first PC with color representing tissue. Report the correlation.
+
+3. We see an association with the first PC and the observation averages. Redo the PCA but only after removing the center (row means).
+
+4. For the first 10 PCs, make a boxplot showing the values for each tissue.
+
+5. Plot the percent variance explained by PC number. Hint: use the `summary` function.
+
+6. Load the following dataset and compute distances:
+
+```{r}
+#| eval: false
+data("tissue_gene_expression")
+```
+
+Compare the distance between the first two observations (both cerebellums), the 39th and 40th (both colons), and the 73rd and 74th (both endometriums). Are observations of the same tissue type closer to each other?
+
+7. Make an image plot of all the distances using the `image` function. Hint: convert the distance object to a matrix first. Does the pattern suggest that observations of the same tissue type are generally closer?
+
 ## Summary
 
 - Dimensionality reduction creates fewer variables that capture most information
-- PCA finds linear combinations maximizing variance; useful for correlated variables
-- PCoA works from distance matrices; useful for ecological and genetic data
-- Cluster analysis groups similar observations together
-- MANOVA tests whether groups differ on multiple response variables simultaneously
-- DFA finds combinations that best discriminate known groups
-- These methods can be combined: use PCA to reduce dimensions, then cluster or classify
+- **PCA** finds linear combinations that maximize variance
+  - Orthogonal transformations preserve distances while concentrating variance
+  - Highly correlated variables can be effectively reduced to fewer dimensions
+  - Loadings show which original variables contribute to each PC
+  - The twin heights example shows how correlated variables compress to one dimension
+- **PCoA** works from distance matrices; useful for ecological and genetic data
+- **NMDS** preserves rank-order of distances; robust for non-normal data
+- **MANOVA** tests whether groups differ on multiple response variables simultaneously
+- **DFA/LDA** finds combinations that best discriminate known groups
+- These methods can be combined: use PCA to reduce dimensions, then classify
+- PCA can substantially reduce model complexity while maintaining predictive performance
 
 ## Additional Resources
 

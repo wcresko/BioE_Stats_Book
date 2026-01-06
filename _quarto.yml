@@ -61,6 +61,8 @@ book:
         - chapters/22-statistical-learning.qmd
         - chapters/22b-bayesian-statistics.qmd
         - chapters/21-glm.qmd
+        - chapters/22c-classification.qmd
+        - chapters/22d-clustering.qmd
         - chapters/23-dimensionality-reduction.qmd
         - chapters/24-high-performance-computing.qmd
 
