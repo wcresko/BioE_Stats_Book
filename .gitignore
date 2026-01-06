@@ -13,8 +13,7 @@ _freeze/
 *_cache/
 **/*_cache/
 
-# Rendered output (regenerated on build)
-docs/
+# Note: docs/ is NOT ignored - it's needed for GitHub Pages
 
 # Large data files
 *.rdb
