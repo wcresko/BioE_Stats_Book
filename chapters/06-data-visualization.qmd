@@ -63,13 +63,15 @@ Data visualization is both an art and a science. A well-designed graphic can rev
 
 Just as grammar provides rules for constructing sentences from words, the grammar of graphics provides rules for constructing visualizations from components. Every graphic is composed of data, aesthetic mappings that connect variables to visual properties, and geometric objects that represent data points. Additional components like scales, statistical transformations, coordinate systems, and facets allow for sophisticated customizations.
 
-![](../images/images_4a.017.jpeg){fig-align="center"}
+![The grammar of graphics breaks visualizations into fundamental components](../images/images_4a.017.jpeg){#fig-grammar-graphics fig-align="center"}
 
 ## Building Plots with ggplot2
 
 The basic structure of a ggplot2 call begins with the `ggplot()` function, which creates a coordinate system. You add layers to this foundation using the `+` operator.
 
 ```{r}
+#| label: fig-basic-ggplot
+#| fig-cap: "A basic scatterplot of highway fuel efficiency versus engine displacement"
 #| fig-width: 7
 #| fig-height: 5
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) +
@@ -83,9 +85,11 @@ This creates a scatterplot of highway fuel efficiency against engine displacemen
 Aesthetics are visual properties of the plot. Beyond position (x and y), common aesthetics include color, size, shape, and transparency (alpha). You can map variables to these aesthetics to encode additional information.
 
 ```{r}
+#| label: fig-aesthetic-mapping
+#| fig-cap: "Scatterplot with color mapped to vehicle class"
 #| fig-width: 8
 #| fig-height: 5
-ggplot(mpg, aes(x = displ, y = hwy, color = class)) + 
+ggplot(mpg, aes(x = displ, y = hwy, color = class)) +
   geom_point(size = 3, alpha = 0.7)
 ```
 
@@ -100,6 +104,8 @@ Geometric objects, or geoms, determine what type of plot you create. Different g
 Points are good for showing the relationship between two continuous variables:
 
 ```{r}
+#| label: fig-geom-point
+#| fig-cap: "Simple scatterplot using geom_point()"
 #| fig-width: 7
 #| fig-height: 4
 ggplot(mpg, aes(x = displ, y = hwy)) +
@@ -111,6 +117,8 @@ ggplot(mpg, aes(x = displ, y = hwy)) +
 Lines connect points in order, useful for time series or showing trends:
 
 ```{r}
+#| label: fig-geom-smooth
+#| fig-cap: "Scatterplot with smoothed trend line and confidence interval"
 #| fig-width: 7
 #| fig-height: 4
 ggplot(mpg, aes(x = displ, y = hwy)) +
@@ -125,6 +133,8 @@ The `geom_smooth()` function adds a smoothed conditional mean with confidence in
 Bar charts show counts or summaries of categorical data:
 
 ```{r}
+#| label: fig-geom-bar
+#| fig-cap: "Bar chart showing diamond counts by cut quality"
 #| fig-width: 7
 #| fig-height: 4
 ggplot(diamonds, aes(x = cut)) +
@@ -134,6 +144,8 @@ ggplot(diamonds, aes(x = cut)) +
 Use `fill` to color bars by another variable:
 
 ```{r}
+#| label: fig-bar-dodge
+#| fig-cap: "Grouped bar chart showing diamond counts by cut and clarity"
 #| fig-width: 8
 #| fig-height: 4
 ggplot(diamonds, aes(x = cut, fill = clarity)) +
@@ -145,6 +157,8 @@ ggplot(diamonds, aes(x = cut, fill = clarity)) +
 Histograms show the distribution of a continuous variable:
 
 ```{r}
+#| label: fig-histogram
+#| fig-cap: "Histogram showing the distribution of diamond carat weights"
 #| fig-width: 7
 #| fig-height: 4
 ggplot(diamonds, aes(x = carat)) +
@@ -156,6 +170,8 @@ ggplot(diamonds, aes(x = carat)) +
 Boxplots summarize distributions and highlight outliers:
 
 ```{r}
+#| label: fig-boxplot
+#| fig-cap: "Boxplot comparing highway fuel efficiency across vehicle classes"
 #| fig-width: 8
 #| fig-height: 4
 ggplot(mpg, aes(x = class, y = hwy)) +
@@ -167,6 +183,8 @@ ggplot(mpg, aes(x = class, y = hwy)) +
 You can layer multiple geoms to create richer visualizations:
 
 ```{r}
+#| label: fig-combined-geoms
+#| fig-cap: "Combining multiple geoms: points colored by class with a black trend line"
 #| fig-width: 7
 #| fig-height: 5
 ggplot(mpg, aes(x = displ, y = hwy)) +
@@ -179,6 +197,8 @@ ggplot(mpg, aes(x = displ, y = hwy)) +
 Faceting creates small multiples—separate panels for subsets of the data. This is powerful for comparing patterns across groups.
 
 ```{r}
+#| label: fig-facet-wrap
+#| fig-cap: "Small multiples showing the displacement-efficiency relationship for each vehicle class"
 #| fig-width: 9
 #| fig-height: 6
 ggplot(mpg, aes(x = displ, y = hwy)) +
@@ -189,6 +209,8 @@ ggplot(mpg, aes(x = displ, y = hwy)) +
 Use `facet_grid()` for two-variable faceting:
 
 ```{r}
+#| label: fig-facet-grid
+#| fig-cap: "Two-variable faceting by drive type (rows) and number of cylinders (columns)"
 #| fig-width: 9
 #| fig-height: 6
 ggplot(mpg, aes(x = displ, y = hwy)) +
@@ -201,6 +223,8 @@ ggplot(mpg, aes(x = displ, y = hwy)) +
 Add informative labels with the `labs()` function:
 
 ```{r}
+#| label: fig-labs-demo
+#| fig-cap: "A well-labeled plot with title, subtitle, caption, and axis labels"
 #| fig-width: 8
 #| fig-height: 5
 ggplot(mpg, aes(x = displ, y = hwy, color = class)) +
@@ -221,6 +245,8 @@ ggplot(mpg, aes(x = displ, y = hwy, color = class)) +
 Themes control the non-data aspects of the plot—background, grid lines, fonts, etc. ggplot2 includes several built-in themes:
 
 ```{r}
+#| label: fig-theme-classic
+#| fig-cap: "Using theme_classic() for a clean, publication-ready appearance"
 #| fig-width: 7
 #| fig-height: 4
 ggplot(mpg, aes(x = displ, y = hwy)) +
@@ -234,7 +260,7 @@ Other built-in themes include `theme_minimal()`, `theme_bw()`, `theme_light()`, 
 
 Choosing an appropriate visualization depends on the types of variables you want to display and the message you want to convey.
 
-![](../images/Chart_flow_chart.jpeg){fig-align="center"}
+![Choosing the right visualization depends on your data types and question](../images/Chart_flow_chart.jpeg){#fig-chart-selection fig-align="center"}
 
 For one categorical variable, use bar charts. For one continuous variable, use histograms or density plots. For two continuous variables, use scatterplots. For one continuous and one categorical, use boxplots or violin plots. For two categorical variables, use stacked or grouped bar charts or heat maps.
 
@@ -259,6 +285,8 @@ Key principles include:
 By default, R orders categorical variables alphabetically, which is rarely the most informative arrangement. Use `reorder()` to order categories by a meaningful value:
 
 ```{r}
+#| label: fig-order-alphabetical
+#| fig-cap: "Bar chart with default alphabetical ordering (often not ideal)"
 #| fig-width: 7
 #| fig-height: 4
 
@@ -277,6 +305,8 @@ ggplot(sample_data, aes(x = treatment, y = response)) +
 ```
 
 ```{r}
+#| label: fig-order-meaningful
+#| fig-cap: "Bar chart with categories ordered by value for easier comparison"
 #| fig-width: 7
 #| fig-height: 4
 
@@ -293,6 +323,8 @@ sample_data |>
 The `reorder()` function takes a categorical variable and a numeric variable, reordering the categories by the numeric values. For horizontal bar charts (which are often easier to read), add `coord_flip()`:
 
 ```{r}
+#| label: fig-horizontal-bars
+#| fig-cap: "Horizontal bar chart with coord_flip() for easier reading of long labels"
 #| fig-width: 7
 #| fig-height: 4
 
@@ -366,6 +398,8 @@ This hierarchy explains why bar charts work better than pie charts for comparing
 When possible, encode your most important data using position. Scatterplots, line graphs, and dot plots all use position effectively:
 
 ```{r}
+#| label: fig-bar-vs-pie
+#| fig-cap: "Comparing bar charts and pie charts: position-based encoding is easier to judge than angles"
 #| fig-width: 8
 #| fig-height: 4
 # Compare a pie chart vs. bar chart for the same data
@@ -405,6 +439,8 @@ A contentious issue in data visualization is whether the y-axis should always st
 For bar charts, the length of the bar represents the magnitude of the value. If the axis doesn't start at zero, the visual representation misrepresents the data:
 
 ```{r}
+#| label: fig-truncated-axis
+#| fig-cap: "Truncated axes in bar charts can mislead readers about the magnitude of differences"
 #| fig-width: 8
 #| fig-height: 4
 # Demonstration of misleading truncated axis
@@ -436,6 +472,8 @@ p_trunc + p_full
 For position-based encodings like scatterplots and line charts, zero doesn't need to be included if it would waste space and obscure meaningful variation:
 
 ```{r}
+#| label: fig-zero-context
+#| fig-cap: "For line charts, including zero depends on whether it has meaning for the variable"
 #| fig-width: 8
 #| fig-height: 4
 # Temperature data - zero would be meaningless
@@ -478,6 +516,8 @@ Sometimes the raw data doesn't visualize well. Transformations can reveal patter
 Many biological variables—gene expression, population sizes, concentrations—follow approximately log-normal distributions with long right tails. Log transformation can make patterns visible:
 
 ```{r}
+#| label: fig-log-transform
+#| fig-cap: "Log transformation reveals patterns in skewed data that span multiple orders of magnitude"
 #| fig-width: 8
 #| fig-height: 4
 # Simulated gene expression data
@@ -569,6 +609,8 @@ Approximately 8% of men and 0.5% of women have some form of color vision deficie
 - Supplement color with shape or pattern when possible
 
 ```{r}
+#| label: fig-accessible-design
+#| fig-cap: "Using both color and shape ensures accessibility for colorblind viewers"
 #| fig-width: 8
 #| fig-height: 4
 # Good practice: color + shape
@@ -598,6 +640,8 @@ Use viridis, plasma, or other perceptually uniform scales instead.
 **Small multiples**—the same chart repeated for different subsets of the data—are remarkably effective for comparison. Edward Tufte called them "the best design solution for a wide range of problems in data presentation."
 
 ```{r}
+#| label: fig-small-multiples
+#| fig-cap: "Small multiples allow easy comparison of patterns across groups and time periods"
 #| fig-width: 9
 #| fig-height: 6
 # Small multiples example
@@ -629,6 +673,8 @@ Beyond the principles discussed, watch out for these common errors:
 **Overplotting**: Too many points obscure patterns. Use transparency, jittering, or density plots.
 
 ```{r}
+#| label: fig-overplotting
+#| fig-cap: "Using transparency (alpha) to reveal density when many points overlap"
 #| fig-width: 8
 #| fig-height: 4
 # Overplotting solution
@@ -661,17 +707,17 @@ p_over + p_alpha
 
 Recognizing bad graphics helps you avoid making them.
 
-![](../images/images_4a.003.jpeg){fig-align="center"}
+![Examples of poor graphic design that obscure rather than reveal patterns](../images/images_4a.003.jpeg){#fig-poor-graphics fig-align="center"}
 
 Ticker-tape style displays make it hard to see patterns. Lines connecting unrelated points mislead. Pie charts make comparisons difficult because humans are poor at judging angles. Three-dimensional effects distort perception without adding information.
 
-![](../images/images_4a.005.jpeg){fig-align="center"}
+![Pie charts and 3D effects make comparisons difficult and distort perception](../images/images_4a.005.jpeg){#fig-poor-graphics-2 fig-align="center"}
 
 ## A Famous Good Example
 
 Charles Minard's 1869 map of Napoleon's Russian campaign is often cited as one of the best statistical graphics ever made. It displays six variables: the size of the army, its location (latitude and longitude), direction of movement, temperature, and date—all in a single coherent image.
 
-![](../images/images_4a.009.jpeg){fig-align="center"}
+![Minard's 1869 map of Napoleon's Russian campaign displays six variables in a single coherent image](../images/images_4a.009.jpeg){#fig-minard fig-align="center"}
 
 The graphic tells a story. You can see the army shrink as it advances, the devastating losses during the retreat, and the correlation with plummeting temperatures. No legend is needed; the meaning is immediately apparent.
 

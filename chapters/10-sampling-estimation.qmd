@@ -48,6 +48,8 @@ The sampling distribution has remarkable properties:
 3. For large samples, it is approximately normal (Central Limit Theorem)
 
 ```{r}
+#| label: fig-sampling-dist
+#| fig-cap: "Sampling distributions of the mean become narrower and more normal as sample size increases"
 #| fig-width: 8
 #| fig-height: 6
 # Demonstrate sampling distribution
@@ -105,7 +107,7 @@ cat("Standard error with n=50:", round(se_50, 3), "\n")
 cat("Ratio:", round(se_5/se_50, 2), "(theoretical: √10 =", round(sqrt(10), 2), ")\n")
 ```
 
-![](../images/week_2.026.jpeg){fig-align="center"}
+![The standard error decreases as sample size increases](../images/week_2.026.jpeg){#fig-standard-error fig-align="center"}
 
 ## Confidence Intervals
 
@@ -117,7 +119,7 @@ $$\bar{x} \pm t_{\alpha/2} \times \frac{s}{\sqrt{n}}$$
 
 where $t_{\alpha/2}$ is the critical value from the t-distribution with $n-1$ degrees of freedom.
 
-![](../images/week_2.027.jpeg){fig-align="center"}
+![Confidence intervals provide a range of plausible values for the parameter](../images/week_2.027.jpeg){#fig-ci-concept fig-align="center"}
 
 The interpretation requires care: a 95% confidence interval means that if we repeated this procedure many times, 95% of the resulting intervals would contain the true parameter. Any particular interval either does or does not contain the true value—we just don't know which.
 
@@ -140,7 +142,7 @@ cat("95% CI: [", round(lower, 2), ",", round(upper, 2), "]\n")
 t.test(sample_data)$conf.int
 ```
 
-![](../images/week_2.028.jpeg){fig-align="center"}
+![The interpretation of confidence intervals requires understanding what is random](../images/week_2.028.jpeg){#fig-ci-interpretation fig-align="center"}
 
 ## The Central Limit Theorem in Practice
 
@@ -153,6 +155,8 @@ This is why confidence intervals work. This is why the normal distribution appea
 Let's see the CLT in action with a highly non-normal distribution. We'll sample from an exponential distribution (heavily right-skewed) and watch how the sampling distribution of the mean becomes normal:
 
 ```{r}
+#| label: fig-clt-exponential
+#| fig-cap: "The Central Limit Theorem in action: sampling distributions of means from a skewed exponential population become normal"
 #| fig-width: 9
 #| fig-height: 7
 set.seed(42)
@@ -237,6 +241,8 @@ cat("True proportion:", true_proportion * 100, "%\n")
 The margin of error is inversely proportional to $\sqrt{n}$. This has important practical implications:
 
 ```{r}
+#| label: fig-moe-sample-size
+#| fig-cap: "Margin of error decreases with sample size, but with diminishing returns"
 #| fig-width: 7
 #| fig-height: 5
 # Margin of error as a function of sample size
@@ -264,6 +270,8 @@ Notice the diminishing returns: going from n = 100 to n = 400 cuts the margin of
 When two candidates are within the margin of error of each other, the poll results are consistent with either candidate leading. This is not a flaw of polling—it reflects genuine uncertainty.
 
 ```{r}
+#| label: fig-poll-simulation
+#| fig-cap: "Simulated polls showing how confidence intervals vary: about 95% contain the true proportion"
 #| fig-width: 8
 #| fig-height: 5
 set.seed(456)
@@ -335,6 +343,8 @@ The correct interpretation of a 95% confidence interval is:
 The first two statements incorrectly assign probability to the parameter, which is fixed. The third confuses a confidence interval for a reference range.
 
 ```{r}
+#| label: fig-ci-coverage
+#| fig-cap: "Monte Carlo demonstration of confidence interval coverage: about 95% of intervals (blue) contain the true mean"
 #| fig-width: 8
 #| fig-height: 6
 # Visual demonstration: Monte Carlo simulation of CI coverage
@@ -463,6 +473,8 @@ The key insight is elegant: we can estimate the sampling distribution of a stati
 4. The distribution of bootstrap statistics approximates the sampling distribution
 
 ```{r}
+#| label: fig-bootstrap-dist
+#| fig-cap: "Bootstrap distribution of the sample mean with 95% confidence interval bounds"
 #| fig-width: 8
 #| fig-height: 5
 # Bootstrap estimation of the sampling distribution of the mean
@@ -575,6 +587,8 @@ MLEs have desirable properties: they are consistent (converge to true values as 
 Simulation provides powerful intuition for statistical concepts. By repeatedly sampling from known populations, we can directly observe sampling distributions.
 
 ```{r}
+#| label: fig-estimator-properties
+#| fig-cap: "Properties of estimators through simulation: sample means are unbiased and their variability decreases with n"
 #| fig-width: 9
 #| fig-height: 6
 # Exploring properties of estimators through simulation

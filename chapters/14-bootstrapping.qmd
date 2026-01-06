@@ -13,7 +13,7 @@ For the sample mean, we have elegant formulas for standard errors and confidence
 
 The bootstrap, invented by Bradley Efron in 1979, provides a general solution. The key insight is that we can learn about the sampling distribution of a statistic by resampling from our data. If our sample is representative of the population, then samples drawn from our sample (with replacement) mimic what we would get from repeated sampling from the population.
 
-![](../images/week_2.030.jpeg){fig-align="center"}
+![Bootstrap resampling procedure showing how multiple samples are drawn with replacement from the original data](../images/week_2.030.jpeg){#fig-bootstrap-resampling fig-align="center"}
 
 ## Why the Bootstrap Works
 
@@ -31,6 +31,8 @@ The basic algorithm is straightforward:
 4. Use the distribution of bootstrap statistics to estimate standard error or confidence intervals
 
 ```{r}
+#| label: fig-bootstrap-dist
+#| fig-cap: "Bootstrap distribution of the median from 1000 resamples, showing the estimated sampling distribution with 95% confidence intervals"
 #| fig-width: 7
 #| fig-height: 5
 # Bootstrap example: estimating standard error of median

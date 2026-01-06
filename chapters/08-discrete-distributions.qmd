@@ -24,13 +24,15 @@ The binomial coefficient $\binom{n}{k}$ counts the number of ways to arrange $k$
 The mean of a binomial distribution is $\mu = np$ and the variance is $\sigma^2 = np(1-p)$.
 
 ```{r}
+#| label: fig-binomial-dist
+#| fig-cap: "Distribution of heads from 1000 simulated experiments of 20 fair coin flips"
 #| fig-width: 7
 #| fig-height: 5
 # Simulate 1000 experiments of 20 coin flips each
 set.seed(42)
 heads <- rbinom(n = 1000, size = 20, prob = 0.5)
 
-hist(heads, breaks = 0:20, col = "steelblue", 
+hist(heads, breaks = 0:20, col = "steelblue",
      main = "Distribution of Heads in 20 Coin Flips",
      xlab = "Number of Heads")
 ```
@@ -62,9 +64,11 @@ $$P(Y = r) = \frac{e^{-\lambda} \lambda^r}{r!}$$
 
 A remarkable property of the Poisson distribution is that the mean and variance are both equal to $\lambda$. This provides a simple check: if your count data has variance much larger than its mean, a simple Poisson model may not be appropriate (a situation called overdispersion, common in biological data).
 
-![](../images/week_2.004.jpeg){fig-align="center"}
+![The Poisson distribution models the number of events in a fixed interval](../images/week_2.004.jpeg){#fig-poisson-concept fig-align="center"}
 
 ```{r}
+#| label: fig-poisson-lambda
+#| fig-cap: "Poisson distributions with different rate parameters (λ) showing how the distribution becomes more symmetric as λ increases"
 #| fig-width: 8
 #| fig-height: 5
 # Show Poisson distributions with different lambda values
@@ -77,7 +81,7 @@ for (lambda in c(1, 3, 5, 10)) {
 }
 ```
 
-![](../images/week_2.005.jpeg){fig-align="center"}
+![As λ increases, the Poisson distribution approaches a normal distribution](../images/week_2.005.jpeg){#fig-poisson-normal fig-align="center"}
 
 As $\lambda$ increases, the Poisson distribution becomes more symmetric and approaches a normal distribution.
 
@@ -131,6 +135,8 @@ The mean is $1/p$ and the variance is $(1-p)/p^2$.
 For example, if the probability of a cell successfully transfecting is 0.1, the geometric distribution tells us how many cells we need to attempt before getting our first successful transfection.
 
 ```{r}
+#| label: fig-geometric-dist
+#| fig-cap: "The geometric distribution shows the probability of first success on each trial number"
 #| fig-width: 6
 #| fig-height: 4
 # Probability of first success on each trial
@@ -144,7 +150,7 @@ plot(trials, probs, type = "h", lwd = 2, col = "steelblue",
      main = "Geometric Distribution (p = 0.1)")
 ```
 
-![](../images/prob.017.jpeg){fig-align="center"}
+![The geometric distribution describes waiting time until the first success](../images/prob.017.jpeg){#fig-geometric-concept fig-align="center"}
 
 ## The Negative Binomial Distribution
 
@@ -156,7 +162,7 @@ The mean is $r/p$ and the variance is $r(1-p)/p^2$.
 
 Consider a predator that must capture 10 prey to reach reproductive maturity. If the daily probability of catching prey is 0.1, the negative binomial distribution describes when the predator will be ready to reproduce.
 
-![](../images/prob.018.jpeg){fig-align="center"}
+![The negative binomial distribution generalizes the geometric to waiting for r successes](../images/prob.018.jpeg){#fig-negbinom-concept fig-align="center"}
 
 The negative binomial is also commonly used to model overdispersed count data—counts with variance greater than their mean—which the simple Poisson cannot accommodate.
 
@@ -197,6 +203,8 @@ Use the **negative binomial** when counting trials until a specified number of s
 Understanding distributions deepens through simulation. Generate data from each distribution, visualize it, and calculate summary statistics. Compare the theoretical mean and variance to what you observe in your simulated samples.
 
 ```{r}
+#| label: fig-dist-comparison
+#| fig-cap: "Comparing theoretical and empirical properties of Poisson and binomial distributions"
 #| fig-width: 8
 #| fig-height: 6
 # Compare theoretical and empirical properties

@@ -15,7 +15,7 @@ $$e_i = y_i - \hat{y}_i$$
 
 They represent the part of the data not explained by the model—the "leftover" variation. Analyzing residuals helps us check whether the assumptions of our model are met and identify potential problems.
 
-![](../images/images_4b.016.jpeg){fig-align="center"}
+![Conceptual illustration of residuals as the vertical distances between observed data points and the fitted regression line](../images/images_4b.016.jpeg){#fig-residuals-concept fig-align="center"}
 
 ## Why Residual Analysis Matters
 
@@ -23,7 +23,7 @@ A regression model might fit the data well according to R-squared while still be
 
 Remember Anscombe's Quartet—four datasets with identical regression lines but very different patterns. Looking only at the regression output would miss these differences entirely.
 
-![](../images/images_4b.017.jpeg){fig-align="center"}
+![Anscombe's Quartet demonstrating why residual analysis is essential, showing four datasets with identical regression statistics but different patterns](../images/images_4b.017.jpeg){#fig-anscombe-residuals fig-align="center"}
 
 ## Checking Assumptions
 
@@ -32,6 +32,8 @@ Remember Anscombe's Quartet—four datasets with identical regression lines but 
 If the relationship is truly linear, residuals should show no systematic pattern when plotted against fitted values or the predictor variable. A curved pattern suggests non-linearity.
 
 ```{r}
+#| label: fig-linearity-check
+#| fig-cap: "Checking linearity assumption with quadratic data, showing how a curved pattern in residuals vs fitted values reveals nonlinearity"
 #| fig-width: 8
 #| fig-height: 4
 # Create data with non-linear relationship
@@ -58,6 +60,8 @@ The curved pattern in the residual plot reveals that a linear model is inadequat
 Residuals should be approximately normally distributed. Check with a histogram or Q-Q plot:
 
 ```{r}
+#| label: fig-normality-check
+#| fig-cap: "Checking normality assumption using histogram and Q-Q plot of residuals from a well-fitting model"
 #| fig-width: 8
 #| fig-height: 4
 # Good model for comparison
@@ -78,7 +82,7 @@ Points on the Q-Q plot should fall approximately along the diagonal line. System
 
 Residuals should have constant variance across the range of fitted values. A fan or cone shape indicates heteroscedasticity (unequal variance).
 
-![](../images/images_4b.020.jpeg){fig-align="center"}
+![Examples of homoscedasticity (constant variance) and heteroscedasticity (non-constant variance) in residual plots](../images/images_4b.020.jpeg){#fig-heteroscedasticity fig-align="center"}
 
 ### Independence
 
@@ -89,6 +93,8 @@ Residuals should be independent of each other. This is hard to check visually bu
 R provides built-in diagnostic plots for linear models:
 
 ```{r}
+#| label: fig-diagnostic-plots
+#| fig-cap: "Complete set of standard diagnostic plots for regression model assessment including residuals vs fitted, Q-Q plot, scale-location, and residuals vs leverage"
 #| fig-width: 8
 #| fig-height: 8
 # Standard diagnostic plots
@@ -108,7 +114,7 @@ Not all observations affect the regression equally. **Leverage** measures how un
 
 **Cook's Distance** measures how much the regression would change if an observation were removed. High Cook's D values indicate influential points that merit closer examination.
 
-![](../images/images_4b.021.jpeg){fig-align="center"}
+![Illustration of leverage and influence showing how high-leverage points with large residuals can strongly affect the fitted regression line](../images/images_4b.021.jpeg){#fig-leverage-influence fig-align="center"}
 
 ```{r}
 # Check for influential points

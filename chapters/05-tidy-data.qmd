@@ -7,13 +7,13 @@ library(tidyverse)
 theme_set(theme_minimal())
 ```
 
-![](../images/week_01.005.jpeg){fig-align="center"}
+![Tidy data principles provide a standard way to organize datasets](../images/week_01.005.jpeg){#fig-tidy-intro fig-align="center"}
 
 ## What is Tidy Data?
 
 Data comes in many shapes, and not all shapes are equally convenient for analysis. The concept of "tidy data" provides a standard way to organize data that works well with R and makes many analyses straightforward. In tidy data, each variable forms a column, each observation forms a row, and each type of observational unit forms a table.
 
-![](../images/week_01.006.jpeg){fig-align="center"}
+![In tidy data, each variable forms a column and each observation forms a row](../images/week_01.006.jpeg){#fig-tidy-structure fig-align="center"}
 
 This structure might seem obvious, but real-world data rarely arrives in tidy form. Spreadsheets often encode information in column names, spread a single variable across multiple columns, or combine multiple variables in a single column. Data wrangling is the process of transforming messy data into tidy data.
 
@@ -50,13 +50,13 @@ library(tidyverse)
 
 Loading the tidyverse loads all core packages at once. The message shows which packages are attached and notes any functions that conflict with base R or other packages.
 
-![](../images/week_3.011.jpeg){fig-align="center"}
+![The tidyverse is a collection of R packages designed for data science](../images/week_3.011.jpeg){#fig-tidyverse-packages fig-align="center"}
 
 ## Tibbles
 
 Tibbles are the tidyverse's enhanced data frames. They print more informatively, showing only the first few rows and as many columns as fit on screen, along with the dimensions and column types.
 
-![](../images/week_3.012.jpeg){fig-align="center"}
+![Tibbles are the tidyverse's enhanced data frames with improved printing](../images/week_3.012.jpeg){#fig-tibbles fig-align="center"}
 
 ```{r}
 # Create a tibble
@@ -180,7 +180,7 @@ flights |>
 
 Read the pipe as "then"—take flights, then filter, then group, then summarize.
 
-![](../images/week_3.015.jpeg){fig-align="center"}
+![The pipe operator passes results from one operation to the next](../images/week_3.015.jpeg){#fig-pipe-operator fig-align="center"}
 
 ## Handling Missing Values
 
@@ -381,6 +381,8 @@ Factors are R's way of representing categorical data with a fixed set of possibl
 For visualization, you often want factor levels ordered by a value rather than alphabetically:
 
 ```{r}
+#| label: fig-gene-alphabetical
+#| fig-cap: "Bar chart showing gene expression in default alphabetical order"
 #| fig-width: 6
 #| fig-height: 4
 # Sample data
@@ -396,6 +398,8 @@ ggplot(gene_data, aes(x = gene, y = expression)) +
 ```
 
 ```{r}
+#| label: fig-gene-ordered
+#| fig-cap: "Bar chart showing gene expression ordered by value for easier comparison"
 #| fig-width: 6
 #| fig-height: 4
 # Reorder by expression value

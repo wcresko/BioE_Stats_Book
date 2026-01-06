@@ -163,6 +163,8 @@ $$p + (1-p) = 1$$
 This same framework applies to any binary outcome: whether a patient responds to treatment, whether an allele is inherited from a parent, or whether a product passes quality control.
 
 ```{r}
+#| label: fig-bernoulli
+#| fig-cap: "Simulated Bernoulli distribution from 1000 coin flips showing approximately equal probability for heads and tails"
 #| fig-width: 5
 #| fig-height: 4
 # Flip a coin 1000 times
@@ -387,6 +389,8 @@ Switching doubles your chances! The key insight: when you first pick, you have a
 In a room with 50 people, what's the probability that at least two share a birthday?
 
 ```{r}
+#| label: fig-birthday-problem
+#| fig-cap: "The probability of at least two people sharing a birthday increases rapidly with group size, exceeding 50% at just 23 people"
 #| fig-width: 6
 #| fig-height: 4
 # Monte Carlo simulation
@@ -445,6 +449,8 @@ The theory described here requires repeating experiments over and over forever. 
 One practical approach is to check for the stability of the estimate:
 
 ```{r}
+#| label: fig-monte-carlo-convergence
+#| fig-cap: "Monte Carlo estimates converge to the true probability (red dashed line) as the number of simulations increases"
 #| fig-width: 6
 #| fig-height: 4
 B_values <- 10^seq(1, 5, len = 100)
@@ -516,6 +522,8 @@ Explore the binomial distribution:
 5. How does the distribution change with 200 or 2000 flips per experiment?
 
 ```{r}
+#| label: fig-binomial-sim
+#| fig-cap: "Distribution of heads from 1000 simulated experiments of 20 coin flips each"
 #| fig-width: 6
 #| fig-height: 4
 # 1000 experiments, 20 flips each, fair coin

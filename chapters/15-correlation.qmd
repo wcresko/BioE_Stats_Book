@@ -28,6 +28,8 @@ The covariance formula involves products of deviations from the mean. Consider e
 - If a point is in the **upper-left** or **lower-right** (one above, one below), the product is negative
 
 ```{r}
+#| label: fig-covariance-quadrants
+#| fig-cap: "Visualization of covariance showing how products of deviations from means contribute to the overall covariance, with positive products in upper-right and lower-left quadrants"
 #| fig-width: 7
 #| fig-height: 6
 # Visualizing covariance with quadrants
@@ -71,9 +73,11 @@ This produces a value between -1 and +1:
 - $r = -1$: perfect negative linear relationship  
 - $r = 0$: no linear relationship
 
-![](../images/images_4b.006.jpeg){fig-align="center"}
+![Examples of scatterplots with different correlation coefficients ranging from strong positive to strong negative](../images/images_4b.006.jpeg){#fig-correlation-examples fig-align="center"}
 
 ```{r}
+#| label: fig-correlation-patterns
+#| fig-cap: "Four scatterplots demonstrating different correlation patterns: strong positive, moderate negative, no correlation, and a non-linear relationship where correlation is misleading"
 #| fig-width: 8
 #| fig-height: 6
 # Examples of different correlations
@@ -106,7 +110,7 @@ plot(x4, y4, main = paste("r =", round(cor(x4, y4), 2), "(non-linear!)"),
 
 Francis Anscombe created a famous set of four datasets that all have nearly identical statistical properties—same means, variances, correlations, and regression lines—yet look completely different when plotted. This demonstrates why visualization is essential.
 
-![](../images/images_4b.007.jpeg){fig-align="center"}
+![Anscombe's Quartet showing four datasets with identical statistical properties but very different patterns when visualized](../images/images_4b.007.jpeg){#fig-anscombe-quartet fig-align="center"}
 
 Always plot your data before calculating correlations. The correlation coefficient captures only linear relationships and can be misleading for non-linear patterns.
 
@@ -132,6 +136,8 @@ Just like the sample mean, the sample correlation coefficient is a **random vari
 This sampling variability has important implications for interpretation. A sample correlation of r = 0.3 from a small study might arise even when the true correlation is zero (or is actually 0.5). Understanding this uncertainty is essential for proper inference.
 
 ```{r}
+#| label: fig-correlation-sampling
+#| fig-cap: "Sampling distributions of correlation coefficient r for small (n=20) and large (n=100) samples, demonstrating how sample size affects the reliability of correlation estimates"
 #| fig-width: 9
 #| fig-height: 6
 # Demonstrate sampling variability of correlation
@@ -307,6 +313,8 @@ cat("Variance explained:", round(r_squared * 100, 1), "%\n")
 :::
 
 ```{r}
+#| label: fig-outlier-effect
+#| fig-cap: "Effect of a single outlier on correlation, showing how r changes from near zero to moderately positive with the addition of one extreme point"
 #| fig-width: 8
 #| fig-height: 4
 # Demonstrating the effect of outliers
@@ -351,6 +359,8 @@ Correlation quantifies the strength and direction of linear relationships betwee
 4. What happens to the correlation when you add outliers?
 
 ```{r}
+#| label: fig-correlation-exercise
+#| fig-cap: "Scatterplot of two correlated variables with fitted regression line"
 #| fig-width: 6
 #| fig-height: 5
 set.seed(42)

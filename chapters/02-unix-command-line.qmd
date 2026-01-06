@@ -7,7 +7,7 @@ library(tidyverse)
 theme_set(theme_minimal())
 ```
 
-![](../images/w1_code.jpeg){fig-align="center"}
+![Unix powers most scientific computing environments](../images/w1_code.jpeg){#fig-unix-intro fig-align="center"}
 
 ## What is Unix?
 
@@ -23,7 +23,7 @@ The shell is a program that interprets your commands and communicates with the o
 
 Bash (Bourne Again SHell) is the most common shell on Linux systems and was the default on MacOS until recently (MacOS now defaults to zsh, which is very similar). The shell runs inside a terminal application, which provides the window where you type commands and see output.
 
-![](../images/w1_shell.jpeg){fig-align="center"}
+![The shell interprets commands and communicates with the operating system](../images/w1_shell.jpeg){#fig-unix-shell fig-align="center"}
 
 On Mac, you can access the terminal by opening the Terminal app or a third-party alternative like iTerm2. On Linux, look for a Terminal application in your system menus. Windows users should install the Windows Subsystem for Linux following Microsoft's documentation, then access it through the Ubuntu app or similar.
 
@@ -33,7 +33,7 @@ RStudio also includes a terminal pane, which can be convenient when you want she
 
 Shell commands follow a consistent structure. You type a command name, possibly followed by options that modify its behavior, and arguments that specify what the command should operate on. The shell waits at a prompt—typically `$` for regular users or `#` for administrators—indicating it is ready to accept input.
 
-![](../images/w1_shell_command.jpeg){fig-align="center"}
+![Anatomy of a shell command showing command, options, and arguments](../images/w1_shell_command.jpeg){#fig-unix-command-anatomy fig-align="center"}
 
 Consider the command `ls -l Documents`. Here, `ls` is the command (list directory contents), `-l` is an option (use long format), and `Documents` is the argument (the directory to list). Options usually begin with a dash and can often be combined: `ls -la` combines the `-l` (long format) and `-a` (show hidden files) options.
 
@@ -41,7 +41,7 @@ Consider the command `ls -l Documents`. Here, `ls` is the command (list director
 
 Unix organizes files in a hierarchical structure of directories (folders) and files. The root directory, represented by a single forward slash `/`, sits at the top of this hierarchy and contains all other directories.
 
-![](../images/w1_file_structure.jpeg){fig-align="center"}
+![Unix organizes files in a hierarchical directory structure](../images/w1_file_structure.jpeg){#fig-unix-filesystem fig-align="center"}
 
 Your home directory is your personal workspace, typically located at `/Users/yourusername` on Mac or `/home/yourusername` on Linux. The tilde character `~` serves as a shorthand for your home directory, so `~/Documents` refers to the Documents folder in your home directory.
 
@@ -51,7 +51,7 @@ Every file and directory has a path—a specification of its location in the fil
 
 The most fundamental navigation command is `pwd` (print working directory), which tells you where you currently are in the file system. This is often the first thing you type when opening a terminal to orient yourself.
 
-![](../images/w1_navigation_1.jpeg){fig-align="center"}
+![The pwd command shows your current location in the file system](../images/w1_navigation_1.jpeg){#fig-unix-pwd fig-align="center"}
 
 ```bash
 pwd
@@ -68,7 +68,7 @@ ls -la              # combine long format and hidden files
 ls -lS              # long format, sorted by size
 ```
 
-![](../images/w1_navigation_2.jpeg){fig-align="center"}
+![The ls command lists directory contents with various options](../images/w1_navigation_2.jpeg){#fig-unix-ls fig-align="center"}
 
 The `cd` command (change directory) moves you to a different location.
 
@@ -80,7 +80,7 @@ cd /                # move to root directory
 cd -                # move to previous location
 ```
 
-![](../images/w1_navigate.jpeg){fig-align="center"}
+![The cd command changes your working directory](../images/w1_navigate.jpeg){#fig-unix-cd fig-align="center"}
 
 ## Working with Files and Directories
 

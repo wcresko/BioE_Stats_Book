@@ -17,11 +17,11 @@ Analysis of Variance (ANOVA) provides a solution. It tests whether any of the gr
 
 ANOVA partitions the total variation in the data into components: variation between groups (due to treatment effects) and variation within groups (due to random error).
 
-![](../images/Images_5b.016.jpeg){fig-align="center"}
+![ANOVA partitions total variation into between-group and within-group components](../images/Images_5b.016.jpeg){#fig-anova-partition fig-align="center"}
 
 The key insight is that if groups have equal means, the between-group variation should be similar to the within-group variation. If the between-group variation is much larger, the group means probably differ.
 
-![](../images/Images_5b.015.jpeg){fig-align="center"}
+![Comparison of between-group and within-group variation under different scenarios](../images/Images_5b.015.jpeg){#fig-anova-variation fig-align="center"}
 
 ## The F-Test
 
@@ -88,6 +88,8 @@ The distinction matters because it affects how F-ratios are calculated and what 
 When experiments have two factors, two-way ANOVA examines main effects of each factor and their interaction.
 
 ```{r}
+#| label: fig-factorial-design
+#| fig-cap: "Two-way ANOVA with simulated factorial design showing main effects and interaction"
 #| fig-width: 7
 #| fig-height: 5
 # Simulated factorial design
@@ -109,6 +111,8 @@ An **interaction** means the effect of one factor depends on the level of the ot
 ## Interaction Plots
 
 ```{r}
+#| label: fig-interaction-plot
+#| fig-cap: "Interaction plot showing non-parallel lines indicating interaction between factors"
 #| fig-width: 7
 #| fig-height: 5
 # Visualize interaction
@@ -121,7 +125,7 @@ interaction.plot(data_factorial$factor_A, data_factorial$factor_B,
 
 Non-parallel lines suggest an interaction. Parallel lines suggest additive (non-interacting) effects.
 
-![](../images/images_7a.022.jpeg){fig-align="center"}
+![Illustration of interaction patterns showing parallel versus non-parallel lines](../images/images_7a.022.jpeg){#fig-interaction-patterns fig-align="center"}
 
 ## Nested Designs
 

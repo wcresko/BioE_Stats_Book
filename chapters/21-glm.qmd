@@ -75,6 +75,8 @@ chisq.test(hair_eye)
 For contingency tables, $df = (r-1)(c-1)$ where $r$ and $c$ are the number of rows and columns.
 
 ```{r}
+#| label: fig-mosaic-plot
+#| fig-cap: "Mosaic plot showing the association between hair color and eye color"
 #| fig-width: 7
 #| fig-height: 5
 # Visualize with a mosaic plot
@@ -197,6 +199,8 @@ Equivalently, we model the log-odds:
 $$\log\left(\frac{P}{1-P}\right) = \beta_0 + \beta_1 X$$
 
 ```{r}
+#| label: fig-logistic-function
+#| fig-cap: "The logistic function mapping the linear predictor to probabilities between 0 and 1"
 #| fig-width: 7
 #| fig-height: 5
 # The logistic function
@@ -384,6 +388,8 @@ Diagnostic tools include:
 - Goodness-of-fit tests
 
 ```{r}
+#| label: fig-glm-diagnostics
+#| fig-cap: "Diagnostic plots for assessing logistic regression model assumptions"
 #| fig-width: 8
 #| fig-height: 4
 par(mfrow = c(1, 2))

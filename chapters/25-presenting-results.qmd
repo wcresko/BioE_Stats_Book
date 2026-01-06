@@ -193,6 +193,8 @@ Confidence intervals often communicate more information than p-values alone. The
 When confidence intervals don't cross zero (for differences) or one (for ratios), the result is statistically significant at the corresponding α level.
 
 ```{r}
+#| label: fig-confidence-intervals
+#| fig-cap: "Confidence intervals showing treatment effects on response variable across dose groups"
 #| fig-width: 7
 #| fig-height: 4
 #| echo: false
