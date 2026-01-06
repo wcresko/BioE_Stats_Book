@@ -423,17 +423,41 @@ plot(tsne_after_pca$Y, col = rainbow(10)[labels + 1], pch = 19, cex = 0.3,
 
 ## Exercises
 
+::: {.callout-note}
+### Exercise TU.1: Comparing Methods
+
 1. Load the `tissue_gene_expression` dataset and apply PCA, t-SNE, and UMAP. Compare how well each method separates the different tissue types.
+:::
+
+::: {.callout-note}
+### Exercise TU.2: t-SNE Perplexity
 
 2. For the t-SNE analysis, try perplexity values of 5, 15, 30, and 50. Which value produces the clearest separation of tissue types?
+:::
+
+::: {.callout-note}
+### Exercise TU.3: UMAP Parameters
 
 3. For UMAP, experiment with `n_neighbors` values of 5, 15, and 50, and `min_dist` values of 0.0, 0.1, and 0.5. How do these parameters affect the visualization?
+:::
+
+::: {.callout-note}
+### Exercise TU.4: Stability Analysis
 
 4. Run t-SNE on the MNIST digit dataset multiple times with different random seeds. How stable are the cluster positions? Do the same digits always cluster together?
+:::
+
+::: {.callout-note}
+### Exercise TU.5: Computation Time
 
 5. Time how long PCA, t-SNE, and UMAP take to run on increasing subsets of data (500, 1000, 2000, 5000 points). Plot computation time versus sample size.
+:::
+
+::: {.callout-note}
+### Exercise TU.6: PCA Preprocessing
 
 6. Apply PCA preprocessing (reducing to 50 dimensions) before running t-SNE. Compare the results and computation time to running t-SNE directly on the full data.
+:::
 
 ## Summary
 

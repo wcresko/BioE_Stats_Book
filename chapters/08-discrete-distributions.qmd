@@ -229,6 +229,7 @@ This kind of simulation-based exploration builds intuition that complements form
 
 ## Exercises
 
+::: {.callout-note}
 ### Exercise D.1: Binomial Probabilities in Genetics
 
 A genetic cross is expected to produce offspring with a particular trait with probability 0.25 (following Mendelian ratios). You observe 30 offspring from this cross.
@@ -242,7 +243,9 @@ d) Simulate 1000 experiments of this cross and plot the distribution of the numb
 #| eval: false
 # Your code here
 ```
+:::
 
+::: {.callout-note}
 ### Exercise D.2: Poisson Process in Ecology
 
 The number of seedlings germinating per square meter follows a Poisson distribution with an average of 4.5 seedlings per m².
@@ -256,7 +259,9 @@ d) If the variance you observe in your actual data is 12, what does this suggest
 #| eval: false
 # Your code here
 ```
+:::
 
+::: {.callout-note}
 ### Exercise D.3: Comparing Distributions
 
 A researcher is counting bacterial colonies on petri dishes. In one experiment with 50 dishes, she found:
@@ -275,7 +280,9 @@ d) What biological processes might explain any discrepancies you observe?
 #| eval: false
 # Your code here
 ```
+:::
 
+::: {.callout-note}
 ### Exercise D.4: Negative Binomial Application
 
 You are screening patients for eligibility in a clinical trial. Each patient has a 0.15 probability of meeting the eligibility criteria.
@@ -289,7 +296,9 @@ d) Calculate the 95th percentile of your simulation—what does this number mean
 #| eval: false
 # Your code here
 ```
+:::
 
+::: {.callout-note}
 ### Exercise D.5: Choosing the Right Distribution
 
 For each scenario below, identify which discrete distribution (binomial, Poisson, geometric, or negative binomial) is most appropriate and explain why:
@@ -309,3 +318,4 @@ For one of these scenarios, write R code to:
 #| eval: false
 # Your code here
 ```
+:::

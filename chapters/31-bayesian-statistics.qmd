@@ -382,6 +382,9 @@ summary(model)
 
 ## Exercises
 
+::: {.callout-note}
+### Exercise Bay.1: Sally Clark Case - Base Rate Fallacy
+
 1. In 1999 in England, Sally Clark was convicted of murdering her two infant sons after both were found dead, apparently from Sudden Infant Death Syndrome (SIDS). Expert testimony stated that the chance of two SIDS deaths was 1 in 73 million, calculated as $(1/8500)^2$. What error did this calculation make?
 
 2. Suppose the probability of a second SIDS case given a first is actually 1/100 (due to genetic factors). What is $P(\text{two SIDS deaths})$?
@@ -392,6 +395,10 @@ summary(model)
    - $P(\text{two natural deaths}) = 1/8500 \times 1/100 = 1.2 \times 10^{-5}$
 
    Calculate $P(\text{guilty} \mid \text{two deaths})$.
+:::
+
+::: {.callout-note}
+### Exercise Bay.2: Bayesian Election Polling
 
 4. Consider a Bayesian model for Florida election polling:
 ```{r}
@@ -414,6 +421,7 @@ results <- polls |>
    Using a prior of $N(0, 0.01^2)$ (based on Florida being historically close), calculate the posterior mean and 95% credible interval for the true spread.
 
 5. How does the posterior change if we use a wider prior ($\tau = 0.05$)? What about a narrower prior ($\tau = 0.005$)?
+:::
 
 ## Summary
 

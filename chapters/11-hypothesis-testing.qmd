@@ -324,6 +324,7 @@ In the following chapters, we apply this framework to specific tests: t-tests fo
 
 ## Exercises
 
+::: {.callout-note}
 ### Exercise H.1: Understanding Type I and Type II Errors
 
 Consider a diagnostic test for a rare disease that affects 1% of the population. The test has a false positive rate (Type I error) of 5% and a false negative rate (Type II error) of 10%.
@@ -338,7 +339,9 @@ e) Of the people who test positive, what proportion actually have the disease? (
 #| eval: false
 # Your code here
 ```
+:::
 
+::: {.callout-note}
 ### Exercise H.2: P-Values and Interpretation
 
 For each statement below, indicate whether it is a correct interpretation of p = 0.03:
@@ -350,7 +353,9 @@ d) There is a 97% probability that the alternative hypothesis is true
 e) If we repeated this experiment many times, we would expect to see results this extreme about 3% of the time if the null hypothesis were true
 
 For the correct interpretation(s), explain why they are correct. For the incorrect ones, explain the mistake.
+:::
 
+::: {.callout-note}
 ### Exercise H.3: Power Analysis
 
 You are planning a study to compare the effectiveness of two fertilizers on plant growth. Based on pilot data, you estimate the standard deviation of plant heights to be 12 cm. You want to detect a difference of 8 cm between treatments with 80% power at α = 0.05.
@@ -366,7 +371,9 @@ e) Discuss the trade-offs between sample size, power, and minimum detectable eff
 # Your code here
 library(pwr)
 ```
+:::
 
+::: {.callout-note}
 ### Exercise H.4: Multiple Testing Correction
 
 A genomics study tests 20,000 genes for differential expression between two conditions, using α = 0.05 for each test.
@@ -383,7 +390,9 @@ d) Simulate a scenario where 100 genes are truly differentially expressed (with 
 #| eval: false
 # Your code here
 ```
+:::
 
+::: {.callout-note}
 ### Exercise H.5: Confidence Intervals vs. P-Values
 
 You conduct an experiment measuring the effect of a drug on blood glucose levels. You measure 15 patients before and after treatment and find:
@@ -400,7 +409,9 @@ d) Generate simulated data consistent with these results and verify the relation
 #| eval: false
 # Your code here
 ```
+:::
 
+::: {.callout-note}
 ### Exercise H.6: Randomization Test
 
 You have two groups of seedlings grown under different light conditions:
@@ -420,6 +431,7 @@ f) Under what circumstances might the randomization test be preferable to the t-
 #| eval: false
 # Your code here
 ```
+:::
 
 ## Additional Resources
 

@@ -489,19 +489,39 @@ K-means depends on random initialization. Always:
 
 ## Exercises
 
+::: {.callout-note}
+### Exercise Clu.1: Distance Computation
+
 1. Load the `tissue_gene_expression` dataset. Remove the row means and compute the distance between each observation. Store the result in `d`.
+:::
+
+::: {.callout-note}
+### Exercise Clu.2: Hierarchical Clustering
 
 2. Make a hierarchical clustering plot and add the tissue types as labels. Which tissues cluster together?
+:::
+
+::: {.callout-note}
+### Exercise Clu.3: K-Means Clustering
 
 3. Run k-means clustering on the data with $K = 7$. Make a table comparing the identified clusters to the actual tissue types. Run the algorithm several times to see how the answer changes.
+:::
+
+::: {.callout-note}
+### Exercise Clu.4: Heatmap Visualization
 
 4. Select the 50 most variable genes. Create a heatmap with:
    - Observations in columns
    - Centered predictors
    - A color bar showing tissue types
    - Use `ColSideColors` argument and `col = brewer.pal(11, "RdBu")`
+:::
+
+::: {.callout-note}
+### Exercise Clu.5: Comparing Linkage Methods
 
 5. Compare different linkage methods on the movie data. Which produces the most interpretable clusters?
+:::
 
 ## K-Means vs Hierarchical Clustering
 

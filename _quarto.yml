@@ -55,12 +55,12 @@ book:
         - chapters/20-multiple-regression.qmd
         - chapters/19-single-factor-anova.qmd
         - chapters/20-multifactor-anova.qmd
+        - chapters/21-glm.qmd
 
     - part: "Statistical Learning"
       chapters:
         - chapters/22-statistical-learning.qmd
         - chapters/31-bayesian-statistics.qmd
-        - chapters/21-glm.qmd
         - chapters/32-classification.qmd
         - chapters/33-clustering.qmd
         - chapters/23-dimensionality-reduction.qmd

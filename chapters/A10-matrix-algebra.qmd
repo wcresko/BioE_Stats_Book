@@ -651,16 +651,36 @@ Key matrix algebra concepts for statistics:
 
 ## Exercises
 
+::: {.callout-note}
+### Exercise MA.1: Matrix Creation and Properties
+
 1. Create a 100 × 10 matrix of randomly generated normal numbers. Compute its dimensions, number of rows, and number of columns.
 
 2. Add the scalar 1 to row 1, the scalar 2 to row 2, and so on, to the matrix from Exercise 1. Hint: create a vector 1:100 and add it.
+:::
+
+::: {.callout-note}
+### Exercise MA.2: Covariance and Symmetry
 
 3. Compute the covariance matrix of the iris numeric variables. Verify it is symmetric.
+:::
+
+::: {.callout-note}
+### Exercise MA.3: Eigenanalysis
 
 4. Perform eigenanalysis on the iris covariance matrix. Which variable contributes most to PC1?
 
 5. Verify that the eigenvectors are orthogonal by computing their pairwise dot products.
+:::
+
+::: {.callout-note}
+### Exercise MA.4: Image Data Analysis
 
 6. Using the MNIST data, compute the proportion of pixels in a "grey area" (values between 50 and 205) for each digit. Make a boxplot by digit class.
+:::
+
+::: {.callout-note}
+### Exercise MA.5: Matrix Standardization
 
 7. Standardize the columns of a matrix (subtract mean, divide by SD) using `sweep()`.
+:::
