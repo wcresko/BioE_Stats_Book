@@ -94,6 +94,19 @@ ggplot(confound_data, aes(x = metabolic_rate, y = lifespan)) +
 
 Within each stratum (holding body size approximately constant), we see the true negative relationship. The slopes within strata approximate what multiple regression gives us.
 
+::: {.callout-note}
+## Simpson's Paradox
+
+This phenomenon—where a trend reverses or disappears when data are stratified by a confounding variable—is known as **Simpson's Paradox**. In our example, metabolic rate appears *positively* associated with lifespan in the aggregate data, but is *negatively* associated within each body size group.
+
+Simpson's Paradox is not a statistical anomaly; it's a consequence of confounding. Famous examples include:
+
+- **UC Berkeley gender bias case (1973)**: Aggregate admission rates appeared to favor men, but within most departments, women were admitted at equal or higher rates. The paradox arose because women disproportionately applied to more competitive departments.
+- **Kidney stone treatments**: Treatment A appeared less effective overall, but was more effective for both small and large stones. The paradox occurred because Treatment A was preferentially used for more severe cases.
+
+The resolution is always the same: aggregate data can be misleading when a confounding variable affects both the predictor and outcome. Stratification (or multiple regression) reveals the relationship within levels of the confounder.
+:::
+
 ::: {.callout-important}
 ## Why This Matters
 
