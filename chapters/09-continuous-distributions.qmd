@@ -29,9 +29,11 @@ $$f(x) = \frac{1}{b-a} \quad \text{for } a \leq x \leq b$$
 
 The mean is $(a+b)/2$ and the variance is $(b-a)^2/12$.
 
-![](../images/prob.019.jpeg){fig-align="center"}
+![The uniform distribution has constant probability density across an interval](../images/prob.019.jpeg){#fig-uniform-concept fig-align="center"}
 
 ```{r}
+#| label: fig-uniform-dist
+#| fig-cap: "The uniform distribution on [0, 10] showing constant density"
 #| fig-width: 6
 #| fig-height: 4
 # Uniform distribution between 0 and 10
@@ -51,11 +53,13 @@ $$f(x) = \lambda e^{-\lambda x} \quad \text{for } x \geq 0$$
 
 The mean is $1/\lambda$ and the variance is $1/\lambda^2$.
 
-![](../images/prob.020.jpeg){fig-align="center"}
+![The exponential distribution models waiting times in a Poisson process](../images/prob.020.jpeg){#fig-exponential-concept fig-align="center"}
 
 If a radioactive isotope has a decay rate of $\lambda = 0.1$ per minute, the time until the next decay follows an exponential distribution with mean 10 minutes.
 
 ```{r}
+#| label: fig-exponential-dist
+#| fig-cap: "Exponential distribution showing the characteristic right-skewed shape of waiting times"
 #| fig-width: 6
 #| fig-height: 4
 # Exponential distributions with different rates
@@ -86,6 +90,8 @@ The normal distribution is characterized by two parameters: mean $\mu$ (center) 
 $$f(x) = \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}$$
 
 ```{r}
+#| label: fig-normal-params
+#| fig-cap: "Normal distributions with different mean (μ) and standard deviation (σ) parameters"
 #| fig-width: 7
 #| fig-height: 5
 # Normal distributions with different parameters
@@ -95,7 +101,7 @@ plot(x, dnorm(x, mean = 0, sd = 1), type = "l", lwd = 2, col = "blue",
      main = "Normal Distributions")
 lines(x, dnorm(x, mean = 0, sd = 2), lwd = 2, col = "red")
 lines(x, dnorm(x, mean = 5, sd = 1), lwd = 2, col = "darkgreen")
-legend("topright", 
+legend("topright",
        legend = c("μ=0, σ=1", "μ=0, σ=2", "μ=5, σ=1"),
        col = c("blue", "red", "darkgreen"), lwd = 2)
 ```
@@ -167,6 +173,8 @@ Many statistical methods assume normally distributed data. Before applying these
 Visual methods include histograms and Q-Q (quantile-quantile) plots:
 
 ```{r}
+#| label: fig-qq-plots
+#| fig-cap: "Q-Q plots for assessing normality: normally distributed data (left) follows the diagonal line, while skewed data (right) deviates"
 #| fig-width: 8
 #| fig-height: 4
 # Generate some data
@@ -192,6 +200,8 @@ In a Q-Q plot, normally distributed data should fall approximately along the dia
 The Central Limit Theorem (CLT) states that the sampling distribution of the mean approaches normality as sample size increases, regardless of the shape of the population distribution. This is why the normal distribution appears so frequently in statistics—we often work with means or other sums of random variables.
 
 ```{r}
+#| label: fig-clt-demo
+#| fig-cap: "The Central Limit Theorem: sampling distributions of means become normal regardless of the population distribution as sample size increases"
 #| fig-width: 9
 #| fig-height: 6
 # Demonstrate CLT with exponential distribution

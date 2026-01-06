@@ -15,7 +15,7 @@ Multiple regression extends linear regression to multiple predictors:
 
 $$y_i = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \ldots + \beta_p x_p + \epsilon_i$$
 
-![](../images/images_5a.006.jpeg){fig-align="center"}
+![Multiple regression extends linear regression to multiple predictors in multidimensional space](../images/images_5a.006.jpeg){#fig-multiple-regression-concept fig-align="center"}
 
 ## Goals of Multiple Regression
 
@@ -32,6 +32,8 @@ Consider a biological example: suppose we measure both body size and metabolic r
 The solution is to **stratify** by the confounding variable. If we group animals by body size and look at the relationship between metabolic rate and lifespan within each group, we see the true (negative) relationship.
 
 ```{r}
+#| label: fig-confounding-example
+#| fig-cap: "Demonstration of confounding: naive versus multiple regression coefficients"
 #| fig-width: 8
 #| fig-height: 6
 # Simulated confounding example
@@ -69,6 +71,8 @@ The naive model shows a *positive* relationship between metabolic rate and lifes
 We can visualize this confounding through stratification:
 
 ```{r}
+#| label: fig-stratification
+#| fig-cap: "Stratification by body size reveals the true negative relationship between metabolic rate and lifespan"
 #| fig-width: 9
 #| fig-height: 6
 # Stratify by body size
@@ -134,6 +138,8 @@ This "holding constant" interpretation makes the coefficients different from wha
 When predictors are correlated with each other, interpreting individual coefficients becomes problematic. This **multicollinearity** inflates standard errors and can make coefficients unstable.
 
 ```{r}
+#| label: fig-scatterplot-matrix
+#| fig-cap: "Scatterplot matrix for checking multicollinearity between predictors"
 #| fig-width: 6
 #| fig-height: 6
 # Check for multicollinearity visually
@@ -180,6 +186,8 @@ No strategy is universally best. Automated selection can lead to overfitting and
 Polynomial terms can capture non-linear relationships while still using the linear regression framework:
 
 ```{r}
+#| label: fig-polynomial-regression
+#| fig-cap: "Comparison of polynomial models of different degrees for non-linear relationships"
 #| fig-width: 7
 #| fig-height: 5
 # Non-linear relationship
@@ -197,7 +205,7 @@ AIC(model1, model2, model3)
 
 Higher-degree polynomials fit better but risk overfitting. The principle of parsimony suggests using the simplest adequate model.
 
-![](../images/Images_5b.010.jpeg){fig-align="center"}
+![Illustration of polynomial regression showing increasing model complexity](../images/Images_5b.010.jpeg){#fig-polynomial-fit fig-align="center"}
 
 ## Assumptions
 

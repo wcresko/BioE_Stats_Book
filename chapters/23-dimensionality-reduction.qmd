@@ -34,11 +34,13 @@ Given a covariance matrix $\Sigma$, eigenanalysis finds:
 
 The first principal component points in the direction of maximum variance. Each subsequent component is orthogonal (uncorrelated) and captures remaining variance in decreasing order.
 
-![](../images/Images_7a.006.jpeg){fig-align="center"}
+![Geometric interpretation of principal components as directions of maximum variance](../images/Images_7a.006.jpeg){#fig-pca-geometry fig-align="center"}
 
 ### PCA in R
 
 ```{r}
+#| label: fig-pca-iris
+#| fig-cap: "PCA scree plot and principal component scores for iris data colored by species"
 #| fig-width: 8
 #| fig-height: 6
 # PCA on iris data
@@ -98,6 +100,8 @@ Common approaches:
 A **biplot** shows both observations (scores) and variables (loadings) on the same plot:
 
 ```{r}
+#| label: fig-pca-biplot
+#| fig-cap: "PCA biplot showing both observations and variable loadings simultaneously"
 #| fig-width: 7
 #| fig-height: 6
 biplot(iris_pca, col = c("gray50", "red"), cex = 0.7,
@@ -115,6 +119,8 @@ While PCA uses correlations among variables, **Principal Coordinate Analysis (PC
 - The data are counts (e.g., microbiome data)
 
 ```{r}
+#| label: fig-pcoa
+#| fig-cap: "Principal Coordinate Analysis (PCoA) ordination of iris data using Euclidean distances"
 #| fig-width: 7
 #| fig-height: 5
 # PCoA example using Euclidean distances
@@ -149,6 +155,8 @@ legend("topright", levels(iris$Species),
 **NMDS** is an ordination technique that preserves rank-order of distances rather than exact distances. It's widely used in ecology because it makes no assumptions about the data distribution.
 
 ```{r}
+#| label: fig-nmds
+#| fig-cap: "Non-metric multidimensional scaling (NMDS) ordination of iris data"
 #| fig-width: 7
 #| fig-height: 5
 #| message: false
@@ -184,6 +192,8 @@ Non-metric multidimensional scaling (NMDS) produces ordinal rankings only. NMDS 
 **Hierarchical clustering** builds a tree (dendrogram) of nested clusters. At each step, it either combines the most similar observations/clusters (agglomerative) or splits the most dissimilar (divisive).
 
 ```{r}
+#| label: fig-hierarchical-clustering
+#| fig-cap: "Hierarchical clustering dendrogram of iris data with three clusters highlighted"
 #| fig-width: 8
 #| fig-height: 5
 # Hierarchical clustering
@@ -219,6 +229,8 @@ The `nstart` parameter runs the algorithm multiple times with different starting
 Several methods help determine the optimal number of clusters:
 
 ```{r}
+#| label: fig-cluster-optimization
+#| fig-cap: "Elbow method and silhouette analysis for determining optimal number of clusters"
 #| fig-width: 8
 #| fig-height: 4
 # Elbow method: look for bend in within-cluster sum of squares
@@ -270,7 +282,7 @@ where:
 
 These are matrices because we have multiple response variables.
 
-![](../images/Images_7a.011.jpeg){fig-align="center"}
+![MANOVA decomposes multivariate variation into between-group and within-group components](../images/Images_7a.011.jpeg){#fig-manova-decomposition fig-align="center"}
 
 ### Test Statistics
 
@@ -340,11 +352,13 @@ DFA finds discriminant functions—weighted combinations of original variables�
 
 The first discriminant function captures the most separation, the second captures remaining separation orthogonal to the first, and so on.
 
-![](../images/Images_7a.012.jpeg){fig-align="center"}
+![Discriminant function analysis finds linear combinations that maximize group separation](../images/Images_7a.012.jpeg){#fig-dfa-concept fig-align="center"}
 
 ### DFA in R
 
 ```{r}
+#| label: fig-lda-scores
+#| fig-cap: "Linear discriminant analysis showing group separation along discriminant functions"
 #| fig-width: 7
 #| fig-height: 5
 # Linear Discriminant Analysis
@@ -415,6 +429,8 @@ mean(lda_cv$class == iris$Species)
 DFA is valuable for identifying which variables best distinguish groups—useful in biomarker discovery:
 
 ```{r}
+#| label: fig-lda-loadings
+#| fig-cap: "Variable contributions to the first linear discriminant function"
 #| fig-width: 7
 #| fig-height: 5
 # Which variables contribute most to separation?

@@ -14,6 +14,8 @@ This appendix provides a reference for the statistical distributions used in hyp
 When we conduct a hypothesis test, we calculate a test statistic from our sample data. To determine whether this statistic is "unusual," we need to know what values to expect if the null hypothesis were true. The **sampling distribution** tells us exactly this—it's the distribution of the test statistic across all possible samples.
 
 ```{r}
+#| label: fig-sampling-dist-mean
+#| fig-cap: "Sampling distribution of the mean based on 5000 samples of size 30, showing close agreement with the theoretical normal distribution"
 #| fig-width: 8
 #| fig-height: 5
 # Demonstrate: sampling distribution of the mean
@@ -57,6 +59,8 @@ $$Z = \frac{\bar{X} - \mu}{\sigma / \sqrt{n}}$$
 Under $H_0$, $Z \sim N(0, 1)$
 
 ```{r}
+#| label: fig-sampling-z-rejection
+#| fig-cap: "Standard normal distribution with rejection regions for a two-tailed test at α = 0.05"
 #| fig-width: 7
 #| fig-height: 5
 x <- seq(-4, 4, length.out = 200)
@@ -117,6 +121,8 @@ Under $H_0$, $t \sim t_{df}$ where $df = n - 1$ for one-sample tests.
 The t-distribution has heavier tails than the normal, reflecting additional uncertainty from estimating variance. As df increases, t approaches normal:
 
 ```{r}
+#| label: fig-sampling-t-df
+#| fig-cap: "t-distribution for different degrees of freedom showing convergence to the normal distribution as df increases"
 #| fig-width: 8
 #| fig-height: 6
 x <- seq(-4, 4, length.out = 200)
@@ -152,6 +158,8 @@ data.frame(
 ### Practical Implications
 
 ```{r}
+#| label: fig-sampling-t-sample-size
+#| fig-cap: "Critical t-values decrease as sample size increases, approaching the Z critical value of 1.96"
 #| fig-width: 8
 #| fig-height: 4
 # How confidence interval width depends on sample size
@@ -196,6 +204,8 @@ $$\chi^2 = \sum_{i=1}^{k} Z_i^2$$
 The distribution is always positive and right-skewed. As df increases, it becomes more symmetric and approaches normality.
 
 ```{r}
+#| label: fig-sampling-chisq
+#| fig-cap: "Chi-square distribution for different degrees of freedom showing increasing symmetry with higher df"
 #| fig-width: 8
 #| fig-height: 5
 x <- seq(0, 30, length.out = 200)
@@ -265,6 +275,8 @@ $$F = \frac{\chi^2_1 / df_1}{\chi^2_2 / df_2}$$
 - $df_2$: denominator degrees of freedom (within-groups or error)
 
 ```{r}
+#| label: fig-sampling-f-dist
+#| fig-cap: "F distribution for different combinations of numerator and denominator degrees of freedom"
 #| fig-width: 8
 #| fig-height: 5
 x <- seq(0, 5, length.out = 200)
@@ -293,6 +305,8 @@ $$F = \frac{MS_{between}}{MS_{within}} = \frac{\text{Signal}}{\text{Noise}}$$
 - F ≈ 1: Group differences are similar to within-group variation
 
 ```{r}
+#| label: fig-sampling-f-anova
+#| fig-cap: "F distribution with df1=3 and df2=20 showing the rejection region for a one-way ANOVA at α = 0.05"
 #| fig-width: 7
 #| fig-height: 5
 # Visualize rejection region for ANOVA
@@ -346,6 +360,8 @@ qf(0.95, df1 = 3, df2 = 20)  # Critical F for ANOVA
 These distributions are mathematically related:
 
 ```{r}
+#| label: fig-sampling-relationships
+#| fig-cap: "Mathematical relationships between the normal, chi-square, t, and F distributions"
 #| echo: false
 #| fig-width: 9
 #| fig-height: 6
@@ -413,6 +429,8 @@ where k = number of groups/categories, n = sample size, p = number of predictors
 - **Regression**: Estimate p+1 coefficients → leaves n-p-1 error df
 
 ```{r}
+#| label: fig-sampling-variance-precision
+#| fig-cap: "Sampling distributions of sample variance for different sample sizes, showing increased precision with higher degrees of freedom"
 #| fig-width: 8
 #| fig-height: 5
 # Demonstration: Why df matters

@@ -84,6 +84,7 @@ format:
     code-tools: true
     toc: true
     number-sections: true
+    number-depth: 2
 
 execute:
   echo: true

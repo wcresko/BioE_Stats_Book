@@ -31,6 +31,8 @@ Cross-validation estimates how well a model will generalize to new data.
 3. Average performance across all folds
 
 ```{r}
+#| label: fig-cross-validation
+#| fig-cap: "Cross-validation example demonstrating prediction error estimation"
 #| fig-width: 7
 #| fig-height: 5
 # Simple CV example with linear regression
@@ -67,6 +69,8 @@ The best predictions come from models that balance bias and variance. As model c
 **LOESS** (Locally Estimated Scatterplot Smoothing) fits local regressions to subsets of data, weighted by distance from each point.
 
 ```{r}
+#| label: fig-loess-comparison
+#| fig-cap: "Comparison of linear regression and LOESS smoothing for non-linear data"
 #| fig-width: 7
 #| fig-height: 5
 # Compare linear regression and LOESS
@@ -112,6 +116,8 @@ Key metrics:
 Decision trees make predictions by asking a series of yes/no questions about the features:
 
 ```{r}
+#| label: fig-decision-tree
+#| fig-cap: "Decision tree for classifying iris species based on sepal measurements"
 #| fig-width: 7
 #| fig-height: 5
 library(rpart)

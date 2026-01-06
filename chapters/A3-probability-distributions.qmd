@@ -33,6 +33,8 @@ $$P(X = k) = p^k(1-p)^{1-k}, \quad k \in \{0, 1\}$$
 - Whether an allele is inherited
 
 ```{r}
+#| label: fig-appendix-bernoulli
+#| fig-cap: "Bernoulli distribution showing probability of success and failure for different values of p"
 #| fig-width: 5
 #| fig-height: 3
 # Bernoulli with different p values
@@ -70,6 +72,8 @@ $$P(X = k) = \binom{n}{k} p^k (1-p)^{n-k}$$
 - Number of patients responding to treatment out of $n$ treated
 
 ```{r}
+#| label: fig-appendix-binomial
+#| fig-cap: "Binomial distribution with n=20 trials for different probabilities of success"
 #| fig-width: 8
 #| fig-height: 4
 # Binomial distributions with n=20
@@ -104,6 +108,8 @@ $$P(X = k) = (1-p)^{k-1}p, \quad k = 1, 2, 3, \ldots$$
 - Number of reads until finding a specific sequence
 
 ```{r}
+#| label: fig-appendix-geometric
+#| fig-cap: "Geometric distribution showing the probability of years until extinction when p = 0.1"
 #| fig-width: 7
 #| fig-height: 4
 # Geometric distribution example
@@ -140,6 +146,8 @@ $$P(X = k) = \binom{k-1}{r-1} p^r (1-p)^{k-r}, \quad k = r, r+1, r+2, \ldots$$
 - Number of trials until $r$ successes
 
 ```{r}
+#| label: fig-appendix-negbinom
+#| fig-cap: "Negative binomial distribution showing days until a predator captures 10 prey (r=10, p=0.1)"
 #| fig-width: 7
 #| fig-height: 4
 # Negative binomial example
@@ -177,6 +185,8 @@ Note: For a Poisson distribution, mean equals variance. When observed variance e
 - Rare event counts in genomics
 
 ```{r}
+#| label: fig-appendix-poisson
+#| fig-cap: "Poisson distribution for different rate parameters (λ = 1, 5, and 15)"
 #| fig-width: 8
 #| fig-height: 4
 # Poisson distributions with different lambda values
@@ -218,6 +228,8 @@ $$f(x) = \frac{1}{b-a}, \quad a \leq x \leq b$$
 - Equal probability among alternatives
 
 ```{r}
+#| label: fig-appendix-uniform
+#| fig-cap: "Uniform distribution with equal probability between a=0 and b=5"
 #| fig-width: 6
 #| fig-height: 4
 x <- seq(-1, 6, length.out = 200)
@@ -249,6 +261,8 @@ $$f(x) = \lambda e^{-\lambda x}, \quad x \geq 0$$
 - Waiting times
 
 ```{r}
+#| label: fig-appendix-exponential
+#| fig-cap: "Exponential distribution for different rate parameters (λ = 0.5, 1, and 2)"
 #| fig-width: 7
 #| fig-height: 4
 # Exponential with different rate parameters
@@ -287,6 +301,8 @@ $$f(x) = \frac{\lambda^r}{\Gamma(r)} x^{r-1} e^{-\lambda x}, \quad x \geq 0$$
 - Prior distributions in Bayesian analysis
 
 ```{r}
+#| label: fig-appendix-gamma
+#| fig-cap: "Gamma distribution with rate = 0.5 for different shape parameters (1, 2, and 5)"
 #| fig-width: 7
 #| fig-height: 4
 # Gamma distribution with different shape parameters
@@ -328,6 +344,8 @@ $$f(x) = \frac{1}{\sqrt{2\pi}\sigma} e^{-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\r
 - Basis for many statistical tests
 
 ```{r}
+#| label: fig-appendix-normal
+#| fig-cap: "Normal distribution with mean μ=2 for different standard deviations (σ = 0.5, 1, and 2)"
 #| fig-width: 7
 #| fig-height: 5
 x <- seq(-4, 8, length.out = 200)
@@ -359,6 +377,8 @@ $$Z = \frac{X - \mu}{\sigma}$$
 This **z-score** tells us how many standard deviations a value is from the mean.
 
 ```{r}
+#| label: fig-appendix-standard-normal
+#| fig-cap: "Standard normal distribution showing 68% of values within 1 standard deviation and 95% within 2 standard deviations"
 #| fig-width: 7
 #| fig-height: 5
 x <- seq(-4, 4, length.out = 200)
@@ -408,6 +428,8 @@ $$f(x) = \frac{1}{x\sigma\sqrt{2\pi}} e^{-\frac{(\ln x - \mu)^2}{2\sigma^2}}, \q
 - Income distributions
 
 ```{r}
+#| label: fig-appendix-lognormal
+#| fig-cap: "Log-normal distribution (left) and its transformation to normal distribution after log transformation (right)"
 #| fig-width: 8
 #| fig-height: 4
 par(mfrow = c(1, 2))
@@ -445,6 +467,8 @@ The chi-square distribution is the distribution of a sum of squared standard nor
 - Variance estimation
 
 ```{r}
+#| label: fig-appendix-chisquare
+#| fig-cap: "Chi-square distribution for different degrees of freedom (df = 2, 5, and 10)"
 #| fig-width: 7
 #| fig-height: 4
 x <- seq(0, 20, length.out = 200)
@@ -474,6 +498,8 @@ As $\nu \to \infty$, the t-distribution approaches the standard normal.
 - Robust regression
 
 ```{r}
+#| label: fig-appendix-t-dist
+#| fig-cap: "Student's t-distribution compared to normal distribution for different degrees of freedom"
 #| fig-width: 7
 #| fig-height: 4
 x <- seq(-4, 4, length.out = 200)
@@ -504,6 +530,8 @@ The F-distribution is the ratio of two chi-square distributions divided by their
 - Regression significance tests
 
 ```{r}
+#| label: fig-appendix-f-dist
+#| fig-cap: "F distribution for different numerator and denominator degrees of freedom"
 #| fig-width: 7
 #| fig-height: 4
 x <- seq(0, 5, length.out = 200)
@@ -538,6 +566,8 @@ The beta distribution is defined on the interval [0, 1] and is useful for modeli
 - Allele frequencies
 
 ```{r}
+#| label: fig-appendix-beta
+#| fig-cap: "Beta distribution for different shape parameters showing various distribution shapes"
 #| fig-width: 7
 #| fig-height: 4
 x <- seq(0, 1, length.out = 200)
@@ -601,6 +631,8 @@ rnorm(5)
 ## Choosing the Right Distribution
 
 ```{r}
+#| label: fig-appendix-dist-choice
+#| fig-cap: "Decision flowchart for choosing the appropriate probability distribution based on data type and characteristics"
 #| echo: false
 #| fig-width: 9
 #| fig-height: 6

@@ -20,6 +20,8 @@ The t-distribution, discovered by William Sealy Gosset (who published under the 
 The t-distribution is characterized by its degrees of freedom (df). As df increases, the t-distribution approaches the normal distribution. For small samples, the heavier tails mean that extreme values are more likely, leading to wider confidence intervals and more conservative tests.
 
 ```{r}
+#| label: fig-t-vs-normal
+#| fig-cap: "The t-distribution has heavier tails than the normal, especially with low degrees of freedom"
 #| fig-width: 7
 #| fig-height: 5
 # Compare t-distributions with different df
@@ -120,6 +122,8 @@ The test assumes:
 - Equal variances in both groups (for the standard version)
 
 ```{r}
+#| label: fig-two-sample-visual
+#| fig-cap: "Visualization of two groups before performing a two-sample t-test"
 #| fig-width: 8
 #| fig-height: 4
 # Two-sample t-test example
@@ -131,7 +135,7 @@ control <- rnorm(n = 30, mean = 10, sd = 3)
 par(mfrow = c(1, 2))
 boxplot(treatment, control, names = c("Treatment", "Control"),
         col = c("lightblue", "lightgreen"), main = "Boxplot")
-        
+
 # Combined histogram
 hist(treatment, col = rgb(0, 0, 1, 0.5), xlim = c(0, 20),
      main = "Histograms", xlab = "Value")
@@ -211,6 +215,8 @@ T-tests assume normally distributed data (or large samples) and, for the standar
 **Normality**: Use histograms, Q-Q plots, or formal tests like Shapiro-Wilk.
 
 ```{r}
+#| label: fig-qq-normality
+#| fig-cap: "Q-Q plot for assessing normality: points following the line suggest approximate normality"
 #| fig-width: 6
 #| fig-height: 4
 # Check normality with Q-Q plot
@@ -261,6 +267,8 @@ cat("Cohen's d:", round(cohens_d, 2), "\n")
 Let's work through a complete analysis comparing two groups:
 
 ```{r}
+#| label: fig-drug-trial-analysis
+#| fig-cap: "Complete analysis workflow: visualization and assumption checking before the t-test"
 #| fig-width: 8
 #| fig-height: 6
 # Simulated drug trial data
@@ -270,7 +278,7 @@ placebo <- rnorm(40, mean = 70, sd = 12)
 
 # Step 1: Visualize
 par(mfrow = c(2, 2))
-boxplot(drug, placebo, names = c("Drug", "Placebo"), 
+boxplot(drug, placebo, names = c("Drug", "Placebo"),
         col = c("coral", "lightblue"), main = "Response by Group")
 
 # Step 2: Check normality
@@ -303,6 +311,8 @@ The t-test shows a significant difference (p < 0.05), and Cohen's d indicates a 
 When normality assumptions are questionable and sample sizes are small, randomization (permutation) tests provide a non-parametric alternative to the t-test. The logic is elegant: if there is no difference between groups, then the group labels are arbitrary and could be shuffled without affecting the distribution of the test statistic.
 
 ```{r}
+#| label: fig-permutation-test
+#| fig-cap: "Permutation test null distribution with observed difference (red line) for comparison"
 #| fig-width: 7
 #| fig-height: 5
 # Randomization test example

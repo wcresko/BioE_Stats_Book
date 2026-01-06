@@ -8,7 +8,7 @@ library(gt)
 theme_set(theme_minimal())
 ```
 
-![](../images/week_01.001.jpeg){fig-align="center"}
+![Statistics provides the framework for drawing conclusions from data](../images/week_01.001.jpeg){#fig-intro-framework fig-align="center"}
 
 ## The Role of Statistics in Bioengineering
 
@@ -16,7 +16,7 @@ Bioengineering sits at the intersection of biology, engineering, and medicine, a
 
 At its core, statistics addresses a fundamental problem: we almost never know the world perfectly, yet we still need to make decisions and draw conclusions. When you measure the mechanical properties of a hydrogel, characterize the response of neurons to a stimulus, or quantify gene expression in different treatment groups, you obtain samples from larger populations. Statistics gives us the tools to estimate underlying parameters from these samples and to quantify our uncertainty about those estimates.
 
-![](../images/week_01.002.jpeg){fig-align="center"}
+![Statistical literacy is essential for modern bioengineering careers](../images/week_01.002.jpeg){#fig-intro-career fig-align="center"}
 
 ## Why Statistics Matters for Your Career
 
@@ -24,7 +24,7 @@ The importance of statistical literacy for bioengineers cannot be overstated. Ex
 
 Beyond research, statistical thinking is increasingly important in industry applications. Quality control in biomanufacturing relies on statistical process control. Clinical trials require sophisticated statistical designs. Machine learning algorithms that power diagnostic tools and drug discovery pipelines are fundamentally statistical methods. Familiarity with these concepts will serve you throughout your career.
 
-![](../images/week_01.003.jpeg){fig-align="center"}
+![Computational approaches enable powerful and reproducible data analysis](../images/week_01.003.jpeg){#fig-intro-computational fig-align="center"}
 
 ## Coding and Scripting for Data Analysis
 
@@ -32,7 +32,7 @@ This course emphasizes computational approaches to statistics. While it is possi
 
 Programming is incredibly fast and powerful, particularly for repeated actions. A single command can accomplish what would require thousands of mouse clicks. You gain the ability to analyze large datasets that spreadsheet software cannot handle efficiently. You have access to thousands of free programs created by and for scientists. Your analyses become reproducible—you can document exactly what you did and share that documentation with others.
 
-![](../images/week_01.004.jpeg){fig-align="center"}
+![Coding and scripting form the foundation of modern data science](../images/week_01.004.jpeg){#fig-intro-coding fig-align="center"}
 
 We distinguish between coding and scripting, though the line between them has blurred considerably. Coding generally refers to programming in compiled languages like C++ or Fortran, where source code is translated into machine code before execution. Scripting typically involves interpreted languages like Python, R, or Julia, where commands are executed on the fly without a separate compilation step. Compiled code tends to run faster but is less flexible during development; scripting languages offer more interactivity at some cost in execution speed. Modern analytical pipelines typically combine both approaches, using scripting languages for data manipulation and visualization while calling compiled code for computationally intensive operations.
 

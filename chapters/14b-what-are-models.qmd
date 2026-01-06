@@ -71,6 +71,8 @@ Every statistical model specifies:
 4. **Error structure**: Assumptions about variability (normally distributed, etc.)
 
 ```{r}
+#| label: fig-model-components
+#| fig-cap: "Components of a linear model showing data points, the fitted model line representing E[Y|X], and residuals (ε) as vertical deviations from the line"
 #| fig-width: 7
 #| fig-height: 5
 # Visualizing a simple linear model
@@ -120,6 +122,8 @@ $$\hat{\theta} = \arg\max_{\theta} L(\theta | \text{data}) = \arg\max_{\theta} \
 For normally distributed errors, least squares and MLE give identical results. MLE extends to non-normal distributions and complex models.
 
 ```{r}
+#| label: fig-mle-example
+#| fig-cap: "Maximum likelihood estimation for the mean of a normal distribution, showing sample data (left) and the log-likelihood curve (right) with maximum at the MLE"
 #| fig-width: 8
 #| fig-height: 4
 # Visualize likelihood for estimating a mean
@@ -153,6 +157,8 @@ text(mu_values[which.max(log_lik)], min(log_lik) + 2,
 **Overfitting** occurs when a model captures noise rather than signal—it fits the training data extremely well but fails to generalize to new data.
 
 ```{r}
+#| label: fig-overfitting
+#| fig-cap: "Demonstration of underfitting (degree 1 polynomial, left) and overfitting (degree 15 polynomial, right) in regression models"
 #| fig-width: 8
 #| fig-height: 5
 # Demonstrate overfitting with polynomial regression
@@ -196,6 +202,8 @@ $$\text{Total Error} = \text{Bias}^2 + \text{Variance} + \text{Irreducible Error
 Simple models have high bias but low variance. Complex models have low bias but high variance. The goal is to find the sweet spot.
 
 ```{r}
+#| label: fig-bias-variance-tradeoff
+#| fig-cap: "The bias-variance tradeoff showing how total prediction error decomposes into bias squared, variance, and irreducible error, with optimal model complexity at the minimum total error"
 #| fig-width: 7
 #| fig-height: 5
 # Conceptual bias-variance plot
@@ -234,6 +242,8 @@ Common transformations:
 - **Categorical encoding**: Converting categories to numbers
 
 ```{r}
+#| label: fig-log-transform
+#| fig-cap: "Effect of log transformation on a nonlinear relationship, showing curved pattern on original scale (left) that becomes linear after log transformation (right)"
 #| fig-width: 8
 #| fig-height: 4
 # Example: log transformation
@@ -304,6 +314,8 @@ The gold standard for evaluating predictive performance is **cross-validation**:
 3. Average performance across all K tests
 
 ```{r}
+#| label: fig-cross-validation
+#| fig-cap: "Cross-validation error for polynomial models of different degrees, showing optimal model complexity at minimum CV error"
 #| fig-width: 6
 #| fig-height: 5
 library(boot)

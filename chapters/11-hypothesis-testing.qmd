@@ -35,7 +35,7 @@ Key questions in hypothesis testing include:
 
 Two types of mistakes are possible in hypothesis testing.
 
-![](../images/week_3.007.jpeg){fig-align="center"}
+![Type I and Type II errors in hypothesis testing](../images/week_3.007.jpeg){#fig-error-types fig-align="center"}
 
 A **Type I error** occurs when we reject a true null hypothesis—concluding there is an effect when there is not. The probability of a Type I error is denoted $\alpha$ and is called the significance level. By convention, $\alpha$ is often set to 0.05, meaning we accept a 5% chance of falsely rejecting a true null.
 
@@ -66,6 +66,8 @@ $$\text{Power} \approx \Phi\left(\frac{|\mu_1 - \mu_2|}{\sigma}\sqrt{\frac{n}{2}
 where $\Phi$ is the standard normal CDF, and $z_{1-\alpha/2}$ is the critical value.
 
 ```{r}
+#| label: fig-power-curves
+#| fig-cap: "Statistical power increases with sample size and effect size; the dashed line indicates the common 80% power threshold"
 #| fig-width: 8
 #| fig-height: 5
 # Visualize how power depends on effect size and sample size
@@ -124,7 +126,7 @@ The p-value is NOT the probability that the null hypothesis is true. It is the p
 
 The **significance level** $\alpha$ is the threshold below which we reject the null hypothesis. If $p < \alpha$, we reject $H_0$. If $p \geq \alpha$, we fail to reject $H_0$.
 
-![](../images/week_3.008.jpeg){fig-align="center"}
+![The significance level α determines the rejection region for hypothesis testing](../images/week_3.008.jpeg){#fig-significance-level fig-align="center"}
 
 The conventional choice of $\alpha = 0.05$ is arbitrary but widely used. In contexts where Type I errors are particularly costly (e.g., approving an ineffective drug), smaller $\alpha$ values may be appropriate. In exploratory research, larger $\alpha$ values might be acceptable.
 
@@ -136,7 +138,7 @@ A **test statistic** summarizes the data in a way that allows comparison to a kn
 
 Just like raw data, test statistics are random variables with their own sampling distributions. Under the null hypothesis, we know what distribution the test statistic should follow. We can then calculate how unusual our observed statistic is under this distribution.
 
-![](../images/week_3.001.jpeg){fig-align="center"}
+![Test statistics follow known distributions under the null hypothesis](../images/week_3.001.jpeg){#fig-test-statistic fig-align="center"}
 
 ## One-Tailed vs. Two-Tailed Tests
 
@@ -144,7 +146,7 @@ A **two-tailed test** considers extreme values in both directions. The alternati
 
 A **one-tailed test** considers extreme values in only one direction. The alternative hypothesis is directional: $H_A: \mu > \mu_0$ or $H_A: \mu < \mu_0$. Only extreme values in the specified direction count as evidence against the null.
 
-![](../images/week_3.002.jpeg){fig-align="center"}
+![One-tailed vs. two-tailed tests: the alternative hypothesis determines which tail(s) to consider](../images/week_3.002.jpeg){#fig-tailed-tests fig-align="center"}
 
 Two-tailed tests are more conservative and are appropriate when you do not have a strong prior expectation about the direction of an effect. One-tailed tests have more power to detect effects in the specified direction but will miss effects in the opposite direction.
 
@@ -182,6 +184,8 @@ A 95% CI that doesn't contain zero corresponds to p < 0.05 for a two-tailed test
 This relationship makes sense when you think about it: the confidence interval represents the range of parameter values that are "compatible" with the data. If the null value falls outside this range, the data provide evidence against it (small p-value). If the null value falls inside, the data are consistent with it (large p-value).
 
 ```{r}
+#| label: fig-ci-pvalue-relationship
+#| fig-cap: "The relationship between confidence intervals and p-values: CIs that exclude zero correspond to small p-values"
 #| fig-width: 8
 #| fig-height: 5
 # Demonstrate the CI-pvalue relationship
@@ -286,6 +290,8 @@ The American Statistical Association's 2016 statement on p-values emphasizes tha
 We can create empirical null distributions through randomization, providing an alternative to parametric assumptions.
 
 ```{r}
+#| label: fig-randomization-null
+#| fig-cap: "Randomization creates an empirical null distribution; the red line shows the observed test statistic"
 #| fig-width: 7
 #| fig-height: 5
 # Two groups to compare
@@ -317,7 +323,7 @@ cat("Observed t:", round(t_obs, 3), "\n")
 cat("P-value:", p_value, "\n")
 ```
 
-![](../images/week_3.009.jpeg){fig-align="center"}
+![Randomization tests provide a distribution-free alternative to parametric tests](../images/week_3.009.jpeg){#fig-randomization-concept fig-align="center"}
 
 ## Summary
 

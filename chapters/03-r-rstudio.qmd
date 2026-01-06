@@ -7,7 +7,7 @@ library(tidyverse)
 theme_set(theme_minimal())
 ```
 
-![](../images/RStudio_Screenshot.png){fig-align="center"}
+![The RStudio integrated development environment](../images/RStudio_Screenshot.png){#fig-rstudio-ide fig-align="center"}
 
 ## What is R?
 
@@ -207,6 +207,8 @@ rep(c(1, 2), times = 3)
 R can generate random numbers from various probability distributions, which is invaluable for simulation and understanding statistical concepts.
 
 ```{r}
+#| label: fig-rnorm-hist
+#| fig-cap: "Histogram of 1000 random draws from a normal distribution with mean 0 and standard deviation 10"
 #| fig-width: 6
 #| fig-height: 4
 # Draw 1000 values from a normal distribution with mean 0 and SD 10
@@ -215,6 +217,8 @@ hist(x)
 ```
 
 ```{r}
+#| label: fig-rbinom-hist
+#| fig-cap: "Histogram of binomial distribution results from 1000 experiments of 20 coin flips each"
 #| fig-width: 6
 #| fig-height: 4
 # Draw from a binomial distribution: 1000 experiments, 20 trials each, p=0.5
@@ -286,12 +290,14 @@ write.table(mydata, "output.txt", sep = "\t", row.names = FALSE)
 R has extensive graphics capabilities. The base `plot()` function creates scatterplots and other basic visualizations.
 
 ```{r}
+#| label: fig-basic-scatter
+#| fig-cap: "A simple scatterplot showing the relationship between x and x squared"
 #| fig-width: 6
 #| fig-height: 4
 x <- 1:10
 y <- x^2
-plot(x, y, 
-     xlab = "X values", 
+plot(x, y,
+     xlab = "X values",
      ylab = "Y squared",
      main = "A Simple Plot",
      col = "blue",
@@ -301,6 +307,8 @@ plot(x, y,
 Histograms visualize the distribution of a single variable.
 
 ```{r}
+#| label: fig-normal-hist
+#| fig-cap: "Histogram of 1000 random samples from a standard normal distribution"
 #| fig-width: 6
 #| fig-height: 4
 data <- rnorm(1000)
@@ -310,6 +318,8 @@ hist(data, breaks = 30, col = "lightblue", main = "Normal Distribution")
 Boxplots compare distributions across groups.
 
 ```{r}
+#| label: fig-hydrogel-boxplot
+#| fig-cap: "Boxplot comparing compression values across hydrogel concentration levels"
 #| fig-width: 6
 #| fig-height: 4
 boxplot(compression ~ hydrogel_concentration, data = mydata,
@@ -706,6 +716,8 @@ Before writing a loop, consider whether the task can be accomplished with vector
 Many plotting parameters are controlled by the `par()` function. Understanding `par()` dramatically increases your plotting capabilities.
 
 ```{r}
+#| label: fig-multipanel-plots
+#| fig-cap: "Multiple plot panels showing increasing (points) and decreasing (lines) sequences"
 #| fig-width: 8
 #| fig-height: 4
 # Create multiple panels
@@ -725,6 +737,8 @@ plot(seq_2, xlab = "Index", ylab = "Value", type = "l", col = "blue",
 Graphical parameters like `col`, `pch` (point character), and `cex` (character expansion) are vectorized:
 
 ```{r}
+#| label: fig-twocolor-scatter
+#| fig-cap: "Scatterplot demonstrating vectorized graphical parameters with two colors"
 #| fig-width: 6
 #| fig-height: 5
 seq_1 <- seq(0, 10, by = 0.1)

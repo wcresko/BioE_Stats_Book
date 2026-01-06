@@ -14,7 +14,7 @@ Power is the probability of correctly rejecting a false null hypothesis—the pr
 
 Power = 1 - $\beta$, where $\beta$ is the probability of a Type II error (failing to reject a false null hypothesis). We typically aim for power of at least 80%, meaning we accept a 20% chance of missing a true effect.
 
-![](../images/images_6b.002.jpeg){fig-align="center"}
+![Illustration of statistical power showing the relationship between Type I error (alpha), Type II error (beta), and power in hypothesis testing](../images/images_6b.002.jpeg){#fig-power-concept fig-align="center"}
 
 ## Why Power Matters
 
@@ -36,7 +36,7 @@ $$\text{Power} \propto \frac{(\text{Effect Size}) \times (\alpha) \times (\sqrt{
 
 **Variability ($\sigma$)**: Less variable data makes effects easier to detect.
 
-![](../images/images_6b.003.jpeg){fig-align="center"}
+![Visual representation of the four factors that determine statistical power: effect size, sample size, significance level, and variability](../images/images_6b.003.jpeg){#fig-power-determinants fig-align="center"}
 
 ## Cohen's d: Standardized Effect Size
 
@@ -72,6 +72,8 @@ About 64 subjects per group are needed to detect a medium effect with 80% power 
 Power curves show how power changes with sample size or effect size:
 
 ```{r}
+#| label: fig-power-curves
+#| fig-cap: "Power curves showing how statistical power increases with sample size for different effect sizes (Cohen's d = 0.2, 0.5, 0.8) in a two-sample t-test"
 #| fig-width: 7
 #| fig-height: 5
 # Power curve for different effect sizes
@@ -111,6 +113,8 @@ pwr.anova.test(k = 3, f = 0.25, sig.level = 0.05, power = 0.80)
 For complex designs, simulation provides a flexible approach:
 
 ```{r}
+#| label: fig-simulated-power
+#| fig-cap: "Simulation-based power analysis for comparing two Poisson distributions, showing power as a function of sample size"
 #| fig-width: 7
 #| fig-height: 5
 # Simulation-based power for comparing two Poisson distributions
