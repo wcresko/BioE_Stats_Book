@@ -721,42 +721,457 @@ legend("topright", c("PR Curve", "Baseline (random)"),
        col = c("purple", "gray"), lty = c(1, 2), lwd = c(2, 1))
 ```
 
-## Decision Trees
+## Decision Trees (CART)
 
-Decision trees make predictions by asking a series of yes/no questions about the features:
+**Classification and Regression Trees (CART)** make predictions by recursively partitioning the feature space into regions. At each node, the algorithm asks a yes/no question about a single feature, splitting observations into two groups. The process continues until a stopping criterion is met.
+
+### How Trees Work
+
+The key idea: find the split that best separates the data at each step.
+
+For **classification**, CART typically minimizes the **Gini impurity**:
+
+$$
+G = \sum_{k=1}^{K} p_k (1 - p_k)
+$$
+
+where $p_k$ is the proportion of observations in class $k$. A pure node (all one class) has $G = 0$.
+
+For **regression**, CART minimizes the **residual sum of squares (RSS)**:
+
+$$
+\text{RSS} = \sum_{i \in R_1} (y_i - \bar{y}_{R_1})^2 + \sum_{i \in R_2} (y_i - \bar{y}_{R_2})^2
+$$
+
+where $R_1$ and $R_2$ are the two regions created by the split.
 
 ```{r}
-#| label: fig-decision-tree
-#| fig-cap: "Decision tree for classifying iris species based on sepal measurements"
-#| fig-width: 7
-#| fig-height: 5
+#| label: fig-cart-classification
+#| fig-cap: "A CART decision tree for classifying iris species. Each node shows the predicted class, proportion of observations, and the splitting rule."
+#| fig-width: 8
+#| fig-height: 6
 library(rpart)
 library(rpart.plot)
 
-# Build a simple decision tree
+# Build a classification tree
 data(iris)
-tree_model <- rpart(Species ~ Sepal.Length + Sepal.Width, data = iris)
-rpart.plot(tree_model)
+tree_class <- rpart(Species ~ ., data = iris, method = "class")
+
+# Visualize with rpart.plot
+rpart.plot(tree_class, extra = 104, box.palette = "RdYlGn",
+           main = "Classification Tree for Iris Species")
 ```
 
-Trees are interpretable but prone to overfitting. Pruning (removing branches) or using ensembles helps.
+### Interpreting Tree Output
+
+The tree visualization shows:
+
+- **Node prediction**: The predicted class (or value for regression)
+- **Split rule**: The feature and threshold used to split
+- **Proportions**: Distribution of classes at each node
+- **Sample size**: Number of observations reaching each node
+
+```{r}
+# Detailed tree summary
+summary(tree_class, cp = 0.1)
+```
+
+### Regression Trees
+
+Trees can also predict continuous outcomes:
+
+```{r}
+#| label: fig-cart-regression
+#| fig-cap: "A regression tree predicting car fuel efficiency (mpg) from weight and horsepower"
+#| fig-width: 8
+#| fig-height: 5
+# Build a regression tree
+tree_reg <- rpart(mpg ~ wt + hp + cyl, data = mtcars, method = "anova")
+
+rpart.plot(tree_reg, extra = 101, box.palette = "Blues",
+           main = "Regression Tree for MPG")
+```
+
+### The Decision Boundary
+
+Trees partition the feature space into rectangular regions:
+
+```{r}
+#| label: fig-tree-boundary
+#| fig-cap: "Decision tree partition of the feature space. Each rectangular region is assigned to a class based on the majority vote of training points in that region."
+#| fig-width: 8
+#| fig-height: 6
+# Visualize decision boundary for 2D case
+tree_2d <- rpart(Species ~ Petal.Length + Petal.Width, data = iris, method = "class")
+
+# Create grid for prediction
+petal_length_seq <- seq(0, 7, length.out = 200)
+petal_width_seq <- seq(0, 3, length.out = 200)
+grid <- expand.grid(Petal.Length = petal_length_seq,
+                    Petal.Width = petal_width_seq)
+grid$pred <- predict(tree_2d, grid, type = "class")
+
+# Plot
+plot(grid$Petal.Length, grid$Petal.Width,
+     col = c(rgb(1,0,0,0.1), rgb(0,1,0,0.1), rgb(0,0,1,0.1))[grid$pred],
+     pch = 15, cex = 0.3,
+     xlab = "Petal Length", ylab = "Petal Width",
+     main = "Decision Tree Boundaries")
+points(iris$Petal.Length, iris$Petal.Width,
+       col = c("red", "green", "blue")[iris$Species],
+       pch = 19, cex = 0.8)
+legend("topleft", levels(iris$Species),
+       col = c("red", "green", "blue"), pch = 19)
+```
+
+### Controlling Tree Complexity
+
+Trees easily overfit—they can keep splitting until each leaf contains a single observation. Several parameters control complexity:
+
+- **cp (complexity parameter)**: Minimum improvement required for a split
+- **minsplit**: Minimum observations required to attempt a split
+- **maxdepth**: Maximum depth of the tree
+
+```{r}
+#| label: fig-tree-complexity
+#| fig-cap: "Effect of the complexity parameter on tree structure: smaller cp allows more splits and greater complexity"
+#| fig-width: 9
+#| fig-height: 4
+par(mfrow = c(1, 3))
+
+# Simple tree (high cp)
+tree_simple <- rpart(Species ~ ., data = iris, cp = 0.1)
+rpart.plot(tree_simple, main = "cp = 0.1 (simple)")
+
+# Medium tree
+tree_medium <- rpart(Species ~ ., data = iris, cp = 0.02)
+rpart.plot(tree_medium, main = "cp = 0.02 (medium)")
+
+# Complex tree (low cp)
+tree_complex <- rpart(Species ~ ., data = iris, cp = 0.001)
+rpart.plot(tree_complex, main = "cp = 0.001 (complex)")
+```
+
+### Pruning with Cross-Validation
+
+The optimal complexity is typically chosen by cross-validation:
+
+```{r}
+#| label: fig-tree-cv
+#| fig-cap: "Cross-validation error as a function of tree complexity. The dashed line shows one standard error above the minimum, often used to select a simpler tree."
+#| fig-width: 7
+#| fig-height: 5
+# Fit full tree
+full_tree <- rpart(Species ~ ., data = iris, cp = 0.001)
+
+# Plot CV error vs complexity
+plotcp(full_tree)
+
+# Print CP table
+printcp(full_tree)
+
+# Prune to optimal cp
+best_cp <- full_tree$cptable[which.min(full_tree$cptable[, "xerror"]), "CP"]
+pruned_tree <- prune(full_tree, cp = best_cp)
+```
+
+::: {.callout-tip}
+## Advantages and Disadvantages of Trees
+
+**Advantages:**
+- Highly interpretable—easy to explain to non-statisticians
+- Handle both numeric and categorical predictors
+- Capture non-linear relationships and interactions automatically
+- Robust to outliers and don't require feature scaling
+
+**Disadvantages:**
+- High variance—small changes in data can produce very different trees
+- Prone to overfitting without careful tuning
+- Axis-aligned splits can't capture diagonal relationships efficiently
+- Generally lower predictive accuracy than ensemble methods
+:::
 
 ## Random Forests
 
-Random forests improve on single trees by:
-1. Building many trees on bootstrap samples (bagging)
-2. Using a random subset of features at each split
-3. Averaging predictions across all trees
+**Random forests** address the high variance of individual trees by building many trees and averaging their predictions. The key innovations are **bagging** (bootstrap aggregating) and **random feature selection**.
+
+### The Random Forest Algorithm
+
+1. Draw $B$ bootstrap samples from the training data
+2. For each sample, grow a tree with a twist: at each split, consider only a random subset of $m$ features (typically $m = \sqrt{p}$ for classification, $m = p/3$ for regression)
+3. For prediction:
+   - **Classification**: Vote across all trees (majority wins)
+   - **Regression**: Average predictions across all trees
+
+The randomness serves two purposes:
+- **Bagging** reduces variance by averaging many noisy but unbiased trees
+- **Random feature selection** decorrelates the trees, making the average more effective
+
+### Random Forests in R
 
 ```{r}
+#| label: fig-rf-model
+#| fig-cap: "Random forest OOB error rate decreasing as more trees are added"
+#| fig-width: 7
+#| fig-height: 5
 library(randomForest)
+set.seed(42)
 
-rf_model <- randomForest(Species ~ ., data = iris, ntree = 100)
-rf_model
+# Fit random forest
+rf_model <- randomForest(Species ~ ., data = iris,
+                          ntree = 500,       # Number of trees
+                          mtry = 2,          # Features tried at each split
+                          importance = TRUE)  # Calculate variable importance
 
-# Variable importance
-varImpPlot(rf_model)
+# Model summary
+print(rf_model)
+
+# Plot error vs number of trees
+plot(rf_model, main = "Random Forest: Error vs. Number of Trees")
+legend("topright", colnames(rf_model$err.rate), col = 1:4, lty = 1:4)
 ```
+
+### Out-of-Bag (OOB) Error
+
+Each bootstrap sample uses about 63% of observations. The remaining 37% (out-of-bag samples) provide a built-in test set:
+
+```{r}
+# OOB confusion matrix
+rf_model$confusion
+
+# OOB error rate
+cat("OOB Error Rate:", round(1 - sum(diag(rf_model$confusion[,1:3])) /
+                              sum(rf_model$confusion[,1:3]), 3), "\n")
+```
+
+OOB error is nearly as accurate as cross-validation but comes "for free" during training.
+
+### Variable Importance
+
+Random forests provide measures of how important each predictor is:
+
+```{r}
+#| label: fig-rf-importance
+#| fig-cap: "Variable importance from random forest: Mean Decrease Accuracy measures how much removing a variable hurts prediction; Mean Decrease Gini measures the total reduction in node impurity"
+#| fig-width: 8
+#| fig-height: 5
+# Variable importance plot
+varImpPlot(rf_model, main = "Variable Importance")
+
+# Numeric importance values
+importance(rf_model)
+```
+
+**Mean Decrease Accuracy**: For each tree, predictions are made on OOB samples. Then the values of variable $j$ are randomly permuted, and predictions are made again. The decrease in accuracy from permutation measures importance.
+
+**Mean Decrease Gini**: Total decrease in Gini impurity from splits on variable $j$, averaged over all trees.
+
+### Tuning Random Forests
+
+Key parameters to tune:
+
+- **ntree**: Number of trees (more is generally better, but with diminishing returns)
+- **mtry**: Number of features considered at each split
+- **nodesize**: Minimum size of terminal nodes
+
+```{r}
+#| label: fig-rf-tuning
+#| fig-cap: "Random forest OOB error as a function of mtry (number of features considered at each split)"
+#| fig-width: 7
+#| fig-height: 5
+# Tune mtry
+oob_error <- sapply(1:4, function(m) {
+  rf <- randomForest(Species ~ ., data = iris, mtry = m, ntree = 200)
+  rf$err.rate[200, "OOB"]
+})
+
+plot(1:4, oob_error, type = "b", pch = 19,
+     xlab = "mtry (features at each split)",
+     ylab = "OOB Error Rate",
+     main = "Tuning mtry Parameter")
+```
+
+### Random Forest for Regression
+
+```{r}
+# Regression random forest
+set.seed(42)
+rf_reg <- randomForest(mpg ~ ., data = mtcars, ntree = 500, importance = TRUE)
+
+# Performance
+cat("Variance explained:", round(rf_reg$rsq[500] * 100, 1), "%\n")
+cat("MSE:", round(rf_reg$mse[500], 2), "\n")
+
+# Variable importance for regression
+varImpPlot(rf_reg, main = "Variable Importance for MPG Prediction")
+```
+
+## Support Vector Machines (SVM)
+
+**Support Vector Machines** find the hyperplane that best separates classes by maximizing the margin—the distance between the boundary and the nearest points from each class.
+
+### The Maximum Margin Classifier
+
+For linearly separable data, infinitely many lines could separate the classes. SVM chooses the line with the largest margin:
+
+```{r}
+#| label: fig-svm-concept
+#| fig-cap: "Support Vector Machine concept: the decision boundary (solid line) maximizes the margin (distance to nearest points). Support vectors are the points on the margin boundaries."
+#| fig-width: 7
+#| fig-height: 6
+library(e1071)
+
+# Create simple 2D data
+set.seed(42)
+n <- 40
+x1 <- c(rnorm(n/2, mean = 0), rnorm(n/2, mean = 3))
+x2 <- c(rnorm(n/2, mean = 0), rnorm(n/2, mean = 3))
+y <- factor(c(rep(-1, n/2), rep(1, n/2)))
+svm_data <- data.frame(x1, x2, y)
+
+# Fit linear SVM
+svm_linear <- svm(y ~ x1 + x2, data = svm_data, kernel = "linear",
+                   cost = 10, scale = FALSE)
+
+# Plot
+plot(svm_linear, svm_data, x1 ~ x2,
+     col = c("lightblue", "lightpink"),
+     symbolPalette = c("blue", "red"),
+     svSymbol = "x", dataSymbol = "o")
+```
+
+### Soft Margin and the Cost Parameter
+
+Real data is rarely perfectly separable. **Soft margin** SVM allows some points to violate the margin, controlled by the cost parameter $C$:
+
+- **High C**: Small margin, few violations (may overfit)
+- **Low C**: Large margin, more violations (may underfit)
+
+```{r}
+#| label: fig-svm-cost
+#| fig-cap: "Effect of cost parameter on SVM decision boundary: low cost allows more margin violations (smoother boundary), high cost enforces stricter separation"
+#| fig-width: 9
+#| fig-height: 4
+par(mfrow = c(1, 3))
+
+for (cost_val in c(0.1, 1, 100)) {
+  svm_fit <- svm(y ~ x1 + x2, data = svm_data, kernel = "linear",
+                  cost = cost_val, scale = FALSE)
+  plot(svm_fit, svm_data, x1 ~ x2,
+       col = c("lightblue", "lightpink"),
+       main = paste("Cost =", cost_val))
+}
+```
+
+### The Kernel Trick
+
+For non-linear boundaries, SVM uses **kernels** to implicitly map data to higher dimensions where classes become linearly separable:
+
+**Common kernels:**
+
+- **Linear**: $K(x, x') = x \cdot x'$ (no transformation)
+- **Polynomial**: $K(x, x') = (1 + x \cdot x')^d$
+- **Radial Basis Function (RBF)**: $K(x, x') = \exp(-\gamma \|x - x'\|^2)$
+
+```{r}
+#| label: fig-svm-kernels
+#| fig-cap: "Different SVM kernels produce different decision boundaries: linear kernels give straight lines, polynomial and RBF kernels can capture non-linear patterns"
+#| fig-width: 9
+#| fig-height: 4
+# Create non-linear data
+set.seed(123)
+n <- 200
+r1 <- runif(n/2, 0, 2)
+theta1 <- runif(n/2, 0, 2*pi)
+r2 <- runif(n/2, 3, 5)
+theta2 <- runif(n/2, 0, 2*pi)
+
+x1 <- c(r1 * cos(theta1), r2 * cos(theta2))
+x2 <- c(r1 * sin(theta1), r2 * sin(theta2))
+y <- factor(c(rep("inner", n/2), rep("outer", n/2)))
+circle_data <- data.frame(x1, x2, y)
+
+par(mfrow = c(1, 3))
+
+# Linear (fails)
+svm_lin <- svm(y ~ ., data = circle_data, kernel = "linear")
+plot(svm_lin, circle_data, col = c("lightblue", "lightpink"),
+     main = "Linear Kernel")
+
+# Polynomial
+svm_poly <- svm(y ~ ., data = circle_data, kernel = "polynomial", degree = 2)
+plot(svm_poly, circle_data, col = c("lightblue", "lightpink"),
+     main = "Polynomial Kernel (d=2)")
+
+# RBF
+svm_rbf <- svm(y ~ ., data = circle_data, kernel = "radial", gamma = 0.5)
+plot(svm_rbf, circle_data, col = c("lightblue", "lightpink"),
+     main = "RBF Kernel")
+```
+
+### Tuning SVM with Cross-Validation
+
+The key parameters to tune are:
+- **cost**: Penalty for margin violations
+- **gamma**: For RBF kernel, controls the "reach" of each training example
+
+```{r}
+# Tune SVM using cross-validation
+set.seed(42)
+tune_result <- tune(svm, Species ~ ., data = iris,
+                     kernel = "radial",
+                     ranges = list(
+                       cost = c(0.1, 1, 10, 100),
+                       gamma = c(0.01, 0.1, 0.5, 1)
+                     ))
+
+# Best parameters
+cat("Best parameters:\n")
+print(tune_result$best.parameters)
+
+# Best model performance
+cat("\nBest model error:", round(tune_result$best.performance, 3), "\n")
+
+# Use best model
+best_svm <- tune_result$best.model
+table(Predicted = predict(best_svm), Actual = iris$Species)
+```
+
+### Multiclass SVM
+
+SVM is inherently binary, but extends to multiple classes via:
+
+- **One-vs-One**: Fit $\binom{K}{2}$ classifiers for all pairs of classes; classify by voting
+- **One-vs-All**: Fit $K$ classifiers (each class vs. rest); classify to highest-scoring class
+
+R's `svm()` uses one-vs-one by default.
+
+::: {.callout-note}
+## SVM vs. Other Methods
+
+**Advantages of SVM:**
+- Effective in high-dimensional spaces (even when dimensions > samples)
+- Memory efficient (uses only support vectors)
+- Versatile through different kernels
+
+**Disadvantages:**
+- Doesn't provide probability estimates directly (though they can be computed)
+- Sensitive to feature scaling—always standardize!
+- Can be slow on very large datasets
+- Kernel and parameter selection can be tricky
+:::
+
+## Comparing Classification Methods
+
+Different methods have different strengths:
+
+| Method | Interpretability | Handles Non-linearity | Speed | Best For |
+|:-------|:-----------------|:----------------------|:------|:---------|
+| kNN | Low | Yes (inherently) | Slow for large data | Simple problems, few features |
+| Decision Tree | High | Yes | Fast | Interpretability needed |
+| Random Forest | Medium | Yes | Moderate | General purpose, variable importance |
+| SVM | Low | Yes (with kernels) | Moderate | High-dimensional data |
+| Logistic Regression | High | No (needs feature engineering) | Fast | Probability estimates, inference |
 
 ## Practical Workflow
 
@@ -794,9 +1209,9 @@ High-dimensional data often benefit from dimensionality reduction before applyin
 
 Statistical learning provides powerful tools for prediction and pattern discovery:
 
-- Overfitting is the central challenge—models that fit training data too well predict poorly
-- Cross-validation provides honest estimates of predictive performance
-- The bias-variance tradeoff governs model complexity choices
+- **Overfitting** is the central challenge—models that fit training data too well predict poorly
+- **Cross-validation** provides honest estimates of predictive performance
+- The **bias-variance tradeoff** governs model complexity choices
 - **Regularization** (ridge, lasso, elastic net) controls overfitting by penalizing model complexity
   - Ridge shrinks coefficients but keeps all predictors
   - Lasso performs variable selection by shrinking some coefficients to zero
@@ -805,13 +1220,22 @@ Statistical learning provides powerful tools for prediction and pattern discover
   - Regression splines use piecewise polynomials at fixed knots
   - Natural splines add boundary constraints for better extrapolation
   - Smoothing splines use penalties to control flexibility
-- LOESS offers flexible non-parametric smoothing
-- K-nearest neighbors illustrates how hyperparameters control model complexity
-- Classification methods (kNN, decision trees, random forests) handle categorical outcomes
-- Confusion matrices summarize classification performance with metrics like accuracy, sensitivity, and precision
-- F1 score and balanced accuracy are better metrics for imbalanced data
-- ROC curves and AUC allow comparison of classifiers across all thresholds
-- Precision-recall curves are preferred for highly imbalanced problems
+- **LOESS** offers flexible non-parametric smoothing
+- **K-nearest neighbors** illustrates how hyperparameters control model complexity
+- **Decision trees (CART)** recursively partition data using simple rules
+  - Highly interpretable but prone to overfitting
+  - Controlled via complexity parameters and pruning
+- **Random forests** combine many trees for robust predictions
+  - Bagging and random feature selection reduce variance
+  - Out-of-bag error provides built-in validation
+  - Variable importance measures identify key predictors
+- **Support vector machines** find maximum-margin decision boundaries
+  - Kernel trick enables non-linear classification
+  - Effective in high-dimensional spaces
+- **Confusion matrices** summarize classification performance with metrics like accuracy, sensitivity, and precision
+- **F1 score and balanced accuracy** are better metrics for imbalanced data
+- **ROC curves and AUC** allow comparison of classifiers across all thresholds
+- **Precision-recall curves** are preferred for highly imbalanced problems
 - The choice between traditional statistics and machine learning depends on goals
 
 ## Additional Resources
