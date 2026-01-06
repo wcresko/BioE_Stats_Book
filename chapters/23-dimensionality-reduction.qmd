@@ -156,11 +156,11 @@ cat("Correlation between PCs:", round(cor(z[, 1], z[, 2]), 3), "\n")
 
 ### The Eigenanalysis Foundation
 
-The mathematical foundation involves **eigenanalysis**: decomposing the covariance (or correlation) matrix to find directions of maximum variation.
+The mathematical foundation involves **eigenanalysis**: decomposing the covariance (or correlation) matrix to find directions of maximum variation. For a detailed treatment of eigenvalues, eigenvectors, and their interpretation, see @sec-eigenanalysis.
 
 Given a covariance matrix $\Sigma$, eigenanalysis finds:
 
-- **Eigenvectors**: The directions of the principal components
+- **Eigenvectors**: The directions of the principal components (loadings)
 - **Eigenvalues**: The variance explained by each component
 
 The first principal component points in the direction of maximum variance. Each subsequent component is orthogonal (uncorrelated) and captures remaining variance in decreasing order.
@@ -171,6 +171,17 @@ v_1 + v_2 + \cdots + v_p
 $$
 
 An orthogonal transformation preserves total variability but redistributes it. PCA finds the transformation that concentrates variance in the first few components.
+
+::: {.callout-tip}
+## Interpreting Eigenvalues and Eigenvectors
+
+- **Eigenvalues** tell you *how much* variance each PC captures—larger means more important
+- **Eigenvectors** (loadings) tell you *how* original variables combine to form each PC
+- Variables with large absolute loadings contribute strongly to that PC
+- The sum of all eigenvalues equals the total variance in the data
+
+See @sec-eigen-pca for a complete explanation with examples.
+:::
 
 ![Geometric interpretation of principal components as directions of maximum variance](../images/Images_7a.006.jpeg){#fig-pca-geometry fig-align="center"}
 
@@ -705,6 +716,7 @@ Compare the distance between the first two observations (both cerebellums), the 
 
 ## Additional Resources
 
+- @sec-matrix-algebra - Matrix algebra fundamentals and eigenanalysis for PCA
 - @james2023islr - Modern treatment of dimensionality reduction and clustering
 - @logan2010biostatistical - MANOVA and DFA in biological research contexts
 - Borcard, D., Gillet, F., & Legendre, P. (2018). *Numerical Ecology with R* - Comprehensive ordination methods
