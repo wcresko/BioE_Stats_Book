@@ -699,6 +699,17 @@ Compare the distance between the first two observations (both cerebellums), the 
 
 7. Make an image plot of all the distances using the `image` function. Hint: convert the distance object to a matrix first. Does the pattern suggest that observations of the same tissue type are generally closer?
 
+## Non-Linear Methods
+
+The methods covered in this chapter are primarily **linear** dimensionality reduction techniques. PCA finds linear combinations of variables, and PCoA preserves Euclidean distances. However, biological data often lies on complex, non-linear manifolds.
+
+For visualization of complex, non-linear structure, see @sec-tsne-umap which covers:
+
+- **t-SNE** (t-distributed Stochastic Neighbor Embedding): Excellent for visualizing local cluster structure
+- **UMAP** (Uniform Manifold Approximation and Projection): Faster than t-SNE and may better preserve global structure
+
+These non-linear methods are particularly valuable for single-cell RNA-seq data and other high-dimensional biological datasets with complex structure.
+
 ## Summary
 
 - Dimensionality reduction creates fewer variables that capture most information
@@ -713,10 +724,12 @@ Compare the distance between the first two observations (both cerebellums), the 
 - **DFA/LDA** finds combinations that best discriminate known groups
 - These methods can be combined: use PCA to reduce dimensions, then classify
 - PCA can substantially reduce model complexity while maintaining predictive performance
+- For non-linear structure, consider t-SNE or UMAP (see @sec-tsne-umap)
 
 ## Additional Resources
 
 - @sec-matrix-algebra - Matrix algebra fundamentals and eigenanalysis for PCA
+- @sec-tsne-umap - Non-linear dimensionality reduction with t-SNE and UMAP
 - @james2023islr - Modern treatment of dimensionality reduction and clustering
 - @logan2010biostatistical - MANOVA and DFA in biological research contexts
 - Borcard, D., Gillet, F., & Legendre, P. (2018). *Numerical Ecology with R* - Comprehensive ordination methods
