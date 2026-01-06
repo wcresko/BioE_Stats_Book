@@ -118,7 +118,6 @@ This pushes the low-dimensional embedding to match the neighborhood structure of
 #| fig-cap: "Effect of perplexity on t-SNE embeddings. Low perplexity emphasizes local structure (may fragment clusters), high perplexity emphasizes global structure (may merge clusters)."
 #| fig-width: 9
 #| fig-height: 4
-#| cache: true
 # Use MNIST digits for demonstration
 if (!exists("mnist")) mnist <- read_mnist()
 
@@ -151,7 +150,6 @@ The `Rtsne` package provides an efficient implementation:
 #| fig-cap: "t-SNE visualization of MNIST digits reveals clear cluster structure corresponding to digit classes"
 #| fig-width: 7
 #| fig-height: 6
-#| cache: true
 # Full t-SNE with good parameters
 set.seed(42)
 tsne_result <- Rtsne(x_sample, perplexity = 30, verbose = FALSE, max_iter = 1000)
@@ -220,7 +218,6 @@ The `umap` package provides a convenient interface:
 #| fig-cap: "UMAP visualization of MNIST digits. Note the clear separation and potentially better preservation of global structure compared to t-SNE."
 #| fig-width: 7
 #| fig-height: 6
-#| cache: true
 # UMAP
 set.seed(42)
 umap_result <- umap(x_sample, n_neighbors = 15, min_dist = 0.1)
@@ -247,7 +244,6 @@ ggplot(df_umap, aes(UMAP1, UMAP2, color = digit)) +
 #| fig-cap: "Effect of n_neighbors and min_dist on UMAP embeddings. These parameters control the balance between local detail and global structure."
 #| fig-width: 9
 #| fig-height: 6
-#| cache: true
 # Different parameter combinations
 par(mfrow = c(2, 3))
 
@@ -279,7 +275,6 @@ Let's directly compare these three methods on the same dataset:
 #| fig-cap: "Comparison of PCA, t-SNE, and UMAP on MNIST digits. PCA captures global variance but mixes clusters; t-SNE and UMAP reveal clear cluster structure."
 #| fig-width: 10
 #| fig-height: 4
-#| cache: true
 # PCA
 pca_result <- prcomp(x_sample)
 
@@ -400,7 +395,6 @@ A typical workflow for non-linear dimensionality reduction:
 #| fig-cap: "Using PCA as a preprocessing step before t-SNE speeds computation and can improve results by removing noise"
 #| fig-width: 8
 #| fig-height: 4
-#| cache: true
 # PCA preprocessing example
 # First reduce to 50 PCs, then run t-SNE
 pca_50 <- prcomp(x_sample)$x[, 1:50]

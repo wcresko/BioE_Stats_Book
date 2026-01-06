@@ -276,7 +276,6 @@ Because pixels near each other on the image grid are correlated, we expect dimen
 #| fig-cap: "Variance explained by principal components of MNIST digit images. The first few PCs capture substantial variance."
 #| fig-width: 7
 #| fig-height: 5
-#| cache: true
 col_means <- colMeans(mnist$test$images)
 pca <- prcomp(mnist$train$images)
 
@@ -338,7 +337,6 @@ tmp %>%
 PCA can reduce model complexity while maintaining predictive performance. Let's use 36 PCs (explaining ~80% of variance) for kNN classification:
 
 ```{r}
-#| cache: true
 library(caret)
 k <- 36
 x_train <- pca$x[, 1:k]
