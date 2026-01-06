@@ -1,0 +1,702 @@
+# Quarto Markdown Reference {#sec-quarto-reference}
+
+This appendix provides a comprehensive quick reference for Quarto Markdown syntax and features used throughout this book.
+
+## Introduction to Quarto {#sec-quarto-intro}
+
+Quarto is an open-source scientific and technical publishing system built on Pandoc. It allows you to:
+
+- Combine narrative text with executable code (R, Python, Julia, Observable)
+- Create reproducible documents in multiple formats (HTML, PDF, Word, EPUB)
+- Use consistent syntax across different programming languages
+- Generate professional scientific documents with cross-references, citations, and equations
+
+Quarto documents use the `.qmd` file extension and combine Markdown for text, code chunks for analysis, and YAML for configuration.
+
+## Basic Markdown Syntax {#sec-markdown-basics}
+
+### Headers {#sec-markdown-headers}
+
+| Syntax | Result | Usage |
+|:-------|:-------|:------|
+| `# Header 1` | Largest heading | Chapter/section title |
+| `## Header 2` | Second level | Major section |
+| `### Header 3` | Third level | Subsection |
+| `#### Header 4` | Fourth level | Sub-subsection |
+| `##### Header 5` | Fifth level | Rarely used |
+| `###### Header 6` | Smallest heading | Rarely used |
+
+Headers can include section labels for cross-referencing:
+```markdown
+## Methods {#sec-methods}
+```
+
+### Text Formatting {#sec-markdown-formatting}
+
+| Syntax | Result | Description |
+|:-------|:-------|:------------|
+| `*italic*` or `_italic_` | *italic* | Emphasized text |
+| `**bold**` or `__bold__` | **bold** | Strong emphasis |
+| `***bold italic***` | ***bold italic*** | Both bold and italic |
+| `~~strikethrough~~` | ~~strikethrough~~ | Deleted text |
+| `superscript^2^` | superscript^2^ | Superscript |
+| `subscript~2~` | subscript~2~ | Subscript |
+| `` `code` `` | `code` | Inline code |
+
+### Lists {#sec-markdown-lists}
+
+**Unordered Lists:**
+```markdown
+- Item 1
+- Item 2
+  - Nested item 2a
+  - Nested item 2b
+- Item 3
+```
+
+**Ordered Lists:**
+```markdown
+1. First item
+2. Second item
+   a. Nested item
+   b. Another nested item
+3. Third item
+```
+
+**Task Lists:**
+```markdown
+- [ ] Incomplete task
+- [x] Completed task
+```
+
+### Links and Images {#sec-markdown-links}
+
+| Syntax | Result | Description |
+|:-------|:-------|:------------|
+| `[text](url)` | [text](url) | Hyperlink |
+| `[text](url "title")` | [text](url) | Link with title |
+| `<url>` | <url> | Automatic link |
+| `![alt text](image.png)` | Image | Embedded image |
+| `![alt text](image.png "caption")` | Image | Image with title |
+
+**Example:**
+```markdown
+Visit the [Quarto website](https://quarto.org) for documentation.
+
+![Histogram of data](figures/histogram.png)
+```
+
+### Blockquotes {#sec-markdown-blockquotes}
+
+```markdown
+> This is a blockquote.
+> It can span multiple lines.
+>
+> And multiple paragraphs.
+```
+
+Result:
+> This is a blockquote.
+> It can span multiple lines.
+
+### Code {#sec-markdown-code}
+
+**Inline Code:**
+```markdown
+Use the `mean()` function to calculate averages.
+```
+
+**Code Blocks:**
+````markdown
+```
+Plain code block without syntax highlighting
+```
+
+```r
+# R code with syntax highlighting
+x <- c(1, 2, 3, 4, 5)
+mean(x)
+```
+
+```python
+# Python code with syntax highlighting
+import numpy as np
+x = np.array([1, 2, 3, 4, 5])
+np.mean(x)
+```
+````
+
+## Quarto-Specific Features {#sec-quarto-features}
+
+### YAML Header {#sec-yaml-header}
+
+Every Quarto document begins with a YAML header enclosed in `---`:
+
+```yaml
+---
+title: "My Analysis"
+author: "Your Name"
+date: "2024-01-15"
+format:
+  html:
+    toc: true
+    code-fold: true
+    theme: cosmo
+  pdf:
+    documentclass: article
+    geometry: margin=1in
+execute:
+  echo: true
+  warning: false
+  message: false
+bibliography: references.bib
+---
+```
+
+**Common YAML Options:**
+
+| Option | Description | Example |
+|:-------|:------------|:--------|
+| `title` | Document title | `"My Report"` |
+| `author` | Author name(s) | `"Jane Doe"` |
+| `date` | Document date | `today` or `"2024-01-15"` |
+| `format` | Output format(s) | `html`, `pdf`, `docx` |
+| `toc` | Table of contents | `true` or `false` |
+| `number-sections` | Number sections | `true` or `false` |
+| `bibliography` | Bibliography file | `references.bib` |
+| `execute` | Global execution options | See below |
+
+### Code Chunk Options {#sec-code-chunks}
+
+Code chunks in Quarto use `#|` (hashpipe) notation for options:
+
+````markdown
+```{r}
+#| label: fig-scatter
+#| fig-cap: "Relationship between variables"
+#| echo: false
+#| warning: false
+#| fig-width: 6
+#| fig-height: 4
+
+plot(mtcars$mpg, mtcars$hp)
+```
+````
+
+**Common Chunk Options:**
+
+| Option | Description | Values |
+|:-------|:------------|:-------|
+| `label` | Unique chunk identifier | `fig-name`, `tbl-name` |
+| `echo` | Show code | `true`, `false` |
+| `eval` | Execute code | `true`, `false` |
+| `include` | Include output | `true`, `false` |
+| `warning` | Show warnings | `true`, `false` |
+| `message` | Show messages | `true`, `false` |
+| `error` | Show errors | `true`, `false` |
+| `fig-cap` | Figure caption | `"Caption text"` |
+| `fig-width` | Figure width (inches) | `6`, `8`, etc. |
+| `fig-height` | Figure height (inches) | `4`, `6`, etc. |
+| `tbl-cap` | Table caption | `"Caption text"` |
+| `output` | Control output | `true`, `false`, `asis` |
+
+### Cross-References {#sec-cross-refs}
+
+Quarto provides automatic numbering and cross-referencing:
+
+**Figures:**
+````markdown
+```{r}
+#| label: fig-histogram
+#| fig-cap: "Distribution of sample data"
+
+hist(rnorm(100))
+```
+
+See @fig-histogram for the distribution.
+````
+
+**Tables:**
+````markdown
+```{r}
+#| label: tbl-summary
+#| tbl-cap: "Summary statistics"
+
+knitr::kable(summary(mtcars))
+```
+
+Results are shown in @tbl-summary.
+````
+
+**Sections:**
+```markdown
+## Methods {#sec-methods}
+
+As described in @sec-methods, we used...
+```
+
+**Equations:**
+```markdown
+$$
+E = mc^2
+$$ {#eq-einstein}
+
+According to @eq-einstein, energy equals...
+```
+
+**Cross-Reference Prefixes:**
+
+| Type | Prefix | Example |
+|:-----|:-------|:--------|
+| Figure | `fig-` | `@fig-scatter` |
+| Table | `tbl-` | `@tbl-results` |
+| Section | `sec-` | `@sec-intro` |
+| Equation | `eq-` | `@eq-model` |
+| Theorem | `thm-` | `@thm-central-limit` |
+| Lemma | `lem-` | `@lem-property` |
+| Proof | `prp-` | `@prp-main` |
+
+### Citations {#sec-citations}
+
+Reference bibliography entries using `@key`:
+
+```markdown
+According to @fisher1925 and @student1908, the t-test...
+
+Multiple citations [@fisher1925; @student1908].
+
+Citation with page number [@fisher1925, p. 42].
+
+Citation with prefix [see @fisher1925, p. 42].
+```
+
+**Bibliography File (BibTeX):**
+```bibtex
+@article{fisher1925,
+  author = {Fisher, R. A.},
+  title = {Statistical Methods for Research Workers},
+  journal = {Oliver and Boyd},
+  year = {1925}
+}
+```
+
+### Callout Blocks {#sec-callouts}
+
+Callout blocks highlight important information:
+
+**Note:**
+```markdown
+:::{.callout-note}
+This is a note callout block.
+:::
+```
+
+**Tip:**
+```markdown
+:::{.callout-tip}
+## Pro Tip
+This is a helpful tip for users.
+:::
+```
+
+**Warning:**
+```markdown
+:::{.callout-warning}
+Be careful with this approach!
+:::
+```
+
+**Important:**
+```markdown
+:::{.callout-important}
+This is crucial information.
+:::
+```
+
+**Caution:**
+```markdown
+:::{.callout-caution}
+Proceed with caution.
+:::
+```
+
+**Callout Types:**
+
+| Type | Icon | Color | Usage |
+|:-----|:-----|:------|:------|
+| `note` | Info | Blue | General information |
+| `tip` | Lightbulb | Green | Helpful suggestions |
+| `warning` | Warning | Orange | Potential issues |
+| `important` | Exclamation | Red | Critical information |
+| `caution` | Fire | Red | Dangerous operations |
+
+**Collapsible Callouts:**
+```markdown
+:::{.callout-note collapse="true"}
+## Expandable Note
+This content is hidden by default.
+:::
+```
+
+### Tabsets {#sec-tabsets}
+
+Organize content into tabs:
+
+```markdown
+::: {.panel-tabset}
+
+## R Code
+```{r}
+mean(c(1, 2, 3, 4, 5))
+```
+
+## Python Code
+```{python}
+import numpy as np
+np.mean([1, 2, 3, 4, 5])
+```
+
+## Julia Code
+```{julia}
+using Statistics
+mean([1, 2, 3, 4, 5])
+```
+
+:::
+```
+
+### Equations {#sec-equations}
+
+**Inline Math:**
+```markdown
+The mean is calculated as $\bar{x} = \frac{1}{n}\sum_{i=1}^{n}x_i$.
+```
+
+**Display Math:**
+```markdown
+$$
+\sigma^2 = \frac{1}{n-1}\sum_{i=1}^{n}(x_i - \bar{x})^2
+$$
+```
+
+**Numbered Equations:**
+```markdown
+$$
+f(x) = \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}
+$$ {#eq-normal}
+
+The normal distribution (@eq-normal) is...
+```
+
+**Aligned Equations:**
+```markdown
+$$
+\begin{aligned}
+\bar{x} &= \frac{1}{n}\sum_{i=1}^{n}x_i \\
+&= \frac{x_1 + x_2 + \cdots + x_n}{n}
+\end{aligned}
+$$ {#eq-mean}
+```
+
+## Figures and Tables {#sec-figures-tables}
+
+### Figure Syntax {#sec-figure-syntax}
+
+**Basic Figure:**
+````markdown
+```{r}
+#| label: fig-plot
+#| fig-cap: "Scatter plot of mpg vs hp"
+
+plot(mtcars$mpg, mtcars$hp,
+     xlab = "Miles per Gallon",
+     ylab = "Horsepower")
+```
+````
+
+**Multiple Figures (Subfigures):**
+````markdown
+```{r}
+#| label: fig-multiple
+#| fig-cap: "Comparison of distributions"
+#| fig-subcap:
+#|   - "Normal distribution"
+#|   - "Exponential distribution"
+#| layout-ncol: 2
+
+hist(rnorm(1000))
+hist(rexp(1000))
+```
+
+See @fig-multiple-1 and @fig-multiple-2.
+````
+
+**Markdown Images with Labels:**
+```markdown
+![Experimental setup](images/setup.png){#fig-setup}
+
+The apparatus shown in @fig-setup was used...
+```
+
+### Figure Size and Alignment {#sec-figure-options}
+
+| Option | Description | Example |
+|:-------|:------------|:--------|
+| `fig-width` | Width in inches | `fig-width: 6` |
+| `fig-height` | Height in inches | `fig-height: 4` |
+| `fig-align` | Alignment | `left`, `center`, `right` |
+| `out-width` | Output width (%) | `out-width: "80%"` |
+| `fig-dpi` | Resolution | `fig-dpi: 300` |
+
+**Example:**
+````markdown
+```{r}
+#| fig-width: 8
+#| fig-height: 5
+#| fig-align: center
+#| out-width: "90%"
+
+plot(pressure)
+```
+````
+
+### Table Syntax {#sec-table-syntax}
+
+**Markdown Tables (Pipe Tables):**
+```markdown
+| Column 1 | Column 2 | Column 3 |
+|:---------|:--------:|---------:|
+| Left     | Center   | Right    |
+| aligned  | aligned  | aligned  |
+| text     | text     | text     |
+```
+
+**Table Alignment:**
+- `:---` = Left aligned
+- `:--:` = Center aligned
+- `---:` = Right aligned
+
+**Grid Tables:**
+```markdown
++----------+----------+----------+
+| Column 1 | Column 2 | Column 3 |
++==========+==========+==========+
+| Row 1    | Data     | Values   |
++----------+----------+----------+
+| Row 2    | More     | Content  |
++----------+----------+----------+
+```
+
+**Code-Generated Tables:**
+````markdown
+```{r}
+#| label: tbl-mtcars
+#| tbl-cap: "Summary of mtcars dataset"
+
+knitr::kable(head(mtcars[, 1:4]))
+```
+````
+
+**Caption and Label:**
+```markdown
+: Summary statistics for experimental groups {#tbl-summary}
+
+| Group | Mean | SD   | N  |
+|:------|-----:|-----:|---:|
+| A     | 5.2  | 1.1  | 20 |
+| B     | 6.8  | 1.4  | 20 |
+```
+
+## Document Output Options {#sec-output-options}
+
+### HTML Output {#sec-html-output}
+
+```yaml
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    toc-location: left
+    number-sections: true
+    code-fold: true
+    code-tools: true
+    code-copy: true
+    theme: cosmo
+    highlight-style: github
+    embed-resources: false
+    fig-width: 7
+    fig-height: 5
+```
+
+**Common HTML Options:**
+
+| Option | Description | Values |
+|:-------|:------------|:-------|
+| `toc` | Table of contents | `true`, `false` |
+| `toc-depth` | TOC depth | `1`, `2`, `3`, etc. |
+| `toc-location` | TOC position | `left`, `right`, `body` |
+| `code-fold` | Foldable code | `true`, `false`, `show` |
+| `code-tools` | Code tools menu | `true`, `false` |
+| `theme` | Visual theme | `default`, `cosmo`, `flatly`, etc. |
+| `embed-resources` | Self-contained | `true`, `false` |
+
+### PDF Output {#sec-pdf-output}
+
+```yaml
+format:
+  pdf:
+    documentclass: article
+    geometry:
+      - margin=1in
+      - letterpaper
+    number-sections: true
+    colorlinks: true
+    toc: true
+    toc-depth: 2
+    keep-tex: false
+```
+
+**Common PDF Options:**
+
+| Option | Description | Values |
+|:-------|:------------|:-------|
+| `documentclass` | LaTeX class | `article`, `report`, `book` |
+| `geometry` | Page layout | `margin=1in`, etc. |
+| `fontsize` | Text size | `10pt`, `11pt`, `12pt` |
+| `colorlinks` | Colored links | `true`, `false` |
+| `keep-tex` | Keep .tex file | `true`, `false` |
+
+### Word Output {#sec-word-output}
+
+```yaml
+format:
+  docx:
+    toc: true
+    number-sections: true
+    highlight-style: github
+    reference-doc: custom-template.docx
+```
+
+### Multiple Formats {#sec-multiple-formats}
+
+```yaml
+format:
+  html:
+    toc: true
+    theme: cosmo
+  pdf:
+    documentclass: article
+  docx:
+    toc: true
+```
+
+Render specific format:
+```bash
+quarto render document.qmd --to html
+quarto render document.qmd --to pdf
+```
+
+## Common Quarto Commands {#sec-quarto-commands}
+
+### Basic Commands {#sec-basic-commands}
+
+| Command | Description |
+|:--------|:------------|
+| `quarto preview file.qmd` | Live preview in browser |
+| `quarto render file.qmd` | Render to default format |
+| `quarto render file.qmd --to html` | Render to HTML |
+| `quarto render file.qmd --to pdf` | Render to PDF |
+| `quarto render file.qmd --to docx` | Render to Word |
+| `quarto render` | Render entire project |
+| `quarto publish` | Publish document online |
+
+### Project Commands {#sec-project-commands}
+
+| Command | Description |
+|:--------|:------------|
+| `quarto create project` | Create new project |
+| `quarto preview` | Preview project |
+| `quarto render` | Render all project files |
+| `quarto check` | Check installation |
+| `quarto tools install` | Install required tools |
+
+### Preview Options {#sec-preview-options}
+
+```bash
+# Preview on specific port
+quarto preview document.qmd --port 8080
+
+# Preview without opening browser
+quarto preview document.qmd --no-browser
+
+# Preview specific format
+quarto preview document.qmd --to pdf
+```
+
+### Render Options {#sec-render-options}
+
+```bash
+# Render with parameters
+quarto render document.qmd -P alpha:0.05 -P n:100
+
+# Render to specific output file
+quarto render document.qmd --output report.html
+
+# Render all formats
+quarto render document.qmd --to all
+
+# Execute code even if frozen
+quarto render document.qmd --execute
+```
+
+## Keyboard Shortcuts {#sec-quarto-shortcuts}
+
+When using Quarto in RStudio or VS Code:
+
+| Shortcut | Action | Platform |
+|:---------|:-------|:---------|
+| `Cmd/Ctrl + Shift + K` | Render document | All |
+| `Cmd/Ctrl + Shift + Enter` | Run current chunk | All |
+| `Cmd/Ctrl + Alt + I` | Insert code chunk | RStudio |
+| `Cmd/Ctrl + Alt + P` | Run all chunks above | RStudio |
+
+## Quick Reference Summary {#sec-quick-summary}
+
+**Document Structure:**
+```markdown
+---
+title: "Title"
+format: html
+---
+
+# Section
+
+Text with **bold** and *italic*.
+
+```{r}
+#| label: fig-name
+#| fig-cap: "Caption"
+code here
+```
+
+See @fig-name and @sec-other.
+```
+
+**Essential Syntax:**
+- Headers: `#`, `##`, `###`
+- Bold: `**text**`
+- Italic: `*text*`
+- Code: `` `code` ``
+- Link: `[text](url)`
+- Image: `![caption](file.png)`
+- Equation: `$math$` or `$$display$$`
+- Citation: `@reference`
+- Cross-ref: `@fig-name`, `@tbl-name`, `@sec-name`
+
+**Key Features:**
+- Use YAML for configuration
+- Use `#|` for chunk options
+- Label figures/tables/sections with `{#prefix-name}`
+- Reference with `@prefix-name`
+- Use callouts for important info
+- Organize with tabsets and divs

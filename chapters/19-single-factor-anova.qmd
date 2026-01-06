@@ -1,4 +1,4 @@
-# Analysis of Variance {#sec-anova}
+# Single Factor ANOVA {#sec-single-factor-anova}
 
 ```{r}
 #| echo: false
@@ -83,82 +83,6 @@ summary.lm(aov(Sepal.Length ~ Species, data = iris))
 
 The distinction matters because it affects how F-ratios are calculated and what conclusions can be drawn.
 
-## Two-Way ANOVA
-
-When experiments have two factors, two-way ANOVA examines main effects of each factor and their interaction.
-
-```{r}
-#| label: fig-factorial-design
-#| fig-cap: "Two-way ANOVA with simulated factorial design showing main effects and interaction"
-#| fig-width: 7
-#| fig-height: 5
-# Simulated factorial design
-set.seed(42)
-n <- 20
-data_factorial <- data.frame(
-  response = c(rnorm(n, 10, 2), rnorm(n, 12, 2), 
-               rnorm(n, 11, 2), rnorm(n, 18, 2)),
-  factor_A = rep(c("A1", "A1", "A2", "A2"), each = n),
-  factor_B = rep(c("B1", "B2", "B1", "B2"), each = n)
-)
-
-two_way <- aov(response ~ factor_A * factor_B, data = data_factorial)
-summary(two_way)
-```
-
-An **interaction** means the effect of one factor depends on the level of the other. Significant interactions often require examining simple effects rather than main effects.
-
-## Interaction Plots
-
-```{r}
-#| label: fig-interaction-plot
-#| fig-cap: "Interaction plot showing non-parallel lines indicating interaction between factors"
-#| fig-width: 7
-#| fig-height: 5
-# Visualize interaction
-interaction.plot(data_factorial$factor_A, data_factorial$factor_B, 
-                 data_factorial$response,
-                 col = c("blue", "red"), lwd = 2,
-                 xlab = "Factor A", ylab = "Response",
-                 trace.label = "Factor B")
-```
-
-Non-parallel lines suggest an interaction. Parallel lines suggest additive (non-interacting) effects.
-
-![Illustration of interaction patterns showing parallel versus non-parallel lines](../images/images_7a.022.jpeg){#fig-interaction-patterns fig-align="center"}
-
-## Nested Designs
-
-In nested designs, levels of one factor exist only within levels of another. For example, technicians might be nested within labs—each technician works in only one lab.
-
-Nested designs have no interaction term because not all combinations of factor levels exist. They are common when sampling is hierarchical.
-
-## Practical Considerations
-
-Report effect sizes (like $\eta^2$) alongside p-values. A significant ANOVA with tiny effect size may not be practically meaningful.
-
-Check assumptions with residual plots. Consider transformations or nonparametric alternatives (Kruskal-Wallis) when assumptions are violated.
-
-Plan your sample size using power analysis before collecting data, specifying the minimum effect size you want to detect.
-
-## ANOVA as a General Linear Model
-
-ANOVA is a special case of the general linear model (GLM). Both t-tests and ANOVA can be expressed as regression with indicator variables (dummy coding). This unified framework shows that these seemingly different methods are fundamentally the same.
-
-```{r}
-# ANOVA using lm() with dummy coding
-# Equivalent to aov()
-iris_lm <- lm(Sepal.Length ~ Species, data = iris)
-anova(iris_lm)
-```
-
-The connection becomes clear when you realize:
-- A one-sample t-test is regression on an intercept
-- A two-sample t-test is regression with one binary predictor
-- One-way ANOVA is regression with multiple indicator variables
-
-This unified view is powerful: once you understand regression, you understand the entire family of linear models.
-
 ## Effect Sizes in ANOVA
 
 Beyond statistical significance, report how much of the variance is explained by your factors.
@@ -224,45 +148,96 @@ cat("Correct p-value:", t.test(means_A, means_B)$p.value, "\n")
 
 The correct analysis has less power (larger p-value) because it honestly reflects the true sample size.
 
-## Repeated Measures ANOVA
+## ANOVA as a General Linear Model
 
-When the same subjects are measured under multiple conditions, observations are not independent—each subject creates correlated measurements. **Repeated measures ANOVA** accounts for this by partitioning out between-subject variability.
+ANOVA is a special case of the general linear model (GLM). Both t-tests and ANOVA can be expressed as regression with indicator variables (dummy coding). This unified framework shows that these seemingly different methods are fundamentally the same.
 
 ```{r}
-# Simulated repeated measures data
-set.seed(123)
-n_subjects <- 10
-subject <- factor(rep(1:n_subjects, 3))
-time <- factor(rep(c("Before", "During", "After"), each = n_subjects))
-
-# Subjects have baseline differences, plus time effect
-baseline <- rnorm(n_subjects, 50, 10)
-response <- c(baseline, baseline + 5 + rnorm(n_subjects, 0, 3),
-              baseline + 2 + rnorm(n_subjects, 0, 3))
-
-rm_data <- data.frame(subject, time, response)
-
-# Repeated measures ANOVA
-rm_aov <- aov(response ~ time + Error(subject/time), data = rm_data)
-summary(rm_aov)
+# ANOVA using lm() with dummy coding
+# Equivalent to aov()
+iris_lm <- lm(Sepal.Length ~ Species, data = iris)
+anova(iris_lm)
 ```
 
-Repeated measures designs are powerful because they control for individual differences, but require additional assumptions (sphericity) that should be checked.
+The connection becomes clear when you realize:
+- A one-sample t-test is regression on an intercept
+- A two-sample t-test is regression with one binary predictor
+- One-way ANOVA is regression with multiple indicator variables
+
+This unified view is powerful: once you understand regression, you understand the entire family of linear models.
+
+## Practice Exercises
+
+::: {.callout-note icon=false}
+## Exercise 1: Plant Growth Analysis
+
+The `PlantGrowth` dataset in R contains weights of plants obtained under three different conditions: control, treatment 1, and treatment 2.
+
+a. Perform a one-way ANOVA to test whether the treatments affect plant weight
+b. Check the assumptions using appropriate diagnostic plots
+c. If the ANOVA is significant, perform Tukey's HSD to identify which groups differ
+d. Calculate and interpret the eta-squared effect size
+e. Visualize the results with a boxplot or violin plot
+:::
+
+::: {.callout-note icon=false}
+## Exercise 2: Diet and Weight Loss
+
+A researcher tests four different diets on 40 participants (10 per diet). After 8 weeks, weight loss (in kg) is recorded. Create a simulated dataset and:
+
+a. Perform a one-way ANOVA
+b. Test the homogeneity of variance assumption using Levene's test
+c. Perform post-hoc comparisons using Tukey's HSD
+d. Calculate omega-squared to estimate the population effect size
+e. Write a brief interpretation of the results
+:::
+
+::: {.callout-note icon=false}
+## Exercise 3: Planned Contrasts
+
+Using the `chickwts` dataset, which contains chicken weights for different feed supplements:
+
+a. Examine the feed types and formulate two specific contrasts before analysis
+b. Perform a one-way ANOVA
+c. Test your planned contrasts
+d. Compare the p-values from planned contrasts to post-hoc tests
+e. Discuss why planned contrasts might be preferable when you have specific hypotheses
+:::
+
+::: {.callout-note icon=false}
+## Exercise 4: Pseudoreplication Detection
+
+A student measures enzyme activity in cells. They have 3 culture dishes per treatment (control and experimental), with 20 cells measured per dish.
+
+a. What is the true sample size for each treatment?
+b. What would happen to the p-value if cells were incorrectly treated as independent replicates?
+c. Write R code to demonstrate the difference between the pseudoreplicated and correct analysis
+d. Explain how you would properly analyze this experiment
+:::
+
+::: {.callout-note icon=false}
+## Exercise 5: ANOVA as Regression
+
+Using the `iris` dataset:
+
+a. Perform a one-way ANOVA using `aov()` to test for differences in `Petal.Length` across species
+b. Perform the same analysis using `lm()` and compare the results
+c. Examine the coefficients from the `lm()` model and interpret what they represent
+d. Use `anova()` on the `lm()` object to get the ANOVA table
+e. Explain how the regression framework relates to the ANOVA framework
+:::
 
 ## Summary
 
-ANOVA provides a flexible framework for comparing groups:
+Single-factor ANOVA provides a framework for comparing means across multiple groups:
 
-- One-way ANOVA compares means across multiple groups
+- One-way ANOVA tests whether any group means differ in a single test
 - The F-test assesses whether between-group variance exceeds within-group variance
-- Post-hoc tests identify which specific groups differ
-- Two-way ANOVA examines main effects and interactions
+- Post-hoc tests identify which specific groups differ while controlling for multiple comparisons
+- Planned contrasts are more powerful when you have specific hypotheses
 - Fixed effects are specific treatments; random effects are sampled from populations
-- ANOVA is part of the general linear model family
-- Always report effect sizes, not just p-values
-- Beware of pseudoreplication—the unit of analysis must match the unit of replication
+- Effect sizes (eta-squared, omega-squared) quantify the proportion of variance explained
+- Pseudoreplication is a critical design flaw that must be avoided
+- ANOVA is a special case of the general linear model
 
-## Additional Resources
-
-- @logan2010biostatistical - Comprehensive treatment of ANOVA designs in biological research
-- @crawley2007r - Detailed coverage of linear models in R including ANOVA
+Always check assumptions, report effect sizes alongside p-values, and ensure your unit of analysis matches your unit of replication.

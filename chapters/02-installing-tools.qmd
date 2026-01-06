@@ -1,0 +1,331 @@
+# Installing Core Tools {#sec-installing-tools}
+
+```{r}
+#| echo: false
+#| message: false
+library(tidyverse)
+theme_set(theme_minimal())
+```
+
+Before you can begin your journey in data science and statistical analysis, you need to set up your computing environment with the essential tools. This chapter guides you through installing R, RStudio, LaTeX, and command-line tools on Mac, Windows, and Linux systems.
+
+## Overview of Required Software
+
+The core tools you will need throughout this course include:
+
+| Tool | Purpose |
+|:-----|:--------|
+| **R** | Statistical computing and graphics |
+| **RStudio** | Integrated development environment (IDE) for R |
+| **LaTeX** | Document preparation system for typesetting |
+| **Quarto** | Scientific publishing system (included with RStudio) |
+| **Command-line tools** | Unix shell access for file management and scripting |
+
+## Installing R
+
+R is the foundation of our statistical computing environment. It must be installed before RStudio.
+
+### Mac
+
+1. Visit the Comprehensive R Archive Network (CRAN): https://cran.r-project.org/
+2. Click "Download R for macOS"
+3. Download the latest `.pkg` file appropriate for your Mac:
+   - For Apple Silicon Macs (M1/M2/M3): Download the arm64 version
+   - For Intel Macs: Download the x86_64 version
+4. Open the downloaded file and follow the installation prompts
+5. R will be installed in your Applications folder
+
+::: {.callout-tip}
+## Checking Your Mac's Processor
+Click the Apple menu () → "About This Mac". If you see "Apple M1" or similar, you have an Apple Silicon Mac. If you see "Intel", you have an Intel Mac.
+:::
+
+### Windows
+
+1. Visit CRAN: https://cran.r-project.org/
+2. Click "Download R for Windows"
+3. Click "base"
+4. Click the download link for the latest version
+5. Run the downloaded `.exe` installer
+6. Accept the default options during installation
+7. R will be added to your Start menu
+
+### Linux (Ubuntu/Debian)
+
+Open a terminal and run:
+
+```bash
+# Update package index
+sudo apt update
+
+# Install R
+sudo apt install r-base r-base-dev
+
+# Verify installation
+R --version
+```
+
+For other Linux distributions, consult the CRAN documentation for specific instructions.
+
+## Installing RStudio
+
+RStudio provides an integrated development environment that makes working with R much more convenient. It includes a code editor, console, file browser, and many other tools.
+
+### All Platforms
+
+1. Visit the RStudio download page: https://posit.co/download/rstudio-desktop/
+2. The website should automatically detect your operating system
+3. Click the download button for your platform
+4. Run the installer:
+   - **Mac**: Open the `.dmg` file and drag RStudio to your Applications folder
+   - **Windows**: Run the `.exe` installer and follow the prompts
+   - **Linux**: Install the `.deb` or `.rpm` package using your package manager
+
+### Verifying the Installation
+
+1. Open RStudio (not R directly)
+2. In the Console pane, type `R.version` and press Enter
+3. You should see version information displayed
+
+```r
+# Check R version
+R.version.string
+
+# Check that common packages can load
+library(stats)
+```
+
+## Installing LaTeX
+
+LaTeX is used for creating beautifully typeset documents, particularly those containing mathematical equations. You have two main options: a full LaTeX distribution or the lightweight TinyTeX.
+
+### Option 1: TinyTeX (Recommended)
+
+TinyTeX is a minimal LaTeX distribution that works well with R and Quarto. It automatically installs missing packages as needed.
+
+In RStudio, open the Console and run:
+
+```r
+# Install tinytex package
+install.packages("tinytex")
+
+# Install TinyTeX distribution
+tinytex::install_tinytex()
+```
+
+This process may take several minutes. Once complete, restart RStudio.
+
+### Option 2: Full LaTeX Distribution
+
+If you prefer a complete LaTeX installation:
+
+**Mac:**
+
+1. Download MacTeX from https://www.tug.org/mactex/
+2. Run the installer (this is a large download, approximately 4 GB)
+3. Restart your computer after installation
+
+**Windows:**
+
+1. Download MiKTeX from https://miktex.org/download
+2. Run the installer
+3. During installation, choose "Yes" for automatic package installation
+4. Restart your computer
+
+**Linux:**
+
+```bash
+# Ubuntu/Debian
+sudo apt install texlive-full
+
+# Or for a smaller installation
+sudo apt install texlive texlive-latex-extra texlive-fonts-recommended
+```
+
+### Verifying LaTeX Installation
+
+In RStudio, run:
+
+```r
+# Check if LaTeX is available
+tinytex::is_tinytex()
+
+# Or check the LaTeX path
+Sys.which("pdflatex")
+```
+
+## Installing Command-Line Tools
+
+### Mac
+
+macOS has a Unix foundation, so command-line tools are partially available by default. However, you should install the full Xcode Command Line Tools:
+
+1. Open Terminal (Applications → Utilities → Terminal)
+2. Type the following command and press Enter:
+
+```bash
+xcode-select --install
+```
+
+3. A dialog will appear asking to install the tools—click "Install"
+4. Wait for the installation to complete (may take 5-10 minutes)
+
+Alternatively, if you plan to develop software, you can install the full Xcode from the Mac App Store.
+
+### Windows
+
+Windows does not natively include Unix command-line tools, but you have several options:
+
+**Option 1: Windows Subsystem for Linux (WSL) - Recommended**
+
+WSL allows you to run a full Linux environment within Windows:
+
+1. Open PowerShell as Administrator (right-click Start → Windows Terminal (Admin))
+2. Run:
+
+```powershell
+wsl --install
+```
+
+3. Restart your computer when prompted
+4. After restart, Ubuntu will install automatically
+5. Create a username and password when prompted
+6. You now have access to a full Linux terminal
+
+**Option 2: Git Bash**
+
+A lighter alternative that provides basic Unix commands:
+
+1. Download Git for Windows: https://git-scm.com/download/win
+2. Run the installer
+3. Select "Use Git from the Windows Command Prompt" during installation
+4. Git Bash will be available from your Start menu
+
+### Linux
+
+Linux distributions come with a full suite of command-line tools by default. Open your terminal application to access them.
+
+## Installing Additional R Packages
+
+Once R and RStudio are installed, you should install the tidyverse collection of packages:
+
+```r
+# Install tidyverse (may take several minutes)
+install.packages("tidyverse")
+
+# Install additional useful packages
+install.packages(c("knitr", "rmarkdown", "quarto", "devtools"))
+
+# For this course, also install
+install.packages(c("pwr", "car", "lme4", "gapminder"))
+```
+
+::: {.callout-note}
+## Package Installation
+Package installation only needs to be done once. After installation, you load packages in each R session using `library()`.
+:::
+
+## Installing Quarto
+
+Quarto is a scientific and technical publishing system that works with R, Python, and other languages. Recent versions of RStudio include Quarto, but you can also install it separately.
+
+### All Platforms
+
+1. Visit https://quarto.org/docs/get-started/
+2. Download the installer for your operating system
+3. Run the installer
+
+### Verifying Quarto Installation
+
+In RStudio's Terminal pane:
+
+```bash
+quarto --version
+```
+
+Or create a new Quarto document in RStudio (File → New File → Quarto Document) and verify it renders correctly.
+
+## Troubleshooting Common Issues
+
+### R and RStudio
+
+| Problem | Solution |
+|:--------|:---------|
+| RStudio cannot find R | Reinstall R, then reinstall RStudio |
+| Package installation fails | Check your internet connection; try `install.packages("name", dependencies = TRUE)` |
+| "Package not available" error | Update R to the latest version |
+
+### LaTeX
+
+| Problem | Solution |
+|:--------|:---------|
+| PDF compilation fails | Run `tinytex::tlmgr_update()` to update packages |
+| Missing `.sty` file | Run `tinytex::tlmgr_install("package-name")` |
+| TinyTeX installation hangs | Check firewall settings; try installing behind a different network |
+
+### Command Line
+
+| Problem | Solution |
+|:--------|:---------|
+| "Command not found" errors | Verify the tool is installed; check your PATH environment variable |
+| WSL installation fails | Enable virtualization in BIOS; run Windows Update |
+| Permission denied | Use `sudo` on Mac/Linux; run as Administrator on Windows |
+
+## Keeping Software Updated
+
+Regularly update your tools to get bug fixes and new features:
+
+**R and RStudio:**
+- Check for RStudio updates: Help → Check for Updates
+- Update R by downloading the latest version from CRAN
+
+**R Packages:**
+```r
+# Update all installed packages
+update.packages(ask = FALSE)
+```
+
+**TinyTeX:**
+```r
+tinytex::tlmgr_update()
+```
+
+**Command-line tools:**
+```bash
+# Mac (with Homebrew)
+brew update && brew upgrade
+
+# Ubuntu/Debian Linux
+sudo apt update && sudo apt upgrade
+
+# Windows (WSL)
+sudo apt update && sudo apt upgrade
+```
+
+## Summary
+
+You now have a complete scientific computing environment:
+
+- **R** provides the statistical computing foundation
+- **RStudio** offers a powerful integrated development environment
+- **LaTeX/TinyTeX** enables professional document typesetting
+- **Command-line tools** provide essential utilities for file management and scripting
+- **Quarto** supports reproducible scientific publishing
+
+With these tools installed, you are ready to begin learning data science and statistical analysis. In the following chapters, we will explore each of these tools in depth.
+
+## Practice Exercises
+
+### Exercise I.1: Verify Your Installation
+
+1. Open RStudio and run `sessionInfo()` to see your R configuration
+2. Install the tidyverse package if you have not already
+3. Create a new Quarto document and render it to PDF
+4. Open a terminal and run `pwd` (Mac/Linux) or `cd` (Windows) to verify command-line access
+
+### Exercise I.2: Explore RStudio
+
+1. Familiarize yourself with the four main panes in RStudio
+2. Try the keyboard shortcut `Ctrl+Enter` (Windows/Linux) or `Cmd+Enter` (Mac) to run code
+3. Create and save an R script (.R file)
+4. Access the built-in help by typing `?mean` in the console
