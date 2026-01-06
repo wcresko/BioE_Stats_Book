@@ -15,7 +15,7 @@ book:
   chapters:
     - index.qmd
     
-    - part: "Foundations of Data Science"
+    - part: "Core Data Science Tools"
       chapters:
         - chapters/01-introduction.qmd
         - chapters/02-unix-command-line.qmd
