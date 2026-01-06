@@ -399,3 +399,120 @@ plot(logit_model, which = c(1, 2))
 ## Summary
 
 GLMs provide a flexible framework for modeling non-normal response variables while maintaining the interpretability of linear models. Logistic regression for binary outcomes and Poisson regression for counts are the most common applications, but the framework extends to other distributions as needed.
+
+## Exercises
+
+### Exercise G.1: Logistic Regression for Binary Outcomes
+
+You study the effect of study time on exam success. Students either pass (1) or fail (0), and you record their study hours:
+
+```
+study_hours <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
+pass <- c(0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1)
+```
+
+a) Fit a logistic regression model predicting pass/fail from study hours
+b) Interpret the coefficient for study hours on the log-odds scale
+c) Calculate and interpret the odds ratio for a one-hour increase in study time
+d) Predict the probability of passing for a student who studies 5 hours
+e) At what study time does the model predict a 50% probability of passing?
+f) Create a visualization showing the fitted logistic curve with the observed data points
+
+```{r}
+#| eval: false
+# Your code here
+```
+
+### Exercise G.2: Poisson Regression for Count Data
+
+You count the number of bacterial colonies on petri dishes as a function of antibiotic concentration:
+
+```
+concentration <- c(0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0)
+colonies <- c(142, 118, 89, 67, 45, 32, 21)
+```
+
+a) Fit a Poisson regression model
+b) Interpret the coefficient for concentration
+c) Calculate the expected number of colonies at concentration = 1.5
+d) Check for overdispersion by comparing residual deviance to degrees of freedom
+e) If overdispersed, refit using quasipoisson and compare standard errors
+f) Create a plot showing observed counts and model predictions
+
+```{r}
+#| eval: false
+# Your code here
+```
+
+### Exercise G.3: Model Comparison and Selection
+
+Using the `mtcars` dataset, predict whether a car has an automatic transmission (`am`: 0 = automatic, 1 = manual) from various predictors:
+
+a) Fit three logistic regression models:
+   - Model 1: `am ~ mpg`
+   - Model 2: `am ~ mpg + wt`
+   - Model 3: `am ~ mpg + wt + hp`
+b) Compare models using AIC
+c) Perform likelihood ratio tests to compare nested models
+d) Which model would you choose and why?
+e) For your chosen model, interpret the coefficients in terms of odds ratios
+f) Use the model to predict transmission type for a car with mpg=20, wt=3.0, hp=150
+
+```{r}
+#| eval: false
+# Your code here
+```
+
+### Exercise G.4: Chi-Square and Contingency Tables
+
+A genetics study crosses two heterozygous plants and observes offspring phenotypes. Expected ratio is 9:3:3:1.
+
+```
+observed <- c(293, 105, 98, 32)  # Four phenotype categories
+```
+
+a) Perform a chi-square goodness-of-fit test
+b) Calculate the expected counts and verify the chi-square assumption is met
+c) Calculate the contribution of each category to the total chi-square statistic
+d) Visualize observed vs. expected with a barplot
+e) Do the data support the Mendelian hypothesis?
+
+Now consider a 2×2 contingency table for treatment outcome by gender:
+
+|  | Success | Failure |
+|:--|:--------|:--------|
+| Male | 45 | 25 |
+| Female | 60 | 20 |
+
+f) Test for independence using chi-square
+g) Calculate and interpret the odds ratio
+h) Use Fisher's exact test and compare to the chi-square result
+
+```{r}
+#| eval: false
+# Your code here
+```
+
+### Exercise G.5: Handling Overdispersion
+
+Simulate overdispersed count data and explore the consequences:
+
+```
+set.seed(123)
+x <- seq(1, 10, length.out = 50)
+# Negative binomial creates overdispersion
+y <- rnbinom(50, size = 2, mu = exp(1 + 0.3 * x))
+```
+
+a) Fit both a Poisson and quasi-Poisson model
+b) Calculate the dispersion parameter
+c) Compare the standard errors between the two models
+d) How does ignoring overdispersion affect inference?
+e) Fit a negative binomial model using `MASS::glm.nb()` and compare to the quasi-Poisson approach
+f) Which model would you prefer for these data and why?
+
+```{r}
+#| eval: false
+# Your code here
+library(MASS)  # for glm.nb()
+```

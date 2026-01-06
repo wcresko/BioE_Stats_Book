@@ -24,7 +24,7 @@ A typical machine learning challenge might include hundreds or thousands of pred
 
 ## Principal Component Analysis (PCA)
 
-**Principal Component Analysis (PCA)** is the most widely used dimensionality reduction technique. It finds new variables (principal components) that are linear combinations of the originals, chosen to capture maximum variance. The technique behind it—the singular value decomposition—is also useful in many other contexts.
+**Principal Component Analysis (PCA)** [@pearson1901lines; @hotelling1933analysis] is the most widely used dimensionality reduction technique. It finds new variables (principal components) that are linear combinations of the originals, chosen to capture maximum variance. The technique behind it—the singular value decomposition—is also useful in many other contexts.
 
 ### Intuition: Preserving Distance
 
@@ -183,7 +183,7 @@ An orthogonal transformation preserves total variability but redistributes it. P
 See @sec-eigen-pca for a complete explanation with examples.
 :::
 
-![Geometric interpretation of principal components as directions of maximum variance](../images/Images_7a.006.jpeg){#fig-pca-geometry fig-align="center"}
+![Geometric interpretation of principal components as directions of maximum variance](../images/images_7a.006.jpeg){#fig-pca-geometry fig-align="center"}
 
 ### PCA in R
 
@@ -457,7 +457,7 @@ where:
 
 These are matrices because we have multiple response variables.
 
-![MANOVA decomposes multivariate variation into between-group and within-group components](../images/Images_7a.011.jpeg){#fig-manova-decomposition fig-align="center"}
+![MANOVA decomposes multivariate variation into between-group and within-group components](../images/images_7a.011.jpeg){#fig-manova-decomposition fig-align="center"}
 
 ### Test Statistics
 
@@ -527,7 +527,7 @@ DFA finds discriminant functions—weighted combinations of original variables�
 
 The first discriminant function captures the most separation, the second captures remaining separation orthogonal to the first, and so on.
 
-![Discriminant function analysis finds linear combinations that maximize group separation](../images/Images_7a.012.jpeg){#fig-dfa-concept fig-align="center"}
+![Discriminant function analysis finds linear combinations that maximize group separation](../images/images_7a.012.jpeg){#fig-dfa-concept fig-align="center"}
 
 ### DFA in R
 

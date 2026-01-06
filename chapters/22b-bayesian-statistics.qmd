@@ -311,26 +311,7 @@ The prior distribution encodes what we believe before seeing data. Prior choice 
 
 ### Types of Priors
 
-**Informative priors** incorporate substantial prior knowledge:
-```{r}
-#| eval: false
-# Prior for batting average based on historical data
-# N(0.275, 0.027²) - most players hit between .220 and .330
-```
-
-**Weakly informative priors** provide gentle regularization:
-```{r}
-#| eval: false
-# Prior for a regression coefficient
-# N(0, 10²) - allows wide range but prefers smaller values
-```
-
-**Non-informative (diffuse) priors** attempt to "let the data speak":
-```{r}
-#| eval: false
-# Uniform prior on [0, 1] for a probability
-# Improper prior: P(θ) ∝ 1 for θ ∈ (-∞, ∞)
-```
+Priors fall along a spectrum of informativeness. **Informative priors** incorporate substantial prior knowledge—for example, a prior for batting average based on historical data might be N(0.275, 0.027²), reflecting that most players hit between .220 and .330. **Weakly informative priors** provide gentle regularization without imposing strong beliefs; a prior of N(0, 10²) for a regression coefficient allows a wide range of values while preferring smaller effects over extremely large ones. Finally, **non-informative** or **diffuse priors** attempt to "let the data speak" by imposing minimal prior constraints—for instance, a uniform prior on [0, 1] for a probability parameter, or an improper prior where P(θ) ∝ 1 across the entire real line.
 
 ::: {.callout-note}
 ## Empirical Bayes
@@ -369,17 +350,7 @@ legend("right", c("Posterior mean", "Observed (.450)", "Prior mean (.275)", "τ 
 
 ## When Bayesian Methods Excel
 
-Bayesian approaches are particularly valuable for:
-
-1. **Combining multiple sources of information**: Prior knowledge, expert opinion, and data from related studies can all be incorporated.
-
-2. **Hierarchical/multilevel data**: When observations are grouped (patients within hospitals, students within schools), hierarchical models naturally handle the structure.
-
-3. **Small samples**: Prior information can stabilize estimates when data are limited.
-
-4. **Sequential updating**: As new data arrive, yesterday's posterior becomes today's prior.
-
-5. **Complex models**: MCMC methods allow fitting models that would be intractable with frequentist methods.
+Bayesian approaches are particularly valuable in several contexts. They excel at **combining multiple sources of information**, allowing you to incorporate prior knowledge, expert opinion, and data from related studies into a single coherent analysis. When working with **hierarchical or multilevel data**—such as patients grouped within hospitals or students nested within schools—Bayesian hierarchical models naturally capture this structure and allow appropriate borrowing of strength across groups. Bayesian methods are especially useful when working with **small samples**, where prior information can stabilize estimates that would otherwise be unreliable. The framework also supports **sequential updating**, where yesterday's posterior becomes today's prior as new data arrive, making it natural for adaptive designs and ongoing monitoring studies. Finally, modern **MCMC methods** enable fitting complex models that would be analytically or computationally intractable using traditional frequentist approaches, opening doors to realistic models of complicated phenomena.
 
 ## Computational Bayesian Statistics
 
@@ -457,7 +428,7 @@ results <- polls |>
 
 ## Additional Resources
 
-- Kruschke, J. K. (2014). *Doing Bayesian Data Analysis* - Accessible introduction with R examples
-- McElreath, R. (2020). *Statistical Rethinking* - Excellent modern treatment with Stan
-- Gelman, A., et al. (2013). *Bayesian Data Analysis* - The comprehensive reference
+- @gelman2013bayesian - The comprehensive reference for Bayesian data analysis
+- @kruschke2014doing - Accessible introduction with R examples
+- @mcelreath2020statistical - Excellent modern treatment with Stan
 - @james2023islr - Connects Bayesian ideas to statistical learning

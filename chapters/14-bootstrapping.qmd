@@ -11,7 +11,7 @@ theme_set(theme_minimal())
 
 For the sample mean, we have elegant formulas for standard errors and confidence intervals derived from probability theory. But what about other statistics—the median, a correlation coefficient, the ratio of two means? For many estimators, no convenient formula exists.
 
-The bootstrap, invented by Bradley Efron in 1979, provides a general solution. The key insight is that we can learn about the sampling distribution of a statistic by resampling from our data. If our sample is representative of the population, then samples drawn from our sample (with replacement) mimic what we would get from repeated sampling from the population.
+The bootstrap [@efron1979bootstrap], invented by Bradley Efron in 1979, provides a general solution. The key insight is that we can learn about the sampling distribution of a statistic by resampling from our data. If our sample is representative of the population, then samples drawn from our sample (with replacement) mimic what we would get from repeated sampling from the population.
 
 ![Bootstrap resampling procedure showing how multiple samples are drawn with replacement from the original data](../images/week_2.030.jpeg){#fig-bootstrap-resampling fig-align="center"}
 
@@ -305,3 +305,129 @@ Resampling methods provide powerful, flexible tools for statistical inference:
 - Bootstrap excels at constructing confidence intervals; permutation tests excel at hypothesis testing
 - Use 1,000+ replications for bootstrap standard errors; 10,000+ for confidence intervals and p-values
 - These methods complement rather than replace traditional parametric approaches
+
+## Exercises
+
+### Exercise B.1: Bootstrap Standard Errors
+
+You measure the half-life of a radioactive isotope in 15 independent experiments:
+
+```
+half_lives <- c(5.2, 5.8, 5.1, 6.2, 5.9, 5.4, 6.1, 5.7, 5.3, 6.0, 5.5, 5.9, 5.6, 6.3, 5.4)
+```
+
+a) Calculate the mean and median half-life
+b) Use the bootstrap (with 5000 replications) to estimate the standard error of the mean
+c) Use the bootstrap to estimate the standard error of the median
+d) Compare the bootstrap SE of the mean to the analytical formula SE = s/√n
+e) Create histograms of the bootstrap distributions for both the mean and median
+f) Which statistic (mean or median) has greater sampling variability for these data?
+
+```{r}
+#| eval: false
+# Your code here
+```
+
+### Exercise B.2: Bootstrap Confidence Intervals
+
+You measure reaction times (in milliseconds) for a cognitive task:
+
+```
+reaction_times <- c(234, 245, 267, 289, 256, 298, 312, 245, 278, 301, 267, 289, 234, 256, 278)
+```
+
+a) Calculate 95% confidence intervals for the median using three methods:
+   - Percentile method (manual calculation)
+   - Using the `boot` package with percentile, basic, and BCa methods
+b) Compare the widths and endpoints of these different confidence intervals
+c) Which method would you prefer for this dataset and why?
+d) Bootstrap the 90th percentile and construct a 95% CI for it
+
+```{r}
+#| eval: false
+# Your code here
+library(boot)
+```
+
+### Exercise B.3: Bootstrap for Correlation
+
+You have measurements of two physiological variables:
+
+```
+x <- c(12.3, 14.5, 11.8, 15.2, 13.1, 14.8, 12.9, 15.5, 13.6, 14.1)
+y <- c(98, 105, 95, 110, 101, 107, 99, 112, 103, 106)
+```
+
+a) Calculate Pearson's correlation coefficient
+b) Calculate the 95% CI for the correlation using the traditional Fisher z-transformation method (`cor.test()`)
+c) Use the bootstrap (10000 replications) to construct a 95% CI for the correlation
+d) Compare the two confidence intervals—are they similar?
+e) Create a scatterplot with the data and report the correlation with its bootstrap CI
+
+```{r}
+#| eval: false
+# Your code here
+```
+
+### Exercise B.4: Permutation Test vs. t-test
+
+You compare growth rates of bacteria cultured in two different media:
+
+```
+medium_A <- c(0.42, 0.38, 0.45, 0.41, 0.39, 0.44, 0.40, 0.43)
+medium_B <- c(0.51, 0.48, 0.55, 0.49, 0.52, 0.47, 0.54, 0.50)
+```
+
+a) Visualize the two groups with boxplots
+b) Perform a two-sample t-test
+c) Implement a permutation test with 10,000 permutations to test for a difference in means
+d) Compare the p-values from the t-test and permutation test
+e) Calculate the effect size (Cohen's d)
+f) Createhistogram of the permutation distribution with the observed difference marked
+
+```{r}
+#| eval: false
+# Your code here
+```
+
+### Exercise B.5: Paired Permutation Test
+
+You measure expression levels of a gene before and after heat stress in 10 plant samples:
+
+```
+before_stress <- c(125, 142, 138, 151, 129, 145, 133, 148, 136, 141)
+after_stress <- c(189, 207, 195, 218, 182, 203, 191, 214, 198, 206)
+```
+
+a) Calculate the paired differences and perform a paired t-test
+b) Implement a paired permutation test by randomly flipping the signs of differences (10,000 permutations)
+c) Compare the p-values from both methods
+d) Use the bootstrap to construct a 95% CI for the mean difference
+e) Visualize the paired data with a before-after plot (connecting lines between paired points)
+
+```{r}
+#| eval: false
+# Your code here
+```
+
+### Exercise B.6: Bootstrap vs. Permutation—Understanding the Difference
+
+Consider the following dataset:
+
+```
+group1 <- c(23, 25, 28, 31, 27, 29, 26, 30)
+group2 <- c(35, 38, 33, 40, 36, 37, 34, 39)
+```
+
+a) Use the bootstrap (sampling with replacement from each group separately) to construct 95% CIs for the mean of group1 and the mean of group2
+b) Use a permutation test to test whether the two groups have different means
+c) Explain in your own words:
+   - What question does the bootstrap answer?
+   - What question does the permutation test answer?
+   - Why do we resample WITH replacement for bootstrap but WITHOUT replacement for permutation tests?
+d) Create visualizations demonstrating both the bootstrap distribution (for one of the means) and the permutation distribution (for the difference in means)
+
+```{r}
+#| eval: false
+# Your code here
+```

@@ -9,7 +9,7 @@ theme_set(theme_minimal())
 
 ## From Inference to Prediction
 
-Traditional statistics emphasizes inference—understanding relationships, testing hypotheses, and quantifying uncertainty. Statistical learning (or machine learning) shifts focus toward prediction—building models that accurately predict outcomes for new data.
+Traditional statistics emphasizes inference—understanding relationships, testing hypotheses, and quantifying uncertainty. Statistical learning (or machine learning) shifts focus toward prediction—building models that accurately predict outcomes for new data [@hastie2009elements].
 
 Both approaches use similar mathematical tools, but the goals differ. In inference, we want to understand the true relationship between variables. In prediction, we want accurate predictions, even if the model does not perfectly capture the underlying mechanism.
 
@@ -235,7 +235,7 @@ The **regularization parameter** $\lambda$ controls the strength of the penalty:
 
 ### Ridge Regression (L2 Penalty)
 
-**Ridge regression** uses the sum of squared coefficients as the penalty:
+**Ridge regression** [@hoerl1970ridge] uses the sum of squared coefficients as the penalty:
 
 $$P(\beta) = \sum_{j=1}^p \beta_j^2$$
 
@@ -268,7 +268,7 @@ plot(ridge_fit, xvar = "lambda", main = "Ridge Regression Coefficients")
 
 ### Lasso Regression (L1 Penalty)
 
-**Lasso** (Least Absolute Shrinkage and Selection Operator) uses the sum of absolute values as the penalty:
+**Lasso** (Least Absolute Shrinkage and Selection Operator) [@tibshirani1996regression] uses the sum of absolute values as the penalty:
 
 $$P(\beta) = \sum_{j=1}^p |\beta_j|$$
 
@@ -562,7 +562,7 @@ cat("Optimal degrees of freedom:", round(smooth_fit$df, 2), "\n")
 
 ## LOESS: Flexible Non-Parametric Smoothing
 
-**LOESS** (Locally Estimated Scatterplot Smoothing) fits local regressions to subsets of data, weighted by distance from each point.
+**LOESS** (Locally Estimated Scatterplot Smoothing) [@cleveland1979robust] fits local regressions to subsets of data, weighted by distance from each point.
 
 ```{r}
 #| label: fig-loess-comparison
@@ -1315,7 +1315,7 @@ pruned_tree <- prune(full_tree, cp = best_cp)
 
 ## Random Forests
 
-**Random forests** are a **very popular** machine learning approach that addresses the shortcomings of decision trees using a clever idea. The goal is to improve prediction performance and reduce instability by *averaging* multiple decision trees (a forest of trees constructed with randomness). It has two features that help accomplish this.
+**Random forests** [@breiman2001random] are a **very popular** machine learning approach that addresses the shortcomings of decision trees using a clever idea. The goal is to improve prediction performance and reduce instability by *averaging* multiple decision trees (a forest of trees constructed with randomness). It has two features that help accomplish this.
 
 The first step is **bootstrap aggregation** or **bagging**. The general idea is to generate many predictors, each using regression or classification trees, and then form a final prediction based on the average prediction of all these trees. To assure that the individual trees are not the same, we use the bootstrap to induce randomness. These two features combined explain the name: the bootstrap makes the individual trees **randomly** different, and the combination of trees is the **forest**.
 
@@ -1471,7 +1471,7 @@ varImpPlot(rf_reg, main = "Variable Importance for MPG Prediction")
 
 ## Support Vector Machines (SVM)
 
-**Support Vector Machines** find the hyperplane that best separates classes by maximizing the margin—the distance between the boundary and the nearest points from each class.
+**Support Vector Machines** [@cortes1995support] find the hyperplane that best separates classes by maximizing the margin—the distance between the boundary and the nearest points from each class.
 
 ### The Maximum Margin Classifier
 

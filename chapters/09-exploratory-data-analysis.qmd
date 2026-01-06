@@ -12,7 +12,7 @@ theme_set(theme_minimal())
 
 Exploratory Data Analysis (EDA) is the critical first step in any data analysis project. Before running statistical tests, fitting models, or drawing conclusions, you need to understand your data intimately. EDA is the practice of using visualization and summary statistics to explore datasets, uncover patterns, detect anomalies, test assumptions, and formulate hypotheses.
 
-The term "Exploratory Data Analysis" was popularized by John Tukey in his groundbreaking 1977 book of the same name. Tukey emphasized that EDA is fundamentally different from confirmatory data analysis. While confirmatory analysis tests specific hypotheses with formal statistical procedures, exploratory analysis is open-ended, creative, and iterative. It is detective work—you are looking for clues about what your data can tell you.
+The term "Exploratory Data Analysis" was popularized by John Tukey in his groundbreaking 1977 book [@tukey1977exploratory]. Tukey emphasized that EDA is fundamentally different from confirmatory data analysis. While confirmatory analysis tests specific hypotheses with formal statistical procedures, exploratory analysis is open-ended, creative, and iterative. It is detective work—you are looking for clues about what your data can tell you.
 
 ::: {.callout-note}
 ## Tukey's Philosophy
