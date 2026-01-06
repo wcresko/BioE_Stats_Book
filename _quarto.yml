@@ -3,14 +3,14 @@ project:
   output-dir: docs
 
 book:
-  title: "Statistics for Bioengineering"
-  subtitle: "A Practical Guide to Data Analysis in R"
+  title: "Statistics for the Biosciences and Bioengineering"
+  subtitle: "A Practical Guide to Data Analysis"
   author: "William Cresko"
   date: today
   date-format: "MMMM YYYY"
   reader-mode: true
   page-footer:
-    left: "Statistics for Bioengineering by William Cresko"
+    left: "Statistics for Biosciences and Bioengineering"
     right: "Built with [Quarto](https://quarto.org/)"
   chapters:
     - index.qmd

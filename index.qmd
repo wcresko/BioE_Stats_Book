@@ -1,20 +1,18 @@
-# Preface {.unnumbered}
+# {.unnumbered}
 
-![](images/Cover2.tiff){width=50% fig-align="center"}
-
-Welcome to *Statistics for Bioengineering*, a comprehensive guide designed for graduate students at the University of Oregon Knight Campus. This book provides the foundational skills needed for a successful scientific career in bioengineering and related fields, combining rigorous statistical theory with practical computational implementation in R.
+This books is meant to accompany the graduate statistics courses I teach at the University of Oregon, including *Statistics for Bioengineering*. This book provides the foundational skills needed for a successful scientific career in bioengineering and biosciences, combining rigorous statistical theory with practical computational implementation in R. I've written this book to 
 
 ## Why This Book?
 
-Modern bioengineering research generates vast amounts of data—from RNA sequencing experiments to biomaterial characterization studies, from neural recordings to clinical trial outcomes. Making sense of this data requires more than just running statistical tests; it demands a deep understanding of the principles underlying those tests and the computational skills to implement them properly.
+Modern biosciences and bioengineering research generates vast amounts of data—from RNA sequencing experiments to biomaterial characterization studies, from neural recordings to clinical trial outcomes. Making sense of this data requires more than just running statistical tests; it demands a deep understanding of the principles underlying those tests and the computational skills to implement them properly.
 
-This course takes a practical, hands-on approach to learning statistics. Rather than deriving every formula from first principles, we focus on understanding when and why to apply particular methods, how to implement them in R, and how to interpret and communicate results. Throughout the book, you'll work with real biological data and develop the skills to analyze your own research questions.
+This course takes a practical, hands-on approach to learning statistics. Rather than deriving every formula from first principles, we will focus on understanding when and why to apply particular methods, how to implement them in R, and how to interpret and communicate results. Throughout the book, you'll work with real biological data and develop the skills to analyze your own research questions.
 
 ## What You Will Learn
 
 The material spans several interconnected domains:
 
-**Computational Foundations.** You will develop proficiency in Unix command-line operations and R programming, including the tidyverse ecosystem for data manipulation and visualization. These tools form the backbone of modern reproducible research practices.
+**Computational Foundations.** You will develop proficiency in basic Unix and R programming, including the tidyverse ecosystem for data manipulation and visualization. These tools form the backbone of modern reproducible research practices.
 
 **Statistical Theory.** The book covers probability distributions, parameter estimation, hypothesis testing, and the logic of statistical inference. Understanding these concepts allows you to choose appropriate methods and interpret results correctly.
 
@@ -22,32 +20,22 @@ The material spans several interconnected domains:
 
 **Reproducible Research.** Using Markdown, Git, and GitHub, you'll learn to document your analyses in ways that others (including your future self) can understand and reproduce.
 
-## Prerequisites
 
-This book assumes no prior programming experience, though familiarity with basic algebra and an introductory statistics course will be helpful. You should have access to a computer running Windows, MacOS, or Linux with R and RStudio installed. Instructions for software setup are provided in the opening chapters.
 
-## Course Materials
-
-### Required Texts (Free Online)
-
-The following textbooks are available freely online and provide excellent supplementary material:
+## Additional Resources
 
 - [R for Data Science](https://r4ds.hadley.nz) (RDS). 2025. Wickham, Çetinkaya-Rundel, and Grolemund. O'Reilly Press.
 - [Modern Statistics with R](https://www.modernstatisticswithr.com) (MSR). 2025. Måns Thulin, CRC Press.
 - [An Introduction to Statistical Learning](https://www.statlearning.com) (ISLR). 2023. James, Witten, Hastie, Tibshirani. Springer.
 
-### Additional Resources
-
 - [Modern Statistics for Modern Biology](https://web.stanford.edu/class/bios221/book/). 2019. Holmes and Huber. Cambridge University Press.
 - [ggPlot2: Elegant Graphics for Data Analysis, 3rd Edition](https://ggplot2-book.org). Wickham, Navarro, Pedersen. Springer.
 - [The Visual Display of Quantitative Information](https://www.amazon.com/Visual-Display-Quantitative-Information/dp/1930824130). Tufte, E.R. Graphics Press.
 
-### Software Requirements
+## Software Requirements
 
 - Latest version of R ([install here](https://www.r-project.org))
 - Latest version of RStudio ([install here](https://www.rstudio.org))
-- A terminal with SSH capabilities for connecting to computing clusters
-- Git installed and a GitHub account
 - LaTeX for document preparation
 
 ## How to Use This Book
@@ -60,11 +48,12 @@ The exercises at the end of each chapter progress from straightforward applicati
 
 ## Acknowledgments
 
-This book grew out of many years of teaching biostatistics at the University of Oregon. I am grateful to the many students whose questions and struggles have shaped how I present this material, and to colleagues who have shared their insights on effective teaching of statistics.
+This book grew out of many years of teaching biostatistics at the University of Oregon. I am grateful to the many students whose questions and struggles have shaped how I present this material, and to colleagues who have shared their insights on effective teaching of statistics. In particular Clay Small, Andrew Muehlheisen, Hannah Tavalire, Peter Ralph, Sabrina Moustofi and Hope Healey helped create previous versions of this material.
 
 ---
 
-*Bill Cresko*  
+*Bill Cresko* 
+*Institute of Ecology and Evolution*
 *Knight Campus for Accelerating Scientific Impact*  
 *University of Oregon*
 

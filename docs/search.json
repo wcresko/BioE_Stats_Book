@@ -2,37 +2,37 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Statistics for Bioengineering",
+    "title": "Statistics for the Biosciences and Bioengineering",
     "section": "",
-    "text": "Preface\nWelcome to Statistics for Bioengineering, a comprehensive guide designed for graduate students at the University of Oregon Knight Campus. This book provides the foundational skills needed for a successful scientific career in bioengineering and related fields, combining rigorous statistical theory with practical computational implementation in R.",
+    "text": "This books is meant to accompany the graduate statistics courses I teach at the University of Oregon, including Statistics for Bioengineering. This book provides the foundational skills needed for a successful scientific career in bioengineering and biosciences, combining rigorous statistical theory with practical computational implementation in R. I’ve written this book to",
     "crumbs": [
-      "Preface"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Why This Book?</span>"
     ]
   },
   {
     "objectID": "index.html#why-this-book",
     "href": "index.html#why-this-book",
-    "title": "Statistics for Bioengineering",
-    "section": "Why This Book?",
-    "text": "Why This Book?\nModern bioengineering research generates vast amounts of data—from RNA sequencing experiments to biomaterial characterization studies, from neural recordings to clinical trial outcomes. Making sense of this data requires more than just running statistical tests; it demands a deep understanding of the principles underlying those tests and the computational skills to implement them properly.\nThis course takes a practical, hands-on approach to learning statistics. Rather than deriving every formula from first principles, we focus on understanding when and why to apply particular methods, how to implement them in R, and how to interpret and communicate results. Throughout the book, you’ll work with real biological data and develop the skills to analyze your own research questions.",
+    "title": "Statistics for the Biosciences and Bioengineering",
+    "section": "0.1 Why This Book?",
+    "text": "0.1 Why This Book?\nModern biosciences and bioengineering research generates vast amounts of data—from RNA sequencing experiments to biomaterial characterization studies, from neural recordings to clinical trial outcomes. Making sense of this data requires more than just running statistical tests; it demands a deep understanding of the principles underlying those tests and the computational skills to implement them properly.\nThis course takes a practical, hands-on approach to learning statistics. Rather than deriving every formula from first principles, we will focus on understanding when and why to apply particular methods, how to implement them in R, and how to interpret and communicate results. Throughout the book, you’ll work with real biological data and develop the skills to analyze your own research questions.",
     "crumbs": [
-      "Preface"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Why This Book?</span>"
     ]
   },
   {
     "objectID": "index.html#what-you-will-learn",
     "href": "index.html#what-you-will-learn",
-    "title": "Statistics for Bioengineering",
-    "section": "What You Will Learn",
-    "text": "What You Will Learn\nThe material spans several interconnected domains:\nComputational Foundations. You will develop proficiency in Unix command-line operations and R programming, including the tidyverse ecosystem for data manipulation and visualization. These tools form the backbone of modern reproducible research practices.\nStatistical Theory. The book covers probability distributions, parameter estimation, hypothesis testing, and the logic of statistical inference. Understanding these concepts allows you to choose appropriate methods and interpret results correctly.\nPractical Analysis Methods. From t-tests to linear regression to analysis of variance, you’ll learn to implement a wide range of statistical techniques. Each method is presented with clear guidance on assumptions, implementation in R, and interpretation of output.\nReproducible Research. Using Markdown, Git, and GitHub, you’ll learn to document your analyses in ways that others (including your future self) can understand and reproduce.",
+    "title": "Statistics for the Biosciences and Bioengineering",
+    "section": "0.2 What You Will Learn",
+    "text": "0.2 What You Will Learn\nThe material spans several interconnected domains:\nComputational Foundations. You will develop proficiency in basic Unix and R programming, including the tidyverse ecosystem for data manipulation and visualization. These tools form the backbone of modern reproducible research practices.\nStatistical Theory. The book covers probability distributions, parameter estimation, hypothesis testing, and the logic of statistical inference. Understanding these concepts allows you to choose appropriate methods and interpret results correctly.\nPractical Analysis Methods. From t-tests to linear regression to analysis of variance, you’ll learn to implement a wide range of statistical techniques. Each method is presented with clear guidance on assumptions, implementation in R, and interpretation of output.\nReproducible Research. Using Markdown, Git, and GitHub, you’ll learn to document your analyses in ways that others (including your future self) can understand and reproduce.",
     "crumbs": [
-      "Preface"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Why This Book?</span>"
     ]
   },
   {
     "objectID": "index.html#prerequisites",
     "href": "index.html#prerequisites",
-    "title": "Statistics for Bioengineering",
+    "title": "Statistics for the Biosciences and Bioengineering",
     "section": "Prerequisites",
     "text": "Prerequisites\nThis book assumes no prior programming experience, though familiarity with basic algebra and an introductory statistics course will be helpful. You should have access to a computer running Windows, MacOS, or Linux with R and RStudio installed. Instructions for software setup are provided in the opening chapters.",
     "crumbs": [
@@ -42,7 +42,7 @@
   {
     "objectID": "index.html#course-materials",
     "href": "index.html#course-materials",
-    "title": "Statistics for Bioengineering",
+    "title": "Statistics for the Biosciences and Bioengineering",
     "section": "Course Materials",
     "text": "Course Materials\n\nRequired Texts (Free Online)\nThe following textbooks are available freely online and provide excellent supplementary material:\n\nR for Data Science (RDS). 2025. Wickham, Çetinkaya-Rundel, and Grolemund. O’Reilly Press.\nModern Statistics with R (MSR). 2025. Måns Thulin, CRC Press.\nAn Introduction to Statistical Learning (ISLR). 2023. James, Witten, Hastie, Tibshirani. Springer.\n\n\n\nAdditional Resources\n\nModern Statistics for Modern Biology. 2019. Holmes and Huber. Cambridge University Press.\nggPlot2: Elegant Graphics for Data Analysis, 3rd Edition. Wickham, Navarro, Pedersen. Springer.\nThe Visual Display of Quantitative Information. Tufte, E.R. Graphics Press.\n\n\n\nSoftware Requirements\n\nLatest version of R (install here)\nLatest version of RStudio (install here)\nA terminal with SSH capabilities for connecting to computing clusters\nGit installed and a GitHub account\nLaTeX for document preparation",
     "crumbs": [
@@ -52,21 +52,21 @@
   {
     "objectID": "index.html#how-to-use-this-book",
     "href": "index.html#how-to-use-this-book",
-    "title": "Statistics for Bioengineering",
-    "section": "How to Use This Book",
-    "text": "How to Use This Book\nEach chapter builds on previous material, so working through the book sequentially is recommended for beginners. However, the modular organization also allows readers with some background to jump to specific topics of interest.\nCode examples are provided throughout the text, and you are strongly encouraged to type them yourself rather than copying and pasting. The act of typing reinforces learning and helps you notice details that might otherwise slip by. When you encounter errors—and you will—treat them as learning opportunities.\nThe exercises at the end of each chapter progress from straightforward applications of the material to more challenging problems requiring synthesis across topics. Attempting these exercises, even when difficult, is essential for developing genuine competence.",
+    "title": "Statistics for the Biosciences and Bioengineering",
+    "section": "0.5 How to Use This Book",
+    "text": "0.5 How to Use This Book\nEach chapter builds on previous material, so working through the book sequentially is recommended for beginners. However, the modular organization also allows readers with some background to jump to specific topics of interest.\nCode examples are provided throughout the text, and you are strongly encouraged to type them yourself rather than copying and pasting. The act of typing reinforces learning and helps you notice details that might otherwise slip by. When you encounter errors—and you will—treat them as learning opportunities.\nThe exercises at the end of each chapter progress from straightforward applications of the material to more challenging problems requiring synthesis across topics. Attempting these exercises, even when difficult, is essential for developing genuine competence.",
     "crumbs": [
-      "Preface"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Why This Book?</span>"
     ]
   },
   {
     "objectID": "index.html#acknowledgments",
     "href": "index.html#acknowledgments",
-    "title": "Statistics for Bioengineering",
-    "section": "Acknowledgments",
-    "text": "Acknowledgments\nThis book grew out of many years of teaching biostatistics at the University of Oregon. I am grateful to the many students whose questions and struggles have shaped how I present this material, and to colleagues who have shared their insights on effective teaching of statistics.\n\nBill Cresko\nKnight Campus for Accelerating Scientific Impact\nUniversity of Oregon",
+    "title": "Statistics for the Biosciences and Bioengineering",
+    "section": "0.6 Acknowledgments",
+    "text": "0.6 Acknowledgments\nThis book grew out of many years of teaching biostatistics at the University of Oregon. I am grateful to the many students whose questions and struggles have shaped how I present this material, and to colleagues who have shared their insights on effective teaching of statistics. In particular Clay Small, Andrew Muehlheisen, Hannah Tavalire, Peter Ralph, Sabrina Moustofi and Hope Healey helped create previous versions of this material.\n\nBill Cresko Institute of Ecology and Evolution Knight Campus for Accelerating Scientific Impact\nUniversity of Oregon",
     "crumbs": [
-      "Preface"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Why This Book?</span>"
     ]
   },
   {
@@ -4829,6 +4829,26 @@
     "text": "Cohen, Jacob. 1988. Statistical Power Analysis for the Behavioral\nSciences. 2nd ed. Lawrence Erlbaum Associates.\n\n\nCrawley, Michael J. 2007. The r Book. John Wiley & Sons.\n\n\nEfron, Bradley. 1979. “Bootstrap Methods: Another Look at the\nJackknife.” The Annals of Statistics 7 (1): 1–26.\n\n\nIrizarry, Rafael A. 2019. Introduction to Data Science.\nSelf-published. https://rafalab.github.io/dsbook/.\n\n\nJames, Gareth, Daniela Witten, Trevor Hastie, and Robert Tibshirani.\n2023. An Introduction to Statistical Learning with Applications in\nr. 2nd ed. Springer. https://www.statlearning.com.\n\n\nLogan, Murray. 2010. Biostatistical Design and Analysis Using\nr. Wiley-Blackwell.\n\n\nThulin, Måns. 2025. Modern Statistics with r. CRC Press. https://www.modernstatisticswithr.com.",
     "crumbs": [
       "References"
+    ]
+  },
+  {
+    "objectID": "index.html#additional-resources",
+    "href": "index.html#additional-resources",
+    "title": "Statistics for the Biosciences and Bioengineering",
+    "section": "0.3 Additional Resources",
+    "text": "0.3 Additional Resources\n\nR for Data Science (RDS). 2025. Wickham, Çetinkaya-Rundel, and Grolemund. O’Reilly Press.\nModern Statistics with R (MSR). 2025. Måns Thulin, CRC Press.\nAn Introduction to Statistical Learning (ISLR). 2023. James, Witten, Hastie, Tibshirani. Springer.\nModern Statistics for Modern Biology. 2019. Holmes and Huber. Cambridge University Press.\nggPlot2: Elegant Graphics for Data Analysis, 3rd Edition. Wickham, Navarro, Pedersen. Springer.\nThe Visual Display of Quantitative Information. Tufte, E.R. Graphics Press.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Why This Book?</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#software-requirements",
+    "href": "index.html#software-requirements",
+    "title": "Statistics for the Biosciences and Bioengineering",
+    "section": "0.4 Software Requirements",
+    "text": "0.4 Software Requirements\n\nLatest version of R (install here)\nLatest version of RStudio (install here)\nLaTeX for document preparation",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Why This Book?</span>"
     ]
   }
 ]
