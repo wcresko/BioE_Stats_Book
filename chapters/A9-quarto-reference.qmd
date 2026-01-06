@@ -350,16 +350,9 @@ Organize content into tabs:
 mean(c(1, 2, 3, 4, 5))
 ```
 
-## Python Code
-```{python}
-import numpy as np
-np.mean([1, 2, 3, 4, 5])
-```
-
-## Julia Code
-```{julia}
-using Statistics
-mean([1, 2, 3, 4, 5])
+## Base R Alternative
+```{r}
+sum(c(1, 2, 3, 4, 5)) / length(c(1, 2, 3, 4, 5))
 ```
 
 :::
