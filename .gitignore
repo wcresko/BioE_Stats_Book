@@ -5,6 +5,10 @@
 
 /.quarto/
 
+# Quarto freeze directory (contains cached computation results)
+# This can become very large with PCA/t-SNE/UMAP on MNIST data
+_freeze/
+
 # Quarto/knitr cache directories
 *_cache/
 **/*_cache/
@@ -15,3 +19,10 @@ docs/
 # Large data files
 *.rdb
 *.rdx
+*.rds
+*.RData
+*.rda
+
+# Large figures that may be generated
+*.png.large
+*.pdf.large
