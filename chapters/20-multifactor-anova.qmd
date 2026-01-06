@@ -189,6 +189,172 @@ t.test(growth ~ nutrient, data = high_temp_data)
 
 In our example, the nutrient effect is significant at both temperatures, but the magnitude differs—the interaction shows that the nutrient boost is stronger at high temperature.
 
+## ANCOVA: Analysis of Covariance
+
+**Analysis of Covariance (ANCOVA)** combines ANOVA with regression by including both categorical factors and continuous covariates. The covariate is a continuous variable that you want to control for—it's not a treatment you manipulate, but a source of variation you want to account for.
+
+**Common uses of ANCOVA:**
+- Controlling for pre-existing differences (baseline measurements)
+- Increasing precision by removing variance explained by the covariate
+- Adjusting for confounding variables
+- Testing whether regression slopes differ across groups
+
+### The ANCOVA Model
+
+The ANCOVA model for one factor and one covariate is:
+
+$$y_{ij} = \mu + \alpha_i + \beta(x_{ij} - \bar{x}) + \epsilon_{ij}$$
+
+where:
+- $\mu$ is the overall mean
+- $\alpha_i$ is the effect of group $i$
+- $\beta$ is the regression slope (common to all groups)
+- $x_{ij}$ is the covariate value
+- $\bar{x}$ is the mean of the covariate
+- $\epsilon_{ij}$ is the random error
+
+The key assumption is that the relationship between the covariate and response has the **same slope in all groups** (homogeneity of regression slopes).
+
+```{r}
+#| label: fig-ancova-example
+#| fig-cap: "ANCOVA example showing treatment effects on final weight while controlling for initial weight"
+#| fig-width: 8
+#| fig-height: 6
+
+# Simulated ANCOVA example: Effect of diet on final weight, controlling for initial weight
+set.seed(567)
+n_per_group <- 20
+
+# Three diet treatments
+diet_data <- data.frame(
+  diet = factor(rep(c("Control", "Low-fat", "High-protein"), each = n_per_group)),
+  initial_weight = c(
+    rnorm(n_per_group, 75, 8),   # Control group
+    rnorm(n_per_group, 78, 8),   # Low-fat (slightly heavier initially)
+    rnorm(n_per_group, 73, 8)    # High-protein (slightly lighter initially)
+  )
+) %>%
+  mutate(
+    # Final weight depends on diet AND initial weight
+    # Diet effects: Control = 0, Low-fat = -3, High-protein = -5
+    diet_effect = case_when(
+      diet == "Control" ~ 0,
+      diet == "Low-fat" ~ -3,
+      diet == "High-protein" ~ -5
+    ),
+    # Final weight = initial + diet effect + some regression to mean + noise
+    final_weight = initial_weight + diet_effect + 0.3 * (initial_weight - 75) + rnorm(n(), 0, 3)
+  )
+
+# Visualize the ANCOVA setup
+ggplot(diet_data, aes(x = initial_weight, y = final_weight, color = diet)) +
+  geom_point(alpha = 0.7, size = 2) +
+  geom_smooth(method = "lm", se = FALSE, linewidth = 1) +
+  labs(title = "ANCOVA: Diet Effect on Final Weight",
+       subtitle = "Parallel regression lines show diet effects while controlling for initial weight",
+       x = "Initial Weight (kg)",
+       y = "Final Weight (kg)",
+       color = "Diet") +
+  scale_color_manual(values = c("Control" = "#E69F00", "Low-fat" = "#56B4E9", "High-protein" = "#009E73")) +
+  theme_minimal(base_size = 12)
+```
+
+### Fitting ANCOVA in R
+
+```{r}
+# Fit ANCOVA model
+ancova_model <- aov(final_weight ~ initial_weight + diet, data = diet_data)
+summary(ancova_model)
+```
+
+Note the order of terms: the covariate (`initial_weight`) is entered first to remove its effect before testing the factor (`diet`).
+
+```{r}
+# Compare to ANOVA without covariate
+anova_only <- aov(final_weight ~ diet, data = diet_data)
+summary(anova_only)
+
+# The ANCOVA has smaller residual SS and more power
+cat("\nResidual SS (ANOVA):", round(sum(residuals(anova_only)^2), 1), "\n")
+cat("Residual SS (ANCOVA):", round(sum(residuals(ancova_model)^2), 1), "\n")
+```
+
+### Adjusted Means
+
+ANCOVA produces **adjusted means**—the group means estimated at the overall mean of the covariate. These are the means we would expect if all groups had started with the same covariate value.
+
+```{r}
+# Get adjusted means
+library(emmeans)
+ancova_emm <- emmeans(ancova_model, "diet")
+ancova_emm
+
+# Pairwise comparisons of adjusted means
+pairs(ancova_emm, adjust = "tukey")
+```
+
+### Testing Homogeneity of Slopes
+
+A critical assumption is that regression slopes are equal across groups. Test this by including the interaction term:
+
+```{r}
+# Test for unequal slopes (interaction between covariate and factor)
+slope_test <- aov(final_weight ~ initial_weight * diet, data = diet_data)
+summary(slope_test)
+```
+
+A significant interaction indicates slopes differ across groups, violating the ANCOVA assumption. In that case, you should:
+1. Report separate regressions for each group
+2. Use a more complex model (separate slopes ANCOVA)
+3. Consider whether the interaction itself is scientifically meaningful
+
+```{r}
+#| label: fig-ancova-slopes
+#| fig-cap: "Testing homogeneity of slopes: parallel lines indicate the assumption is met"
+#| fig-width: 8
+#| fig-height: 6
+
+# Visualize slopes by group
+ggplot(diet_data, aes(x = initial_weight, y = final_weight, color = diet)) +
+  geom_point(alpha = 0.6) +
+  geom_smooth(method = "lm", se = TRUE, alpha = 0.2) +
+  labs(title = "Testing Homogeneity of Regression Slopes",
+       subtitle = "Slopes should be approximately parallel for valid ANCOVA",
+       x = "Initial Weight (kg)",
+       y = "Final Weight (kg)",
+       color = "Diet") +
+  scale_color_manual(values = c("Control" = "#E69F00", "Low-fat" = "#56B4E9", "High-protein" = "#009E73")) +
+  theme_minimal(base_size = 12)
+```
+
+::: {.callout-warning}
+## ANCOVA Assumptions
+
+1. **Independence** of observations
+2. **Normality** of residuals
+3. **Homogeneity of variance** across groups
+4. **Linear relationship** between covariate and response
+5. **Homogeneity of regression slopes** (equal slopes across groups)
+6. **Covariate measured without error** (or with negligible error)
+7. **Covariate independent of treatment** (especially important in observational studies)
+
+The last assumption is critical: if the treatment affects the covariate, ANCOVA can remove real treatment effects. The covariate should ideally be measured before treatment is applied.
+:::
+
+### When to Use ANCOVA
+
+**Use ANCOVA when:**
+- You have a continuous covariate measured before treatment
+- You want to increase precision by accounting for baseline variation
+- Groups differ on the covariate (but not due to treatment)
+- The covariate-response relationship is linear with equal slopes
+
+**Avoid ANCOVA when:**
+- The covariate is affected by treatment
+- Slopes clearly differ across groups
+- The covariate is categorical (use factorial ANOVA instead)
+- Sample sizes are very small
+
 ## Nested Designs
 
 In **nested designs**, levels of one factor exist only within levels of another factor. This differs from a factorial design where all combinations of factors are crossed.
@@ -607,6 +773,7 @@ Multi-factor ANOVA extends the basic ANOVA framework to designs with multiple fa
 - **Factorial designs** test all combinations of factor levels, allowing estimation of main effects and interactions
 - **Interactions** reveal that factors do not operate independently—the effect of one factor depends on another
 - **Interaction plots** with non-parallel lines indicate interactions; interpret simple effects rather than main effects when interactions are significant
+- **ANCOVA** combines categorical factors with continuous covariates, controlling for baseline variation and increasing statistical power
 - **Nested designs** have hierarchical structure where levels of one factor exist only within another; common in hierarchical sampling
 - **Repeated measures ANOVA** accounts for correlation when the same subjects are measured multiple times
 - **Mixed effects models** include both fixed and random effects, providing flexibility for complex data structures
