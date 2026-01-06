@@ -21,9 +21,120 @@ Models are built to fit training data as closely as possible. A linear regressio
 
 The solution is to evaluate models on data they have not seen—held-out test data or through cross-validation.
 
+## Loss Functions: Quantifying Prediction Error
+
+A **loss function** (or **cost function**) measures how wrong a prediction is. It quantifies the penalty for predicting $\hat{y}$ when the true value is $y$.
+
+### Common Loss Functions for Regression
+
+**Squared Error Loss** (L2): The most common loss for continuous outcomes:
+$$L(y, \hat{y}) = (y - \hat{y})^2$$
+
+Squaring penalizes large errors more heavily than small ones. Linear regression minimizes the sum of squared errors (SSE or RSS).
+
+**Absolute Error Loss** (L1): Less sensitive to outliers:
+$$L(y, \hat{y}) = |y - \hat{y}|$$
+
+**Mean Squared Error (MSE)** and **Root Mean Squared Error (RMSE)** are averages across all predictions:
+$$\text{MSE} = \frac{1}{n}\sum_{i=1}^n (y_i - \hat{y}_i)^2, \quad \text{RMSE} = \sqrt{\text{MSE}}$$
+
+### Common Loss Functions for Classification
+
+**0-1 Loss**: The simplest classification loss—1 if wrong, 0 if correct:
+$$L(y, \hat{y}) = \mathbb{I}(y \neq \hat{y})$$
+
+The average 0-1 loss is the **error rate**; one minus the error rate is **accuracy**.
+
+**Log Loss** (Cross-Entropy): Used when we have predicted probabilities $\hat{p}$:
+$$L(y, \hat{p}) = -[y \log(\hat{p}) + (1-y) \log(1-\hat{p})]$$
+
+Log loss penalizes confident wrong predictions severely—predicting probability 0.99 for the wrong class incurs much larger loss than predicting 0.6.
+
+```{r}
+#| label: fig-loss-functions
+#| fig-cap: "Comparison of squared loss (penalizes large errors heavily) versus absolute loss (more robust to outliers)"
+#| fig-width: 8
+#| fig-height: 4
+par(mfrow = c(1, 2))
+
+# Regression loss functions
+errors <- seq(-3, 3, length.out = 100)
+plot(errors, errors^2, type = "l", col = "blue", lwd = 2,
+     xlab = "Prediction Error (y - ŷ)", ylab = "Loss",
+     main = "Regression Loss Functions")
+lines(errors, abs(errors), col = "red", lwd = 2)
+legend("top", c("Squared (L2)", "Absolute (L1)"),
+       col = c("blue", "red"), lwd = 2)
+
+# Classification log loss
+p <- seq(0.01, 0.99, length.out = 100)
+plot(p, -log(p), type = "l", col = "blue", lwd = 2,
+     xlab = "Predicted Probability for True Class", ylab = "Log Loss",
+     main = "Classification Log Loss")
+abline(v = 0.5, lty = 2, col = "gray")
+```
+
+### Why Loss Functions Matter
+
+Different loss functions lead to different optimal predictions:
+
+- **Squared loss** → optimal prediction is the **mean**
+- **Absolute loss** → optimal prediction is the **median**
+- **0-1 loss** → optimal prediction is the **mode** (most frequent class)
+
+The choice of loss function should reflect how errors affect your application. Medical diagnosis may weight false negatives (missed disease) more heavily than false positives.
+
 ## Cross-Validation
 
-Cross-validation estimates how well a model will generalize to new data.
+### The Problem: Training Error vs. Test Error
+
+A fundamental insight of statistical learning is that **training error** (how well we fit the data used to build the model) is an overly optimistic estimate of **test error** (how well we predict new data).
+
+```{r}
+#| label: fig-train-test-error
+#| fig-cap: "Training error always decreases with model complexity, but test error eventually increases due to overfitting. The optimal model minimizes test error."
+#| fig-width: 8
+#| fig-height: 5
+# Demonstrate training vs test error
+set.seed(42)
+n <- 100
+x <- sort(runif(n, 0, 10))
+y_true <- sin(x) + 0.5 * cos(0.5 * x)
+y <- y_true + rnorm(n, sd = 0.3)
+
+# Split into training and test
+train_idx <- sample(1:n, 70)
+train_data <- data.frame(x = x[train_idx], y = y[train_idx])
+test_data <- data.frame(x = x[-train_idx], y = y[-train_idx])
+
+# Fit polynomials of increasing degree
+library(splines)
+degrees <- 1:15
+train_error <- test_error <- numeric(length(degrees))
+
+for (i in seq_along(degrees)) {
+  d <- degrees[i]
+  fit <- lm(y ~ poly(x, d), data = train_data)
+  train_error[i] <- mean((train_data$y - predict(fit, train_data))^2)
+  test_error[i] <- mean((test_data$y - predict(fit, test_data))^2)
+}
+
+# Plot
+plot(degrees, train_error, type = "b", pch = 19, col = "blue",
+     xlab = "Model Complexity (Polynomial Degree)",
+     ylab = "Mean Squared Error",
+     main = "Training vs Test Error", ylim = c(0, max(test_error)))
+lines(degrees, test_error, type = "b", pch = 19, col = "red")
+legend("topright", c("Training Error", "Test Error"),
+       col = c("blue", "red"), pch = 19, lty = 1)
+abline(v = degrees[which.min(test_error)], lty = 2, col = "gray")
+```
+
+Notice that training error keeps decreasing as complexity increases, eventually reaching near zero. But test error follows a U-shape—it decreases initially as the model captures true patterns, then increases as the model starts fitting noise.
+
+### K-Fold Cross-Validation
+
+Cross-validation estimates how well a model will generalize to new data without requiring a separate test set.
 
 **K-fold cross-validation**:
 1. Split data into k roughly equal parts (folds)
@@ -32,7 +143,7 @@ Cross-validation estimates how well a model will generalize to new data.
 
 ```{r}
 #| label: fig-cross-validation
-#| fig-cap: "Cross-validation example demonstrating prediction error estimation"
+#| fig-cap: "K-fold cross-validation: each fold takes turns being the test set"
 #| fig-width: 7
 #| fig-height: 5
 # Simple CV example with linear regression
@@ -53,6 +164,46 @@ cat("CV estimate of prediction error:", round(cv_result$delta[1], 3), "\n")
 ```
 
 **Leave-one-out cross-validation (LOOCV)** is k-fold with k = n: each observation is held out once. More computationally expensive but lower variance.
+
+### Bootstrap for Error Estimation
+
+The **bootstrap** can also estimate prediction error. The approach:
+
+1. Draw a bootstrap sample (n observations with replacement)
+2. Fit the model on the bootstrap sample
+3. Evaluate on observations NOT selected (the "out-of-bag" observations)
+4. Repeat and average
+
+This is similar to cross-validation but uses the natural ~37% of observations left out of each bootstrap sample.
+
+```{r}
+# Bootstrap estimate of prediction error
+set.seed(123)
+n_boot <- 100
+boot_errors <- numeric(n_boot)
+
+for (b in 1:n_boot) {
+  # Bootstrap sample
+  boot_idx <- sample(1:nrow(data), replace = TRUE)
+  oob_idx <- setdiff(1:nrow(data), unique(boot_idx))
+
+  if (length(oob_idx) > 0) {
+    fit <- lm(y ~ x, data = data[boot_idx, ])
+    boot_errors[b] <- mean((data$y[oob_idx] - predict(fit, data[oob_idx, ]))^2)
+  }
+}
+
+cat("Bootstrap estimate of prediction error:", round(mean(boot_errors), 3), "\n")
+```
+
+::: {.callout-tip}
+## Choosing a CV Strategy
+
+- **k = 5 or k = 10**: Standard choices that balance bias and variance
+- **LOOCV (k = n)**: Low bias but high variance; expensive for large n
+- **Bootstrap**: Useful when you also want confidence intervals
+- **Repeated CV**: Run k-fold multiple times with different splits for more stable estimates
+:::
 
 ## Bias-Variance Tradeoff
 
@@ -204,6 +355,104 @@ Notice that lasso correctly identifies the zero coefficients (variables 4-10), w
 
 **Important**: Always standardize predictors before applying regularization, as the penalty treats all coefficients equally. The `glmnet` function does this automatically by default.
 :::
+
+## Smoothing: From Simple Averages to Flexible Curves
+
+When the relationship between a predictor and outcome is non-linear, we need methods more flexible than linear regression. **Smoothing** methods estimate curves by averaging nearby observations, allowing the data to reveal its own pattern.
+
+### Bin Smoothing
+
+The simplest smoothing approach is **bin smoothing** (also called **binning**): divide the predictor into intervals (bins) and estimate the outcome as the average within each bin.
+
+```{r}
+#| label: fig-bin-smoothing
+#| fig-cap: "Bin smoothing divides data into intervals and estimates each segment as the mean of points in that bin"
+#| fig-width: 8
+#| fig-height: 5
+# Generate non-linear data
+set.seed(42)
+n <- 200
+x <- runif(n, 0, 10)
+y <- sin(x) + rnorm(n, sd = 0.3)
+
+# Bin smoothing with different bin widths
+par(mfrow = c(1, 2))
+
+# Narrow bins
+n_bins <- 20
+breaks <- seq(min(x), max(x), length.out = n_bins + 1)
+bin_means <- sapply(1:n_bins, function(i) {
+  in_bin <- x >= breaks[i] & x < breaks[i + 1]
+  if (sum(in_bin) > 0) mean(y[in_bin]) else NA
+})
+bin_centers <- (breaks[-1] + breaks[-(n_bins + 1)]) / 2
+
+plot(x, y, pch = 16, col = "gray60", main = "Narrow bins (20)")
+points(bin_centers, bin_means, col = "blue", pch = 19, cex = 1.5)
+lines(bin_centers, bin_means, col = "blue", lwd = 2)
+
+# Wide bins
+n_bins <- 5
+breaks <- seq(min(x), max(x), length.out = n_bins + 1)
+bin_means <- sapply(1:n_bins, function(i) {
+  in_bin <- x >= breaks[i] & x < breaks[i + 1]
+  if (sum(in_bin) > 0) mean(y[in_bin]) else NA
+})
+bin_centers <- (breaks[-1] + breaks[-(n_bins + 1)]) / 2
+
+plot(x, y, pch = 16, col = "gray60", main = "Wide bins (5)")
+points(bin_centers, bin_means, col = "red", pch = 19, cex = 1.5)
+lines(bin_centers, bin_means, col = "red", lwd = 2)
+```
+
+Bin smoothing illustrates the **bias-variance tradeoff** in smoothing:
+
+- **Narrow bins**: Capture local variation (low bias) but are noisy (high variance)
+- **Wide bins**: Smooth over noise (low variance) but may miss true curvature (high bias)
+
+The main limitation of bin smoothing is the **discontinuity** at bin boundaries—the estimate jumps from one bin to the next.
+
+### Kernel Smoothing
+
+**Kernel smoothing** improves on binning by using weighted averages, where closer points receive more weight. This creates smooth, continuous estimates.
+
+The estimate at any point $x_0$ is:
+
+$$\hat{f}(x_0) = \frac{\sum_{i=1}^n K\left(\frac{x_i - x_0}{h}\right) y_i}{\sum_{i=1}^n K\left(\frac{x_i - x_0}{h}\right)}$$
+
+where $K$ is a **kernel function** (typically Gaussian or Epanechnikov) and $h$ is the **bandwidth** controlling smoothness.
+
+```{r}
+#| label: fig-kernel-smoothing
+#| fig-cap: "Kernel smoothing uses weighted averages with Gaussian weights, creating smooth estimates"
+#| fig-width: 9
+#| fig-height: 4
+# Kernel smoothing function
+kernel_smooth <- function(x0, x, y, bandwidth) {
+  weights <- dnorm(x, mean = x0, sd = bandwidth)
+  sum(weights * y) / sum(weights)
+}
+
+# Apply to grid of points
+x_grid <- seq(0, 10, length.out = 200)
+
+par(mfrow = c(1, 3))
+
+for (bw in c(0.2, 0.5, 1.0)) {
+  y_smooth <- sapply(x_grid, function(x0) kernel_smooth(x0, x, y, bw))
+
+  plot(x, y, pch = 16, col = "gray60", main = paste("Bandwidth =", bw))
+  lines(x_grid, y_smooth, col = "blue", lwd = 2)
+  lines(x_grid, sin(x_grid), col = "red", lwd = 2, lty = 2)
+}
+```
+
+The **bandwidth** parameter plays the same role as the number of bins:
+
+- **Small bandwidth**: More local, follows the data closely (risk of overfitting)
+- **Large bandwidth**: More global, smoother curve (risk of over-smoothing)
+
+Kernel smoothing eliminates the discontinuity problem of bin smoothing while retaining its intuitive local-averaging interpretation.
 
 ## Splines: Flexible Curve Fitting
 
@@ -1360,6 +1609,66 @@ SVM is inherently binary, but extends to multiple classes via:
 
 R's `svm()` uses one-vs-one by default.
 
+### Support Vector Regression (SVR)
+
+SVMs can also be used for regression problems. **Support Vector Regression** works by fitting a tube of width $\epsilon$ around the data—points inside the tube contribute no loss, while points outside are penalized.
+
+The key idea is that instead of minimizing squared errors (like in linear regression), SVR minimizes how much predictions deviate beyond a tolerance margin $\epsilon$:
+
+$$
+L_\epsilon(y, \hat{y}) = \begin{cases} 0 & \text{if } |y - \hat{y}| \leq \epsilon \\ |y - \hat{y}| - \epsilon & \text{otherwise} \end{cases}
+$$
+
+This is called the **$\epsilon$-insensitive loss function**.
+
+```{r}
+#| label: fig-svr
+#| fig-cap: "Support Vector Regression fits a tube around the data. Points within the tube (width epsilon) have zero loss."
+#| fig-width: 8
+#| fig-height: 5
+# Generate non-linear data
+set.seed(42)
+n <- 100
+x <- seq(0, 4*pi, length.out = n)
+y <- sin(x) + rnorm(n, sd = 0.3)
+svr_data <- data.frame(x = x, y = y)
+
+# Fit SVR with RBF kernel
+svr_model <- svm(y ~ x, data = svr_data, kernel = "radial",
+                  epsilon = 0.3, cost = 10)
+
+# Predictions
+svr_data$pred <- predict(svr_model, svr_data)
+
+# Plot
+plot(x, y, pch = 16, col = "gray60", main = "Support Vector Regression")
+lines(x, svr_data$pred, col = "blue", lwd = 2)
+lines(x, sin(x), col = "red", lwd = 2, lty = 2)
+legend("topright", c("SVR fit", "True function"),
+       col = c("blue", "red"), lty = c(1, 2), lwd = 2)
+```
+
+Key SVR parameters:
+
+- **epsilon**: Width of the insensitive tube. Larger values give smoother fits.
+- **cost (C)**: Penalty for points outside the tube. Higher C fits the data more closely.
+- **kernel**: As with classification, RBF kernels can capture non-linear patterns.
+
+```{r}
+#| label: fig-svr-epsilon
+#| fig-cap: "Effect of epsilon on SVR: larger epsilon creates wider tubes and smoother fits"
+#| fig-width: 9
+#| fig-height: 4
+par(mfrow = c(1, 3))
+
+for (eps in c(0.1, 0.3, 0.5)) {
+  svr_fit <- svm(y ~ x, data = svr_data, kernel = "radial",
+                  epsilon = eps, cost = 10)
+  plot(x, y, pch = 16, col = "gray60", main = paste("epsilon =", eps))
+  lines(x, predict(svr_fit), col = "blue", lwd = 2)
+}
+```
+
 ::: {.callout-note}
 ## SVM vs. Other Methods
 
@@ -1491,17 +1800,20 @@ What is the variable importance in the random forest call for these predictors? 
 Statistical learning provides powerful tools for prediction and pattern discovery:
 
 - **Overfitting** is the central challenge—models that fit training data too well predict poorly
+- **Loss functions** quantify prediction error (squared loss for regression, log loss for classification)
 - **Cross-validation** provides honest estimates of predictive performance
+  - Training error is always optimistic; test error reveals true performance
+  - K-fold CV and bootstrap estimate generalization error
 - The **bias-variance tradeoff** governs model complexity choices
 - **Regularization** (ridge, lasso, elastic net) controls overfitting by penalizing model complexity
   - Ridge shrinks coefficients but keeps all predictors
   - Lasso performs variable selection by shrinking some coefficients to zero
   - Cross-validation selects the optimal regularization strength
-- **Splines** provide flexible curve fitting with controlled smoothness
-  - Regression splines use piecewise polynomials at fixed knots
-  - Natural splines add boundary constraints for better extrapolation
-  - Smoothing splines use penalties to control flexibility
-- **LOESS** offers flexible non-parametric smoothing
+- **Smoothing methods** estimate flexible curves from data
+  - Bin smoothing divides data into intervals
+  - Kernel smoothing uses weighted averages for continuous estimates
+  - Splines fit piecewise polynomials with controlled smoothness
+  - LOESS fits local regressions weighted by distance
 - **K-nearest neighbors** illustrates how hyperparameters control model complexity
 - **Decision trees (CART)** recursively partition data using simple rules
   - Highly interpretable but prone to overfitting
@@ -1512,6 +1824,7 @@ Statistical learning provides powerful tools for prediction and pattern discover
   - Variable importance measures identify key predictors
 - **Support vector machines** find maximum-margin decision boundaries
   - Kernel trick enables non-linear classification
+  - Support vector regression (SVR) extends to continuous outcomes
   - Effective in high-dimensional spaces
 - **Confusion matrices** summarize classification performance with metrics like accuracy, sensitivity, and precision
 - **F1 score and balanced accuracy** are better metrics for imbalanced data
