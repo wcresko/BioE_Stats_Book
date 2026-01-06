@@ -64,6 +64,253 @@ Prediction error has two components:
 
 The best predictions come from models that balance bias and variance. As model complexity increases, bias decreases but variance increases. The optimal complexity minimizes total prediction error.
 
+## Regularization: Controlling Model Complexity
+
+**Regularization** addresses overfitting by adding a penalty term that discourages complex models. This is particularly important when you have many predictors relative to observations, or when predictors are correlated.
+
+### The Regularization Idea
+
+Standard linear regression minimizes the sum of squared residuals (RSS):
+
+$$\text{RSS} = \sum_{i=1}^n (y_i - \beta_0 - \sum_{j=1}^p \beta_j x_{ij})^2$$
+
+Regularized regression adds a penalty term $\lambda P(\beta)$ that shrinks coefficients toward zero:
+
+$$\text{Minimize: } \text{RSS} + \lambda P(\beta)$$
+
+The **regularization parameter** $\lambda$ controls the strength of the penalty:
+- $\lambda = 0$: No penalty, equivalent to ordinary least squares
+- $\lambda \to \infty$: Very strong penalty, coefficients shrink toward zero
+
+### Ridge Regression (L2 Penalty)
+
+**Ridge regression** uses the sum of squared coefficients as the penalty:
+
+$$P(\beta) = \sum_{j=1}^p \beta_j^2$$
+
+This shrinks all coefficients toward zero but never exactly to zero. Ridge is particularly effective when predictors are correlated (multicollinearity).
+
+```{r}
+#| label: fig-ridge-path
+#| fig-cap: "Ridge regression coefficient paths: as lambda increases, coefficients shrink toward zero but never reach exactly zero"
+#| fig-width: 8
+#| fig-height: 5
+library(glmnet)
+
+# Generate sample data with correlated predictors
+set.seed(42)
+n <- 100
+p <- 10
+X <- matrix(rnorm(n * p), n, p)
+# Create correlated predictors
+X[, 2] <- X[, 1] + rnorm(n, sd = 0.5)
+X[, 3] <- X[, 1] + rnorm(n, sd = 0.5)
+true_beta <- c(3, -2, 1.5, rep(0, p - 3))
+y <- X %*% true_beta + rnorm(n)
+
+# Fit ridge regression across lambda values
+ridge_fit <- glmnet(X, y, alpha = 0)  # alpha = 0 for ridge
+
+# Plot coefficient paths
+plot(ridge_fit, xvar = "lambda", main = "Ridge Regression Coefficients")
+```
+
+### Lasso Regression (L1 Penalty)
+
+**Lasso** (Least Absolute Shrinkage and Selection Operator) uses the sum of absolute values as the penalty:
+
+$$P(\beta) = \sum_{j=1}^p |\beta_j|$$
+
+Unlike ridge, lasso can shrink coefficients exactly to zero, effectively performing **variable selection**. This produces sparse models that are easier to interpret.
+
+```{r}
+#| label: fig-lasso-path
+#| fig-cap: "Lasso regression coefficient paths: as lambda increases, coefficients shrink and some become exactly zero (variable selection)"
+#| fig-width: 8
+#| fig-height: 5
+# Fit lasso regression
+lasso_fit <- glmnet(X, y, alpha = 1)  # alpha = 1 for lasso
+
+plot(lasso_fit, xvar = "lambda", main = "Lasso Regression Coefficients")
+```
+
+### Elastic Net: Combining Ridge and Lasso
+
+**Elastic net** combines both penalties:
+
+$$P(\beta) = \alpha \sum_{j=1}^p |\beta_j| + (1-\alpha) \sum_{j=1}^p \beta_j^2$$
+
+The mixing parameter $\alpha$ controls the balance:
+- $\alpha = 0$: Pure ridge
+- $\alpha = 1$: Pure lasso
+- $0 < \alpha < 1$: Combination
+
+Elastic net is often preferred when predictors are correlated—it tends to select groups of correlated variables together.
+
+### Choosing Lambda with Cross-Validation
+
+The regularization parameter $\lambda$ is typically chosen by cross-validation:
+
+```{r}
+#| label: fig-cv-lambda
+#| fig-cap: "Cross-validation to select optimal lambda: the left dashed line marks the minimum error, the right marks the most regularized model within one standard error"
+#| fig-width: 8
+#| fig-height: 5
+# Cross-validation for lasso
+set.seed(123)
+cv_lasso <- cv.glmnet(X, y, alpha = 1)
+
+# Plot cross-validation results
+plot(cv_lasso)
+
+# Optimal lambda values
+cat("Lambda with minimum CV error:", round(cv_lasso$lambda.min, 4), "\n")
+cat("Lambda within 1 SE of minimum:", round(cv_lasso$lambda.1se, 4), "\n")
+```
+
+The `lambda.1se` (one standard error rule) often provides a more parsimonious model with nearly as good performance as the minimum.
+
+### Comparing Regularization Methods
+
+```{r}
+# Fit models with optimal lambda
+ridge_cv <- cv.glmnet(X, y, alpha = 0)
+lasso_cv <- cv.glmnet(X, y, alpha = 1)
+
+# Extract coefficients
+coef_ols <- coef(lm(y ~ X))
+coef_ridge <- coef(ridge_cv, s = "lambda.1se")
+coef_lasso <- coef(lasso_cv, s = "lambda.1se")
+
+# Compare (excluding intercept)
+comparison <- data.frame(
+  True = c(NA, true_beta),
+  OLS = as.vector(coef_ols),
+  Ridge = as.vector(coef_ridge),
+  Lasso = as.vector(coef_lasso)
+)
+rownames(comparison) <- c("Intercept", paste0("X", 1:p))
+round(comparison, 3)
+```
+
+Notice that lasso correctly identifies the zero coefficients (variables 4-10), while ridge shrinks them but doesn't eliminate them.
+
+::: {.callout-tip}
+## When to Use Each Method
+
+- **Ridge**: When you believe all predictors are relevant and want to handle multicollinearity
+- **Lasso**: When you want automatic variable selection and a sparse model
+- **Elastic Net**: When predictors are correlated and you want both selection and grouping
+
+**Important**: Always standardize predictors before applying regularization, as the penalty treats all coefficients equally. The `glmnet` function does this automatically by default.
+:::
+
+## Splines: Flexible Curve Fitting
+
+While LOESS provides local smoothing, **splines** offer a more structured approach to fitting flexible curves. A spline is a piecewise polynomial function that joins smoothly at points called **knots**.
+
+### Why Splines?
+
+Linear regression assumes a straight-line relationship, which is often too restrictive. We could fit polynomial regression (e.g., $y = \beta_0 + \beta_1 x + \beta_2 x^2 + \beta_3 x^3$), but polynomials can behave erratically, especially at the edges of the data.
+
+Splines provide flexibility while maintaining smooth, well-behaved curves.
+
+### Regression Splines
+
+**Regression splines** fit piecewise polynomials at fixed knot locations. The `splines` package provides basis functions for incorporating splines into linear models:
+
+```{r}
+#| label: fig-spline-comparison
+#| fig-cap: "Comparison of linear, polynomial, and spline fits for non-linear data"
+#| fig-width: 9
+#| fig-height: 4
+library(splines)
+
+# Generate non-linear data
+set.seed(42)
+x <- seq(0, 10, length.out = 100)
+y <- sin(x) + 0.5 * cos(2*x) + rnorm(100, sd = 0.3)
+data <- data.frame(x, y)
+
+# Fit different models
+fit_linear <- lm(y ~ x, data = data)
+fit_poly <- lm(y ~ poly(x, 5), data = data)
+fit_spline <- lm(y ~ bs(x, df = 6), data = data)  # B-spline with 6 df
+
+# Predictions
+data$pred_linear <- predict(fit_linear)
+data$pred_poly <- predict(fit_poly)
+data$pred_spline <- predict(fit_spline)
+
+par(mfrow = c(1, 3))
+
+plot(x, y, pch = 16, col = "gray60", main = "Linear")
+lines(x, data$pred_linear, col = "red", lwd = 2)
+
+plot(x, y, pch = 16, col = "gray60", main = "Polynomial (degree 5)")
+lines(x, data$pred_poly, col = "blue", lwd = 2)
+
+plot(x, y, pch = 16, col = "gray60", main = "Spline (6 df)")
+lines(x, data$pred_spline, col = "darkgreen", lwd = 2)
+```
+
+### Natural Splines
+
+**Natural splines** add the constraint that the function is linear beyond the boundary knots. This prevents the wild behavior that polynomials often exhibit at the edges:
+
+```{r}
+#| label: fig-natural-spline
+#| fig-cap: "Natural splines constrain the fit to be linear beyond the data boundaries, reducing edge effects"
+#| fig-width: 7
+#| fig-height: 5
+# Compare B-spline and natural spline
+fit_bs <- lm(y ~ bs(x, df = 6), data = data)
+fit_ns <- lm(y ~ ns(x, df = 6), data = data)
+
+# Extend prediction range to see edge behavior
+x_ext <- seq(-2, 12, length.out = 200)
+pred_bs <- predict(fit_bs, newdata = data.frame(x = x_ext))
+pred_ns <- predict(fit_ns, newdata = data.frame(x = x_ext))
+
+plot(x, y, pch = 16, col = "gray60", xlim = c(-2, 12), ylim = c(-3, 3),
+     main = "B-spline vs Natural Spline at Boundaries")
+lines(x_ext, pred_bs, col = "blue", lwd = 2)
+lines(x_ext, pred_ns, col = "darkgreen", lwd = 2)
+abline(v = range(x), lty = 2, col = "gray")
+legend("topright", c("B-spline", "Natural spline", "Data range"),
+       col = c("blue", "darkgreen", "gray"), lty = c(1, 1, 2), lwd = c(2, 2, 1))
+```
+
+### Smoothing Splines
+
+**Smoothing splines** take a different approach: instead of pre-specifying knots, they place a knot at every data point and control smoothness through a penalty on the second derivative:
+
+$$\text{Minimize: } \sum_{i=1}^n (y_i - f(x_i))^2 + \lambda \int f''(x)^2 dx$$
+
+The smoothing parameter $\lambda$ is typically chosen by cross-validation:
+
+```{r}
+#| label: fig-smoothing-spline
+#| fig-cap: "Smoothing spline with automatic cross-validation selection of the smoothing parameter"
+#| fig-width: 7
+#| fig-height: 5
+# Fit smoothing spline with cross-validation
+smooth_fit <- smooth.spline(x, y, cv = TRUE)
+
+plot(x, y, pch = 16, col = "gray60", main = "Smoothing Spline")
+lines(smooth_fit, col = "purple", lwd = 2)
+cat("Optimal degrees of freedom:", round(smooth_fit$df, 2), "\n")
+```
+
+::: {.callout-note}
+## Choosing the Right Approach
+
+- **Regression splines (bs, ns)**: When you want to include splines in a regression model with other predictors
+- **Natural splines**: When extrapolation behavior matters
+- **Smoothing splines**: For exploratory smoothing with automatic tuning
+- **LOESS**: For local, non-parametric smoothing (especially useful for visualization)
+:::
+
 ## LOESS: Flexible Non-Parametric Smoothing
 
 **LOESS** (Locally Estimated Scatterplot Smoothing) fits local regressions to subsets of data, weighted by distance from each point.
@@ -550,8 +797,16 @@ Statistical learning provides powerful tools for prediction and pattern discover
 - Overfitting is the central challenge—models that fit training data too well predict poorly
 - Cross-validation provides honest estimates of predictive performance
 - The bias-variance tradeoff governs model complexity choices
-- K-nearest neighbors illustrates how hyperparameters control model complexity
+- **Regularization** (ridge, lasso, elastic net) controls overfitting by penalizing model complexity
+  - Ridge shrinks coefficients but keeps all predictors
+  - Lasso performs variable selection by shrinking some coefficients to zero
+  - Cross-validation selects the optimal regularization strength
+- **Splines** provide flexible curve fitting with controlled smoothness
+  - Regression splines use piecewise polynomials at fixed knots
+  - Natural splines add boundary constraints for better extrapolation
+  - Smoothing splines use penalties to control flexibility
 - LOESS offers flexible non-parametric smoothing
+- K-nearest neighbors illustrates how hyperparameters control model complexity
 - Classification methods (kNN, decision trees, random forests) handle categorical outcomes
 - Confusion matrices summarize classification performance with metrics like accuracy, sensitivity, and precision
 - F1 score and balanced accuracy are better metrics for imbalanced data
