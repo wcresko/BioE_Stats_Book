@@ -531,6 +531,61 @@ When you identify outliers, ask:
 Document your decisions about outlier handling.
 :::
 
+### Robust Alternatives to Mean and Standard Deviation
+
+When outliers are present, the mean and standard deviation can be heavily influenced by extreme values. **Robust statistics** provide alternatives that are less sensitive to outliers.
+
+**Median vs Mean**: The median is the value that splits the data in half—50% above, 50% below. Unlike the mean, the median is unaffected by extreme values.
+
+**MAD vs Standard Deviation**: The **Median Absolute Deviation (MAD)** is a robust measure of spread. It is calculated as the median of the absolute deviations from the median:
+
+$$\text{MAD} = \text{median}(|X_i - \text{median}(X)|)$$
+
+To make MAD comparable to the standard deviation for normally distributed data, it is often scaled by a factor of 1.4826:
+
+$$\text{MAD}_{\text{scaled}} = 1.4826 \times \text{MAD}$$
+
+```{r}
+# Compare robust and non-robust statistics
+# Create data with an outlier
+normal_data <- c(rnorm(99, mean = 50, sd = 5), 200)  # One extreme outlier
+
+# Non-robust statistics
+cat("Mean:", round(mean(normal_data), 2), "\n")
+cat("SD:", round(sd(normal_data), 2), "\n")
+
+# Robust statistics
+cat("Median:", round(median(normal_data), 2), "\n")
+cat("MAD (scaled):", round(mad(normal_data), 2), "\n")
+
+# IQR is also robust
+cat("IQR:", round(IQR(normal_data), 2), "\n")
+```
+
+The MAD and IQR give sensible estimates of spread that are not inflated by the single outlier.
+
+::: {.callout-note}
+## Tukey's Fences
+
+The boxplot outlier rule (1.5 × IQR from the quartiles) is known as **Tukey's fences**. Values outside the inner fences (1.5 × IQR) are considered potential outliers, while values outside the outer fences (3 × IQR) are considered extreme outliers. This rule is robust because it is based on quartiles rather than the mean and standard deviation.
+
+```{r}
+# Calculate Tukey's fences
+Q1 <- quantile(normal_data, 0.25)
+Q3 <- quantile(normal_data, 0.75)
+IQR_val <- Q3 - Q1
+
+inner_fence_lower <- Q1 - 1.5 * IQR_val
+inner_fence_upper <- Q3 + 1.5 * IQR_val
+outer_fence_lower <- Q1 - 3 * IQR_val
+outer_fence_upper <- Q3 + 3 * IQR_val
+
+cat("Inner fences:", round(inner_fence_lower, 2), "to", round(inner_fence_upper, 2), "\n")
+cat("Outer fences:", round(outer_fence_lower, 2), "to", round(outer_fence_upper, 2), "\n")
+cat("Outlier value:", max(normal_data), "- far beyond outer fence\n")
+```
+:::
+
 ## Data Quality Checks
 
 Beyond outliers, perform systematic quality checks to identify problems in your data.
