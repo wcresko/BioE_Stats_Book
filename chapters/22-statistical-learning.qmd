@@ -96,6 +96,131 @@ When the response is categorical, we have a classification problem rather than r
 
 **Random forests** combine many decision trees for more robust predictions.
 
+## K-Nearest Neighbors
+
+**K-nearest neighbors (kNN)** is one of the simplest and most intuitive classification algorithms. To classify a new observation, kNN finds the k closest observations in the training data and assigns the most common class among those neighbors.
+
+```{r}
+#| label: fig-knn-concept
+#| fig-cap: "K-nearest neighbors classification: the new point (star) is classified based on its nearest neighbors"
+#| fig-width: 8
+#| fig-height: 5
+# Simulate two-class data
+set.seed(42)
+n <- 100
+class1 <- data.frame(
+  x1 = rnorm(n/2, mean = 2, sd = 1),
+  x2 = rnorm(n/2, mean = 2, sd = 1),
+  class = "A"
+)
+class2 <- data.frame(
+  x1 = rnorm(n/2, mean = 4, sd = 1),
+  x2 = rnorm(n/2, mean = 4, sd = 1),
+  class = "B"
+)
+train_data <- rbind(class1, class2)
+
+# New point to classify
+new_point <- data.frame(x1 = 3.2, x2 = 3.5)
+
+# Plot
+plot(train_data$x1, train_data$x2,
+     col = ifelse(train_data$class == "A", "blue", "red"),
+     pch = 16, xlab = "Feature 1", ylab = "Feature 2",
+     main = "K-Nearest Neighbors (k=5)")
+points(new_point$x1, new_point$x2, pch = 8, cex = 2, lwd = 2)
+
+# Find 5 nearest neighbors
+distances <- sqrt((train_data$x1 - new_point$x1)^2 +
+                  (train_data$x2 - new_point$x2)^2)
+nearest <- order(distances)[1:5]
+
+# Draw circles around nearest neighbors
+points(train_data$x1[nearest], train_data$x2[nearest],
+       cex = 2, col = ifelse(train_data$class[nearest] == "A", "blue", "red"))
+legend("topleft", c("Class A", "Class B", "New point"),
+       col = c("blue", "red", "black"), pch = c(16, 16, 8))
+```
+
+The choice of **k** is critical and illustrates the bias-variance tradeoff:
+
+- **Small k** (e.g., k=1): Very flexible, low bias but high variance. The decision boundary is jagged and sensitive to individual training points—prone to overfitting.
+- **Large k**: Smoother decision boundary, higher bias but lower variance. May miss local patterns—prone to underfitting.
+
+```{r}
+#| label: fig-knn-k-comparison
+#| fig-cap: "Effect of k on kNN classification: small k creates complex boundaries (potential overfitting), large k creates smooth boundaries (potential underfitting)"
+#| fig-width: 9
+#| fig-height: 4
+library(class)
+
+# Create a grid for visualization
+x1_grid <- seq(0, 6, length.out = 100)
+x2_grid <- seq(0, 6, length.out = 100)
+grid <- expand.grid(x1 = x1_grid, x2 = x2_grid)
+
+par(mfrow = c(1, 3))
+
+for (k_val in c(1, 15, 50)) {
+  # Predict on grid
+  pred <- knn(train = train_data[, 1:2],
+              test = grid,
+              cl = train_data$class,
+              k = k_val)
+
+  # Plot decision regions
+  plot(grid$x1, grid$x2, col = ifelse(pred == "A",
+       rgb(0, 0, 1, 0.1), rgb(1, 0, 0, 0.1)),
+       pch = 15, cex = 0.5, xlab = "Feature 1", ylab = "Feature 2",
+       main = paste("k =", k_val))
+  points(train_data$x1, train_data$x2,
+         col = ifelse(train_data$class == "A", "blue", "red"), pch = 16)
+}
+```
+
+### Selecting k with Cross-Validation
+
+We choose k by evaluating classification accuracy across different values using cross-validation:
+
+```{r}
+#| label: fig-knn-cv
+#| fig-cap: "Cross-validation accuracy for different values of k: accuracy on training data decreases with k, but test accuracy peaks at intermediate values"
+#| fig-width: 7
+#| fig-height: 5
+# Evaluate different k values
+set.seed(123)
+k_values <- seq(1, 50, by = 2)
+
+# Simple holdout validation
+test_idx <- sample(1:nrow(train_data), 30)
+train_subset <- train_data[-test_idx, ]
+test_subset <- train_data[test_idx, ]
+
+accuracy <- sapply(k_values, function(k) {
+  pred <- knn(train = train_subset[, 1:2],
+              test = test_subset[, 1:2],
+              cl = train_subset$class,
+              k = k)
+  mean(pred == test_subset$class)
+})
+
+train_accuracy <- sapply(k_values, function(k) {
+  pred <- knn(train = train_subset[, 1:2],
+              test = train_subset[, 1:2],
+              cl = train_subset$class,
+              k = k)
+  mean(pred == train_subset$class)
+})
+
+plot(k_values, train_accuracy, type = "l", col = "blue", lwd = 2,
+     xlab = "k (number of neighbors)", ylab = "Accuracy",
+     main = "Training vs Test Accuracy", ylim = c(0.5, 1))
+lines(k_values, accuracy, col = "red", lwd = 2)
+legend("bottomright", c("Training", "Test"), col = c("blue", "red"), lwd = 2)
+```
+
+Notice that training accuracy is perfect (1.0) when k=1—each point is its own nearest neighbor. But test accuracy tells the true story of generalization performance.
+
 ## Confusion Matrices
 
 Classification performance is evaluated with a **confusion matrix**:
@@ -110,6 +235,244 @@ Key metrics:
 - **Sensitivity** (Recall): TP / (TP + FN) — how many positives were caught
 - **Specificity**: TN / (TN + FP) — how many negatives were correctly identified
 - **Precision**: TP / (TP + FP) — among positive predictions, how many were correct
+
+### The Problem with Accuracy
+
+Accuracy can be misleading with **imbalanced classes**. If 95% of emails are legitimate, a classifier that labels everything as "not spam" achieves 95% accuracy while being completely useless for its intended purpose.
+
+```{r}
+# Imbalanced class example
+set.seed(42)
+# 95% negative, 5% positive (e.g., rare disease screening)
+n <- 1000
+actual <- factor(c(rep("Negative", 950), rep("Positive", 50)))
+
+# Naive classifier: always predict negative
+naive_pred <- factor(rep("Negative", n), levels = c("Negative", "Positive"))
+
+# Calculate metrics
+TP <- sum(naive_pred == "Positive" & actual == "Positive")
+TN <- sum(naive_pred == "Negative" & actual == "Negative")
+FP <- sum(naive_pred == "Positive" & actual == "Negative")
+FN <- sum(naive_pred == "Negative" & actual == "Positive")
+
+cat("Accuracy:", (TP + TN) / n, "\n")
+cat("Sensitivity (Recall):", TP / (TP + FN), "\n")
+cat("The classifier catches 0% of positive cases!\n")
+```
+
+### F1 Score and Balanced Accuracy
+
+For imbalanced data, better metrics include:
+
+**F1 Score**: The harmonic mean of precision and recall, balancing both concerns:
+
+$$F_1 = 2 \cdot \frac{\text{Precision} \cdot \text{Recall}}{\text{Precision} + \text{Recall}} = \frac{2 \cdot TP}{2 \cdot TP + FP + FN}$$
+
+**Balanced Accuracy**: The average of sensitivity and specificity:
+
+$$\text{Balanced Accuracy} = \frac{\text{Sensitivity} + \text{Specificity}}{2}$$
+
+```{r}
+# Better classifier for the imbalanced data
+set.seed(123)
+# Suppose we have a model that catches 80% of positives but has some false positives
+better_pred <- actual  # Start with actual
+# Correctly identify 80% of positives
+pos_idx <- which(actual == "Positive")
+neg_idx <- which(actual == "Negative")
+better_pred[sample(pos_idx, 10)] <- "Negative"  # Miss 10 of 50 positives (20%)
+better_pred[sample(neg_idx, 50)] <- "Positive"  # 50 false positives
+
+# Confusion matrix
+TP <- sum(better_pred == "Positive" & actual == "Positive")
+TN <- sum(better_pred == "Negative" & actual == "Negative")
+FP <- sum(better_pred == "Positive" & actual == "Negative")
+FN <- sum(better_pred == "Negative" & actual == "Positive")
+
+precision <- TP / (TP + FP)
+recall <- TP / (TP + FN)  # Sensitivity
+specificity <- TN / (TN + FP)
+
+# Calculate metrics
+accuracy <- (TP + TN) / n
+f1 <- 2 * precision * recall / (precision + recall)
+balanced_acc <- (recall + specificity) / 2
+
+cat("Accuracy:", round(accuracy, 3), "\n")
+cat("Precision:", round(precision, 3), "\n")
+cat("Recall (Sensitivity):", round(recall, 3), "\n")
+cat("F1 Score:", round(f1, 3), "\n")
+cat("Balanced Accuracy:", round(balanced_acc, 3), "\n")
+```
+
+::: {.callout-tip}
+## Which Metric to Use?
+
+- **Accuracy**: Only when classes are balanced
+- **F1 Score**: When you care about both precision and recall equally
+- **Sensitivity/Recall**: When missing positives is costly (disease screening)
+- **Precision**: When false positives are costly (spam filtering)
+- **Balanced Accuracy**: Quick summary for imbalanced data
+:::
+
+## ROC Curves and AUC
+
+Many classifiers output probabilities rather than hard class labels. By varying the **threshold** for classifying as positive, we trade off sensitivity against specificity.
+
+The **Receiver Operating Characteristic (ROC) curve** plots sensitivity (true positive rate) against 1 - specificity (false positive rate) at all possible thresholds.
+
+```{r}
+#| label: fig-roc-curve
+#| fig-cap: "ROC curve showing the tradeoff between sensitivity and false positive rate; the dashed diagonal represents random guessing"
+#| fig-width: 7
+#| fig-height: 6
+# Simulate a classifier with probabilities
+set.seed(42)
+n <- 500
+actual <- factor(c(rep(1, 100), rep(0, 400)))  # 20% positive
+
+# Generate predicted probabilities (imperfect classifier)
+probs <- c(rbeta(100, 3, 2),   # Positives: higher probs
+           rbeta(400, 2, 3))   # Negatives: lower probs
+
+# Calculate ROC curve manually
+thresholds <- seq(0, 1, by = 0.01)
+roc_data <- data.frame(
+  threshold = thresholds,
+  TPR = sapply(thresholds, function(t) {
+    pred <- ifelse(probs >= t, 1, 0)
+    sum(pred == 1 & actual == 1) / sum(actual == 1)
+  }),
+  FPR = sapply(thresholds, function(t) {
+    pred <- ifelse(probs >= t, 1, 0)
+    sum(pred == 1 & actual == 0) / sum(actual == 0)
+  })
+)
+
+# Plot ROC curve
+plot(roc_data$FPR, roc_data$TPR, type = "l", lwd = 2, col = "blue",
+     xlab = "False Positive Rate (1 - Specificity)",
+     ylab = "True Positive Rate (Sensitivity)",
+     main = "ROC Curve")
+abline(0, 1, lty = 2, col = "gray")  # Random classifier line
+
+# Add points for specific thresholds
+highlight <- c(0.3, 0.5, 0.7)
+for (t in highlight) {
+  idx <- which.min(abs(roc_data$threshold - t))
+  points(roc_data$FPR[idx], roc_data$TPR[idx], pch = 19, cex = 1.5)
+  text(roc_data$FPR[idx] + 0.05, roc_data$TPR[idx],
+       paste("t =", t), cex = 0.8)
+}
+legend("bottomright", c("ROC Curve", "Random Classifier"),
+       col = c("blue", "gray"), lty = c(1, 2), lwd = c(2, 1))
+```
+
+### Area Under the Curve (AUC)
+
+The **AUC** (Area Under the ROC Curve) summarizes classifier performance in a single number:
+
+- **AUC = 0.5**: No better than random guessing
+- **AUC = 1.0**: Perfect classification
+- **AUC > 0.8**: Generally considered good
+
+```{r}
+# Calculate AUC using trapezoidal rule
+auc <- sum(diff(roc_data$FPR[order(roc_data$FPR)]) *
+           (head(roc_data$TPR[order(roc_data$FPR)], -1) +
+            tail(roc_data$TPR[order(roc_data$FPR)], -1)) / 2)
+cat("AUC:", round(abs(auc), 3), "\n")
+```
+
+### Comparing Classifiers with ROC
+
+ROC curves allow direct comparison of classifiers:
+
+```{r}
+#| label: fig-roc-comparison
+#| fig-cap: "Comparing classifiers using ROC curves: higher curves (larger AUC) indicate better performance"
+#| fig-width: 7
+#| fig-height: 6
+# Simulate three classifiers of varying quality
+set.seed(42)
+
+# Good classifier
+probs_good <- c(rbeta(100, 4, 1.5), rbeta(400, 1.5, 4))
+
+# Medium classifier (our original)
+probs_medium <- probs
+
+# Poor classifier
+probs_poor <- c(rbeta(100, 2, 2), rbeta(400, 2, 2))
+
+# Function to calculate ROC data
+calc_roc <- function(probs, actual) {
+  thresholds <- seq(0, 1, by = 0.01)
+  data.frame(
+    TPR = sapply(thresholds, function(t) {
+      pred <- ifelse(probs >= t, 1, 0)
+      sum(pred == 1 & actual == 1) / sum(actual == 1)
+    }),
+    FPR = sapply(thresholds, function(t) {
+      pred <- ifelse(probs >= t, 1, 0)
+      sum(pred == 1 & actual == 0) / sum(actual == 0)
+    })
+  )
+}
+
+roc_good <- calc_roc(probs_good, actual)
+roc_medium <- calc_roc(probs_medium, actual)
+roc_poor <- calc_roc(probs_poor, actual)
+
+# Plot comparison
+plot(roc_good$FPR, roc_good$TPR, type = "l", lwd = 2, col = "darkgreen",
+     xlab = "False Positive Rate", ylab = "True Positive Rate",
+     main = "ROC Curve Comparison")
+lines(roc_medium$FPR, roc_medium$TPR, lwd = 2, col = "blue")
+lines(roc_poor$FPR, roc_poor$TPR, lwd = 2, col = "red")
+abline(0, 1, lty = 2, col = "gray")
+
+legend("bottomright",
+       c("Good (AUC ≈ 0.90)", "Medium (AUC ≈ 0.75)", "Poor (AUC ≈ 0.50)"),
+       col = c("darkgreen", "blue", "red"), lwd = 2)
+```
+
+### Precision-Recall Curves
+
+For highly imbalanced data, **precision-recall curves** can be more informative than ROC curves because they focus on the minority (positive) class:
+
+```{r}
+#| label: fig-pr-curve
+#| fig-cap: "Precision-recall curve for imbalanced classification; the horizontal dashed line shows baseline precision (proportion of positives)"
+#| fig-width: 7
+#| fig-height: 5
+# Calculate precision-recall curve
+pr_data <- data.frame(
+  threshold = thresholds,
+  precision = sapply(thresholds, function(t) {
+    pred <- ifelse(probs >= t, 1, 0)
+    tp <- sum(pred == 1 & actual == 1)
+    fp <- sum(pred == 1 & actual == 0)
+    if (tp + fp == 0) return(NA)
+    tp / (tp + fp)
+  }),
+  recall = sapply(thresholds, function(t) {
+    pred <- ifelse(probs >= t, 1, 0)
+    sum(pred == 1 & actual == 1) / sum(actual == 1)
+  })
+)
+
+# Remove NA values
+pr_data <- pr_data[!is.na(pr_data$precision), ]
+
+plot(pr_data$recall, pr_data$precision, type = "l", lwd = 2, col = "purple",
+     xlab = "Recall (Sensitivity)", ylab = "Precision",
+     main = "Precision-Recall Curve", ylim = c(0, 1))
+abline(h = mean(actual == 1), lty = 2, col = "gray")  # Baseline
+legend("topright", c("PR Curve", "Baseline (random)"),
+       col = c("purple", "gray"), lty = c(1, 2), lwd = c(2, 1))
+```
 
 ## Decision Trees
 
@@ -187,9 +550,13 @@ Statistical learning provides powerful tools for prediction and pattern discover
 - Overfitting is the central challenge—models that fit training data too well predict poorly
 - Cross-validation provides honest estimates of predictive performance
 - The bias-variance tradeoff governs model complexity choices
+- K-nearest neighbors illustrates how hyperparameters control model complexity
 - LOESS offers flexible non-parametric smoothing
-- Classification methods (decision trees, random forests) handle categorical outcomes
-- Confusion matrices summarize classification performance
+- Classification methods (kNN, decision trees, random forests) handle categorical outcomes
+- Confusion matrices summarize classification performance with metrics like accuracy, sensitivity, and precision
+- F1 score and balanced accuracy are better metrics for imbalanced data
+- ROC curves and AUC allow comparison of classifiers across all thresholds
+- Precision-recall curves are preferred for highly imbalanced problems
 - The choice between traditional statistics and machine learning depends on goals
 
 ## Additional Resources
