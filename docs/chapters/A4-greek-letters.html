@@ -1,0 +1,1681 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.30">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>43&nbsp; Greek Letters in Mathematics and Statistics – Statistics for the Biosciences and Bioengineering</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/A3-probability-distributions.html" rel="next">
+<link href="../chapters/A7-latex-reference.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-de070a7b0ab54f8780927367ac907214.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-485d01fc63b59abcd3ee1bf1e8e2748d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/A8-keyboard-shortcuts.html">Appendices</a></li><li class="breadcrumb-item"><a href="../chapters/A4-greek-letters.html"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Greek Letters in Mathematics and Statistics</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Statistics for the Biosciences and Bioengineering</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Why This Book?</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Core Data Science Tools</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-installing-tools.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Installing Core Tools</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-unix-command-line.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Unix and the Command Line</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-r-rstudio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">R and RStudio</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-markdown-latex.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Markdown and LaTeX</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Data Exploration</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/07-tidy-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Tidy Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/08-data-wrangling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Data Wrangling with dplyr</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/09-exploratory-data-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/06-data-visualization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Data Visualization</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Probability and Distributions</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/07-probability-foundations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Foundations of Probability</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/08-discrete-distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Discrete Probability Distributions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/09-continuous-distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Continuous Probability Distributions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/10-sampling-estimation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Sampling and Parameter Estimation</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Statistical Inference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/11-experimental-design.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Experimental Design Principles</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/11-hypothesis-testing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/12-t-tests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">T-Tests</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/13-nonparametric-tests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Nonparametric Tests</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/14-bootstrapping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Resampling Methods</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Linear Models</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/30-what-are-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">What are Models?</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/15-correlation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Correlation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/16-simple-linear-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Simple Linear Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/17-residual-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Residual Analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/18-statistical-power.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Statistical Power</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/20-multiple-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Multiple Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/19-single-factor-anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Single Factor ANOVA</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/20-multifactor-anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Multi-Factor ANOVA</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/21-glm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Statistical Learning</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/22-statistical-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Core Concepts in Statistical Learning</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/31-bayesian-statistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Bayesian Statistics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/32-classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Classification Methods</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/33-clustering.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Clustering</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/23-dimensionality-reduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Dimensionality Reduction and Multivariate Methods</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/34-tsne-umap.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Non-Linear Dimensionality Reduction: t-SNE and UMAP</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/24-high-performance-computing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">High Performance Computing</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Scientific Communication</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/25-presenting-results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Presenting Statistical Results</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Historical Context</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A1-eugenics-history.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">The Eugenics History of Statistics</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A8-keyboard-shortcuts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Keyboard Shortcuts Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A6-unix-reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Unix Command Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A2-r-reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">R Command Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A9-quarto-reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">Quarto Markdown Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A7-latex-reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">LaTeX Command Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A4-greek-letters.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Greek Letters in Mathematics and Statistics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A3-probability-distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">Common Probability Distributions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A5-sampling-distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">Sampling Distributions in Hypothesis Testing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A10-matrix-algebra.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">Matrix Algebra Fundamentals</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#the-greek-alphabet" id="toc-the-greek-alphabet" class="nav-link active" data-scroll-target="#the-greek-alphabet"><span class="header-section-number">43.1</span> The Greek Alphabet</a></li>
+  <li><a href="#most-commonly-used-letters-in-statistics" id="toc-most-commonly-used-letters-in-statistics" class="nav-link" data-scroll-target="#most-commonly-used-letters-in-statistics"><span class="header-section-number">43.2</span> Most Commonly Used Letters in Statistics</a>
+  <ul class="collapse">
+  <li><a href="#population-parameters" id="toc-population-parameters" class="nav-link" data-scroll-target="#population-parameters">Population Parameters</a></li>
+  <li><a href="#hypothesis-testing" id="toc-hypothesis-testing" class="nav-link" data-scroll-target="#hypothesis-testing">Hypothesis Testing</a></li>
+  <li><a href="#effect-sizes" id="toc-effect-sizes" class="nav-link" data-scroll-target="#effect-sizes">Effect Sizes</a></li>
+  <li><a href="#distributions" id="toc-distributions" class="nav-link" data-scroll-target="#distributions">Distributions</a></li>
+  <li><a href="#summation-and-products" id="toc-summation-and-products" class="nav-link" data-scroll-target="#summation-and-products">Summation and Products</a></li>
+  </ul></li>
+  <li><a href="#writing-greek-letters" id="toc-writing-greek-letters" class="nav-link" data-scroll-target="#writing-greek-letters"><span class="header-section-number">43.3</span> Writing Greek Letters</a>
+  <ul class="collapse">
+  <li><a href="#in-latex-and-quarto" id="toc-in-latex-and-quarto" class="nav-link" data-scroll-target="#in-latex-and-quarto">In LaTeX and Quarto</a></li>
+  <li><a href="#in-r" id="toc-in-r" class="nav-link" data-scroll-target="#in-r">In R</a></li>
+  </ul></li>
+  <li><a href="#conventions-and-mnemonics" id="toc-conventions-and-mnemonics" class="nav-link" data-scroll-target="#conventions-and-mnemonics"><span class="header-section-number">43.4</span> Conventions and Mnemonics</a>
+  <ul class="collapse">
+  <li><a href="#roman-vs.-greek-letters" id="toc-roman-vs.-greek-letters" class="nav-link" data-scroll-target="#roman-vs.-greek-letters">Roman vs.&nbsp;Greek Letters</a></li>
+  <li><a href="#memory-aids" id="toc-memory-aids" class="nav-link" data-scroll-target="#memory-aids">Memory Aids</a></li>
+  </ul></li>
+  <li><a href="#common-formulas-using-greek-letters" id="toc-common-formulas-using-greek-letters" class="nav-link" data-scroll-target="#common-formulas-using-greek-letters"><span class="header-section-number">43.5</span> Common Formulas Using Greek Letters</a>
+  <ul class="collapse">
+  <li><a href="#normal-distribution" id="toc-normal-distribution" class="nav-link" data-scroll-target="#normal-distribution">Normal Distribution</a></li>
+  <li><a href="#z-score" id="toc-z-score" class="nav-link" data-scroll-target="#z-score">Z-score</a></li>
+  <li><a href="#linear-regression-model" id="toc-linear-regression-model" class="nav-link" data-scroll-target="#linear-regression-model">Linear Regression Model</a></li>
+  <li><a href="#correlation-coefficient" id="toc-correlation-coefficient" class="nav-link" data-scroll-target="#correlation-coefficient">Correlation Coefficient</a></li>
+  <li><a href="#chi-square-test-statistic" id="toc-chi-square-test-statistic" class="nav-link" data-scroll-target="#chi-square-test-statistic">Chi-Square Test Statistic</a></li>
+  <li><a href="#anova-f-ratio" id="toc-anova-f-ratio" class="nav-link" data-scroll-target="#anova-f-ratio">ANOVA F-ratio</a></li>
+  </ul></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">43.6</span> Summary</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/A8-keyboard-shortcuts.html">Appendices</a></li><li class="breadcrumb-item"><a href="../chapters/A4-greek-letters.html"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Greek Letters in Mathematics and Statistics</span></a></li></ol></nav>
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span id="sec-greek-letters" class="quarto-section-identifier"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Greek Letters in Mathematics and Statistics</span></span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Greek letters are ubiquitous in mathematics and statistics. This appendix provides a reference for the Greek alphabet, including pronunciation and common uses in statistical contexts.</p>
+<section id="the-greek-alphabet" class="level2" data-number="43.1">
+<h2 data-number="43.1" class="anchored" data-anchor-id="the-greek-alphabet"><span class="header-section-number">43.1</span> The Greek Alphabet</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 7%">
+<col style="width: 19%">
+<col style="width: 32%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Letter</th>
+<th style="text-align: center;">Lowercase</th>
+<th style="text-align: center;">Uppercase</th>
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Pronunciation</th>
+<th style="text-align: left;">Common Statistical Uses</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">α</td>
+<td style="text-align: center;">Α</td>
+<td style="text-align: left;">Alpha</td>
+<td style="text-align: left;">AL-fah</td>
+<td style="text-align: left;">Significance level (Type I error rate); regression intercept</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">β</td>
+<td style="text-align: center;">Β</td>
+<td style="text-align: left;">Beta</td>
+<td style="text-align: left;">BAY-tah</td>
+<td style="text-align: left;">Type II error rate; regression coefficients; slope parameters</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">γ</td>
+<td style="text-align: center;">Γ</td>
+<td style="text-align: left;">Gamma</td>
+<td style="text-align: left;">GAM-ah</td>
+<td style="text-align: left;">Gamma distribution; shape parameter</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">δ</td>
+<td style="text-align: center;">Δ</td>
+<td style="text-align: left;">Delta</td>
+<td style="text-align: left;">DEL-tah</td>
+<td style="text-align: left;">Change or difference; effect size (Cohen’s d uses Roman d)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">ε</td>
+<td style="text-align: center;">Ε</td>
+<td style="text-align: left;">Epsilon</td>
+<td style="text-align: left;">EP-si-lon</td>
+<td style="text-align: left;">Error term in models; small quantity approaching zero</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">ζ</td>
+<td style="text-align: center;">Ζ</td>
+<td style="text-align: left;">Zeta</td>
+<td style="text-align: left;">ZAY-tah</td>
+<td style="text-align: left;">Rarely used in statistics</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">η</td>
+<td style="text-align: center;">Η</td>
+<td style="text-align: left;">Eta</td>
+<td style="text-align: left;">AY-tah</td>
+<td style="text-align: left;">Effect size (η²); learning rate</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">θ</td>
+<td style="text-align: center;">Θ</td>
+<td style="text-align: left;">Theta</td>
+<td style="text-align: left;">THAY-tah</td>
+<td style="text-align: left;">Generic parameter; angle</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">9</td>
+<td style="text-align: center;">ι</td>
+<td style="text-align: center;">Ι</td>
+<td style="text-align: left;">Iota</td>
+<td style="text-align: left;">eye-OH-tah</td>
+<td style="text-align: left;">Rarely used in statistics</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">κ</td>
+<td style="text-align: center;">Κ</td>
+<td style="text-align: left;">Kappa</td>
+<td style="text-align: left;">KAP-ah</td>
+<td style="text-align: left;">Cohen’s kappa (agreement); condition number</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">11</td>
+<td style="text-align: center;">λ</td>
+<td style="text-align: center;">Λ</td>
+<td style="text-align: left;">Lambda</td>
+<td style="text-align: left;">LAM-dah</td>
+<td style="text-align: left;">Rate parameter (Poisson, exponential); eigenvalue; Wilks’ lambda</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">μ</td>
+<td style="text-align: center;">Μ</td>
+<td style="text-align: left;">Mu</td>
+<td style="text-align: left;">MYOO</td>
+<td style="text-align: left;">Population mean</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">13</td>
+<td style="text-align: center;">ν</td>
+<td style="text-align: center;">Ν</td>
+<td style="text-align: left;">Nu</td>
+<td style="text-align: left;">NOO</td>
+<td style="text-align: left;">Degrees of freedom</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">14</td>
+<td style="text-align: center;">ξ</td>
+<td style="text-align: center;">Ξ</td>
+<td style="text-align: left;">Xi</td>
+<td style="text-align: left;">KSEE or ZIGH</td>
+<td style="text-align: left;">Rarely used; sometimes for random variables</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">15</td>
+<td style="text-align: center;">ο</td>
+<td style="text-align: center;">Ο</td>
+<td style="text-align: left;">Omicron</td>
+<td style="text-align: left;">OM-i-kron</td>
+<td style="text-align: left;">Rarely used (resembles Roman O)</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">16</td>
+<td style="text-align: center;">π</td>
+<td style="text-align: center;">Π</td>
+<td style="text-align: left;">Pi</td>
+<td style="text-align: left;">PIE</td>
+<td style="text-align: left;">Mathematical constant (≈ 3.14159); product notation (Π)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">17</td>
+<td style="text-align: center;">ρ</td>
+<td style="text-align: center;">Ρ</td>
+<td style="text-align: left;">Rho</td>
+<td style="text-align: left;">ROW</td>
+<td style="text-align: left;">Population correlation coefficient; autocorrelation</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">18</td>
+<td style="text-align: center;">σ</td>
+<td style="text-align: center;">Σ</td>
+<td style="text-align: left;">Sigma</td>
+<td style="text-align: left;">SIG-mah</td>
+<td style="text-align: left;">Population standard deviation (σ); summation (Σ)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">19</td>
+<td style="text-align: center;">τ</td>
+<td style="text-align: center;">Τ</td>
+<td style="text-align: left;">Tau</td>
+<td style="text-align: left;">TAW (rhymes with cow)</td>
+<td style="text-align: left;">Kendall’s tau; time constant</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">20</td>
+<td style="text-align: center;">υ</td>
+<td style="text-align: center;">Υ</td>
+<td style="text-align: left;">Upsilon</td>
+<td style="text-align: left;">OOP-si-lon</td>
+<td style="text-align: left;">Rarely used in statistics</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">21</td>
+<td style="text-align: center;">φ</td>
+<td style="text-align: center;">Φ</td>
+<td style="text-align: left;">Phi</td>
+<td style="text-align: left;">FYE or FEE</td>
+<td style="text-align: left;">Phi coefficient; standard normal PDF (φ); golden ratio</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">22</td>
+<td style="text-align: center;">χ</td>
+<td style="text-align: center;">Χ</td>
+<td style="text-align: left;">Chi</td>
+<td style="text-align: left;">KYE (rhymes with sky)</td>
+<td style="text-align: left;">Chi-square distribution and test (χ²)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">23</td>
+<td style="text-align: center;">ψ</td>
+<td style="text-align: center;">Ψ</td>
+<td style="text-align: left;">Psi</td>
+<td style="text-align: left;">SIGH or PSEE</td>
+<td style="text-align: left;">Rarely used; sometimes for angles or wave functions</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">24</td>
+<td style="text-align: center;">ω</td>
+<td style="text-align: center;">Ω</td>
+<td style="text-align: left;">Omega</td>
+<td style="text-align: left;">oh-MAY-gah</td>
+<td style="text-align: left;">Effect size (ω²); angular frequency</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="most-commonly-used-letters-in-statistics" class="level2" data-number="43.2">
+<h2 data-number="43.2" class="anchored" data-anchor-id="most-commonly-used-letters-in-statistics"><span class="header-section-number">43.2</span> Most Commonly Used Letters in Statistics</h2>
+<section id="population-parameters" class="level3">
+<h3 class="anchored" data-anchor-id="population-parameters">Population Parameters</h3>
+<p>The following Greek letters conventionally represent <strong>population parameters</strong> (true but unknown values):</p>
+<ul>
+<li><strong>μ (mu)</strong>: Population mean</li>
+<li><strong>σ (sigma)</strong>: Population standard deviation</li>
+<li><strong>σ² (sigma squared)</strong>: Population variance</li>
+<li><strong>ρ (rho)</strong>: Population correlation coefficient</li>
+<li><strong>π (pi)</strong>: Population proportion (also the mathematical constant)</li>
+<li><strong>β (beta)</strong>: Population regression coefficients</li>
+</ul>
+</section>
+<section id="hypothesis-testing" class="level3">
+<h3 class="anchored" data-anchor-id="hypothesis-testing">Hypothesis Testing</h3>
+<ul>
+<li><strong>α (alpha)</strong>: Significance level; probability of Type I error (rejecting a true null hypothesis). Commonly set to 0.05.</li>
+<li><strong>β (beta)</strong>: Probability of Type II error (failing to reject a false null hypothesis). Power = 1 - β.</li>
+<li><strong>χ² (chi-square)</strong>: Test statistic for categorical data analysis</li>
+</ul>
+</section>
+<section id="effect-sizes" class="level3">
+<h3 class="anchored" data-anchor-id="effect-sizes">Effect Sizes</h3>
+<ul>
+<li><strong>η² (eta squared)</strong>: Proportion of variance explained in ANOVA</li>
+<li><strong>ω² (omega squared)</strong>: Less biased estimate of variance explained</li>
+<li><strong>φ (phi)</strong>: Effect size for 2×2 contingency tables</li>
+</ul>
+</section>
+<section id="distributions" class="level3">
+<h3 class="anchored" data-anchor-id="distributions">Distributions</h3>
+<ul>
+<li><strong>λ (lambda)</strong>: Rate parameter for Poisson and exponential distributions</li>
+<li><strong>Γ (Gamma)</strong>: The Gamma function and Gamma distribution</li>
+<li><strong>θ (theta)</strong>: Generic parameter in probability distributions</li>
+</ul>
+</section>
+<section id="summation-and-products" class="level3">
+<h3 class="anchored" data-anchor-id="summation-and-products">Summation and Products</h3>
+<ul>
+<li><strong>Σ (capital sigma)</strong>: Summation notation: <span class="math inline">\(\sum_{i=1}^{n} x_i\)</span></li>
+<li><strong>Π (capital pi)</strong>: Product notation: <span class="math inline">\(\prod_{i=1}^{n} x_i\)</span></li>
+</ul>
+</section>
+</section>
+<section id="writing-greek-letters" class="level2" data-number="43.3">
+<h2 data-number="43.3" class="anchored" data-anchor-id="writing-greek-letters"><span class="header-section-number">43.3</span> Writing Greek Letters</h2>
+<section id="in-latex-and-quarto" class="level3">
+<h3 class="anchored" data-anchor-id="in-latex-and-quarto">In LaTeX and Quarto</h3>
+<p>Greek letters are written in LaTeX (and thus in Quarto documents) using backslash commands:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode latex code-with-copy"><code class="sourceCode latex"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ss">$</span><span class="sc">\alpha</span><span class="ss">$</span>    → α        <span class="ss">$</span><span class="sc">\Alpha</span><span class="ss">$</span>    → Α</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ss">$</span><span class="sc">\beta</span><span class="ss">$</span>     → β        <span class="ss">$</span><span class="sc">\Beta</span><span class="ss">$</span>     → Β</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ss">$</span><span class="sc">\gamma</span><span class="ss">$</span>    → γ        <span class="ss">$</span><span class="sc">\Gamma</span><span class="ss">$</span>    → Γ</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ss">$</span><span class="sc">\delta</span><span class="ss">$</span>    → δ        <span class="ss">$</span><span class="sc">\Delta</span><span class="ss">$</span>    → Δ</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ss">$</span><span class="sc">\epsilon</span><span class="ss">$</span>  → ε        <span class="ss">$</span><span class="sc">\mu</span><span class="ss">$</span>       → μ</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ss">$</span><span class="sc">\sigma</span><span class="ss">$</span>    → σ        <span class="ss">$</span><span class="sc">\Sigma</span><span class="ss">$</span>    → Σ</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="ss">$</span><span class="sc">\chi</span><span class="ss">$</span>      → χ        <span class="ss">$</span><span class="sc">\lambda</span><span class="ss">$</span>   → λ</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ss">$</span><span class="sc">\theta</span><span class="ss">$</span>    → θ        <span class="ss">$</span><span class="sc">\rho</span><span class="ss">$</span>      → ρ</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="in-r" class="level3">
+<h3 class="anchored" data-anchor-id="in-r">In R</h3>
+<p>R supports Greek letters in plots using the <code>expression()</code> function:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Axis labels with Greek letters</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="fu">expression</span>(mu),</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="fu">expression</span>(sigma<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># More complex expressions</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">"Mean = "</span>, mu, <span class="st">", SD = "</span>, sigma)))</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># In ggplot2</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">expression</span>(alpha),</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="fu">expression</span>(beta))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+</section>
+<section id="conventions-and-mnemonics" class="level2" data-number="43.4">
+<h2 data-number="43.4" class="anchored" data-anchor-id="conventions-and-mnemonics"><span class="header-section-number">43.4</span> Conventions and Mnemonics</h2>
+<section id="roman-vs.-greek-letters" class="level3">
+<h3 class="anchored" data-anchor-id="roman-vs.-greek-letters">Roman vs.&nbsp;Greek Letters</h3>
+<p>A useful convention in statistics:</p>
+<ul>
+<li><strong>Greek letters</strong> represent <strong>population parameters</strong> (unknown, fixed values)</li>
+<li><strong>Roman (Latin) letters</strong> represent <strong>sample statistics</strong> (calculated from data)</li>
+</ul>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Population Parameter</th>
+<th style="text-align: left;">Sample Statistic</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">μ (mu) - population mean</td>
+<td style="text-align: left;"><span class="math inline">\(\bar{x}\)</span> - sample mean</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">σ (sigma) - population SD</td>
+<td style="text-align: left;">s - sample SD</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ρ (rho) - population correlation</td>
+<td style="text-align: left;">r - sample correlation</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">β (beta) - population slope</td>
+<td style="text-align: left;">b - sample slope</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">π (pi) - population proportion</td>
+<td style="text-align: left;">p̂ - sample proportion</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="memory-aids" class="level3">
+<h3 class="anchored" data-anchor-id="memory-aids">Memory Aids</h3>
+<ul>
+<li><strong>α (alpha)</strong> for significance level: “A” comes first, and we set alpha first before testing</li>
+<li><strong>β (beta)</strong> for slope: “B” is for the coefficient “B” in y = a + bx</li>
+<li><strong>μ (mu)</strong> for mean: Think “μ” looks like a “u” turned sideways—“u” for “average of you all”</li>
+<li><strong>σ (sigma)</strong> for standard deviation: “S” for Sigma, “S” for Standard deviation</li>
+<li><strong>Σ (capital sigma)</strong> for sum: “S” for Sum</li>
+<li><strong>ρ (rho)</strong> for correlation: “R” for Rho, “R” for R-value (correlation)</li>
+<li><strong>χ (chi)</strong> for chi-square: Looks like an “X”—think “X marks the spot” for testing categories</li>
+</ul>
+</section>
+</section>
+<section id="common-formulas-using-greek-letters" class="level2" data-number="43.5">
+<h2 data-number="43.5" class="anchored" data-anchor-id="common-formulas-using-greek-letters"><span class="header-section-number">43.5</span> Common Formulas Using Greek Letters</h2>
+<section id="normal-distribution" class="level3">
+<h3 class="anchored" data-anchor-id="normal-distribution">Normal Distribution</h3>
+<p><span class="math display">\[f(x) = \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}\]</span></p>
+</section>
+<section id="z-score" class="level3">
+<h3 class="anchored" data-anchor-id="z-score">Z-score</h3>
+<p><span class="math display">\[z = \frac{x - \mu}{\sigma}\]</span></p>
+</section>
+<section id="linear-regression-model" class="level3">
+<h3 class="anchored" data-anchor-id="linear-regression-model">Linear Regression Model</h3>
+<p><span class="math display">\[Y_i = \beta_0 + \beta_1 X_i + \epsilon_i\]</span></p>
+<p>where <span class="math inline">\(\epsilon_i \sim N(0, \sigma^2)\)</span></p>
+</section>
+<section id="correlation-coefficient" class="level3">
+<h3 class="anchored" data-anchor-id="correlation-coefficient">Correlation Coefficient</h3>
+<p><span class="math display">\[\rho = \frac{\text{Cov}(X, Y)}{\sigma_X \sigma_Y}\]</span></p>
+</section>
+<section id="chi-square-test-statistic" class="level3">
+<h3 class="anchored" data-anchor-id="chi-square-test-statistic">Chi-Square Test Statistic</h3>
+<p><span class="math display">\[\chi^2 = \sum \frac{(O - E)^2}{E}\]</span></p>
+</section>
+<section id="anova-f-ratio" class="level3">
+<h3 class="anchored" data-anchor-id="anova-f-ratio">ANOVA F-ratio</h3>
+<p><span class="math display">\[F = \frac{MS_{\text{between}}}{MS_{\text{within}}} = \frac{\sigma^2_{\text{between}}}{\sigma^2_{\text{within}}}\]</span></p>
+</section>
+</section>
+<section id="summary" class="level2" data-number="43.6">
+<h2 data-number="43.6" class="anchored" data-anchor-id="summary"><span class="header-section-number">43.6</span> Summary</h2>
+<p>Mastering Greek letters is essential for reading and writing statistical notation. The most important letters to memorize are:</p>
+<ul>
+<li><strong>μ, σ, ρ</strong>: Population mean, standard deviation, and correlation</li>
+<li><strong>α, β</strong>: Significance level and Type II error (or regression coefficients)</li>
+<li><strong>Σ</strong>: Summation</li>
+<li><strong>χ²</strong>: Chi-square</li>
+</ul>
+<p>With practice, these symbols become as natural as the Roman alphabet, and they provide a universal language for expressing statistical concepts precisely and concisely.</p>
+
+
+<!-- -->
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/A7-latex-reference.html" class="pagination-link" aria-label="LaTeX Command Reference">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">LaTeX Command Reference</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/A3-probability-distributions.html" class="pagination-link" aria-label="Common Probability Distributions">
+        <span class="nav-page-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">Common Probability Distributions</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb3" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Greek Letters in Mathematics and Statistics {#sec-greek-letters}</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>Greek letters are ubiquitous in mathematics and statistics. This appendix provides a reference for the Greek alphabet, including pronunciation and common uses in statistical contexts.</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Greek Alphabet</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Letter <span class="pp">|</span> Lowercase <span class="pp">|</span> Uppercase <span class="pp">|</span> Name <span class="pp">|</span> Pronunciation <span class="pp">|</span> Common Statistical Uses <span class="pp">|</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="pp">|:------:|:---------:|:---------:|:-----|:--------------|:------------------------|</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 1 <span class="pp">|</span> α <span class="pp">|</span> Α <span class="pp">|</span> Alpha <span class="pp">|</span> AL-fah <span class="pp">|</span> Significance level (Type I error rate); regression intercept <span class="pp">|</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 2 <span class="pp">|</span> β <span class="pp">|</span> Β <span class="pp">|</span> Beta <span class="pp">|</span> BAY-tah <span class="pp">|</span> Type II error rate; regression coefficients; slope parameters <span class="pp">|</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 3 <span class="pp">|</span> γ <span class="pp">|</span> Γ <span class="pp">|</span> Gamma <span class="pp">|</span> GAM-ah <span class="pp">|</span> Gamma distribution; shape parameter <span class="pp">|</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 4 <span class="pp">|</span> δ <span class="pp">|</span> Δ <span class="pp">|</span> Delta <span class="pp">|</span> DEL-tah <span class="pp">|</span> Change or difference; effect size (Cohen's d uses Roman d) <span class="pp">|</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 5 <span class="pp">|</span> ε <span class="pp">|</span> Ε <span class="pp">|</span> Epsilon <span class="pp">|</span> EP-si-lon <span class="pp">|</span> Error term in models; small quantity approaching zero <span class="pp">|</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 6 <span class="pp">|</span> ζ <span class="pp">|</span> Ζ <span class="pp">|</span> Zeta <span class="pp">|</span> ZAY-tah <span class="pp">|</span> Rarely used in statistics <span class="pp">|</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 7 <span class="pp">|</span> η <span class="pp">|</span> Η <span class="pp">|</span> Eta <span class="pp">|</span> AY-tah <span class="pp">|</span> Effect size (η²); learning rate <span class="pp">|</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 8 <span class="pp">|</span> θ <span class="pp">|</span> Θ <span class="pp">|</span> Theta <span class="pp">|</span> THAY-tah <span class="pp">|</span> Generic parameter; angle <span class="pp">|</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 9 <span class="pp">|</span> ι <span class="pp">|</span> Ι <span class="pp">|</span> Iota <span class="pp">|</span> eye-OH-tah <span class="pp">|</span> Rarely used in statistics <span class="pp">|</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 10 <span class="pp">|</span> κ <span class="pp">|</span> Κ <span class="pp">|</span> Kappa <span class="pp">|</span> KAP-ah <span class="pp">|</span> Cohen's kappa (agreement); condition number <span class="pp">|</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 11 <span class="pp">|</span> λ <span class="pp">|</span> Λ <span class="pp">|</span> Lambda <span class="pp">|</span> LAM-dah <span class="pp">|</span> Rate parameter (Poisson, exponential); eigenvalue; Wilks' lambda <span class="pp">|</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 12 <span class="pp">|</span> μ <span class="pp">|</span> Μ <span class="pp">|</span> Mu <span class="pp">|</span> MYOO <span class="pp">|</span> Population mean <span class="pp">|</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 13 <span class="pp">|</span> ν <span class="pp">|</span> Ν <span class="pp">|</span> Nu <span class="pp">|</span> NOO <span class="pp">|</span> Degrees of freedom <span class="pp">|</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 14 <span class="pp">|</span> ξ <span class="pp">|</span> Ξ <span class="pp">|</span> Xi <span class="pp">|</span> KSEE or ZIGH <span class="pp">|</span> Rarely used; sometimes for random variables <span class="pp">|</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 15 <span class="pp">|</span> ο <span class="pp">|</span> Ο <span class="pp">|</span> Omicron <span class="pp">|</span> OM-i-kron <span class="pp">|</span> Rarely used (resembles Roman O) <span class="pp">|</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 16 <span class="pp">|</span> π <span class="pp">|</span> Π <span class="pp">|</span> Pi <span class="pp">|</span> PIE <span class="pp">|</span> Mathematical constant (≈ 3.14159); product notation (Π) <span class="pp">|</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 17 <span class="pp">|</span> ρ <span class="pp">|</span> Ρ <span class="pp">|</span> Rho <span class="pp">|</span> ROW <span class="pp">|</span> Population correlation coefficient; autocorrelation <span class="pp">|</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 18 <span class="pp">|</span> σ <span class="pp">|</span> Σ <span class="pp">|</span> Sigma <span class="pp">|</span> SIG-mah <span class="pp">|</span> Population standard deviation (σ); summation (Σ) <span class="pp">|</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 19 <span class="pp">|</span> τ <span class="pp">|</span> Τ <span class="pp">|</span> Tau <span class="pp">|</span> TAW (rhymes with cow) <span class="pp">|</span> Kendall's tau; time constant <span class="pp">|</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 20 <span class="pp">|</span> υ <span class="pp">|</span> Υ <span class="pp">|</span> Upsilon <span class="pp">|</span> OOP-si-lon <span class="pp">|</span> Rarely used in statistics <span class="pp">|</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 21 <span class="pp">|</span> φ <span class="pp">|</span> Φ <span class="pp">|</span> Phi <span class="pp">|</span> FYE or FEE <span class="pp">|</span> Phi coefficient; standard normal PDF (φ); golden ratio <span class="pp">|</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 22 <span class="pp">|</span> χ <span class="pp">|</span> Χ <span class="pp">|</span> Chi <span class="pp">|</span> KYE (rhymes with sky) <span class="pp">|</span> Chi-square distribution and test (χ²) <span class="pp">|</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 23 <span class="pp">|</span> ψ <span class="pp">|</span> Ψ <span class="pp">|</span> Psi <span class="pp">|</span> SIGH or PSEE <span class="pp">|</span> Rarely used; sometimes for angles or wave functions <span class="pp">|</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 24 <span class="pp">|</span> ω <span class="pp">|</span> Ω <span class="pp">|</span> Omega <span class="pp">|</span> oh-MAY-gah <span class="pp">|</span> Effect size (ω²); angular frequency <span class="pp">|</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a><span class="fu">## Most Commonly Used Letters in Statistics</span></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a><span class="fu">### Population Parameters</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>The following Greek letters conventionally represent **population parameters** (true but unknown values):</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**μ (mu)**: Population mean</span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**σ (sigma)**: Population standard deviation</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**σ² (sigma squared)**: Population variance</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**ρ (rho)**: Population correlation coefficient</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**π (pi)**: Population proportion (also the mathematical constant)</span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**β (beta)**: Population regression coefficients</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a><span class="fu">### Hypothesis Testing</span></span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**α (alpha)**: Significance level; probability of Type I error (rejecting a true null hypothesis). Commonly set to 0.05.</span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**β (beta)**: Probability of Type II error (failing to reject a false null hypothesis). Power = 1 - β.</span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**χ² (chi-square)**: Test statistic for categorical data analysis</span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a><span class="fu">### Effect Sizes</span></span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**η² (eta squared)**: Proportion of variance explained in ANOVA</span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**ω² (omega squared)**: Less biased estimate of variance explained</span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**φ (phi)**: Effect size for 2×2 contingency tables</span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a><span class="fu">### Distributions</span></span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**λ (lambda)**: Rate parameter for Poisson and exponential distributions</span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Γ (Gamma)**: The Gamma function and Gamma distribution</span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**θ (theta)**: Generic parameter in probability distributions</span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a><span class="fu">### Summation and Products</span></span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Σ (capital sigma)**: Summation notation: $\sum_{i=1}^{n} x_i$</span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Π (capital pi)**: Product notation: $\prod_{i=1}^{n} x_i$</span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a><span class="fu">## Writing Greek Letters</span></span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a><span class="fu">### In LaTeX and Quarto</span></span>
+<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a>Greek letters are written in LaTeX (and thus in Quarto documents) using backslash commands:</span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a><span class="in">```latex</span></span>
+<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a><span class="in">$\alpha$    → α        $\Alpha$    → Α</span></span>
+<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a><span class="in">$\beta$     → β        $\Beta$     → Β</span></span>
+<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a><span class="in">$\gamma$    → γ        $\Gamma$    → Γ</span></span>
+<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a><span class="in">$\delta$    → δ        $\Delta$    → Δ</span></span>
+<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a><span class="in">$\epsilon$  → ε        $\mu$       → μ</span></span>
+<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a><span class="in">$\sigma$    → σ        $\Sigma$    → Σ</span></span>
+<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a><span class="in">$\chi$      → χ        $\lambda$   → λ</span></span>
+<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a><span class="in">$\theta$    → θ        $\rho$      → ρ</span></span>
+<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a><span class="fu">### In R</span></span>
+<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a>R supports Greek letters in plots using the <span class="in">`expression()`</span> function:</span>
+<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb3-94"><a href="#cb3-94" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb3-95"><a href="#cb3-95" aria-hidden="true" tabindex="-1"></a><span class="co"># Axis labels with Greek letters</span></span>
+<span id="cb3-96"><a href="#cb3-96" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y,</span>
+<span id="cb3-97"><a href="#cb3-97" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="fu">expression</span>(mu),</span>
+<span id="cb3-98"><a href="#cb3-98" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="fu">expression</span>(sigma<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb3-99"><a href="#cb3-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-100"><a href="#cb3-100" aria-hidden="true" tabindex="-1"></a><span class="co"># More complex expressions</span></span>
+<span id="cb3-101"><a href="#cb3-101" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">"Mean = "</span>, mu, <span class="st">", SD = "</span>, sigma)))</span>
+<span id="cb3-102"><a href="#cb3-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-103"><a href="#cb3-103" aria-hidden="true" tabindex="-1"></a><span class="co"># In ggplot2</span></span>
+<span id="cb3-104"><a href="#cb3-104" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb3-105"><a href="#cb3-105" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
+<span id="cb3-106"><a href="#cb3-106" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb3-107"><a href="#cb3-107" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">expression</span>(alpha),</span>
+<span id="cb3-108"><a href="#cb3-108" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="fu">expression</span>(beta))</span>
+<span id="cb3-109"><a href="#cb3-109" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb3-110"><a href="#cb3-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-111"><a href="#cb3-111" aria-hidden="true" tabindex="-1"></a><span class="fu">## Conventions and Mnemonics</span></span>
+<span id="cb3-112"><a href="#cb3-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-113"><a href="#cb3-113" aria-hidden="true" tabindex="-1"></a><span class="fu">### Roman vs. Greek Letters</span></span>
+<span id="cb3-114"><a href="#cb3-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-115"><a href="#cb3-115" aria-hidden="true" tabindex="-1"></a>A useful convention in statistics:</span>
+<span id="cb3-116"><a href="#cb3-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-117"><a href="#cb3-117" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Greek letters** represent **population parameters** (unknown, fixed values)</span>
+<span id="cb3-118"><a href="#cb3-118" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Roman (Latin) letters** represent **sample statistics** (calculated from data)</span>
+<span id="cb3-119"><a href="#cb3-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-120"><a href="#cb3-120" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Population Parameter <span class="pp">|</span> Sample Statistic <span class="pp">|</span></span>
+<span id="cb3-121"><a href="#cb3-121" aria-hidden="true" tabindex="-1"></a><span class="pp">|:---------------------|:-----------------|</span></span>
+<span id="cb3-122"><a href="#cb3-122" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> μ (mu) - population mean <span class="pp">|</span> $\bar{x}$ - sample mean <span class="pp">|</span></span>
+<span id="cb3-123"><a href="#cb3-123" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> σ (sigma) - population SD <span class="pp">|</span> s - sample SD <span class="pp">|</span></span>
+<span id="cb3-124"><a href="#cb3-124" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> ρ (rho) - population correlation <span class="pp">|</span> r - sample correlation <span class="pp">|</span></span>
+<span id="cb3-125"><a href="#cb3-125" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> β (beta) - population slope <span class="pp">|</span> b - sample slope <span class="pp">|</span></span>
+<span id="cb3-126"><a href="#cb3-126" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> π (pi) - population proportion <span class="pp">|</span> p̂ - sample proportion <span class="pp">|</span></span>
+<span id="cb3-127"><a href="#cb3-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-128"><a href="#cb3-128" aria-hidden="true" tabindex="-1"></a><span class="fu">### Memory Aids</span></span>
+<span id="cb3-129"><a href="#cb3-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-130"><a href="#cb3-130" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**α (alpha)** for significance level: "A" comes first, and we set alpha first before testing</span>
+<span id="cb3-131"><a href="#cb3-131" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**β (beta)** for slope: "B" is for the coefficient "B" in y = a + bx</span>
+<span id="cb3-132"><a href="#cb3-132" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**μ (mu)** for mean: Think "μ" looks like a "u" turned sideways—"u" for "average of you all"</span>
+<span id="cb3-133"><a href="#cb3-133" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**σ (sigma)** for standard deviation: "S" for Sigma, "S" for Standard deviation</span>
+<span id="cb3-134"><a href="#cb3-134" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Σ (capital sigma)** for sum: "S" for Sum</span>
+<span id="cb3-135"><a href="#cb3-135" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**ρ (rho)** for correlation: "R" for Rho, "R" for R-value (correlation)</span>
+<span id="cb3-136"><a href="#cb3-136" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**χ (chi)** for chi-square: Looks like an "X"—think "X marks the spot" for testing categories</span>
+<span id="cb3-137"><a href="#cb3-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-138"><a href="#cb3-138" aria-hidden="true" tabindex="-1"></a><span class="fu">## Common Formulas Using Greek Letters</span></span>
+<span id="cb3-139"><a href="#cb3-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-140"><a href="#cb3-140" aria-hidden="true" tabindex="-1"></a><span class="fu">### Normal Distribution</span></span>
+<span id="cb3-141"><a href="#cb3-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-142"><a href="#cb3-142" aria-hidden="true" tabindex="-1"></a>$$f(x) = \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}$$</span>
+<span id="cb3-143"><a href="#cb3-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-144"><a href="#cb3-144" aria-hidden="true" tabindex="-1"></a><span class="fu">### Z-score</span></span>
+<span id="cb3-145"><a href="#cb3-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-146"><a href="#cb3-146" aria-hidden="true" tabindex="-1"></a>$$z = \frac{x - \mu}{\sigma}$$</span>
+<span id="cb3-147"><a href="#cb3-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-148"><a href="#cb3-148" aria-hidden="true" tabindex="-1"></a><span class="fu">### Linear Regression Model</span></span>
+<span id="cb3-149"><a href="#cb3-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-150"><a href="#cb3-150" aria-hidden="true" tabindex="-1"></a>$$Y_i = \beta_0 + \beta_1 X_i + \epsilon_i$$</span>
+<span id="cb3-151"><a href="#cb3-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-152"><a href="#cb3-152" aria-hidden="true" tabindex="-1"></a>where $\epsilon_i \sim N(0, \sigma^2)$</span>
+<span id="cb3-153"><a href="#cb3-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-154"><a href="#cb3-154" aria-hidden="true" tabindex="-1"></a><span class="fu">### Correlation Coefficient</span></span>
+<span id="cb3-155"><a href="#cb3-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-156"><a href="#cb3-156" aria-hidden="true" tabindex="-1"></a>$$\rho = \frac{\text{Cov}(X, Y)}{\sigma_X \sigma_Y}$$</span>
+<span id="cb3-157"><a href="#cb3-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-158"><a href="#cb3-158" aria-hidden="true" tabindex="-1"></a><span class="fu">### Chi-Square Test Statistic</span></span>
+<span id="cb3-159"><a href="#cb3-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-160"><a href="#cb3-160" aria-hidden="true" tabindex="-1"></a>$$\chi^2 = \sum \frac{(O - E)^2}{E}$$</span>
+<span id="cb3-161"><a href="#cb3-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-162"><a href="#cb3-162" aria-hidden="true" tabindex="-1"></a><span class="fu">### ANOVA F-ratio</span></span>
+<span id="cb3-163"><a href="#cb3-163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-164"><a href="#cb3-164" aria-hidden="true" tabindex="-1"></a>$$F = \frac{MS_{\text{between}}}{MS_{\text{within}}} = \frac{\sigma^2_{\text{between}}}{\sigma^2_{\text{within}}}$$</span>
+<span id="cb3-165"><a href="#cb3-165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-166"><a href="#cb3-166" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
+<span id="cb3-167"><a href="#cb3-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-168"><a href="#cb3-168" aria-hidden="true" tabindex="-1"></a>Mastering Greek letters is essential for reading and writing statistical notation. The most important letters to memorize are:</span>
+<span id="cb3-169"><a href="#cb3-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-170"><a href="#cb3-170" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**μ, σ, ρ**: Population mean, standard deviation, and correlation</span>
+<span id="cb3-171"><a href="#cb3-171" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**α, β**: Significance level and Type II error (or regression coefficients)</span>
+<span id="cb3-172"><a href="#cb3-172" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Σ**: Summation</span>
+<span id="cb3-173"><a href="#cb3-173" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**χ²**: Chi-square</span>
+<span id="cb3-174"><a href="#cb3-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-175"><a href="#cb3-175" aria-hidden="true" tabindex="-1"></a>With practice, these symbols become as natural as the Roman alphabet, and they provide a universal language for expressing statistical concepts precisely and concisely.</span>
+</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Statistics for Biosciences and Bioengineering</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Built with <a href="https://quarto.org/">Quarto</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

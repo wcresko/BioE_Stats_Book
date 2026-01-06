@@ -1,0 +1,2220 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.30">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>30&nbsp; Bayesian Statistics – Statistics for the Biosciences and Bioengineering</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/32-classification.html" rel="next">
+<link href="../chapters/22-statistical-learning.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-de070a7b0ab54f8780927367ac907214.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-485d01fc63b59abcd3ee1bf1e8e2748d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/22-statistical-learning.html">Statistical Learning</a></li><li class="breadcrumb-item"><a href="../chapters/31-bayesian-statistics.html"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Bayesian Statistics</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Statistics for the Biosciences and Bioengineering</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Why This Book?</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Core Data Science Tools</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-installing-tools.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Installing Core Tools</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-unix-command-line.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Unix and the Command Line</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-r-rstudio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">R and RStudio</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-markdown-latex.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Markdown and LaTeX</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Data Exploration</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/07-tidy-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Tidy Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/08-data-wrangling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Data Wrangling with dplyr</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/09-exploratory-data-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/06-data-visualization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Data Visualization</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Probability and Distributions</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/07-probability-foundations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Foundations of Probability</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/08-discrete-distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Discrete Probability Distributions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/09-continuous-distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Continuous Probability Distributions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/10-sampling-estimation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Sampling and Parameter Estimation</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Statistical Inference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/11-experimental-design.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Experimental Design Principles</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/11-hypothesis-testing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/12-t-tests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">T-Tests</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/13-nonparametric-tests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Nonparametric Tests</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/14-bootstrapping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Resampling Methods</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Linear Models</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/30-what-are-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">What are Models?</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/15-correlation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Correlation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/16-simple-linear-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Simple Linear Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/17-residual-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Residual Analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/18-statistical-power.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Statistical Power</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/20-multiple-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Multiple Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/19-single-factor-anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Single Factor ANOVA</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/20-multifactor-anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Multi-Factor ANOVA</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/21-glm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Statistical Learning</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/22-statistical-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Core Concepts in Statistical Learning</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/31-bayesian-statistics.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Bayesian Statistics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/32-classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Classification Methods</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/33-clustering.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Clustering</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/23-dimensionality-reduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Dimensionality Reduction and Multivariate Methods</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/34-tsne-umap.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Non-Linear Dimensionality Reduction: t-SNE and UMAP</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/24-high-performance-computing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">High Performance Computing</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Scientific Communication</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/25-presenting-results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Presenting Statistical Results</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Historical Context</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A1-eugenics-history.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">The Eugenics History of Statistics</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A8-keyboard-shortcuts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Keyboard Shortcuts Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A6-unix-reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Unix Command Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A2-r-reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">R Command Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A9-quarto-reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">Quarto Markdown Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A7-latex-reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">LaTeX Command Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A4-greek-letters.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Greek Letters in Mathematics and Statistics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A3-probability-distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">Common Probability Distributions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A5-sampling-distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">Sampling Distributions in Hypothesis Testing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A10-matrix-algebra.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">Matrix Algebra Fundamentals</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#a-different-approach-to-probability" id="toc-a-different-approach-to-probability" class="nav-link active" data-scroll-target="#a-different-approach-to-probability"><span class="header-section-number">30.1</span> A Different Approach to Probability</a></li>
+  <li><a href="#bayes-theorem-the-foundation" id="toc-bayes-theorem-the-foundation" class="nav-link" data-scroll-target="#bayes-theorem-the-foundation"><span class="header-section-number">30.2</span> Bayes’ Theorem: The Foundation</a>
+  <ul class="collapse">
+  <li><a href="#a-diagnostic-test-example" id="toc-a-diagnostic-test-example" class="nav-link" data-scroll-target="#a-diagnostic-test-example">A Diagnostic Test Example</a></li>
+  <li><a href="#simulation-to-verify" id="toc-simulation-to-verify" class="nav-link" data-scroll-target="#simulation-to-verify">Simulation to Verify</a></li>
+  </ul></li>
+  <li><a href="#from-bayes-theorem-to-bayesian-inference" id="toc-from-bayes-theorem-to-bayesian-inference" class="nav-link" data-scroll-target="#from-bayes-theorem-to-bayesian-inference"><span class="header-section-number">30.3</span> From Bayes’ Theorem to Bayesian Inference</a></li>
+  <li><a href="#hierarchical-models-shrinkage-and-borrowing-strength" id="toc-hierarchical-models-shrinkage-and-borrowing-strength" class="nav-link" data-scroll-target="#hierarchical-models-shrinkage-and-borrowing-strength"><span class="header-section-number">30.4</span> Hierarchical Models: Shrinkage and Borrowing Strength</a>
+  <ul class="collapse">
+  <li><a href="#a-baseball-example" id="toc-a-baseball-example" class="nav-link" data-scroll-target="#a-baseball-example">A Baseball Example</a></li>
+  <li><a href="#the-prior-what-do-we-know-about-batting-averages" id="toc-the-prior-what-do-we-know-about-batting-averages" class="nav-link" data-scroll-target="#the-prior-what-do-we-know-about-batting-averages">The Prior: What Do We Know About Batting Averages?</a></li>
+  <li><a href="#the-hierarchical-model" id="toc-the-hierarchical-model" class="nav-link" data-scroll-target="#the-hierarchical-model">The Hierarchical Model</a></li>
+  <li><a href="#the-posterior-combining-prior-and-data" id="toc-the-posterior-combining-prior-and-data" class="nav-link" data-scroll-target="#the-posterior-combining-prior-and-data">The Posterior: Combining Prior and Data</a></li>
+  <li><a href="#applying-to-josé-iglesias" id="toc-applying-to-josé-iglesias" class="nav-link" data-scroll-target="#applying-to-josé-iglesias">Applying to José Iglesias</a></li>
+  <li><a href="#the-outcome" id="toc-the-outcome" class="nav-link" data-scroll-target="#the-outcome">The Outcome</a></li>
+  </ul></li>
+  <li><a href="#credible-intervals-vs.-confidence-intervals" id="toc-credible-intervals-vs.-confidence-intervals" class="nav-link" data-scroll-target="#credible-intervals-vs.-confidence-intervals"><span class="header-section-number">30.5</span> Credible Intervals vs.&nbsp;Confidence Intervals</a></li>
+  <li><a href="#choosing-priors" id="toc-choosing-priors" class="nav-link" data-scroll-target="#choosing-priors"><span class="header-section-number">30.6</span> Choosing Priors</a>
+  <ul class="collapse">
+  <li><a href="#types-of-priors" id="toc-types-of-priors" class="nav-link" data-scroll-target="#types-of-priors">Types of Priors</a></li>
+  <li><a href="#prior-sensitivity" id="toc-prior-sensitivity" class="nav-link" data-scroll-target="#prior-sensitivity">Prior Sensitivity</a></li>
+  </ul></li>
+  <li><a href="#when-bayesian-methods-excel" id="toc-when-bayesian-methods-excel" class="nav-link" data-scroll-target="#when-bayesian-methods-excel"><span class="header-section-number">30.7</span> When Bayesian Methods Excel</a></li>
+  <li><a href="#computational-bayesian-statistics" id="toc-computational-bayesian-statistics" class="nav-link" data-scroll-target="#computational-bayesian-statistics"><span class="header-section-number">30.8</span> Computational Bayesian Statistics</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">30.9</span> Exercises</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">30.10</span> Summary</a></li>
+  <li><a href="#additional-resources" id="toc-additional-resources" class="nav-link" data-scroll-target="#additional-resources"><span class="header-section-number">30.11</span> Additional Resources</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/22-statistical-learning.html">Statistical Learning</a></li><li class="breadcrumb-item"><a href="../chapters/31-bayesian-statistics.html"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Bayesian Statistics</span></a></li></ol></nav>
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span id="sec-bayesian-statistics" class="quarto-section-identifier"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Bayesian Statistics</span></span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="a-different-approach-to-probability" class="level2" data-number="30.1">
+<h2 data-number="30.1" class="anchored" data-anchor-id="a-different-approach-to-probability"><span class="header-section-number">30.1</span> A Different Approach to Probability</h2>
+<p>What does it mean when an election forecaster tells us that a candidate has a 90% chance of winning? In classical (frequentist) statistics, probability refers to long-run frequencies of events. A parameter like the true proportion of voters supporting a candidate is a fixed but unknown number—it doesn’t make sense to assign it a probability.</p>
+<p><strong>Bayesian statistics</strong> takes a different view: probability represents our <em>degree of belief</em> about uncertain quantities. Under this framework, we can legitimately say “there is a 90% probability that candidate A will win” because we’re expressing our uncertainty about the outcome.</p>
+<p>This chapter introduces Bayesian thinking and shows how it provides a principled framework for combining prior knowledge with observed data.</p>
+</section>
+<section id="bayes-theorem-the-foundation" class="level2" data-number="30.2">
+<h2 data-number="30.2" class="anchored" data-anchor-id="bayes-theorem-the-foundation"><span class="header-section-number">30.2</span> Bayes’ Theorem: The Foundation</h2>
+<p>Bayes’ theorem relates conditional probabilities:</p>
+<p><span class="math display">\[
+P(A \mid B) = \frac{P(B \mid A) \cdot P(A)}{P(B)}
+\]</span></p>
+<p>This simple equation has profound implications. It tells us how to update our beliefs about <span class="math inline">\(A\)</span> after observing evidence <span class="math inline">\(B\)</span>.</p>
+<section id="a-diagnostic-test-example" class="level3">
+<h3 class="anchored" data-anchor-id="a-diagnostic-test-example">A Diagnostic Test Example</h3>
+<p>Consider a test for cystic fibrosis with 99% accuracy:</p>
+<p><span class="math display">\[
+P(+ \mid D=1) = 0.99 \quad \text{and} \quad P(- \mid D=0) = 0.99
+\]</span></p>
+<p>where <span class="math inline">\(+\)</span> denotes a positive test result and <span class="math inline">\(D\)</span> indicates disease status (1 = has disease, 0 = doesn’t).</p>
+<p>If a randomly selected person tests positive, what is the probability they actually have the disease?</p>
+<p>The cystic fibrosis rate is approximately 1 in 3,900, so <span class="math inline">\(P(D=1) = 0.00025\)</span>.</p>
+<p>Applying Bayes’ theorem:</p>
+<p><span class="math display">\[
+\begin{aligned}
+P(D=1 \mid +) &amp;= \frac{P(+ \mid D=1) \cdot P(D=1)}{P(+)} \\[1em]
+&amp;= \frac{P(+ \mid D=1) \cdot P(D=1)}{P(+ \mid D=1) \cdot P(D=1) + P(+ \mid D=0) \cdot P(D=0)}
+\end{aligned}
+\]</span></p>
+<p>Plugging in the numbers:</p>
+<p><span class="math display">\[
+P(D=1 \mid +) = \frac{0.99 \times 0.00025}{0.99 \times 0.00025 + 0.01 \times 0.99975} = 0.024
+\]</span></p>
+<p>Despite the test having 99% accuracy, the probability of having the disease given a positive test is only about 2.4%. This counterintuitive result arises because the disease is so rare—most positive tests are false positives from the large healthy population.</p>
+</section>
+<section id="simulation-to-verify" class="level3">
+<h3 class="anchored" data-anchor-id="simulation-to-verify">Simulation to Verify</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>prev <span class="ot">&lt;-</span> <span class="fl">0.00025</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="dv">100000</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>accuracy <span class="ot">&lt;-</span> <span class="fl">0.99</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Randomly assign disease status</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>outcome <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"Disease"</span>, <span class="st">"Healthy"</span>), N, <span class="at">replace =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">prob =</span> <span class="fu">c</span>(prev, <span class="dv">1</span> <span class="sc">-</span> prev))</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>N_D <span class="ot">&lt;-</span> <span class="fu">sum</span>(outcome <span class="sc">==</span> <span class="st">"Disease"</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>N_H <span class="ot">&lt;-</span> <span class="fu">sum</span>(outcome <span class="sc">==</span> <span class="st">"Healthy"</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"People with disease:"</span>, N_D, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>People with disease: 28 </code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Healthy people:"</span>, N_H, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Healthy people: 99972 </code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Administer test</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">"character"</span>, N)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>test[outcome <span class="sc">==</span> <span class="st">"Disease"</span>] <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"+"</span>, <span class="st">"-"</span>), N_D, <span class="at">replace =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">prob =</span> <span class="fu">c</span>(accuracy, <span class="dv">1</span> <span class="sc">-</span> accuracy))</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>test[outcome <span class="sc">==</span> <span class="st">"Healthy"</span>] <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"-"</span>, <span class="st">"+"</span>), N_H, <span class="at">replace =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">prob =</span> <span class="fu">c</span>(accuracy, <span class="dv">1</span> <span class="sc">-</span> accuracy))</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Results</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>confusion <span class="ot">&lt;-</span> <span class="fu">table</span>(outcome, test)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(confusion)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>         test
+outcome       -     +
+  Disease     0    28
+  Healthy 98948  1024</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Probability of disease given positive test</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">P(Disease | Positive test):"</span>,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round</span>(<span class="fu">sum</span>(test <span class="sc">==</span> <span class="st">"+"</span> <span class="sc">&amp;</span> outcome <span class="sc">==</span> <span class="st">"Disease"</span>) <span class="sc">/</span> <span class="fu">sum</span>(test <span class="sc">==</span> <span class="st">"+"</span>), <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+P(Disease | Positive test): 0.027 </code></pre>
+</div>
+</div>
+<p>The simulation confirms our calculation: despite the high test accuracy, most people who test positive are actually healthy because the disease is so rare.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The Base Rate Fallacy
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Ignoring the base rate (prior probability) of a condition leads to dramatically wrong conclusions. This is critical in medical testing, forensic evidence, and any diagnostic situation. Always consider:</p>
+<ol type="1">
+<li>How accurate is the test? (sensitivity, specificity)</li>
+<li>How common is the condition? (base rate/prevalence)</li>
+<li>What population is being tested? (targeted vs.&nbsp;general screening)</li>
+</ol>
+</div>
+</div>
+</section>
+</section>
+<section id="from-bayes-theorem-to-bayesian-inference" class="level2" data-number="30.3">
+<h2 data-number="30.3" class="anchored" data-anchor-id="from-bayes-theorem-to-bayesian-inference"><span class="header-section-number">30.3</span> From Bayes’ Theorem to Bayesian Inference</h2>
+<p>Bayes’ theorem becomes a framework for statistical inference when we apply it to unknown parameters:</p>
+<p><span class="math display">\[
+P(\theta \mid \text{data}) = \frac{P(\text{data} \mid \theta) \cdot P(\theta)}{P(\text{data})}
+\]</span></p>
+<p>The components have specific names:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 28%">
+<col style="width: 28%">
+<col style="width: 42%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Term</th>
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(P(\theta \mid \text{data})\)</span></td>
+<td style="text-align: left;"><strong>Posterior</strong></td>
+<td style="text-align: left;">Updated belief after seeing data</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(P(\text{data} \mid \theta)\)</span></td>
+<td style="text-align: left;"><strong>Likelihood</strong></td>
+<td style="text-align: left;">Probability of data given parameter</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(P(\theta)\)</span></td>
+<td style="text-align: left;"><strong>Prior</strong></td>
+<td style="text-align: left;">Initial belief before seeing data</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(P(\text{data})\)</span></td>
+<td style="text-align: left;"><strong>Evidence</strong></td>
+<td style="text-align: left;">Normalizing constant</td>
+</tr>
+</tbody>
+</table>
+<p>The posterior combines what we knew before (prior) with what the data tell us (likelihood).</p>
+</section>
+<section id="hierarchical-models-shrinkage-and-borrowing-strength" class="level2" data-number="30.4">
+<h2 data-number="30.4" class="anchored" data-anchor-id="hierarchical-models-shrinkage-and-borrowing-strength"><span class="header-section-number">30.4</span> Hierarchical Models: Shrinkage and Borrowing Strength</h2>
+<p>One of Bayesian statistics’ most powerful applications is <strong>hierarchical modeling</strong>, where we model variability at multiple levels. This allows us to “borrow strength” across related observations.</p>
+<section id="a-baseball-example" class="level3">
+<h3 class="anchored" data-anchor-id="a-baseball-example">A Baseball Example</h3>
+<p>Consider José Iglesias, a baseball player who in April 2013 had the following statistics:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Month</th>
+<th style="text-align: left;">At Bats</th>
+<th style="text-align: left;">Hits</th>
+<th style="text-align: left;">AVG</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">April</td>
+<td style="text-align: left;">20</td>
+<td style="text-align: left;">9</td>
+<td style="text-align: left;">.450</td>
+</tr>
+</tbody>
+</table>
+<p>A batting average (AVG) of .450 is extraordinarily high—no player has finished a season above .400 since Ted Williams in 1941. How should we predict José’s season-ending average?</p>
+<p><strong>The frequentist approach</strong> uses only José’s data. With <span class="math inline">\(p = 0.450\)</span> as our estimate and <span class="math inline">\(n = 20\)</span> at bats:</p>
+<p><span class="math display">\[
+\text{SE} = \sqrt{\frac{0.450 \times 0.550}{20}} = 0.111
+\]</span></p>
+<p>A 95% confidence interval is <span class="math inline">\(.450 \pm 0.222\)</span>, or roughly <span class="math inline">\(.228\)</span> to <span class="math inline">\(.672\)</span>. This interval is wide and centered at .450, implying our best guess is that José will break Ted Williams’ record.</p>
+<p><strong>The Bayesian approach</strong> incorporates what we know about baseball players in general.</p>
+</section>
+<section id="the-prior-what-do-we-know-about-batting-averages" class="level3">
+<h3 class="anchored" data-anchor-id="the-prior-what-do-we-know-about-batting-averages">The Prior: What Do We Know About Batting Averages?</h3>
+<p>Let’s examine batting averages for players with substantial at-bats over recent seasons:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Lahman)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-error">
+<pre><code>Error in `library()`:
+! there is no package called 'Lahman'</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>batting_data <span class="ot">&lt;-</span> Batting <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(yearID <span class="sc">%in%</span> <span class="dv">2010</span><span class="sc">:</span><span class="dv">2012</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">AVG =</span> H <span class="sc">/</span> AB) <span class="sc">|&gt;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(AB <span class="sc">&gt;</span> <span class="dv">500</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-error">
+<pre><code>Error:
+! object 'Batting' not found</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>batting_data <span class="sc">|&gt;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(AVG)) <span class="sc">+</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>yearID) <span class="sc">+</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Batting Average"</span>, <span class="at">y =</span> <span class="st">"Count"</span>,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"MLB Batting Averages by Year"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-error">
+<pre><code>Error:
+! object 'batting_data' not found</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary statistics</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Mean batting average:"</span>, <span class="fu">round</span>(<span class="fu">mean</span>(batting_data<span class="sc">$</span>AVG), <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-error">
+<pre><code>Error:
+! object 'batting_data' not found</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"SD of batting averages:"</span>, <span class="fu">round</span>(<span class="fu">sd</span>(batting_data<span class="sc">$</span>AVG), <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-error">
+<pre><code>Error:
+! object 'batting_data' not found</code></pre>
+</div>
+</div>
+<p>The average player has an AVG around .275 with a standard deviation of about 0.027. José’s .450 is over six standard deviations above the mean—an extreme anomaly if taken at face value.</p>
+</section>
+<section id="the-hierarchical-model" class="level3">
+<h3 class="anchored" data-anchor-id="the-hierarchical-model">The Hierarchical Model</h3>
+<p>We model the data at two levels:</p>
+<p><strong>Level 1 (Prior)</strong>: Each player has a “true” batting ability <span class="math inline">\(p\)</span> drawn from a population distribution: <span class="math display">\[
+p \sim N(\mu, \tau^2)
+\]</span></p>
+<p><strong>Level 2 (Likelihood)</strong>: Given ability <span class="math inline">\(p\)</span>, observed performance <span class="math inline">\(Y\)</span> varies due to luck: <span class="math display">\[
+Y \mid p \sim N(p, \sigma^2)
+\]</span></p>
+<p>From the data: - Population mean: <span class="math inline">\(\mu = 0.275\)</span> - Population SD: <span class="math inline">\(\tau = 0.027\)</span> - Individual sampling error: <span class="math inline">\(\sigma = \sqrt{p(1-p)/n} \approx 0.111\)</span></p>
+</section>
+<section id="the-posterior-combining-prior-and-data" class="level3">
+<h3 class="anchored" data-anchor-id="the-posterior-combining-prior-and-data">The Posterior: Combining Prior and Data</h3>
+<p>For this model, the posterior distribution has a beautiful closed form. The posterior mean is:</p>
+<p><span class="math display">\[
+E(p \mid Y = y) = B \cdot \mu + (1-B) \cdot y
+\]</span></p>
+<p>where the <strong>shrinkage factor</strong> <span class="math inline">\(B\)</span> is:</p>
+<p><span class="math display">\[
+B = \frac{\sigma^2}{\sigma^2 + \tau^2}
+\]</span></p>
+<p>This is a <strong>weighted average</strong> of the population mean <span class="math inline">\(\mu\)</span> and observed data <span class="math inline">\(y\)</span>. The weights depend on: - How much individual variation there is (<span class="math inline">\(\sigma\)</span>) - How much population variation there is (<span class="math inline">\(\tau\)</span>)</p>
+<p>When individual uncertainty is high relative to population variation, we “shrink” more toward the population mean.</p>
+</section>
+<section id="applying-to-josé-iglesias" class="level3">
+<h3 class="anchored" data-anchor-id="applying-to-josé-iglesias">Applying to José Iglesias</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Parameters</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fl">0.275</span>      <span class="co"># Population mean</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>tau <span class="ot">&lt;-</span> <span class="fl">0.027</span>     <span class="co"># Population SD</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="fl">0.111</span>   <span class="co"># José's sampling error (from 20 at-bats)</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fl">0.450</span>       <span class="co"># José's observed average</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Shrinkage factor</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> sigma<span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span> (sigma<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> tau<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Shrinkage factor B:"</span>, <span class="fu">round</span>(B, <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Shrinkage factor B: 0.944 </code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Posterior mean</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>posterior_mean <span class="ot">&lt;-</span> B <span class="sc">*</span> mu <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">-</span> B) <span class="sc">*</span> y</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Posterior mean (predicted true ability):"</span>, <span class="fu">round</span>(posterior_mean, <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Posterior mean (predicted true ability): 0.285 </code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Posterior standard error</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>posterior_se <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="dv">1</span> <span class="sc">/</span> (<span class="dv">1</span><span class="sc">/</span>sigma<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span>tau<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Posterior SE:"</span>, <span class="fu">round</span>(posterior_se, <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Posterior SE: 0.026 </code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 95% credible interval</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>ci_lower <span class="ot">&lt;-</span> posterior_mean <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> posterior_se</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>ci_upper <span class="ot">&lt;-</span> posterior_mean <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> posterior_se</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"95% credible interval: ["</span>, <span class="fu">round</span>(ci_lower, <span class="dv">3</span>), <span class="st">","</span>, <span class="fu">round</span>(ci_upper, <span class="dv">3</span>), <span class="st">"]</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>95% credible interval: [ 0.233 , 0.336 ]</code></pre>
+</div>
+</div>
+<p>The Bayesian estimate “shrinks” José’s .450 toward the population average, giving a predicted true ability of about .285. The 95% credible interval is much narrower than the frequentist interval.</p>
+</section>
+<section id="the-outcome" class="level3">
+<h3 class="anchored" data-anchor-id="the-outcome">The Outcome</h3>
+<p>Here’s how José actually performed through the season:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Month</th>
+<th style="text-align: left;">At Bats</th>
+<th style="text-align: left;">Hits</th>
+<th style="text-align: left;">AVG</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">April</td>
+<td style="text-align: left;">20</td>
+<td style="text-align: left;">9</td>
+<td style="text-align: left;">.450</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">May</td>
+<td style="text-align: left;">26</td>
+<td style="text-align: left;">11</td>
+<td style="text-align: left;">.423</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">June</td>
+<td style="text-align: left;">86</td>
+<td style="text-align: left;">34</td>
+<td style="text-align: left;">.395</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">July</td>
+<td style="text-align: left;">83</td>
+<td style="text-align: left;">17</td>
+<td style="text-align: left;">.205</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">August</td>
+<td style="text-align: left;">85</td>
+<td style="text-align: left;">25</td>
+<td style="text-align: left;">.294</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">September</td>
+<td style="text-align: left;">50</td>
+<td style="text-align: left;">10</td>
+<td style="text-align: left;">.200</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Total (w/o April)</strong></td>
+<td style="text-align: left;"><strong>330</strong></td>
+<td style="text-align: left;"><strong>97</strong></td>
+<td style="text-align: left;"><strong>.294</strong></td>
+</tr>
+</tbody>
+</table>
+<p>His final average (excluding April) was .294—almost exactly what the Bayesian model predicted! The hierarchical approach correctly recognized that his early performance was partially luck and regressed his prediction toward the population mean.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize shrinkage</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>observations <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.450</span>, <span class="fl">0.320</span>, <span class="fl">0.260</span>, <span class="fl">0.200</span>)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>labels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"José (Apr)"</span>, <span class="st">"Good hitter"</span>, <span class="st">"Average"</span>, <span class="st">"Struggling"</span>)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate posteriors for each</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>posteriors <span class="ot">&lt;-</span> B <span class="sc">*</span> mu <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">-</span> B) <span class="sc">*</span> observations</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, observations, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">cex =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"blue"</span>,</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">0.15</span>, <span class="fl">0.50</span>), <span class="at">xlim =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">4.5</span>),</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>     <span class="at">xaxt =</span> <span class="st">"n"</span>, <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">"Batting Average"</span>,</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Bayesian Shrinkage: Observations → Posteriors"</span>)</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">1</span>, <span class="at">at =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">labels =</span> labels, <span class="at">las =</span> <span class="dv">2</span>)</span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, posteriors, <span class="at">pch =</span> <span class="dv">17</span>, <span class="at">cex =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"red"</span>)</span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a><span class="fu">arrows</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, observations, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, posteriors,</span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">length =</span> <span class="fl">0.1</span>, <span class="at">col =</span> <span class="st">"gray50"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> mu, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"darkgreen"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>,</span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>       <span class="fu">c</span>(<span class="st">"Observed"</span>, <span class="st">"Posterior estimate"</span>, <span class="st">"Population mean"</span>),</span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">19</span>, <span class="dv">17</span>, <span class="cn">NA</span>), <span class="at">lty =</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="cn">NA</span>, <span class="dv">2</span>),</span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"red"</span>, <span class="st">"darkgreen"</span>), <span class="at">pt.cex =</span> <span class="fl">1.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-shrinkage-illustration" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-shrinkage-illustration-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="31-bayesian-statistics_files/figure-html/fig-shrinkage-illustration-1.png" class="img-fluid figure-img" width="768">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-shrinkage-illustration-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;30.1: Bayesian shrinkage pulls extreme observations toward the population mean
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Notice how the shrinkage is proportional to how extreme the observation is. José’s .450 shrinks dramatically, while the average player’s .260 barely moves.</p>
+</section>
+</section>
+<section id="credible-intervals-vs.-confidence-intervals" class="level2" data-number="30.5">
+<h2 data-number="30.5" class="anchored" data-anchor-id="credible-intervals-vs.-confidence-intervals"><span class="header-section-number">30.5</span> Credible Intervals vs.&nbsp;Confidence Intervals</h2>
+<p>Bayesian inference produces <strong>credible intervals</strong> rather than confidence intervals. The interpretation differs:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">Frequentist Confidence Interval</th>
+<th style="text-align: left;">Bayesian Credible Interval</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Statement</td>
+<td style="text-align: left;">“95% of intervals from repeated sampling would contain the true value”</td>
+<td style="text-align: left;">“There is a 95% probability the true value lies in this interval”</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Parameter</td>
+<td style="text-align: left;">Fixed but unknown</td>
+<td style="text-align: left;">Random variable with a distribution</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Interpretation</td>
+<td style="text-align: left;">About the procedure</td>
+<td style="text-align: left;">About the parameter</td>
+</tr>
+</tbody>
+</table>
+<p>The Bayesian interpretation is often more intuitive: we can directly say “there’s a 95% probability the true batting average is between .233 and .337.”</p>
+</section>
+<section id="choosing-priors" class="level2" data-number="30.6">
+<h2 data-number="30.6" class="anchored" data-anchor-id="choosing-priors"><span class="header-section-number">30.6</span> Choosing Priors</h2>
+<p>The prior distribution encodes what we believe before seeing data. Prior choice is both a strength (incorporating domain knowledge) and a criticism (subjectivity) of Bayesian methods.</p>
+<section id="types-of-priors" class="level3">
+<h3 class="anchored" data-anchor-id="types-of-priors">Types of Priors</h3>
+<p>Priors fall along a spectrum of informativeness. <strong>Informative priors</strong> incorporate substantial prior knowledge—for example, a prior for batting average based on historical data might be N(0.275, 0.027²), reflecting that most players hit between .220 and .330. <strong>Weakly informative priors</strong> provide gentle regularization without imposing strong beliefs; a prior of N(0, 10²) for a regression coefficient allows a wide range of values while preferring smaller effects over extremely large ones. Finally, <strong>non-informative</strong> or <strong>diffuse priors</strong> attempt to “let the data speak” by imposing minimal prior constraints—for instance, a uniform prior on [0, 1] for a probability parameter, or an improper prior where P(θ) ∝ 1 across the entire real line.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Empirical Bayes
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When we estimate prior parameters from data (as we did with batting averages), this is called <strong>empirical Bayes</strong>. It’s a practical compromise: we use the data twice—once to set the prior, once for inference—but it often works well in practice.</p>
+</div>
+</div>
+</section>
+<section id="prior-sensitivity" class="level3">
+<h3 class="anchored" data-anchor-id="prior-sensitivity">Prior Sensitivity</h3>
+<p>It’s good practice to check whether conclusions depend strongly on prior choice:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># How does the posterior change with different priors?</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>tau_values <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.01</span>, <span class="fl">0.15</span>, <span class="at">length.out =</span> <span class="dv">100</span>)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>posterior_means <span class="ot">&lt;-</span> <span class="fu">sapply</span>(tau_values, <span class="cf">function</span>(tau) {</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  B <span class="ot">&lt;-</span> sigma<span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span> (sigma<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> tau<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  B <span class="sc">*</span> mu <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">-</span> B) <span class="sc">*</span> y</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tau_values, posterior_means, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"blue"</span>,</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">"Prior SD ("</span>, tau, <span class="st">")"</span>)),</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Posterior Mean"</span>,</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Prior Sensitivity Analysis"</span>)</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> y, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"red"</span>)      <span class="co"># Observed value</span></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> mu, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"green"</span>)   <span class="co"># Prior mean</span></span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fl">0.027</span>, <span class="at">lty =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">"gray"</span>) <span class="co"># Our chosen tau</span></span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"right"</span>, <span class="fu">c</span>(<span class="st">"Posterior mean"</span>, <span class="st">"Observed (.450)"</span>, <span class="st">"Prior mean (.275)"</span>, <span class="st">"τ = 0.027"</span>),</span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"red"</span>, <span class="st">"green"</span>, <span class="st">"gray"</span>), <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="at">lwd =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-prior-sensitivity" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-prior-sensitivity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="31-bayesian-statistics_files/figure-html/fig-prior-sensitivity-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-prior-sensitivity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;30.2: Posterior mean as a function of prior standard deviation: with strong priors (small τ), we trust the population average; with weak priors (large τ), we trust José’s data
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="when-bayesian-methods-excel" class="level2" data-number="30.7">
+<h2 data-number="30.7" class="anchored" data-anchor-id="when-bayesian-methods-excel"><span class="header-section-number">30.7</span> When Bayesian Methods Excel</h2>
+<p>Bayesian approaches are particularly valuable in several contexts. They excel at <strong>combining multiple sources of information</strong>, allowing you to incorporate prior knowledge, expert opinion, and data from related studies into a single coherent analysis. When working with <strong>hierarchical or multilevel data</strong>—such as patients grouped within hospitals or students nested within schools—Bayesian hierarchical models naturally capture this structure and allow appropriate borrowing of strength across groups. Bayesian methods are especially useful when working with <strong>small samples</strong>, where prior information can stabilize estimates that would otherwise be unreliable. The framework also supports <strong>sequential updating</strong>, where yesterday’s posterior becomes today’s prior as new data arrive, making it natural for adaptive designs and ongoing monitoring studies. Finally, modern <strong>MCMC methods</strong> enable fitting complex models that would be analytically or computationally intractable using traditional frequentist approaches, opening doors to realistic models of complicated phenomena.</p>
+</section>
+<section id="computational-bayesian-statistics" class="level2" data-number="30.8">
+<h2 data-number="30.8" class="anchored" data-anchor-id="computational-bayesian-statistics"><span class="header-section-number">30.8</span> Computational Bayesian Statistics</h2>
+<p>For complex models, posteriors don’t have closed-form solutions. Modern Bayesian statistics relies on <strong>Markov Chain Monte Carlo (MCMC)</strong> methods to sample from posterior distributions.</p>
+<p>Popular tools include: - <strong>Stan</strong> (via <code>rstan</code> or <code>brms</code> packages in R) - <strong>JAGS</strong> (via <code>rjags</code> package) - <strong>PyMC</strong> (in Python)</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example using brms (Bayesian Regression Models using Stan)</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(brms)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a Bayesian linear regression</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">formula =</span> weight <span class="sc">~</span> height,</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> my_data,</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">prior =</span> <span class="fu">c</span>(</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">10</span>), <span class="at">class =</span> <span class="st">"b"</span>),      <span class="co"># Prior on slope</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">100</span>, <span class="dv">50</span>), <span class="at">class =</span> <span class="st">"Intercept"</span>)  <span class="co"># Prior on intercept</span></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize posterior distributions</span></span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="exercises" class="level2" data-number="30.9">
+<h2 data-number="30.9" class="anchored" data-anchor-id="exercises"><span class="header-section-number">30.9</span> Exercises</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise Bay.1: Sally Clark Case - Base Rate Fallacy
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><p>In 1999 in England, Sally Clark was convicted of murdering her two infant sons after both were found dead, apparently from Sudden Infant Death Syndrome (SIDS). Expert testimony stated that the chance of two SIDS deaths was 1 in 73 million, calculated as <span class="math inline">\((1/8500)^2\)</span>. What error did this calculation make?</p></li>
+<li><p>Suppose the probability of a second SIDS case given a first is actually 1/100 (due to genetic factors). What is <span class="math inline">\(P(\text{two SIDS deaths})\)</span>?</p></li>
+<li><p>According to Bayes’ theorem, the probability the prosecution wanted was <span class="math inline">\(P(\text{guilty} \mid \text{two deaths})\)</span>, not <span class="math inline">\(P(\text{two deaths} \mid \text{innocent})\)</span>. Assume:</p>
+<ul>
+<li><span class="math inline">\(P(\text{two deaths} \mid \text{guilty}) = 0.50\)</span></li>
+<li><span class="math inline">\(P(\text{guilty}) = 1/1,000,000\)</span> (rate of child-murdering parents)</li>
+<li><span class="math inline">\(P(\text{two natural deaths}) = 1/8500 \times 1/100 = 1.2 \times 10^{-5}\)</span></li>
+</ul>
+<p>Calculate <span class="math inline">\(P(\text{guilty} \mid \text{two deaths})\)</span>.</p></li>
+</ol>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise Bay.2: Bayesian Election Polling
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol start="4" type="1">
+<li>Consider a Bayesian model for Florida election polling:</li>
+</ol>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dslabs)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(polls_us_election_2016)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>polls <span class="ot">&lt;-</span> polls_us_election_2016 <span class="sc">|&gt;</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(state <span class="sc">==</span> <span class="st">"Florida"</span> <span class="sc">&amp;</span> enddate <span class="sc">&gt;=</span> <span class="st">"2016-11-04"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">spread =</span> rawpoll_clinton<span class="sc">/</span><span class="dv">100</span> <span class="sc">-</span> rawpoll_trump<span class="sc">/</span><span class="dv">100</span>)</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate average spread and SE</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> polls <span class="sc">|&gt;</span></span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg =</span> <span class="fu">mean</span>(spread),</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">se =</span> <span class="fu">sd</span>(spread) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">n</span>())</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Using a prior of <span class="math inline">\(N(0, 0.01^2)\)</span> (based on Florida being historically close), calculate the posterior mean and 95% credible interval for the true spread.</p>
+<ol start="5" type="1">
+<li>How does the posterior change if we use a wider prior (<span class="math inline">\(\tau = 0.05\)</span>)? What about a narrower prior (<span class="math inline">\(\tau = 0.005\)</span>)?</li>
+</ol>
+</div>
+</div>
+</section>
+<section id="summary" class="level2" data-number="30.10">
+<h2 data-number="30.10" class="anchored" data-anchor-id="summary"><span class="header-section-number">30.10</span> Summary</h2>
+<ul>
+<li><strong>Bayes’ theorem</strong> provides a principled way to update beliefs based on evidence</li>
+<li>The <strong>base rate fallacy</strong> occurs when prior probabilities are ignored</li>
+<li><strong>Bayesian inference</strong> treats parameters as random variables with distributions</li>
+<li>The <strong>posterior</strong> combines prior beliefs with observed data</li>
+<li><strong>Hierarchical models</strong> borrow strength across related observations through shrinkage</li>
+<li><strong>Credible intervals</strong> have a more intuitive interpretation than confidence intervals</li>
+<li><strong>Prior sensitivity analysis</strong> checks whether conclusions depend on prior assumptions</li>
+<li>Modern Bayesian computation uses <strong>MCMC</strong> methods implemented in tools like Stan</li>
+</ul>
+</section>
+<section id="additional-resources" class="level2" data-number="30.11">
+<h2 data-number="30.11" class="anchored" data-anchor-id="additional-resources"><span class="header-section-number">30.11</span> Additional Resources</h2>
+<ul>
+<li><span class="citation" data-cites="gelman2013bayesian">Gelman et al. (<a href="../references.html#ref-gelman2013bayesian" role="doc-biblioref">2013</a>)</span> - The comprehensive reference for Bayesian data analysis</li>
+<li><span class="citation" data-cites="kruschke2014doing">Kruschke (<a href="../references.html#ref-kruschke2014doing" role="doc-biblioref">2014</a>)</span> - Accessible introduction with R examples</li>
+<li><span class="citation" data-cites="mcelreath2020statistical">McElreath (<a href="../references.html#ref-mcelreath2020statistical" role="doc-biblioref">2020</a>)</span> - Excellent modern treatment with Stan</li>
+<li><span class="citation" data-cites="james2023islr">James et al. (<a href="../references.html#ref-james2023islr" role="doc-biblioref">2023</a>)</span> - Connects Bayesian ideas to statistical learning</li>
+</ul>
+
+
+<!-- -->
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-gelman2013bayesian" class="csl-entry" role="listitem">
+Gelman, Andrew, John B. Carlin, Hal S. Stern, David B. Dunson, Aki Vehtari, and Donald B. Rubin. 2013. <em>Bayesian Data Analysis</em>. 3rd ed. Boca Raton, FL: CRC Press.
+</div>
+<div id="ref-james2023islr" class="csl-entry" role="listitem">
+James, Gareth, Daniela Witten, Trevor Hastie, and Robert Tibshirani. 2023. <em>An Introduction to Statistical Learning with Applications in r</em>. 2nd ed. Springer. <a href="https://www.statlearning.com">https://www.statlearning.com</a>.
+</div>
+<div id="ref-kruschke2014doing" class="csl-entry" role="listitem">
+Kruschke, John K. 2014. <em>Doing Bayesian Data Analysis: A Tutorial with r, JAGS, and Stan</em>. 2nd ed. Boston: Academic Press.
+</div>
+<div id="ref-mcelreath2020statistical" class="csl-entry" role="listitem">
+McElreath, Richard. 2020. <em>Statistical Rethinking: A Bayesian Course with Examples in r and Stan</em>. 2nd ed. Boca Raton, FL: CRC Press.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/22-statistical-learning.html" class="pagination-link" aria-label="Core Concepts in Statistical Learning">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Core Concepts in Statistical Learning</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/32-classification.html" class="pagination-link" aria-label="Classification Methods">
+        <span class="nav-page-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Classification Methods</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb31" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Bayesian Statistics {#sec-bayesian-statistics}</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_minimal</span>())</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a><span class="fu">## A Different Approach to Probability</span></span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>What does it mean when an election forecaster tells us that a candidate has a 90% chance of winning? In classical (frequentist) statistics, probability refers to long-run frequencies of events. A parameter like the true proportion of voters supporting a candidate is a fixed but unknown number—it doesn't make sense to assign it a probability.</span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>**Bayesian statistics** takes a different view: probability represents our *degree of belief* about uncertain quantities. Under this framework, we can legitimately say "there is a 90% probability that candidate A will win" because we're expressing our uncertainty about the outcome.</span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a>This chapter introduces Bayesian thinking and shows how it provides a principled framework for combining prior knowledge with observed data.</span>
+<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a><span class="fu">## Bayes' Theorem: The Foundation</span></span>
+<span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-22"><a href="#cb31-22" aria-hidden="true" tabindex="-1"></a>Bayes' theorem relates conditional probabilities:</span>
+<span id="cb31-23"><a href="#cb31-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-24"><a href="#cb31-24" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb31-25"><a href="#cb31-25" aria-hidden="true" tabindex="-1"></a>P(A \mid B) = \frac{P(B \mid A) \cdot P(A)}{P(B)}</span>
+<span id="cb31-26"><a href="#cb31-26" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb31-27"><a href="#cb31-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-28"><a href="#cb31-28" aria-hidden="true" tabindex="-1"></a>This simple equation has profound implications. It tells us how to update our beliefs about $A$ after observing evidence $B$.</span>
+<span id="cb31-29"><a href="#cb31-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-30"><a href="#cb31-30" aria-hidden="true" tabindex="-1"></a><span class="fu">### A Diagnostic Test Example</span></span>
+<span id="cb31-31"><a href="#cb31-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-32"><a href="#cb31-32" aria-hidden="true" tabindex="-1"></a>Consider a test for cystic fibrosis with 99% accuracy:</span>
+<span id="cb31-33"><a href="#cb31-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-34"><a href="#cb31-34" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb31-35"><a href="#cb31-35" aria-hidden="true" tabindex="-1"></a>P(+ \mid D=1) = 0.99 \quad \text{and} \quad P(- \mid D=0) = 0.99</span>
+<span id="cb31-36"><a href="#cb31-36" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb31-37"><a href="#cb31-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-38"><a href="#cb31-38" aria-hidden="true" tabindex="-1"></a>where $+$ denotes a positive test result and $D$ indicates disease status (1 = has disease, 0 = doesn't).</span>
+<span id="cb31-39"><a href="#cb31-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-40"><a href="#cb31-40" aria-hidden="true" tabindex="-1"></a>If a randomly selected person tests positive, what is the probability they actually have the disease?</span>
+<span id="cb31-41"><a href="#cb31-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-42"><a href="#cb31-42" aria-hidden="true" tabindex="-1"></a>The cystic fibrosis rate is approximately 1 in 3,900, so $P(D=1) = 0.00025$.</span>
+<span id="cb31-43"><a href="#cb31-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-44"><a href="#cb31-44" aria-hidden="true" tabindex="-1"></a>Applying Bayes' theorem:</span>
+<span id="cb31-45"><a href="#cb31-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-46"><a href="#cb31-46" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb31-47"><a href="#cb31-47" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
+<span id="cb31-48"><a href="#cb31-48" aria-hidden="true" tabindex="-1"></a>P(D=1 \mid +) &amp;= \frac{P(+ \mid D=1) \cdot P(D=1)}{P(+)} <span class="sc">\\</span><span class="co">[</span><span class="ot">1em</span><span class="co">]</span></span>
+<span id="cb31-49"><a href="#cb31-49" aria-hidden="true" tabindex="-1"></a>&amp;= \frac{P(+ \mid D=1) \cdot P(D=1)}{P(+ \mid D=1) \cdot P(D=1) + P(+ \mid D=0) \cdot P(D=0)}</span>
+<span id="cb31-50"><a href="#cb31-50" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
+<span id="cb31-51"><a href="#cb31-51" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb31-52"><a href="#cb31-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-53"><a href="#cb31-53" aria-hidden="true" tabindex="-1"></a>Plugging in the numbers:</span>
+<span id="cb31-54"><a href="#cb31-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-55"><a href="#cb31-55" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb31-56"><a href="#cb31-56" aria-hidden="true" tabindex="-1"></a>P(D=1 \mid +) = \frac{0.99 \times 0.00025}{0.99 \times 0.00025 + 0.01 \times 0.99975} = 0.024</span>
+<span id="cb31-57"><a href="#cb31-57" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb31-58"><a href="#cb31-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-59"><a href="#cb31-59" aria-hidden="true" tabindex="-1"></a>Despite the test having 99% accuracy, the probability of having the disease given a positive test is only about 2.4%. This counterintuitive result arises because the disease is so rare—most positive tests are false positives from the large healthy population.</span>
+<span id="cb31-60"><a href="#cb31-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-61"><a href="#cb31-61" aria-hidden="true" tabindex="-1"></a><span class="fu">### Simulation to Verify</span></span>
+<span id="cb31-62"><a href="#cb31-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-65"><a href="#cb31-65" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb31-66"><a href="#cb31-66" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb31-67"><a href="#cb31-67" aria-hidden="true" tabindex="-1"></a>prev <span class="ot">&lt;-</span> <span class="fl">0.00025</span></span>
+<span id="cb31-68"><a href="#cb31-68" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="dv">100000</span></span>
+<span id="cb31-69"><a href="#cb31-69" aria-hidden="true" tabindex="-1"></a>accuracy <span class="ot">&lt;-</span> <span class="fl">0.99</span></span>
+<span id="cb31-70"><a href="#cb31-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-71"><a href="#cb31-71" aria-hidden="true" tabindex="-1"></a><span class="co"># Randomly assign disease status</span></span>
+<span id="cb31-72"><a href="#cb31-72" aria-hidden="true" tabindex="-1"></a>outcome <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"Disease"</span>, <span class="st">"Healthy"</span>), N, <span class="at">replace =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb31-73"><a href="#cb31-73" aria-hidden="true" tabindex="-1"></a>                  <span class="at">prob =</span> <span class="fu">c</span>(prev, <span class="dv">1</span> <span class="sc">-</span> prev))</span>
+<span id="cb31-74"><a href="#cb31-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-75"><a href="#cb31-75" aria-hidden="true" tabindex="-1"></a>N_D <span class="ot">&lt;-</span> <span class="fu">sum</span>(outcome <span class="sc">==</span> <span class="st">"Disease"</span>)</span>
+<span id="cb31-76"><a href="#cb31-76" aria-hidden="true" tabindex="-1"></a>N_H <span class="ot">&lt;-</span> <span class="fu">sum</span>(outcome <span class="sc">==</span> <span class="st">"Healthy"</span>)</span>
+<span id="cb31-77"><a href="#cb31-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-78"><a href="#cb31-78" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"People with disease:"</span>, N_D, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb31-79"><a href="#cb31-79" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Healthy people:"</span>, N_H, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb31-80"><a href="#cb31-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-81"><a href="#cb31-81" aria-hidden="true" tabindex="-1"></a><span class="co"># Administer test</span></span>
+<span id="cb31-82"><a href="#cb31-82" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">"character"</span>, N)</span>
+<span id="cb31-83"><a href="#cb31-83" aria-hidden="true" tabindex="-1"></a>test[outcome <span class="sc">==</span> <span class="st">"Disease"</span>] <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"+"</span>, <span class="st">"-"</span>), N_D, <span class="at">replace =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb31-84"><a href="#cb31-84" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">prob =</span> <span class="fu">c</span>(accuracy, <span class="dv">1</span> <span class="sc">-</span> accuracy))</span>
+<span id="cb31-85"><a href="#cb31-85" aria-hidden="true" tabindex="-1"></a>test[outcome <span class="sc">==</span> <span class="st">"Healthy"</span>] <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"-"</span>, <span class="st">"+"</span>), N_H, <span class="at">replace =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb31-86"><a href="#cb31-86" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">prob =</span> <span class="fu">c</span>(accuracy, <span class="dv">1</span> <span class="sc">-</span> accuracy))</span>
+<span id="cb31-87"><a href="#cb31-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-88"><a href="#cb31-88" aria-hidden="true" tabindex="-1"></a><span class="co"># Results</span></span>
+<span id="cb31-89"><a href="#cb31-89" aria-hidden="true" tabindex="-1"></a>confusion <span class="ot">&lt;-</span> <span class="fu">table</span>(outcome, test)</span>
+<span id="cb31-90"><a href="#cb31-90" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(confusion)</span>
+<span id="cb31-91"><a href="#cb31-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-92"><a href="#cb31-92" aria-hidden="true" tabindex="-1"></a><span class="co"># Probability of disease given positive test</span></span>
+<span id="cb31-93"><a href="#cb31-93" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">P(Disease | Positive test):"</span>,</span>
+<span id="cb31-94"><a href="#cb31-94" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round</span>(<span class="fu">sum</span>(test <span class="sc">==</span> <span class="st">"+"</span> <span class="sc">&amp;</span> outcome <span class="sc">==</span> <span class="st">"Disease"</span>) <span class="sc">/</span> <span class="fu">sum</span>(test <span class="sc">==</span> <span class="st">"+"</span>), <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb31-95"><a href="#cb31-95" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb31-96"><a href="#cb31-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-97"><a href="#cb31-97" aria-hidden="true" tabindex="-1"></a>The simulation confirms our calculation: despite the high test accuracy, most people who test positive are actually healthy because the disease is so rare.</span>
+<span id="cb31-98"><a href="#cb31-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-99"><a href="#cb31-99" aria-hidden="true" tabindex="-1"></a>::: {.callout-important}</span>
+<span id="cb31-100"><a href="#cb31-100" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Base Rate Fallacy</span></span>
+<span id="cb31-101"><a href="#cb31-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-102"><a href="#cb31-102" aria-hidden="true" tabindex="-1"></a>Ignoring the base rate (prior probability) of a condition leads to dramatically wrong conclusions. This is critical in medical testing, forensic evidence, and any diagnostic situation. Always consider:</span>
+<span id="cb31-103"><a href="#cb31-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-104"><a href="#cb31-104" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>How accurate is the test? (sensitivity, specificity)</span>
+<span id="cb31-105"><a href="#cb31-105" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>How common is the condition? (base rate/prevalence)</span>
+<span id="cb31-106"><a href="#cb31-106" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>What population is being tested? (targeted vs. general screening)</span>
+<span id="cb31-107"><a href="#cb31-107" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb31-108"><a href="#cb31-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-109"><a href="#cb31-109" aria-hidden="true" tabindex="-1"></a><span class="fu">## From Bayes' Theorem to Bayesian Inference</span></span>
+<span id="cb31-110"><a href="#cb31-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-111"><a href="#cb31-111" aria-hidden="true" tabindex="-1"></a>Bayes' theorem becomes a framework for statistical inference when we apply it to unknown parameters:</span>
+<span id="cb31-112"><a href="#cb31-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-113"><a href="#cb31-113" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb31-114"><a href="#cb31-114" aria-hidden="true" tabindex="-1"></a>P(\theta \mid \text{data}) = \frac{P(\text{data} \mid \theta) \cdot P(\theta)}{P(\text{data})}</span>
+<span id="cb31-115"><a href="#cb31-115" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb31-116"><a href="#cb31-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-117"><a href="#cb31-117" aria-hidden="true" tabindex="-1"></a>The components have specific names:</span>
+<span id="cb31-118"><a href="#cb31-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-119"><a href="#cb31-119" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Term <span class="pp">|</span> Name <span class="pp">|</span> Meaning <span class="pp">|</span></span>
+<span id="cb31-120"><a href="#cb31-120" aria-hidden="true" tabindex="-1"></a><span class="pp">|:-----|:-----|:--------|</span></span>
+<span id="cb31-121"><a href="#cb31-121" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> $P(\theta \mid \text{data})$ <span class="pp">|</span> **Posterior** <span class="pp">|</span> Updated belief after seeing data <span class="pp">|</span></span>
+<span id="cb31-122"><a href="#cb31-122" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> $P(\text{data} \mid \theta)$ <span class="pp">|</span> **Likelihood** <span class="pp">|</span> Probability of data given parameter <span class="pp">|</span></span>
+<span id="cb31-123"><a href="#cb31-123" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> $P(\theta)$ <span class="pp">|</span> **Prior** <span class="pp">|</span> Initial belief before seeing data <span class="pp">|</span></span>
+<span id="cb31-124"><a href="#cb31-124" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> $P(\text{data})$ <span class="pp">|</span> **Evidence** <span class="pp">|</span> Normalizing constant <span class="pp">|</span></span>
+<span id="cb31-125"><a href="#cb31-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-126"><a href="#cb31-126" aria-hidden="true" tabindex="-1"></a>The posterior combines what we knew before (prior) with what the data tell us (likelihood).</span>
+<span id="cb31-127"><a href="#cb31-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-128"><a href="#cb31-128" aria-hidden="true" tabindex="-1"></a><span class="fu">## Hierarchical Models: Shrinkage and Borrowing Strength</span></span>
+<span id="cb31-129"><a href="#cb31-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-130"><a href="#cb31-130" aria-hidden="true" tabindex="-1"></a>One of Bayesian statistics' most powerful applications is **hierarchical modeling**, where we model variability at multiple levels. This allows us to "borrow strength" across related observations.</span>
+<span id="cb31-131"><a href="#cb31-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-132"><a href="#cb31-132" aria-hidden="true" tabindex="-1"></a><span class="fu">### A Baseball Example</span></span>
+<span id="cb31-133"><a href="#cb31-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-134"><a href="#cb31-134" aria-hidden="true" tabindex="-1"></a>Consider José Iglesias, a baseball player who in April 2013 had the following statistics:</span>
+<span id="cb31-135"><a href="#cb31-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-136"><a href="#cb31-136" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Month <span class="pp">|</span> At Bats <span class="pp">|</span> Hits <span class="pp">|</span> AVG <span class="pp">|</span></span>
+<span id="cb31-137"><a href="#cb31-137" aria-hidden="true" tabindex="-1"></a><span class="pp">|:------|:--------|:-----|:----|</span></span>
+<span id="cb31-138"><a href="#cb31-138" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> April <span class="pp">|</span> 20 <span class="pp">|</span> 9 <span class="pp">|</span> .450 <span class="pp">|</span></span>
+<span id="cb31-139"><a href="#cb31-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-140"><a href="#cb31-140" aria-hidden="true" tabindex="-1"></a>A batting average (AVG) of .450 is extraordinarily high—no player has finished a season above .400 since Ted Williams in 1941. How should we predict José's season-ending average?</span>
+<span id="cb31-141"><a href="#cb31-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-142"><a href="#cb31-142" aria-hidden="true" tabindex="-1"></a>**The frequentist approach** uses only José's data. With $p = 0.450$ as our estimate and $n = 20$ at bats:</span>
+<span id="cb31-143"><a href="#cb31-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-144"><a href="#cb31-144" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb31-145"><a href="#cb31-145" aria-hidden="true" tabindex="-1"></a>\text{SE} = \sqrt{\frac{0.450 \times 0.550}{20}} = 0.111</span>
+<span id="cb31-146"><a href="#cb31-146" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb31-147"><a href="#cb31-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-148"><a href="#cb31-148" aria-hidden="true" tabindex="-1"></a>A 95% confidence interval is $.450 \pm 0.222$, or roughly $.228$ to $.672$. This interval is wide and centered at .450, implying our best guess is that José will break Ted Williams' record.</span>
+<span id="cb31-149"><a href="#cb31-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-150"><a href="#cb31-150" aria-hidden="true" tabindex="-1"></a>**The Bayesian approach** incorporates what we know about baseball players in general.</span>
+<span id="cb31-151"><a href="#cb31-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-152"><a href="#cb31-152" aria-hidden="true" tabindex="-1"></a><span class="fu">### The Prior: What Do We Know About Batting Averages?</span></span>
+<span id="cb31-153"><a href="#cb31-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-154"><a href="#cb31-154" aria-hidden="true" tabindex="-1"></a>Let's examine batting averages for players with substantial at-bats over recent seasons:</span>
+<span id="cb31-155"><a href="#cb31-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-158"><a href="#cb31-158" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb31-159"><a href="#cb31-159" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-batting-averages</span></span>
+<span id="cb31-160"><a href="#cb31-160" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Distribution of batting averages for MLB players with 500+ at-bats (2010-2012)"</span></span>
+<span id="cb31-161"><a href="#cb31-161" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 9</span></span>
+<span id="cb31-162"><a href="#cb31-162" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 3</span></span>
+<span id="cb31-163"><a href="#cb31-163" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb31-164"><a href="#cb31-164" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb31-165"><a href="#cb31-165" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Lahman)</span>
+<span id="cb31-166"><a href="#cb31-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-167"><a href="#cb31-167" aria-hidden="true" tabindex="-1"></a>batting_data <span class="ot">&lt;-</span> Batting <span class="sc">|&gt;</span></span>
+<span id="cb31-168"><a href="#cb31-168" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(yearID <span class="sc">%in%</span> <span class="dv">2010</span><span class="sc">:</span><span class="dv">2012</span>) <span class="sc">|&gt;</span></span>
+<span id="cb31-169"><a href="#cb31-169" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">AVG =</span> H <span class="sc">/</span> AB) <span class="sc">|&gt;</span></span>
+<span id="cb31-170"><a href="#cb31-170" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(AB <span class="sc">&gt;</span> <span class="dv">500</span>)</span>
+<span id="cb31-171"><a href="#cb31-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-172"><a href="#cb31-172" aria-hidden="true" tabindex="-1"></a>batting_data <span class="sc">|&gt;</span></span>
+<span id="cb31-173"><a href="#cb31-173" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(AVG)) <span class="sc">+</span></span>
+<span id="cb31-174"><a href="#cb31-174" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb31-175"><a href="#cb31-175" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>yearID) <span class="sc">+</span></span>
+<span id="cb31-176"><a href="#cb31-176" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Batting Average"</span>, <span class="at">y =</span> <span class="st">"Count"</span>,</span>
+<span id="cb31-177"><a href="#cb31-177" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"MLB Batting Averages by Year"</span>)</span>
+<span id="cb31-178"><a href="#cb31-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-179"><a href="#cb31-179" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary statistics</span></span>
+<span id="cb31-180"><a href="#cb31-180" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Mean batting average:"</span>, <span class="fu">round</span>(<span class="fu">mean</span>(batting_data<span class="sc">$</span>AVG), <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb31-181"><a href="#cb31-181" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"SD of batting averages:"</span>, <span class="fu">round</span>(<span class="fu">sd</span>(batting_data<span class="sc">$</span>AVG), <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb31-182"><a href="#cb31-182" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb31-183"><a href="#cb31-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-184"><a href="#cb31-184" aria-hidden="true" tabindex="-1"></a>The average player has an AVG around .275 with a standard deviation of about 0.027. José's .450 is over six standard deviations above the mean—an extreme anomaly if taken at face value.</span>
+<span id="cb31-185"><a href="#cb31-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-186"><a href="#cb31-186" aria-hidden="true" tabindex="-1"></a><span class="fu">### The Hierarchical Model</span></span>
+<span id="cb31-187"><a href="#cb31-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-188"><a href="#cb31-188" aria-hidden="true" tabindex="-1"></a>We model the data at two levels:</span>
+<span id="cb31-189"><a href="#cb31-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-190"><a href="#cb31-190" aria-hidden="true" tabindex="-1"></a>**Level 1 (Prior)**: Each player has a "true" batting ability $p$ drawn from a population distribution:</span>
+<span id="cb31-191"><a href="#cb31-191" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb31-192"><a href="#cb31-192" aria-hidden="true" tabindex="-1"></a>p \sim N(\mu, \tau^2)</span>
+<span id="cb31-193"><a href="#cb31-193" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb31-194"><a href="#cb31-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-195"><a href="#cb31-195" aria-hidden="true" tabindex="-1"></a>**Level 2 (Likelihood)**: Given ability $p$, observed performance $Y$ varies due to luck:</span>
+<span id="cb31-196"><a href="#cb31-196" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb31-197"><a href="#cb31-197" aria-hidden="true" tabindex="-1"></a>Y \mid p \sim N(p, \sigma^2)</span>
+<span id="cb31-198"><a href="#cb31-198" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb31-199"><a href="#cb31-199" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-200"><a href="#cb31-200" aria-hidden="true" tabindex="-1"></a>From the data:</span>
+<span id="cb31-201"><a href="#cb31-201" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Population mean: $\mu = 0.275$</span>
+<span id="cb31-202"><a href="#cb31-202" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Population SD: $\tau = 0.027$</span>
+<span id="cb31-203"><a href="#cb31-203" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Individual sampling error: $\sigma = \sqrt{p(1-p)/n} \approx 0.111$</span>
+<span id="cb31-204"><a href="#cb31-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-205"><a href="#cb31-205" aria-hidden="true" tabindex="-1"></a><span class="fu">### The Posterior: Combining Prior and Data</span></span>
+<span id="cb31-206"><a href="#cb31-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-207"><a href="#cb31-207" aria-hidden="true" tabindex="-1"></a>For this model, the posterior distribution has a beautiful closed form. The posterior mean is:</span>
+<span id="cb31-208"><a href="#cb31-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-209"><a href="#cb31-209" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb31-210"><a href="#cb31-210" aria-hidden="true" tabindex="-1"></a>E(p \mid Y = y) = B \cdot \mu + (1-B) \cdot y</span>
+<span id="cb31-211"><a href="#cb31-211" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb31-212"><a href="#cb31-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-213"><a href="#cb31-213" aria-hidden="true" tabindex="-1"></a>where the **shrinkage factor** $B$ is:</span>
+<span id="cb31-214"><a href="#cb31-214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-215"><a href="#cb31-215" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb31-216"><a href="#cb31-216" aria-hidden="true" tabindex="-1"></a>B = \frac{\sigma^2}{\sigma^2 + \tau^2}</span>
+<span id="cb31-217"><a href="#cb31-217" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb31-218"><a href="#cb31-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-219"><a href="#cb31-219" aria-hidden="true" tabindex="-1"></a>This is a **weighted average** of the population mean $\mu$ and observed data $y$. The weights depend on:</span>
+<span id="cb31-220"><a href="#cb31-220" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>How much individual variation there is ($\sigma$)</span>
+<span id="cb31-221"><a href="#cb31-221" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>How much population variation there is ($\tau$)</span>
+<span id="cb31-222"><a href="#cb31-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-223"><a href="#cb31-223" aria-hidden="true" tabindex="-1"></a>When individual uncertainty is high relative to population variation, we "shrink" more toward the population mean.</span>
+<span id="cb31-224"><a href="#cb31-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-225"><a href="#cb31-225" aria-hidden="true" tabindex="-1"></a><span class="fu">### Applying to José Iglesias</span></span>
+<span id="cb31-226"><a href="#cb31-226" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-229"><a href="#cb31-229" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb31-230"><a href="#cb31-230" aria-hidden="true" tabindex="-1"></a><span class="co"># Parameters</span></span>
+<span id="cb31-231"><a href="#cb31-231" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fl">0.275</span>      <span class="co"># Population mean</span></span>
+<span id="cb31-232"><a href="#cb31-232" aria-hidden="true" tabindex="-1"></a>tau <span class="ot">&lt;-</span> <span class="fl">0.027</span>     <span class="co"># Population SD</span></span>
+<span id="cb31-233"><a href="#cb31-233" aria-hidden="true" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="fl">0.111</span>   <span class="co"># José's sampling error (from 20 at-bats)</span></span>
+<span id="cb31-234"><a href="#cb31-234" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fl">0.450</span>       <span class="co"># José's observed average</span></span>
+<span id="cb31-235"><a href="#cb31-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-236"><a href="#cb31-236" aria-hidden="true" tabindex="-1"></a><span class="co"># Shrinkage factor</span></span>
+<span id="cb31-237"><a href="#cb31-237" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> sigma<span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span> (sigma<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> tau<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb31-238"><a href="#cb31-238" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Shrinkage factor B:"</span>, <span class="fu">round</span>(B, <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb31-239"><a href="#cb31-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-240"><a href="#cb31-240" aria-hidden="true" tabindex="-1"></a><span class="co"># Posterior mean</span></span>
+<span id="cb31-241"><a href="#cb31-241" aria-hidden="true" tabindex="-1"></a>posterior_mean <span class="ot">&lt;-</span> B <span class="sc">*</span> mu <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">-</span> B) <span class="sc">*</span> y</span>
+<span id="cb31-242"><a href="#cb31-242" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Posterior mean (predicted true ability):"</span>, <span class="fu">round</span>(posterior_mean, <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb31-243"><a href="#cb31-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-244"><a href="#cb31-244" aria-hidden="true" tabindex="-1"></a><span class="co"># Posterior standard error</span></span>
+<span id="cb31-245"><a href="#cb31-245" aria-hidden="true" tabindex="-1"></a>posterior_se <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="dv">1</span> <span class="sc">/</span> (<span class="dv">1</span><span class="sc">/</span>sigma<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span>tau<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb31-246"><a href="#cb31-246" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Posterior SE:"</span>, <span class="fu">round</span>(posterior_se, <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb31-247"><a href="#cb31-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-248"><a href="#cb31-248" aria-hidden="true" tabindex="-1"></a><span class="co"># 95% credible interval</span></span>
+<span id="cb31-249"><a href="#cb31-249" aria-hidden="true" tabindex="-1"></a>ci_lower <span class="ot">&lt;-</span> posterior_mean <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> posterior_se</span>
+<span id="cb31-250"><a href="#cb31-250" aria-hidden="true" tabindex="-1"></a>ci_upper <span class="ot">&lt;-</span> posterior_mean <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> posterior_se</span>
+<span id="cb31-251"><a href="#cb31-251" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"95% credible interval: ["</span>, <span class="fu">round</span>(ci_lower, <span class="dv">3</span>), <span class="st">","</span>, <span class="fu">round</span>(ci_upper, <span class="dv">3</span>), <span class="st">"]</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb31-252"><a href="#cb31-252" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb31-253"><a href="#cb31-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-254"><a href="#cb31-254" aria-hidden="true" tabindex="-1"></a>The Bayesian estimate "shrinks" José's .450 toward the population average, giving a predicted true ability of about .285. The 95% credible interval is much narrower than the frequentist interval.</span>
+<span id="cb31-255"><a href="#cb31-255" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-256"><a href="#cb31-256" aria-hidden="true" tabindex="-1"></a><span class="fu">### The Outcome</span></span>
+<span id="cb31-257"><a href="#cb31-257" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-258"><a href="#cb31-258" aria-hidden="true" tabindex="-1"></a>Here's how José actually performed through the season:</span>
+<span id="cb31-259"><a href="#cb31-259" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-260"><a href="#cb31-260" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Month <span class="pp">|</span> At Bats <span class="pp">|</span> Hits <span class="pp">|</span> AVG <span class="pp">|</span></span>
+<span id="cb31-261"><a href="#cb31-261" aria-hidden="true" tabindex="-1"></a><span class="pp">|:------|:--------|:-----|:----|</span></span>
+<span id="cb31-262"><a href="#cb31-262" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> April <span class="pp">|</span> 20 <span class="pp">|</span> 9 <span class="pp">|</span> .450 <span class="pp">|</span></span>
+<span id="cb31-263"><a href="#cb31-263" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> May <span class="pp">|</span> 26 <span class="pp">|</span> 11 <span class="pp">|</span> .423 <span class="pp">|</span></span>
+<span id="cb31-264"><a href="#cb31-264" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> June <span class="pp">|</span> 86 <span class="pp">|</span> 34 <span class="pp">|</span> .395 <span class="pp">|</span></span>
+<span id="cb31-265"><a href="#cb31-265" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> July <span class="pp">|</span> 83 <span class="pp">|</span> 17 <span class="pp">|</span> .205 <span class="pp">|</span></span>
+<span id="cb31-266"><a href="#cb31-266" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> August <span class="pp">|</span> 85 <span class="pp">|</span> 25 <span class="pp">|</span> .294 <span class="pp">|</span></span>
+<span id="cb31-267"><a href="#cb31-267" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> September <span class="pp">|</span> 50 <span class="pp">|</span> 10 <span class="pp">|</span> .200 <span class="pp">|</span></span>
+<span id="cb31-268"><a href="#cb31-268" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Total (w/o April)** | **330** | **97** | **.294** <span class="pp">|</span></span>
+<span id="cb31-269"><a href="#cb31-269" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-270"><a href="#cb31-270" aria-hidden="true" tabindex="-1"></a>His final average (excluding April) was .294—almost exactly what the Bayesian model predicted! The hierarchical approach correctly recognized that his early performance was partially luck and regressed his prediction toward the population mean.</span>
+<span id="cb31-271"><a href="#cb31-271" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-274"><a href="#cb31-274" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb31-275"><a href="#cb31-275" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-shrinkage-illustration</span></span>
+<span id="cb31-276"><a href="#cb31-276" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Bayesian shrinkage pulls extreme observations toward the population mean"</span></span>
+<span id="cb31-277"><a href="#cb31-277" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 8</span></span>
+<span id="cb31-278"><a href="#cb31-278" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5</span></span>
+<span id="cb31-279"><a href="#cb31-279" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize shrinkage</span></span>
+<span id="cb31-280"><a href="#cb31-280" aria-hidden="true" tabindex="-1"></a>observations <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.450</span>, <span class="fl">0.320</span>, <span class="fl">0.260</span>, <span class="fl">0.200</span>)</span>
+<span id="cb31-281"><a href="#cb31-281" aria-hidden="true" tabindex="-1"></a>labels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"José (Apr)"</span>, <span class="st">"Good hitter"</span>, <span class="st">"Average"</span>, <span class="st">"Struggling"</span>)</span>
+<span id="cb31-282"><a href="#cb31-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-283"><a href="#cb31-283" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate posteriors for each</span></span>
+<span id="cb31-284"><a href="#cb31-284" aria-hidden="true" tabindex="-1"></a>posteriors <span class="ot">&lt;-</span> B <span class="sc">*</span> mu <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">-</span> B) <span class="sc">*</span> observations</span>
+<span id="cb31-285"><a href="#cb31-285" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-286"><a href="#cb31-286" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb31-287"><a href="#cb31-287" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, observations, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">cex =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"blue"</span>,</span>
+<span id="cb31-288"><a href="#cb31-288" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">0.15</span>, <span class="fl">0.50</span>), <span class="at">xlim =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">4.5</span>),</span>
+<span id="cb31-289"><a href="#cb31-289" aria-hidden="true" tabindex="-1"></a>     <span class="at">xaxt =</span> <span class="st">"n"</span>, <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">"Batting Average"</span>,</span>
+<span id="cb31-290"><a href="#cb31-290" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Bayesian Shrinkage: Observations → Posteriors"</span>)</span>
+<span id="cb31-291"><a href="#cb31-291" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">1</span>, <span class="at">at =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">labels =</span> labels, <span class="at">las =</span> <span class="dv">2</span>)</span>
+<span id="cb31-292"><a href="#cb31-292" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-293"><a href="#cb31-293" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, posteriors, <span class="at">pch =</span> <span class="dv">17</span>, <span class="at">cex =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"red"</span>)</span>
+<span id="cb31-294"><a href="#cb31-294" aria-hidden="true" tabindex="-1"></a><span class="fu">arrows</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, observations, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, posteriors,</span>
+<span id="cb31-295"><a href="#cb31-295" aria-hidden="true" tabindex="-1"></a>       <span class="at">length =</span> <span class="fl">0.1</span>, <span class="at">col =</span> <span class="st">"gray50"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb31-296"><a href="#cb31-296" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> mu, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"darkgreen"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb31-297"><a href="#cb31-297" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-298"><a href="#cb31-298" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>,</span>
+<span id="cb31-299"><a href="#cb31-299" aria-hidden="true" tabindex="-1"></a>       <span class="fu">c</span>(<span class="st">"Observed"</span>, <span class="st">"Posterior estimate"</span>, <span class="st">"Population mean"</span>),</span>
+<span id="cb31-300"><a href="#cb31-300" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">19</span>, <span class="dv">17</span>, <span class="cn">NA</span>), <span class="at">lty =</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="cn">NA</span>, <span class="dv">2</span>),</span>
+<span id="cb31-301"><a href="#cb31-301" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"red"</span>, <span class="st">"darkgreen"</span>), <span class="at">pt.cex =</span> <span class="fl">1.5</span>)</span>
+<span id="cb31-302"><a href="#cb31-302" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb31-303"><a href="#cb31-303" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-304"><a href="#cb31-304" aria-hidden="true" tabindex="-1"></a>Notice how the shrinkage is proportional to how extreme the observation is. José's .450 shrinks dramatically, while the average player's .260 barely moves.</span>
+<span id="cb31-305"><a href="#cb31-305" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-306"><a href="#cb31-306" aria-hidden="true" tabindex="-1"></a><span class="fu">## Credible Intervals vs. Confidence Intervals</span></span>
+<span id="cb31-307"><a href="#cb31-307" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-308"><a href="#cb31-308" aria-hidden="true" tabindex="-1"></a>Bayesian inference produces **credible intervals** rather than confidence intervals. The interpretation differs:</span>
+<span id="cb31-309"><a href="#cb31-309" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-310"><a href="#cb31-310" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="pp">|</span> Frequentist Confidence Interval <span class="pp">|</span> Bayesian Credible Interval <span class="pp">|</span></span>
+<span id="cb31-311"><a href="#cb31-311" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>:--<span class="pp">|</span>:--<span class="pp">|</span>:--<span class="pp">|</span></span>
+<span id="cb31-312"><a href="#cb31-312" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Statement <span class="pp">|</span> "95% of intervals from repeated sampling would contain the true value" <span class="pp">|</span> "There is a 95% probability the true value lies in this interval" <span class="pp">|</span></span>
+<span id="cb31-313"><a href="#cb31-313" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Parameter <span class="pp">|</span> Fixed but unknown <span class="pp">|</span> Random variable with a distribution <span class="pp">|</span></span>
+<span id="cb31-314"><a href="#cb31-314" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Interpretation <span class="pp">|</span> About the procedure <span class="pp">|</span> About the parameter <span class="pp">|</span></span>
+<span id="cb31-315"><a href="#cb31-315" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-316"><a href="#cb31-316" aria-hidden="true" tabindex="-1"></a>The Bayesian interpretation is often more intuitive: we can directly say "there's a 95% probability the true batting average is between .233 and .337."</span>
+<span id="cb31-317"><a href="#cb31-317" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-318"><a href="#cb31-318" aria-hidden="true" tabindex="-1"></a><span class="fu">## Choosing Priors</span></span>
+<span id="cb31-319"><a href="#cb31-319" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-320"><a href="#cb31-320" aria-hidden="true" tabindex="-1"></a>The prior distribution encodes what we believe before seeing data. Prior choice is both a strength (incorporating domain knowledge) and a criticism (subjectivity) of Bayesian methods.</span>
+<span id="cb31-321"><a href="#cb31-321" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-322"><a href="#cb31-322" aria-hidden="true" tabindex="-1"></a><span class="fu">### Types of Priors</span></span>
+<span id="cb31-323"><a href="#cb31-323" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-324"><a href="#cb31-324" aria-hidden="true" tabindex="-1"></a>Priors fall along a spectrum of informativeness. **Informative priors** incorporate substantial prior knowledge—for example, a prior for batting average based on historical data might be N(0.275, 0.027²), reflecting that most players hit between .220 and .330. **Weakly informative priors** provide gentle regularization without imposing strong beliefs; a prior of N(0, 10²) for a regression coefficient allows a wide range of values while preferring smaller effects over extremely large ones. Finally, **non-informative** or **diffuse priors** attempt to "let the data speak" by imposing minimal prior constraints—for instance, a uniform prior on <span class="co">[</span><span class="ot">0, 1</span><span class="co">]</span> for a probability parameter, or an improper prior where P(θ) ∝ 1 across the entire real line.</span>
+<span id="cb31-325"><a href="#cb31-325" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-326"><a href="#cb31-326" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb31-327"><a href="#cb31-327" aria-hidden="true" tabindex="-1"></a><span class="fu">## Empirical Bayes</span></span>
+<span id="cb31-328"><a href="#cb31-328" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-329"><a href="#cb31-329" aria-hidden="true" tabindex="-1"></a>When we estimate prior parameters from data (as we did with batting averages), this is called **empirical Bayes**. It's a practical compromise: we use the data twice—once to set the prior, once for inference—but it often works well in practice.</span>
+<span id="cb31-330"><a href="#cb31-330" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb31-331"><a href="#cb31-331" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-332"><a href="#cb31-332" aria-hidden="true" tabindex="-1"></a><span class="fu">### Prior Sensitivity</span></span>
+<span id="cb31-333"><a href="#cb31-333" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-334"><a href="#cb31-334" aria-hidden="true" tabindex="-1"></a>It's good practice to check whether conclusions depend strongly on prior choice:</span>
+<span id="cb31-335"><a href="#cb31-335" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-338"><a href="#cb31-338" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb31-339"><a href="#cb31-339" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-prior-sensitivity</span></span>
+<span id="cb31-340"><a href="#cb31-340" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Posterior mean as a function of prior standard deviation: with strong priors (small τ), we trust the population average; with weak priors (large τ), we trust José's data"</span></span>
+<span id="cb31-341"><a href="#cb31-341" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 7</span></span>
+<span id="cb31-342"><a href="#cb31-342" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5</span></span>
+<span id="cb31-343"><a href="#cb31-343" aria-hidden="true" tabindex="-1"></a><span class="co"># How does the posterior change with different priors?</span></span>
+<span id="cb31-344"><a href="#cb31-344" aria-hidden="true" tabindex="-1"></a>tau_values <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.01</span>, <span class="fl">0.15</span>, <span class="at">length.out =</span> <span class="dv">100</span>)</span>
+<span id="cb31-345"><a href="#cb31-345" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-346"><a href="#cb31-346" aria-hidden="true" tabindex="-1"></a>posterior_means <span class="ot">&lt;-</span> <span class="fu">sapply</span>(tau_values, <span class="cf">function</span>(tau) {</span>
+<span id="cb31-347"><a href="#cb31-347" aria-hidden="true" tabindex="-1"></a>  B <span class="ot">&lt;-</span> sigma<span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span> (sigma<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> tau<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb31-348"><a href="#cb31-348" aria-hidden="true" tabindex="-1"></a>  B <span class="sc">*</span> mu <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">-</span> B) <span class="sc">*</span> y</span>
+<span id="cb31-349"><a href="#cb31-349" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb31-350"><a href="#cb31-350" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-351"><a href="#cb31-351" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tau_values, posterior_means, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"blue"</span>,</span>
+<span id="cb31-352"><a href="#cb31-352" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">"Prior SD ("</span>, tau, <span class="st">")"</span>)),</span>
+<span id="cb31-353"><a href="#cb31-353" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Posterior Mean"</span>,</span>
+<span id="cb31-354"><a href="#cb31-354" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Prior Sensitivity Analysis"</span>)</span>
+<span id="cb31-355"><a href="#cb31-355" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> y, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"red"</span>)      <span class="co"># Observed value</span></span>
+<span id="cb31-356"><a href="#cb31-356" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> mu, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"green"</span>)   <span class="co"># Prior mean</span></span>
+<span id="cb31-357"><a href="#cb31-357" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fl">0.027</span>, <span class="at">lty =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">"gray"</span>) <span class="co"># Our chosen tau</span></span>
+<span id="cb31-358"><a href="#cb31-358" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-359"><a href="#cb31-359" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"right"</span>, <span class="fu">c</span>(<span class="st">"Posterior mean"</span>, <span class="st">"Observed (.450)"</span>, <span class="st">"Prior mean (.275)"</span>, <span class="st">"τ = 0.027"</span>),</span>
+<span id="cb31-360"><a href="#cb31-360" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"red"</span>, <span class="st">"green"</span>, <span class="st">"gray"</span>), <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="at">lwd =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb31-361"><a href="#cb31-361" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb31-362"><a href="#cb31-362" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-363"><a href="#cb31-363" aria-hidden="true" tabindex="-1"></a><span class="fu">## When Bayesian Methods Excel</span></span>
+<span id="cb31-364"><a href="#cb31-364" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-365"><a href="#cb31-365" aria-hidden="true" tabindex="-1"></a>Bayesian approaches are particularly valuable in several contexts. They excel at **combining multiple sources of information**, allowing you to incorporate prior knowledge, expert opinion, and data from related studies into a single coherent analysis. When working with **hierarchical or multilevel data**—such as patients grouped within hospitals or students nested within schools—Bayesian hierarchical models naturally capture this structure and allow appropriate borrowing of strength across groups. Bayesian methods are especially useful when working with **small samples**, where prior information can stabilize estimates that would otherwise be unreliable. The framework also supports **sequential updating**, where yesterday's posterior becomes today's prior as new data arrive, making it natural for adaptive designs and ongoing monitoring studies. Finally, modern **MCMC methods** enable fitting complex models that would be analytically or computationally intractable using traditional frequentist approaches, opening doors to realistic models of complicated phenomena.</span>
+<span id="cb31-366"><a href="#cb31-366" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-367"><a href="#cb31-367" aria-hidden="true" tabindex="-1"></a><span class="fu">## Computational Bayesian Statistics</span></span>
+<span id="cb31-368"><a href="#cb31-368" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-369"><a href="#cb31-369" aria-hidden="true" tabindex="-1"></a>For complex models, posteriors don't have closed-form solutions. Modern Bayesian statistics relies on **Markov Chain Monte Carlo (MCMC)** methods to sample from posterior distributions.</span>
+<span id="cb31-370"><a href="#cb31-370" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-371"><a href="#cb31-371" aria-hidden="true" tabindex="-1"></a>Popular tools include:</span>
+<span id="cb31-372"><a href="#cb31-372" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Stan** (via <span class="in">`rstan`</span> or <span class="in">`brms`</span> packages in R)</span>
+<span id="cb31-373"><a href="#cb31-373" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**JAGS** (via <span class="in">`rjags`</span> package)</span>
+<span id="cb31-374"><a href="#cb31-374" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**PyMC** (in Python)</span>
+<span id="cb31-375"><a href="#cb31-375" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-378"><a href="#cb31-378" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb31-379"><a href="#cb31-379" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb31-380"><a href="#cb31-380" aria-hidden="true" tabindex="-1"></a><span class="co"># Example using brms (Bayesian Regression Models using Stan)</span></span>
+<span id="cb31-381"><a href="#cb31-381" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(brms)</span>
+<span id="cb31-382"><a href="#cb31-382" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-383"><a href="#cb31-383" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a Bayesian linear regression</span></span>
+<span id="cb31-384"><a href="#cb31-384" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
+<span id="cb31-385"><a href="#cb31-385" aria-hidden="true" tabindex="-1"></a>  <span class="at">formula =</span> weight <span class="sc">~</span> height,</span>
+<span id="cb31-386"><a href="#cb31-386" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> my_data,</span>
+<span id="cb31-387"><a href="#cb31-387" aria-hidden="true" tabindex="-1"></a>  <span class="at">prior =</span> <span class="fu">c</span>(</span>
+<span id="cb31-388"><a href="#cb31-388" aria-hidden="true" tabindex="-1"></a>    <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">10</span>), <span class="at">class =</span> <span class="st">"b"</span>),      <span class="co"># Prior on slope</span></span>
+<span id="cb31-389"><a href="#cb31-389" aria-hidden="true" tabindex="-1"></a>    <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">100</span>, <span class="dv">50</span>), <span class="at">class =</span> <span class="st">"Intercept"</span>)  <span class="co"># Prior on intercept</span></span>
+<span id="cb31-390"><a href="#cb31-390" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb31-391"><a href="#cb31-391" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb31-392"><a href="#cb31-392" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-393"><a href="#cb31-393" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize posterior distributions</span></span>
+<span id="cb31-394"><a href="#cb31-394" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span>
+<span id="cb31-395"><a href="#cb31-395" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb31-396"><a href="#cb31-396" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-397"><a href="#cb31-397" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercises</span></span>
+<span id="cb31-398"><a href="#cb31-398" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-399"><a href="#cb31-399" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb31-400"><a href="#cb31-400" aria-hidden="true" tabindex="-1"></a><span class="fu">### Exercise Bay.1: Sally Clark Case - Base Rate Fallacy</span></span>
+<span id="cb31-401"><a href="#cb31-401" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-402"><a href="#cb31-402" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>In 1999 in England, Sally Clark was convicted of murdering her two infant sons after both were found dead, apparently from Sudden Infant Death Syndrome (SIDS). Expert testimony stated that the chance of two SIDS deaths was 1 in 73 million, calculated as $(1/8500)^2$. What error did this calculation make?</span>
+<span id="cb31-403"><a href="#cb31-403" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-404"><a href="#cb31-404" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Suppose the probability of a second SIDS case given a first is actually 1/100 (due to genetic factors). What is $P(\text{two SIDS deaths})$?</span>
+<span id="cb31-405"><a href="#cb31-405" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-406"><a href="#cb31-406" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>According to Bayes' theorem, the probability the prosecution wanted was $P(\text{guilty} \mid \text{two deaths})$, not $P(\text{two deaths} \mid \text{innocent})$. Assume:</span>
+<span id="cb31-407"><a href="#cb31-407" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>$P(\text{two deaths} \mid \text{guilty}) = 0.50$</span>
+<span id="cb31-408"><a href="#cb31-408" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>$P(\text{guilty}) = 1/1,000,000$ (rate of child-murdering parents)</span>
+<span id="cb31-409"><a href="#cb31-409" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>$P(\text{two natural deaths}) = 1/8500 \times 1/100 = 1.2 \times 10^{-5}$</span>
+<span id="cb31-410"><a href="#cb31-410" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-411"><a href="#cb31-411" aria-hidden="true" tabindex="-1"></a>   Calculate $P(\text{guilty} \mid \text{two deaths})$.</span>
+<span id="cb31-412"><a href="#cb31-412" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb31-413"><a href="#cb31-413" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-414"><a href="#cb31-414" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb31-415"><a href="#cb31-415" aria-hidden="true" tabindex="-1"></a><span class="fu">### Exercise Bay.2: Bayesian Election Polling</span></span>
+<span id="cb31-416"><a href="#cb31-416" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-417"><a href="#cb31-417" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Consider a Bayesian model for Florida election polling:</span>
+<span id="cb31-420"><a href="#cb31-420" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb31-421"><a href="#cb31-421" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb31-422"><a href="#cb31-422" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dslabs)</span>
+<span id="cb31-423"><a href="#cb31-423" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(polls_us_election_2016)</span>
+<span id="cb31-424"><a href="#cb31-424" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-425"><a href="#cb31-425" aria-hidden="true" tabindex="-1"></a>polls <span class="ot">&lt;-</span> polls_us_election_2016 <span class="sc">|&gt;</span></span>
+<span id="cb31-426"><a href="#cb31-426" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(state <span class="sc">==</span> <span class="st">"Florida"</span> <span class="sc">&amp;</span> enddate <span class="sc">&gt;=</span> <span class="st">"2016-11-04"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb31-427"><a href="#cb31-427" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">spread =</span> rawpoll_clinton<span class="sc">/</span><span class="dv">100</span> <span class="sc">-</span> rawpoll_trump<span class="sc">/</span><span class="dv">100</span>)</span>
+<span id="cb31-428"><a href="#cb31-428" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-429"><a href="#cb31-429" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate average spread and SE</span></span>
+<span id="cb31-430"><a href="#cb31-430" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> polls <span class="sc">|&gt;</span></span>
+<span id="cb31-431"><a href="#cb31-431" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb31-432"><a href="#cb31-432" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg =</span> <span class="fu">mean</span>(spread),</span>
+<span id="cb31-433"><a href="#cb31-433" aria-hidden="true" tabindex="-1"></a>    <span class="at">se =</span> <span class="fu">sd</span>(spread) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">n</span>())</span>
+<span id="cb31-434"><a href="#cb31-434" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb31-435"><a href="#cb31-435" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb31-436"><a href="#cb31-436" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-437"><a href="#cb31-437" aria-hidden="true" tabindex="-1"></a>   Using a prior of $N(0, 0.01^2)$ (based on Florida being historically close), calculate the posterior mean and 95% credible interval for the true spread.</span>
+<span id="cb31-438"><a href="#cb31-438" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-439"><a href="#cb31-439" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>How does the posterior change if we use a wider prior ($\tau = 0.05$)? What about a narrower prior ($\tau = 0.005$)?</span>
+<span id="cb31-440"><a href="#cb31-440" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb31-441"><a href="#cb31-441" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-442"><a href="#cb31-442" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
+<span id="cb31-443"><a href="#cb31-443" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-444"><a href="#cb31-444" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Bayes' theorem** provides a principled way to update beliefs based on evidence</span>
+<span id="cb31-445"><a href="#cb31-445" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The **base rate fallacy** occurs when prior probabilities are ignored</span>
+<span id="cb31-446"><a href="#cb31-446" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Bayesian inference** treats parameters as random variables with distributions</span>
+<span id="cb31-447"><a href="#cb31-447" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The **posterior** combines prior beliefs with observed data</span>
+<span id="cb31-448"><a href="#cb31-448" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Hierarchical models** borrow strength across related observations through shrinkage</span>
+<span id="cb31-449"><a href="#cb31-449" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Credible intervals** have a more intuitive interpretation than confidence intervals</span>
+<span id="cb31-450"><a href="#cb31-450" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Prior sensitivity analysis** checks whether conclusions depend on prior assumptions</span>
+<span id="cb31-451"><a href="#cb31-451" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Modern Bayesian computation uses **MCMC** methods implemented in tools like Stan</span>
+<span id="cb31-452"><a href="#cb31-452" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-453"><a href="#cb31-453" aria-hidden="true" tabindex="-1"></a><span class="fu">## Additional Resources</span></span>
+<span id="cb31-454"><a href="#cb31-454" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-455"><a href="#cb31-455" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>@gelman2013bayesian - The comprehensive reference for Bayesian data analysis</span>
+<span id="cb31-456"><a href="#cb31-456" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>@kruschke2014doing - Accessible introduction with R examples</span>
+<span id="cb31-457"><a href="#cb31-457" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>@mcelreath2020statistical - Excellent modern treatment with Stan</span>
+<span id="cb31-458"><a href="#cb31-458" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>@james2023islr - Connects Bayesian ideas to statistical learning</span>
+</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Statistics for Biosciences and Bioengineering</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Built with <a href="https://quarto.org/">Quarto</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
