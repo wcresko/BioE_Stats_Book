@@ -84,6 +84,7 @@ book:
         - chapters/A4-greek-letters.qmd
         - chapters/A3-probability-distributions.qmd
         - chapters/A5-sampling-distributions.qmd
+        - chapters/A10-matrix-algebra.qmd
 
     - references.qmd
 

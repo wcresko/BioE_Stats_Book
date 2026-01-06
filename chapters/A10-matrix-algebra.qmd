@@ -1,0 +1,666 @@
+# Matrix Algebra Fundamentals {#sec-matrix-algebra}
+
+```{r}
+#| echo: false
+#| message: false
+library(tidyverse)
+library(dslabs)
+theme_set(theme_minimal())
+```
+
+## Introduction
+
+Matrix algebra (linear algebra) is the mathematical foundation for many statistical and machine learning methods. Understanding matrices is essential for:
+
+- Dimensionality reduction techniques like PCA (@sec-dimensionality-reduction)
+- Classification methods (@sec-classification)
+- Regression and regularization (@sec-statistical-learning)
+- Working efficiently with large datasets
+
+This appendix introduces the key concepts and R operations you need to work with matrices effectively.
+
+## Basic Objects: Scalars, Vectors, and Matrices
+
+### Scalars
+
+A **scalar** is a single number. In matrix notation, scalars are typically denoted with lowercase letters:
+
+$$a = 5, \quad b = 3.14$$
+
+### Vectors
+
+A **vector** is an ordered collection of numbers. In R, we create vectors with `c()`:
+
+```{r}
+x <- c(2, 5, 1, 8, 3)
+x
+```
+
+Mathematically, we write a column vector as:
+
+$$
+\mathbf{x} = \begin{pmatrix}
+x_1 \\
+x_2 \\
+\vdots \\
+x_n
+\end{pmatrix}
+$$
+
+Vectors are typically denoted with bold lowercase letters. The **transpose** operation $^\top$ converts a column vector to a row vector:
+
+$$\mathbf{x}^\top = (x_1, x_2, \ldots, x_n)$$
+
+### Matrices
+
+A **matrix** is a rectangular array of numbers arranged in rows and columns. We can create matrices in R by binding vectors:
+
+```{r}
+x_1 <- 1:5
+x_2 <- 6:10
+X <- cbind(x_1, x_2)
+X
+```
+
+Mathematically, an $n \times p$ matrix (n rows, p columns) is written as:
+
+$$
+\mathbf{X} = \begin{pmatrix}
+x_{1,1} & x_{1,2} & \cdots & x_{1,p} \\
+x_{2,1} & x_{2,2} & \cdots & x_{2,p} \\
+\vdots & \vdots & \ddots & \vdots \\
+x_{n,1} & x_{n,2} & \cdots & x_{n,p}
+\end{pmatrix}
+$$
+
+Matrices are denoted with bold uppercase letters. The element in row $i$ and column $j$ is written as $x_{i,j}$.
+
+### Matrix Dimensions
+
+The **dimension** of a matrix is its number of rows × number of columns:
+
+```{r}
+# Load MNIST data for examples
+if (!exists("mnist")) mnist <- read_mnist()
+x <- mnist$train$images[1:1000, ]
+y <- mnist$train$labels[1:1000]
+
+dim(x)
+```
+
+This matrix has 1,000 rows (observations) and 784 columns (features—one per pixel).
+
+```{r}
+nrow(x)  # Number of rows
+ncol(x)  # Number of columns
+```
+
+::: {.callout-note}
+## Vectors vs. Matrices in R
+
+R vectors don't have dimensions:
+
+```{r}
+v <- 1:5
+dim(v)
+```
+
+To treat a vector as a matrix, use `as.matrix()`:
+
+```{r}
+dim(as.matrix(v))
+```
+:::
+
+## Creating Matrices
+
+### The `matrix()` Function
+
+Create a matrix from a vector by specifying dimensions:
+
+```{r}
+my_vector <- 1:12
+mat <- matrix(my_vector, nrow = 3, ncol = 4)
+mat
+```
+
+By default, matrices are filled **by column**. Use `byrow = TRUE` to fill by row:
+
+```{r}
+mat_byrow <- matrix(my_vector, nrow = 3, ncol = 4, byrow = TRUE)
+mat_byrow
+```
+
+### Converting Vectors to Grid Images
+
+A powerful application is reshaping a vector into a 2D image. Each row of the MNIST data is a 784-element vector representing a 28×28 pixel image:
+
+```{r}
+#| label: fig-digit-grid
+#| fig-cap: "A digit from MNIST data displayed as a 28×28 pixel grid"
+#| fig-width: 5
+#| fig-height: 5
+# Convert the 3rd digit to a grid
+grid <- matrix(x[3, ], 28, 28)
+
+# Display (flip to show correctly)
+image(1:28, 1:28, grid[, 28:1], col = gray.colors(256, start = 1, end = 0),
+      xlab = "", ylab = "", main = paste("Digit:", y[3]))
+```
+
+### Transpose
+
+The **transpose** swaps rows and columns:
+
+```{r}
+mat <- matrix(1:6, nrow = 2, ncol = 3)
+mat
+t(mat)
+```
+
+## Matrix Indexing
+
+### Extracting Rows and Columns
+
+Use `[row, column]` notation:
+
+```{r}
+mat <- matrix(1:12, nrow = 3, ncol = 4)
+
+# Single element
+mat[2, 3]
+
+# Entire row
+mat[2, ]
+
+# Entire column
+mat[, 3]
+
+# Multiple rows/columns
+mat[1:2, 3:4]
+```
+
+### Preserving Matrix Structure
+
+Extracting a single row or column returns a vector by default:
+
+```{r}
+class(mat[, 1])
+```
+
+Use `drop = FALSE` to keep it as a matrix:
+
+```{r}
+class(mat[, 1, drop = FALSE])
+```
+
+### Logical Indexing
+
+Select elements based on conditions:
+
+```{r}
+mat <- matrix(1:12, nrow = 3, ncol = 4)
+mat[mat > 6] <- 0  # Set values > 6 to zero
+mat
+```
+
+This is useful for operations like binarizing data:
+
+```{r}
+# Binarize MNIST data (convert to 0/1)
+bin_x <- (x > 127) * 1
+```
+
+## Row and Column Operations
+
+### Summary Functions
+
+Compute summaries across rows or columns:
+
+```{r}
+# Row sums and means
+row_sums <- rowSums(x)
+row_means <- rowMeans(x)
+
+# Column sums and means
+col_sums <- colSums(x)
+col_means <- colMeans(x)
+```
+
+For standard deviations, use the `matrixStats` package:
+
+```{r}
+library(matrixStats)
+row_sds <- rowSds(x)
+col_sds <- colSds(x)
+```
+
+### The `apply()` Function
+
+Apply any function across rows (margin = 1) or columns (margin = 2):
+
+```{r}
+# Row medians
+row_medians <- apply(x, 1, median)
+
+# Column ranges
+col_ranges <- apply(x, 2, function(col) max(col) - min(col))
+```
+
+### Filtering Based on Summaries
+
+Remove low-variance columns (uninformative pixels):
+
+```{r}
+# Keep only columns with SD > 60
+sds <- colSds(x)
+x_filtered <- x[, sds > 60]
+dim(x_filtered)
+```
+
+This removes over half the predictors while keeping informative features.
+
+## Vectorized Operations
+
+### Element-wise Operations
+
+Standard arithmetic operates element-by-element:
+
+```{r}
+A <- matrix(1:4, 2, 2)
+B <- matrix(5:8, 2, 2)
+
+A + B   # Addition
+A * B   # Element-wise multiplication
+A / B   # Element-wise division
+```
+
+### Broadcasting
+
+When operating with vectors, R recycles along columns:
+
+```{r}
+mat <- matrix(1:6, nrow = 2, ncol = 3)
+vec <- c(10, 20)
+mat + vec  # Adds 10 to row 1, 20 to row 2
+```
+
+### The `sweep()` Function
+
+For more control over row/column operations:
+
+```{r}
+# Subtract column means (center the data)
+x_centered <- sweep(x, 2, colMeans(x))
+
+# Divide by column SDs (standardize)
+x_standardized <- sweep(x_centered, 2, colSds(x), FUN = "/")
+```
+
+For row operations, use margin = 1:
+
+```{r}
+# Subtract row means
+x_row_centered <- sweep(x, 1, rowMeans(x))
+```
+
+## Matrix Multiplication
+
+### Definition
+
+Matrix multiplication is **not** element-wise. For matrices $\mathbf{A}$ ($n \times k$) and $\mathbf{B}$ ($k \times p$), the product $\mathbf{C} = \mathbf{AB}$ is an $n \times p$ matrix where:
+
+$$c_{i,j} = \sum_{l=1}^{k} a_{i,l} \cdot b_{l,j}$$
+
+The number of columns in $\mathbf{A}$ must equal the number of rows in $\mathbf{B}$.
+
+In R, use `%*%` for matrix multiplication:
+
+```{r}
+A <- matrix(1:6, nrow = 2, ncol = 3)
+B <- matrix(1:6, nrow = 3, ncol = 2)
+
+A %*% B
+```
+
+### Cross Product
+
+The **cross product** $\mathbf{X}^\top\mathbf{X}$ is fundamental in statistics:
+
+```{r}
+# Using matrix multiplication
+XtX <- t(x) %*% x
+
+# More efficient built-in function
+XtX <- crossprod(x)
+```
+
+The cross product creates a $p \times p$ matrix where element $(i,j)$ is the dot product of columns $i$ and $j$.
+
+### Matrix-Vector Multiplication
+
+Multiplying a matrix by a vector transforms the vector:
+
+```{r}
+A <- matrix(c(2, 0, 0, 3), nrow = 2)  # Scaling matrix
+v <- c(1, 1)
+A %*% v
+```
+
+This concept is central to understanding eigenanalysis and PCA.
+
+## The Covariance Matrix
+
+For centered data $\mathbf{X}$ (column means = 0), the **covariance matrix** is:
+
+$$\mathbf{\Sigma} = \frac{1}{n-1} \mathbf{X}^\top \mathbf{X}$$
+
+```{r}
+# Center the data
+x_centered <- scale(x, center = TRUE, scale = FALSE)
+
+# Compute covariance matrix
+cov_matrix <- cov(x_centered)
+dim(cov_matrix)
+```
+
+The covariance matrix is:
+- **Symmetric**: $\Sigma_{ij} = \Sigma_{ji}$
+- **Positive semi-definite**: All eigenvalues ≥ 0
+- **Diagonal elements**: Variances of each variable
+- **Off-diagonal elements**: Covariances between variables
+
+## Eigenanalysis {#sec-eigenanalysis}
+
+Eigenanalysis is the mathematical foundation of Principal Component Analysis (PCA). Understanding eigenvalues and eigenvectors helps you interpret PCA results correctly.
+
+### What are Eigenvectors and Eigenvalues?
+
+For a square matrix $\mathbf{A}$, an **eigenvector** $\mathbf{v}$ and its corresponding **eigenvalue** $\lambda$ satisfy:
+
+$$\mathbf{A}\mathbf{v} = \lambda\mathbf{v}$$
+
+This equation says that when we multiply $\mathbf{A}$ by $\mathbf{v}$, the result is just $\mathbf{v}$ scaled by $\lambda$. The eigenvector's *direction* doesn't change—only its *magnitude*.
+
+### Geometric Intuition
+
+Most vectors change direction when multiplied by a matrix. Eigenvectors are special—they only get stretched or compressed:
+
+```{r}
+#| label: fig-eigenvector-concept
+#| fig-cap: "Eigenvectors maintain their direction when transformed by a matrix. The red vector is an eigenvector (only scaled), while the blue vector changes direction."
+#| fig-width: 7
+#| fig-height: 5
+# Define a transformation matrix
+A <- matrix(c(2, 1, 1, 2), nrow = 2)
+
+# Compute eigenvectors
+eig <- eigen(A)
+
+# Regular vector (changes direction)
+v_regular <- c(1, 0)
+v_transformed <- A %*% v_regular
+
+# Eigenvector (only scales)
+v_eigen <- eig$vectors[, 1]
+v_eigen_transformed <- A %*% v_eigen
+
+# Plot
+plot(NULL, xlim = c(-3, 3), ylim = c(-3, 3), asp = 1,
+     xlab = "x", ylab = "y", main = "Eigenvector vs Regular Vector")
+abline(h = 0, v = 0, col = "gray80")
+
+# Regular vector and its transform
+arrows(0, 0, v_regular[1], v_regular[2], col = "blue", lwd = 2)
+arrows(0, 0, v_transformed[1], v_transformed[2], col = "blue", lwd = 2, lty = 2)
+
+# Eigenvector and its transform
+arrows(0, 0, v_eigen[1], v_eigen[2], col = "red", lwd = 2)
+arrows(0, 0, v_eigen_transformed[1], v_eigen_transformed[2], col = "red", lwd = 2, lty = 2)
+
+legend("topleft", c("Regular (original)", "Regular (transformed)",
+                    "Eigenvector (original)", "Eigenvector (transformed)"),
+       col = c("blue", "blue", "red", "red"), lty = c(1, 2, 1, 2), lwd = 2)
+```
+
+### Computing Eigenvalues and Eigenvectors in R
+
+```{r}
+# Symmetric matrix example
+A <- matrix(c(4, 2, 2, 3), nrow = 2)
+eig <- eigen(A)
+
+# Eigenvalues
+eig$values
+
+# Eigenvectors (as columns)
+eig$vectors
+```
+
+Verify the eigenvalue equation $\mathbf{A}\mathbf{v} = \lambda\mathbf{v}$:
+
+```{r}
+v1 <- eig$vectors[, 1]
+lambda1 <- eig$values[1]
+
+# These should be equal
+A %*% v1
+lambda1 * v1
+```
+
+### Properties for Symmetric Matrices
+
+For symmetric matrices (like covariance matrices):
+
+1. **All eigenvalues are real** (not complex)
+2. **Eigenvectors are orthogonal** (perpendicular to each other)
+3. **Eigenvalues are non-negative** (for positive semi-definite matrices)
+
+```{r}
+# Verify orthogonality: dot product = 0
+sum(eig$vectors[, 1] * eig$vectors[, 2])
+```
+
+### Eigenanalysis and PCA {#sec-eigen-pca}
+
+PCA performs eigenanalysis on the covariance (or correlation) matrix. Here's the connection:
+
+1. **Eigenvectors** of the covariance matrix → **Principal component directions** (loadings)
+2. **Eigenvalues** → **Variance explained** by each component
+
+```{r}
+# Simple example with iris data
+iris_centered <- scale(iris[, 1:4], center = TRUE, scale = FALSE)
+cov_iris <- cov(iris_centered)
+
+# Eigenanalysis
+eig_iris <- eigen(cov_iris)
+
+# Compare to PCA
+pca_iris <- prcomp(iris[, 1:4], center = TRUE, scale. = FALSE)
+
+# Eigenvalues = squared singular values = variances
+eig_iris$values
+pca_iris$sdev^2
+```
+
+The loadings from PCA match the eigenvectors (possibly with sign flips, which are arbitrary):
+
+```{r}
+# Eigenvectors
+round(eig_iris$vectors, 3)
+
+# PCA loadings
+round(pca_iris$rotation, 3)
+```
+
+### Interpreting Eigenvalues
+
+**Eigenvalues tell you how much variance each principal component captures.**
+
+```{r}
+#| label: fig-eigenvalue-interpretation
+#| fig-cap: "Eigenvalues represent variance captured by each principal component. The first PC captures the most variance."
+#| fig-width: 7
+#| fig-height: 5
+# Compute proportion of variance
+var_explained <- eig_iris$values / sum(eig_iris$values)
+cumulative_var <- cumsum(var_explained)
+
+par(mfrow = c(1, 2))
+barplot(var_explained * 100, names.arg = paste0("PC", 1:4),
+        ylab = "Variance Explained (%)", main = "Individual Variance")
+
+barplot(cumulative_var * 100, names.arg = paste0("PC", 1:4),
+        ylab = "Cumulative Variance (%)", main = "Cumulative Variance")
+abline(h = 90, col = "red", lty = 2)
+```
+
+Key interpretations:
+
+- **Large eigenvalue**: The corresponding PC captures substantial variance
+- **Small eigenvalue**: The PC captures little variance (often noise)
+- **Sum of eigenvalues**: Equals total variance in the data
+
+### Interpreting Eigenvectors (Loadings)
+
+**Eigenvectors tell you how original variables combine to form each PC.**
+
+```{r}
+#| label: fig-loading-interpretation
+#| fig-cap: "PCA loadings show how original variables contribute to each principal component"
+#| fig-width: 8
+#| fig-height: 4
+loadings_df <- data.frame(
+  Variable = rep(colnames(iris)[1:4], 4),
+  PC = rep(paste0("PC", 1:4), each = 4),
+  Loading = as.vector(pca_iris$rotation)
+)
+
+ggplot(loadings_df, aes(x = Variable, y = Loading, fill = Loading > 0)) +
+  geom_bar(stat = "identity") +
+  facet_wrap(~PC, nrow = 1) +
+  scale_fill_manual(values = c("steelblue", "coral"), guide = "none") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  labs(title = "PCA Loadings for Iris Data")
+```
+
+Key interpretations:
+
+- **Large positive loading**: Variable increases as PC increases
+- **Large negative loading**: Variable decreases as PC increases
+- **Small loading**: Variable contributes little to that PC
+- **Similar loadings**: Variables that load together are correlated
+
+### The Spectral Decomposition
+
+A symmetric matrix can be decomposed as:
+
+$$\mathbf{A} = \mathbf{V} \mathbf{\Lambda} \mathbf{V}^\top$$
+
+where:
+- $\mathbf{V}$ is the matrix of eigenvectors (columns)
+- $\mathbf{\Lambda}$ is a diagonal matrix of eigenvalues
+
+```{r}
+# Verify spectral decomposition
+V <- eig_iris$vectors
+Lambda <- diag(eig_iris$values)
+reconstructed <- V %*% Lambda %*% t(V)
+
+# Should match original covariance matrix
+max(abs(cov_iris - reconstructed))
+```
+
+This decomposition is the mathematical basis for PCA's ability to reduce dimensionality while preserving variance.
+
+## Matrix Inverse
+
+The **inverse** of a square matrix $\mathbf{A}$, denoted $\mathbf{A}^{-1}$, satisfies:
+
+$$\mathbf{A}\mathbf{A}^{-1} = \mathbf{A}^{-1}\mathbf{A} = \mathbf{I}$$
+
+where $\mathbf{I}$ is the identity matrix.
+
+```{r}
+A <- matrix(c(4, 2, 2, 3), nrow = 2)
+A_inv <- solve(A)
+
+# Verify
+A %*% A_inv
+```
+
+### Applications
+
+Matrix inversion is used in:
+
+- Solving linear systems: $\mathbf{x} = \mathbf{A}^{-1}\mathbf{b}$
+- Linear regression: $\hat{\boldsymbol{\beta}} = (\mathbf{X}^\top\mathbf{X})^{-1}\mathbf{X}^\top\mathbf{y}$
+
+```{r}
+# Solve linear system Ax = b
+A <- matrix(c(2, 1, 1, 3), nrow = 2)
+b <- c(5, 7)
+x <- solve(A, b)  # More efficient than solve(A) %*% b
+x
+
+# Verify
+A %*% x
+```
+
+## QR Decomposition
+
+The **QR decomposition** factors a matrix as $\mathbf{X} = \mathbf{QR}$ where:
+
+- $\mathbf{Q}$ is orthogonal ($\mathbf{Q}^\top\mathbf{Q} = \mathbf{I}$)
+- $\mathbf{R}$ is upper triangular
+
+This is numerically more stable than matrix inversion for solving linear systems.
+
+```{r}
+qr_result <- qr(A)
+Q <- qr.Q(qr_result)
+R <- qr.R(qr_result)
+
+# Verify
+Q %*% R
+```
+
+## Summary
+
+Key matrix algebra concepts for statistics:
+
+| Operation | R Function | Description |
+|:----------|:-----------|:------------|
+| Transpose | `t(X)` | Swap rows and columns |
+| Matrix multiply | `X %*% Y` | Matrix multiplication |
+| Cross product | `crossprod(X)` | $\mathbf{X}^\top\mathbf{X}$ |
+| Element-wise ops | `X * Y`, `X + Y` | Apply to each element |
+| Row/column stats | `rowMeans()`, `colSds()` | Summary statistics |
+| Standardize | `sweep()`, `scale()` | Center and scale |
+| Eigenanalysis | `eigen()` | Eigenvalues and eigenvectors |
+| Inverse | `solve()` | Matrix inverse |
+| QR decomposition | `qr()` | Orthogonal decomposition |
+
+**For PCA** (see @sec-dimensionality-reduction):
+
+- Eigenvalues = variance captured by each principal component
+- Eigenvectors = loadings (weights for combining original variables)
+- Larger eigenvalues indicate more important components
+- Orthogonal eigenvectors ensure uncorrelated components
+
+## Exercises
+
+1. Create a 100 × 10 matrix of randomly generated normal numbers. Compute its dimensions, number of rows, and number of columns.
+
+2. Add the scalar 1 to row 1, the scalar 2 to row 2, and so on, to the matrix from Exercise 1. Hint: create a vector 1:100 and add it.
+
+3. Compute the covariance matrix of the iris numeric variables. Verify it is symmetric.
+
+4. Perform eigenanalysis on the iris covariance matrix. Which variable contributes most to PC1?
+
+5. Verify that the eigenvectors are orthogonal by computing their pairwise dot products.
+
+6. Using the MNIST data, compute the proportion of pixels in a "grey area" (values between 50 and 205) for each digit. Make a boxplot by digit class.
+
+7. Standardize the columns of a matrix (subtract mean, divide by SD) using `sweep()`.
