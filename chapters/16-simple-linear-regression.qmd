@@ -207,6 +207,130 @@ predict(fish_lm, newdata = new_lengths, interval = "confidence")
 
 The confidence interval indicates uncertainty about the mean Y at each X value. A prediction interval (using `interval = "prediction"`) would be wider, accounting for individual variability around that mean.
 
+## Tidyverse Approach: The broom Package
+
+The `summary()` output from `lm()` is informative but awkward to work with programmatically. The **broom package** provides three functions that convert model output into tidy tibbles, making it easy to use regression results in tidyverse workflows.
+
+### tidy(): Extract Coefficient Statistics
+
+The `tidy()` function extracts coefficient estimates, standard errors, test statistics, and p-values as a tibble:
+
+```{r}
+library(broom)
+
+# Standard summary output (not tidy)
+summary(fish_lm)$coefficients
+
+# Tidy output - much easier to work with
+tidy(fish_lm)
+```
+
+The tidy format makes it easy to filter, arrange, or visualize coefficients:
+
+```{r}
+# Extract just significant coefficients
+tidy(fish_lm) |>
+  filter(p.value < 0.05)
+
+# Add confidence intervals
+tidy(fish_lm, conf.int = TRUE, conf.level = 0.95)
+```
+
+### glance(): Model-Level Statistics
+
+The `glance()` function extracts model-level summaries—R-squared, AIC, BIC, and other fit statistics—as a single-row tibble:
+
+```{r}
+glance(fish_lm)
+```
+
+This is particularly useful when comparing multiple models:
+
+```{r}
+# Compare models with different predictors
+fish_lm_simple <- lm(weight_mg ~ length_cm)
+fish_lm_quad <- lm(weight_mg ~ length_cm + I(length_cm^2))
+
+# Combine model summaries
+bind_rows(
+  glance(fish_lm_simple) |> mutate(model = "linear"),
+  glance(fish_lm_quad) |> mutate(model = "quadratic")
+) |>
+  select(model, r.squared, adj.r.squared, AIC, BIC)
+```
+
+### augment(): Add Fitted Values and Residuals
+
+The `augment()` function adds fitted values, residuals, and diagnostic measures to your original data:
+
+```{r}
+# Add model diagnostics to the data
+fish_augmented <- augment(fish_lm)
+head(fish_augmented)
+```
+
+The augmented data includes:
+
+- `.fitted`: Predicted values
+- `.resid`: Residuals
+- `.hat`: Leverage values
+- `.cooksd`: Cook's distance (influence measure)
+- `.std.resid`: Standardized residuals
+
+This makes ggplot-based diagnostic plots straightforward:
+
+```{r}
+#| label: fig-broom-diagnostics
+#| fig-cap: "Residual diagnostic plots created using augmented data from the broom package"
+#| fig-width: 8
+#| fig-height: 4
+
+# Diagnostic plots with ggplot
+library(patchwork)
+
+p1 <- ggplot(fish_augmented, aes(.fitted, .resid)) +
+  geom_point(alpha = 0.6) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "red") +
+  geom_smooth(se = FALSE, color = "blue") +
+  labs(x = "Fitted values", y = "Residuals",
+       title = "Residuals vs Fitted")
+
+p2 <- ggplot(fish_augmented, aes(sample = .std.resid)) +
+  stat_qq() +
+  stat_qq_line(color = "red") +
+  labs(x = "Theoretical quantiles", y = "Standardized residuals",
+       title = "Q-Q Plot")
+
+p1 + p2
+```
+
+You can also use `augment()` to add predictions for new data:
+
+```{r}
+# Predict for new lengths
+new_fish <- tibble(length_cm = c(1.0, 2.0, 3.0, 4.0))
+augment(fish_lm, newdata = new_fish, interval = "confidence")
+```
+
+::: {.callout-tip}
+## Why Use broom?
+
+The broom package integrates regression analysis into tidyverse workflows:
+
+- **Reproducibility**: Tidy output is easier to save, share, and version control
+- **Visualization**: Augmented data works directly with ggplot2
+- **Iteration**: Compare many models using `map()` and `bind_rows()`
+- **Consistency**: Same functions work for `lm()`, `glm()`, `t.test()`, and 100+ model types
+
+```{r}
+#| eval: false
+# Example: Fit models to multiple groups
+mtcars |>
+  group_by(cyl) |>
+  group_modify(~ tidy(lm(mpg ~ wt, data = .x)))
+```
+:::
+
 ## Model Assumptions
 
 Linear regression assumptions include:
