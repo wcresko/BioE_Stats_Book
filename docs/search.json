@@ -72,78 +72,78 @@
   {
     "objectID": "chapters/01-introduction.html",
     "href": "chapters/01-introduction.html",
-    "title": "1  Introduction",
+    "title": "2  Introduction",
     "section": "",
-    "text": "1.1 The Role of Statistics in Bioengineering\nBioengineering sits at the intersection of biology, engineering, and medicine, a field where understanding complex systems requires both precise measurement and rigorous analysis. Whether you are developing new biomaterials, engineering tissues, designing medical devices, or analyzing genomic data, you will encounter situations where you need to draw conclusions from imperfect data. Statistics provides the framework for doing this responsibly.\nAt its core, statistics addresses a fundamental problem: we almost never know the world perfectly, yet we still need to make decisions and draw conclusions. When you measure the mechanical properties of a hydrogel, characterize the response of neurons to a stimulus, or quantify gene expression in different treatment groups, you obtain samples from larger populations. Statistics gives us the tools to estimate underlying parameters from these samples and to quantify our uncertainty about those estimates.",
+    "text": "2.1 The Role of Statistics in Bioengineering\nBioengineering sits at the intersection of biology, engineering, and medicine, a field where understanding complex systems requires both precise measurement and rigorous analysis. Whether you are developing new biomaterials, engineering tissues, designing medical devices, or analyzing genomic data, you will encounter situations where you need to draw conclusions from imperfect data. Statistics provides the framework for doing this responsibly.\nAt its core, statistics addresses a fundamental problem: we almost never know the world perfectly, yet we still need to make decisions and draw conclusions. When you measure the mechanical properties of a hydrogel, characterize the response of neurons to a stimulus, or quantify gene expression in different treatment groups, you obtain samples from larger populations. Statistics gives us the tools to estimate underlying parameters from these samples and to quantify our uncertainty about those estimates.",
     "crumbs": [
-      "Foundations of Data Science",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
+      "Core Data Science Tools",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introduction</span>"
     ]
   },
   {
     "objectID": "chapters/01-introduction.html#why-statistics-matters-for-your-career",
     "href": "chapters/01-introduction.html#why-statistics-matters-for-your-career",
-    "title": "1  Introduction",
-    "section": "1.2 Why Statistics Matters for Your Career",
-    "text": "1.2 Why Statistics Matters for Your Career\nThe importance of statistical literacy for bioengineers cannot be overstated. Experimental design, data analysis, and the interpretation of results form the backbone of scientific research. Understanding statistics allows you to design experiments that can actually answer your questions, analyze data appropriately, and communicate your findings clearly and honestly.\nBeyond research, statistical thinking is increasingly important in industry applications. Quality control in biomanufacturing relies on statistical process control. Clinical trials require sophisticated statistical designs. Machine learning algorithms that power diagnostic tools and drug discovery pipelines are fundamentally statistical methods. Familiarity with these concepts will serve you throughout your career.",
+    "title": "2  Introduction",
+    "section": "2.2 Why Statistics Matters for Your Career",
+    "text": "2.2 Why Statistics Matters for Your Career\nThe importance of statistical literacy for bioengineers cannot be overstated. Experimental design, data analysis, and the interpretation of results form the backbone of scientific research. Understanding statistics allows you to design experiments that can actually answer your questions, analyze data appropriately, and communicate your findings clearly and honestly.\nBeyond research, statistical thinking is increasingly important in industry applications. Quality control in biomanufacturing relies on statistical process control. Clinical trials require sophisticated statistical designs. Machine learning algorithms that power diagnostic tools and drug discovery pipelines are fundamentally statistical methods. Familiarity with these concepts will serve you throughout your career.\n\n\n\n\n\n\nFigure 2.3: Computational approaches enable powerful and reproducible data analysis",
     "crumbs": [
-      "Foundations of Data Science",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
+      "Core Data Science Tools",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introduction</span>"
     ]
   },
   {
     "objectID": "chapters/01-introduction.html#coding-and-scripting-for-data-analysis",
     "href": "chapters/01-introduction.html#coding-and-scripting-for-data-analysis",
-    "title": "1  Introduction",
-    "section": "1.3 Coding and Scripting for Data Analysis",
-    "text": "1.3 Coding and Scripting for Data Analysis\nThis course emphasizes computational approaches to statistics. While it is possible to perform many statistical calculations by hand or using spreadsheet software, modern data analysis almost always involves programming. The ability to write code opens up enormous possibilities.\nProgramming is incredibly fast and powerful, particularly for repeated actions. A single command can accomplish what would require thousands of mouse clicks. You gain the ability to analyze large datasets that spreadsheet software cannot handle efficiently. You have access to thousands of free programs created by and for scientists. Your analyses become reproducible—you can document exactly what you did and share that documentation with others.\n\n\n\n\n\nWe distinguish between coding and scripting, though the line between them has blurred considerably. Coding generally refers to programming in compiled languages like C++ or Fortran, where source code is translated into machine code before execution. Scripting typically involves interpreted languages like Python, R, or Julia, where commands are executed on the fly without a separate compilation step. Compiled code tends to run faster but is less flexible during development; scripting languages offer more interactivity at some cost in execution speed. Modern analytical pipelines typically combine both approaches, using scripting languages for data manipulation and visualization while calling compiled code for computationally intensive operations.",
+    "title": "2  Introduction",
+    "section": "2.3 Coding and Scripting for Data Analysis",
+    "text": "2.3 Coding and Scripting for Data Analysis\nThis course emphasizes computational approaches to statistics. While it is possible to perform many statistical calculations by hand or using spreadsheet software, modern data analysis almost always involves programming. The ability to write code opens up enormous possibilities.\nProgramming is incredibly fast and powerful, particularly for repeated actions. A single command can accomplish what would require thousands of mouse clicks. You gain the ability to analyze large datasets that spreadsheet software cannot handle efficiently. You have access to thousands of free programs created by and for scientists. Your analyses become reproducible—you can document exactly what you did and share that documentation with others.\n\n\n\n\n\n\nFigure 2.4: Coding and scripting form the foundation of modern data science\n\n\n\nWe distinguish between coding and scripting, though the line between them has blurred considerably. Coding generally refers to programming in compiled languages like C++ or Fortran, where source code is translated into machine code before execution. Scripting typically involves interpreted languages like Python, R, or Julia, where commands are executed on the fly without a separate compilation step. Compiled code tends to run faster but is less flexible during development; scripting languages offer more interactivity at some cost in execution speed. Modern analytical pipelines typically combine both approaches, using scripting languages for data manipulation and visualization while calling compiled code for computationally intensive operations.",
     "crumbs": [
-      "Foundations of Data Science",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
+      "Core Data Science Tools",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introduction</span>"
     ]
   },
   {
     "objectID": "chapters/01-introduction.html#what-you-will-learn",
     "href": "chapters/01-introduction.html#what-you-will-learn",
-    "title": "1  Introduction",
-    "section": "1.4 What You Will Learn",
-    "text": "1.4 What You Will Learn\nThis course provides broad coverage of the core components of modern statistics while giving you the computational tools necessary to carry out your work. By the end, you will be able to read and write code in Unix and R, implement reproducible research practices through Markdown, GitHub, and cloud computing platforms, perform exploratory data analysis and visualization, understand probability in the context of distributions and sampling, and conduct a wide range of statistical analyses from t-tests to linear models to machine learning methods.\nThe course is organized around progressive skill building. We start with the computational foundations—Unix, R, and tools for reproducible research. We then develop the probability theory needed to understand statistical inference. With these foundations in place, we cover classical hypothesis testing and parametric methods before moving to more advanced topics like linear models and statistical learning.",
+    "title": "2  Introduction",
+    "section": "2.4 What You Will Learn",
+    "text": "2.4 What You Will Learn\nThis course provides broad coverage of the core components of modern statistics while giving you the computational tools necessary to carry out your work. By the end, you will be able to read and write code in Unix and R, implement reproducible research practices through Markdown, GitHub, and cloud computing platforms, perform exploratory data analysis and visualization, understand probability in the context of distributions and sampling, and conduct a wide range of statistical analyses from t-tests to linear models to machine learning methods.\nThe course is organized around progressive skill building. We start with the computational foundations—Unix, R, and tools for reproducible research. We then develop the probability theory needed to understand statistical inference. With these foundations in place, we cover classical hypothesis testing and parametric methods before moving to more advanced topics like linear models and statistical learning.",
     "crumbs": [
-      "Foundations of Data Science",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
+      "Core Data Science Tools",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introduction</span>"
     ]
   },
   {
     "objectID": "chapters/01-introduction.html#course-philosophy",
     "href": "chapters/01-introduction.html#course-philosophy",
-    "title": "1  Introduction",
-    "section": "1.5 Course Philosophy",
-    "text": "1.5 Course Philosophy\nThis is a practical course, and we will learn by doing. Class time will be devoted primarily to hands-on coding practice rather than traditional lecturing. You will work through exercises, debug code, and analyze real data. This active approach to learning is more challenging than passive note-taking, but it produces much deeper understanding.\nExpect to struggle at times. Programming is frustrating, especially when you are learning. Error messages will seem cryptic. Code that should work will not work. Problems that seem simple will prove difficult. This is normal, and working through these challenges is how you develop genuine competence. The goal is not to avoid mistakes but to develop the skills to diagnose and fix them.\nThroughout the course, we emphasize reproducibility and transparency. Your analyses should be documented in ways that allow others to understand and verify what you did. This is not just good practice for collaboration; it also helps you when you return to your own work months or years later.",
+    "title": "2  Introduction",
+    "section": "2.5 Course Philosophy",
+    "text": "2.5 Course Philosophy\nThis is a practical course, and we will learn by doing. Class time will be devoted primarily to hands-on coding practice rather than traditional lecturing. You will work through exercises, debug code, and analyze real data. This active approach to learning is more challenging than passive note-taking, but it produces much deeper understanding.\nExpect to struggle at times. Programming is frustrating, especially when you are learning. Error messages will seem cryptic. Code that should work will not work. Problems that seem simple will prove difficult. This is normal, and working through these challenges is how you develop genuine competence. The goal is not to avoid mistakes but to develop the skills to diagnose and fix them.\nThroughout the course, we emphasize reproducibility and transparency. Your analyses should be documented in ways that allow others to understand and verify what you did. This is not just good practice for collaboration; it also helps you when you return to your own work months or years later.",
     "crumbs": [
-      "Foundations of Data Science",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
+      "Core Data Science Tools",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introduction</span>"
     ]
   },
   {
     "objectID": "chapters/01-introduction.html#statistical-thinking",
     "href": "chapters/01-introduction.html#statistical-thinking",
-    "title": "1  Introduction",
-    "section": "1.6 Statistical Thinking",
-    "text": "1.6 Statistical Thinking\nStatistics ultimately aims to turn data into conclusions about the world. We want to make point estimates and construct confidence intervals that quantify our uncertainty. We design experiments that can distinguish between competing hypotheses. We test those hypotheses using data. When dealing with high-dimensional data, we need methods to reduce complexity while preserving important information.\nAll of this requires a firm understanding of probability, sampling, and distributions. Probability provides the mathematical framework for reasoning about uncertainty. Understanding how samples relate to populations allows us to make inferences about things we cannot directly observe. Knowledge of common probability distributions tells us what to expect under various conditions and helps us identify when data deviate from expectations.\nWe will explore two major approaches to statistical inference. Frequentist statistics, the classical approach taught in most introductory courses, interprets probabilities as long-run frequencies and uses null hypothesis testing as its primary framework. Hierarchical probabilistic modeling, including maximum likelihood estimation and Bayesian methods, provides complementary tools that are increasingly important in modern statistical practice. Both perspectives have their uses, and understanding both will make you a more versatile analyst.",
+    "title": "2  Introduction",
+    "section": "2.6 Statistical Thinking",
+    "text": "2.6 Statistical Thinking\nStatistics ultimately aims to turn data into conclusions about the world. We want to make point estimates and construct confidence intervals that quantify our uncertainty. We design experiments that can distinguish between competing hypotheses. We test those hypotheses using data. When dealing with high-dimensional data, we need methods to reduce complexity while preserving important information.\nAll of this requires a firm understanding of probability, sampling, and distributions. Probability provides the mathematical framework for reasoning about uncertainty. Understanding how samples relate to populations allows us to make inferences about things we cannot directly observe. Knowledge of common probability distributions tells us what to expect under various conditions and helps us identify when data deviate from expectations.\nWe will explore two major approaches to statistical inference. Frequentist statistics, the classical approach taught in most introductory courses, interprets probabilities as long-run frequencies and uses null hypothesis testing as its primary framework. Hierarchical probabilistic modeling, including maximum likelihood estimation and Bayesian methods, provides complementary tools that are increasingly important in modern statistical practice. Both perspectives have their uses, and understanding both will make you a more versatile analyst.",
     "crumbs": [
-      "Foundations of Data Science",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
+      "Core Data Science Tools",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introduction</span>"
     ]
   },
   {
     "objectID": "chapters/01-introduction.html#getting-started",
     "href": "chapters/01-introduction.html#getting-started",
-    "title": "1  Introduction",
-    "section": "1.7 Getting Started",
-    "text": "1.7 Getting Started\nThe remainder of this chapter covers the practical matters of getting your computational environment set up. In subsequent chapters, we will dive into the material itself, beginning with Unix and the command line before moving to R and RStudio. With these tools in place, we will begin our exploration of probability, inference, and statistical modeling.\nThe journey ahead requires effort, but the skills you develop will serve you throughout your career. Let’s begin.",
+    "title": "2  Introduction",
+    "section": "2.7 Getting Started",
+    "text": "2.7 Getting Started\nThe remainder of this chapter covers the practical matters of getting your computational environment set up. In subsequent chapters, we will dive into the material itself, beginning with Unix and the command line before moving to R and RStudio. With these tools in place, we will begin our exploration of probability, inference, and statistical modeling.\nThe journey ahead requires effort, but the skills you develop will serve you throughout your career. Let’s begin.",
     "crumbs": [
-      "Foundations of Data Science",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
+      "Core Data Science Tools",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introduction</span>"
     ]
   },
   {
@@ -4849,6 +4849,17 @@
     "text": "0.4 Software Requirements\n\nLatest version of R (install here)\nLatest version of RStudio (install here)\nLaTeX for document preparation",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Why This Book?</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/01-introduction.html#the-role-of-statistics-in-bioengineering",
+    "href": "chapters/01-introduction.html#the-role-of-statistics-in-bioengineering",
+    "title": "2  Introduction",
+    "section": "",
+    "text": "Figure 2.2: Statistical literacy is essential for modern bioengineering careers",
+    "crumbs": [
+      "Core Data Science Tools",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introduction</span>"
     ]
   }
 ]
