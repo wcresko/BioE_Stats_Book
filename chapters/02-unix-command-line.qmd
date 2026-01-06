@@ -601,31 +601,6 @@ scp local_file.txt username@server.edu:~/destination/
 scp username@server.edu:~/remote_file.txt ./local_copy.txt
 ```
 
-## Data File Best Practices
-
-When working with data files, following consistent practices will save you time and prevent errors. These guidelines apply whether you are using Unix tools, R, or any other analysis software.
-
-### Do
-
-- **Store data in plain text formats** such as tab-separated (.tsv) or comma-separated (.csv) files. These nonproprietary formats can be read by any software and will remain accessible for years to come.
-- **Keep an unedited copy of original data files.** Even when your analysis requires modifications, preserve the raw data separately.
-- **Use descriptive, consistent names** for files and variables. A name like `experiment1_control_measurements.tsv` is far more useful than `data2.txt`.
-- **Maintain metadata** that documents what each variable means, how data were collected, and any processing steps applied.
-- **Add new observations as rows** and new variables as columns to maintain a consistent rectangular structure.
-
-### Don't
-
-- **Don't mix data types within a column.** If a column contains numbers, every entry should be a number (or explicitly missing).
-- **Don't use special characters in file or directory names.** Stick to letters, numbers, underscores, and hyphens. Avoid spaces, which can cause problems with command-line tools.
-- **Don't use delimiter characters in data values.** If your file is comma-delimited, don't use commas within data entries. For example, use `2024-03-08` rather than `March 8, 2024` for dates.
-- **Don't copy data from formatted documents** like Microsoft Word directly into data files. Hidden formatting characters can corrupt your data.
-- **Don't edit data files in spreadsheet programs** that might silently convert values (for example, Excel's tendency to convert gene names like SEPT1 to dates).
-
-::: {.callout-warning}
-## Preserving Raw Data
-Perhaps the most important principle is to never modify your original raw data files. Keep them in a separate directory with restricted write permissions if possible. All data cleaning and transformation should be done programmatically (in scripts that can be re-run), with outputs saved to new files.
-:::
-
 ## Practice Exercises
 
 The best way to learn command-line skills is through practice. Save a digital record of your work so that you can study it later if you need to.

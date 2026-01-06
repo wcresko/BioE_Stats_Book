@@ -1,4 +1,4 @@
-# Statistical Learning {#sec-statistical-learning}
+# Core Concepts in Statistical Learning {#sec-statistical-learning}
 
 ```{r}
 #| echo: false
