@@ -308,6 +308,7 @@ Resampling methods provide powerful, flexible tools for statistical inference:
 
 ## Exercises
 
+::: {.callout-note}
 ### Exercise B.1: Bootstrap Standard Errors
 
 You measure the half-life of a radioactive isotope in 15 independent experiments:
@@ -327,7 +328,9 @@ f) Which statistic (mean or median) has greater sampling variability for these d
 #| eval: false
 # Your code here
 ```
+:::
 
+::: {.callout-note}
 ### Exercise B.2: Bootstrap Confidence Intervals
 
 You measure reaction times (in milliseconds) for a cognitive task:
@@ -348,7 +351,9 @@ d) Bootstrap the 90th percentile and construct a 95% CI for it
 # Your code here
 library(boot)
 ```
+:::
 
+::: {.callout-note}
 ### Exercise B.3: Bootstrap for Correlation
 
 You have measurements of two physiological variables:
@@ -368,7 +373,9 @@ e) Create a scatterplot with the data and report the correlation with its bootst
 #| eval: false
 # Your code here
 ```
+:::
 
+::: {.callout-note}
 ### Exercise B.4: Permutation Test vs. t-test
 
 You compare growth rates of bacteria cultured in two different media:
@@ -389,7 +396,9 @@ f) Createhistogram of the permutation distribution with the observed difference 
 #| eval: false
 # Your code here
 ```
+:::
 
+::: {.callout-note}
 ### Exercise B.5: Paired Permutation Test
 
 You measure expression levels of a gene before and after heat stress in 10 plant samples:
@@ -409,7 +418,9 @@ e) Visualize the paired data with a before-after plot (connecting lines between 
 #| eval: false
 # Your code here
 ```
+:::
 
+::: {.callout-note}
 ### Exercise B.6: Bootstrap vs. Permutation—Understanding the Difference
 
 Consider the following dataset:
@@ -431,3 +442,4 @@ d) Create visualizations demonstrating both the bootstrap distribution (for one 
 #| eval: false
 # Your code here
 ```
+:::

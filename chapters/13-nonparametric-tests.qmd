@@ -224,6 +224,7 @@ Nonparametric and frequency-based tests provide alternatives when parametric ass
 
 ## Exercises
 
+::: {.callout-note}
 ### Exercise N.1: Mann-Whitney U Test
 
 You measure enzyme activity (in arbitrary units) in two groups of transgenic plants:
@@ -244,7 +245,9 @@ f) Calculate the median and IQR for each group and report these along with your 
 #| eval: false
 # Your code here
 ```
+:::
 
+::: {.callout-note}
 ### Exercise N.2: Wilcoxon Signed-Rank Test
 
 A researcher measures blood pressure before and after a stress reduction intervention in 12 participants:
@@ -265,7 +268,9 @@ f) Report your conclusions about the intervention's effectiveness
 #| eval: false
 # Your code here
 ```
+:::
 
+::: {.callout-note}
 ### Exercise N.3: Chi-Square Goodness-of-Fit
 
 A genetics experiment produces offspring with four phenotypes. According to Mendelian theory, these should occur in a 9:3:3:1 ratio. You observe the following counts:
@@ -284,7 +289,9 @@ e) Do the data support the theoretical prediction? Explain your reasoning
 #| eval: false
 # Your code here
 ```
+:::
 
+::: {.callout-note}
 ### Exercise N.4: Chi-Square Test of Independence
 
 A clinical trial tests a new treatment for bacterial infections. Results are classified by treatment group and outcome:
@@ -305,7 +312,9 @@ f) Report your conclusions about treatment effectiveness
 #| eval: false
 # Your code here
 ```
+:::
 
+::: {.callout-note}
 ### Exercise N.5: Choosing the Right Test
 
 For each scenario below, indicate which test is most appropriate (Mann-Whitney U, Wilcoxon signed-rank, Kruskal-Wallis, chi-square, Fisher's exact, or McNemar's test) and explain why:
@@ -323,6 +332,7 @@ For two of these scenarios, write complete R code to perform the analysis with s
 #| eval: false
 # Your code here
 ```
+:::
 
 ## Additional Resources
 

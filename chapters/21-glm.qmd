@@ -402,6 +402,7 @@ GLMs provide a flexible framework for modeling non-normal response variables whi
 
 ## Exercises
 
+::: {.callout-note}
 ### Exercise G.1: Logistic Regression for Binary Outcomes
 
 You study the effect of study time on exam success. Students either pass (1) or fail (0), and you record their study hours:
@@ -422,7 +423,9 @@ f) Create a visualization showing the fitted logistic curve with the observed da
 #| eval: false
 # Your code here
 ```
+:::
 
+::: {.callout-note}
 ### Exercise G.2: Poisson Regression for Count Data
 
 You count the number of bacterial colonies on petri dishes as a function of antibiotic concentration:
@@ -443,7 +446,9 @@ f) Create a plot showing observed counts and model predictions
 #| eval: false
 # Your code here
 ```
+:::
 
+::: {.callout-note}
 ### Exercise G.3: Model Comparison and Selection
 
 Using the `mtcars` dataset, predict whether a car has an automatic transmission (`am`: 0 = automatic, 1 = manual) from various predictors:
@@ -462,7 +467,9 @@ f) Use the model to predict transmission type for a car with mpg=20, wt=3.0, hp=
 #| eval: false
 # Your code here
 ```
+:::
 
+::: {.callout-note}
 ### Exercise G.4: Chi-Square and Contingency Tables
 
 A genetics study crosses two heterozygous plants and observes offspring phenotypes. Expected ratio is 9:3:3:1.
@@ -492,7 +499,9 @@ h) Use Fisher's exact test and compare to the chi-square result
 #| eval: false
 # Your code here
 ```
+:::
 
+::: {.callout-note}
 ### Exercise G.5: Handling Overdispersion
 
 Simulate overdispersed count data and explore the consequences:
@@ -516,3 +525,4 @@ f) Which model would you prefer for these data and why?
 # Your code here
 library(MASS)  # for glm.nb()
 ```
+:::

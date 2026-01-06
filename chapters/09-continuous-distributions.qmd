@@ -247,6 +247,7 @@ Understanding these distributions and their properties prepares you for statisti
 
 ## Exercises
 
+::: {.callout-note}
 ### Exercise C.1: Normal Distribution Calculations
 
 Heights of adult males in a population are normally distributed with mean 175 cm and standard deviation 7 cm.
@@ -260,7 +261,9 @@ d) If you randomly sample 4 males, what is the probability that their average he
 #| eval: false
 # Your code here
 ```
+:::
 
+::: {.callout-note}
 ### Exercise C.2: Exponential Waiting Times
 
 The time between arrivals of patients at an emergency room follows an exponential distribution with mean 12 minutes.
@@ -274,7 +277,9 @@ d) Simulate 1000 inter-arrival times and compare the empirical distribution to t
 #| eval: false
 # Your code here
 ```
+:::
 
+::: {.callout-note}
 ### Exercise C.3: Central Limit Theorem Exploration
 
 Consider a highly skewed distribution: the chi-square distribution with 2 degrees of freedom.
@@ -289,7 +294,9 @@ e) At what sample size does the distribution of means look approximately normal?
 #| eval: false
 # Your code here
 ```
+:::
 
+::: {.callout-note}
 ### Exercise C.4: Q-Q Plots for Assessing Normality
 
 You have collected the following measurements of protein concentration (mg/mL):
@@ -308,7 +315,9 @@ e) Now add two outliers to the data (values of 30 and 19) and repeat parts (b) a
 #| eval: false
 # Your code here
 ```
+:::
 
+::: {.callout-note}
 ### Exercise C.5: Comparing Uniform and Normal
 
 a) Generate 1000 random values from a uniform distribution on the interval [0, 10]
@@ -322,6 +331,7 @@ f) Explain why the uniform distribution does or does not follow the 68-95-99.7 r
 #| eval: false
 # Your code here
 ```
+:::
 
 ## Additional Resources
 

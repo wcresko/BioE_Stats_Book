@@ -765,6 +765,7 @@ These concepts provide the foundation for hypothesis testing and the statistical
 
 ## Exercises
 
+::: {.callout-note}
 ### Exercise S.1: Standard Error and Sample Size
 
 You are measuring the concentration of a specific protein in blood samples. From previous studies, you know the population standard deviation is approximately 15 mg/dL.
@@ -778,7 +779,9 @@ d) Simulate this scenario: create 1000 samples of size n=25 from a normal distri
 #| eval: false
 # Your code here
 ```
+:::
 
+::: {.callout-note}
 ### Exercise S.2: Confidence Intervals and Interpretation
 
 A researcher measures the wing length (mm) of 20 monarch butterflies and obtains:
@@ -797,7 +800,9 @@ d) Calculate a 99% confidence interval. How does it compare to the 95% CI and wh
 #| eval: false
 # Your code here
 ```
+:::
 
+::: {.callout-note}
 ### Exercise S.3: Bootstrap Confidence Intervals
 
 Consider the following reaction times (milliseconds) for a cognitive task:
@@ -816,7 +821,9 @@ e) Use the bootstrap to estimate the standard error of the median
 #| eval: false
 # Your code here
 ```
+:::
 
+::: {.callout-note}
 ### Exercise S.4: Polling and Margin of Error
 
 You are conducting a survey to estimate the proportion of biology students who plan to attend graduate school. In your random sample of 400 students, 256 indicate they plan to attend graduate school.
@@ -831,7 +838,9 @@ e) How large a sample would you need to achieve a margin of error of ±2% (at 95
 #| eval: false
 # Your code here
 ```
+:::
 
+::: {.callout-note}
 ### Exercise S.5: Experimental Design Critique
 
 Read the following experimental description and identify problems with the design:
@@ -844,7 +853,9 @@ a) List at least three major problems with how this experiment was conducted
 b) For each problem you identified, explain how it could bias the results
 c) Redesign this experiment to address the problems you identified
 d) Would technical replicates (measuring each person's blood pressure multiple times) or biological replicates (measuring more people) be more valuable for this study? Explain.
+:::
 
+::: {.callout-note}
 ### Exercise S.6: Simulation Study of Coverage
 
 The true "95% confidence interval" should contain the true parameter 95% of the time in repeated sampling. Let's verify this through simulation.
@@ -865,6 +876,7 @@ e) Now try a 90% confidence interval. What proportion of intervals contain the t
 #| eval: false
 # Your code here
 ```
+:::
 
 ## Additional Resources
 

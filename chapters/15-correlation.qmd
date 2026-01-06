@@ -351,6 +351,7 @@ Correlation quantifies the strength and direction of linear relationships betwee
 
 ## Practice Exercises
 
+::: {.callout-note}
 ### Exercise L.1: Correlation
 
 1. Create two correlated variables using simulation
@@ -371,7 +372,9 @@ cor(x, y)
 plot(x, y, main = paste("Correlation:", round(cor(x, y), 2)))
 abline(lm(y ~ x), col = "red")
 ```
+:::
 
+::: {.callout-note}
 ### Exercise L.2: Pearson vs. Spearman
 
 Compare Pearson and Spearman correlations:
@@ -390,7 +393,9 @@ y <- log(x) + rnorm(50, sd = 0.3)
 cor(x, y, method = "pearson")
 cor(x, y, method = "spearman")
 ```
+:::
 
+::: {.callout-note}
 ### Exercise L.3: Effect of Outliers
 
 Explore how outliers affect correlation:
@@ -404,7 +409,9 @@ Explore how outliers affect correlation:
 #| eval: false
 # Your code here
 ```
+:::
 
+::: {.callout-note}
 ### Exercise L.4: Partial Correlation
 
 You have three variables: temperature (T), enzyme activity (E), and pH (P). Both temperature and pH affect enzyme activity.
@@ -428,7 +435,9 @@ f) Interpret the difference between the simple and partial correlations
 # install.packages("ppcor")  # if needed
 library(ppcor)
 ```
+:::
 
+::: {.callout-note}
 ### Exercise L.5: Correlation Matrix and Visualization
 
 You have measurements of four morphological traits in a sample of fish:
@@ -457,6 +466,7 @@ f) Are any of the relationships clearly non-linear? How does this affect the cor
 # install.packages("corrplot")  # if needed
 library(corrplot)
 ```
+:::
 
 ## Additional Resources
 
