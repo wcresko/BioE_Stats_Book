@@ -1,0 +1,339 @@
+# Continuous Probability Distributions {#sec-continuous-distributions}
+
+```{r}
+#| echo: false
+#| message: false
+library(tidyverse)
+theme_set(theme_minimal())
+```
+
+## From Discrete to Continuous
+
+Many quantities we measure—weight, concentration, time, temperature—can take any value within a range, not just discrete counts. These continuous random variables require a different mathematical treatment. Instead of probability mass functions that assign probabilities to specific values, we use probability density functions (PDFs) where probabilities come from integrating over intervals.
+
+For a continuous random variable, the probability that it falls within an interval $[a, b]$ is:
+
+$$P(a \leq X \leq b) = \int_a^b f(x) \, dx$$
+
+where $f(x)$ is the probability density function. The total area under the density curve must equal 1:
+
+$$\int_{-\infty}^{\infty} f(x) \, dx = 1$$
+
+Note that for continuous variables, the probability of any exact value is zero—only intervals have non-zero probability.
+
+## The Uniform Distribution
+
+The simplest continuous distribution is the uniform distribution, where all values in an interval are equally likely. If $X$ is uniformly distributed between $a$ and $b$:
+
+$$f(x) = \frac{1}{b-a} \quad \text{for } a \leq x \leq b$$
+
+The mean is $(a+b)/2$ and the variance is $(b-a)^2/12$.
+
+![The uniform distribution has constant probability density across an interval](../images/ch12/ch12_uniform_dist.jpeg){#fig-uniform-concept fig-align="center"}
+
+```{r}
+#| label: fig-uniform-dist
+#| fig-cap: "The uniform distribution on [0, 10] showing constant density"
+#| fig-width: 6
+#| fig-height: 4
+# Uniform distribution between 0 and 10
+x <- seq(0, 10, length.out = 100)
+plot(x, dunif(x, min = 0, max = 10), type = "l", lwd = 2,
+     xlab = "x", ylab = "Density",
+     main = "Uniform Distribution (0, 10)")
+```
+
+The uniform distribution is often used to model random number generation and situations where no outcome is favored over another within a range.
+
+## The Exponential Distribution
+
+The exponential distribution models waiting times between events in a Poisson process—the time until the next event when events occur randomly at a constant rate $\lambda$. Its density function is:
+
+$$f(x) = \lambda e^{-\lambda x} \quad \text{for } x \geq 0$$
+
+The mean is $1/\lambda$ and the variance is $1/\lambda^2$.
+
+![The exponential distribution models waiting times in a Poisson process](../images/ch12/ch12_exponential_dist.jpeg){#fig-exponential-concept fig-align="center"}
+
+If a radioactive isotope has a decay rate of $\lambda = 0.1$ per minute, the time until the next decay follows an exponential distribution with mean 10 minutes.
+
+```{r}
+#| label: fig-exponential-dist
+#| fig-cap: "Exponential distribution showing the characteristic right-skewed shape of waiting times"
+#| fig-width: 6
+#| fig-height: 4
+# Exponential distributions with different rates
+x <- seq(0, 30, length.out = 200)
+plot(x, dexp(x, rate = 0.1), type = "l", lwd = 2, col = "blue",
+     xlab = "Time", ylab = "Density",
+     main = "Exponential Distribution (λ = 0.1)")
+```
+
+A key property of the exponential distribution is memorylessness: the probability of waiting another $t$ units does not depend on how long you have already waited.
+
+## The Gamma Distribution
+
+The gamma distribution generalizes the exponential distribution to model the waiting time until the $r$th event in a Poisson process. Its density function involves two parameters: shape $r$ and rate $\lambda$:
+
+$$f(x) = \frac{\lambda^r x^{r-1} e^{-\lambda x}}{(r-1)!} \quad \text{for } x \geq 0$$
+
+The mean is $r/\lambda$ and the variance is $r/\lambda^2$.
+
+When $r = 1$, the gamma distribution reduces to the exponential. As $r$ increases, the distribution becomes more symmetric and bell-shaped.
+
+## The Normal (Gaussian) Distribution
+
+The normal distribution is the most important continuous distribution in statistics. Its distinctive bell-shaped curve appears throughout nature, and the Central Limit Theorem explains why: the sum of many independent random effects tends toward normality regardless of the underlying distributions.
+
+The normal distribution is characterized by two parameters: mean $\mu$ (center) and standard deviation $\sigma$ (spread):
+
+$$f(x) = \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}$$
+
+```{r}
+#| label: fig-normal-params
+#| fig-cap: "Normal distributions with different mean (μ) and standard deviation (σ) parameters"
+#| fig-width: 7
+#| fig-height: 5
+# Normal distributions with different parameters
+x <- seq(-10, 15, length.out = 200)
+plot(x, dnorm(x, mean = 0, sd = 1), type = "l", lwd = 2, col = "blue",
+     ylim = c(0, 0.5), xlab = "x", ylab = "Density",
+     main = "Normal Distributions")
+lines(x, dnorm(x, mean = 0, sd = 2), lwd = 2, col = "red")
+lines(x, dnorm(x, mean = 5, sd = 1), lwd = 2, col = "darkgreen")
+legend("topright",
+       legend = c("μ=0, σ=1", "μ=0, σ=2", "μ=5, σ=1"),
+       col = c("blue", "red", "darkgreen"), lwd = 2)
+```
+
+### Properties of the Normal Distribution
+
+The normal distribution is symmetric around its mean. The mean, median, and mode are all equal. About 68% of the distribution falls within one standard deviation of the mean, 95% within two standard deviations, and 99.7% within three standard deviations (the "68-95-99.7 rule").
+
+![The 68-95-99.7 rule for the normal distribution.](../images/ch12/ch12_normal_rule.jpeg){#fig-normal-rule fig-align="center"}
+
+### Estimating Normal Parameters
+
+The mean of a sample provides an estimate of the population mean:
+
+$$\bar{x} = \frac{1}{n}\sum_{i=1}^{n}x_i$$
+
+The sample variance estimates the population variance:
+
+$$s^2 = \frac{1}{n-1}\sum_{i=1}^{n}(x_i - \bar{x})^2$$
+
+Note the $n-1$ in the denominator (called Bessel's correction), which provides an unbiased estimate of the population variance.
+
+### The Standard Normal Distribution
+
+When $\mu = 0$ and $\sigma = 1$, we have the standard normal distribution. Any normal variable can be converted to standard normal by subtracting the mean and dividing by the standard deviation:
+
+$$Z = \frac{X - \mu}{\sigma}$$
+
+This standardization, called computing a z-score, allows us to compare values from different normal distributions and to use tables of standard normal probabilities.
+
+```{r}
+# Probability calculations with the normal distribution
+# P(X < 1.96) for standard normal
+pnorm(1.96)
+
+# P(-1.96 < X < 1.96)
+pnorm(1.96) - pnorm(-1.96)
+
+# What value has 97.5% of the distribution below it?
+qnorm(0.975)
+```
+
+The values 1.96 and -1.96 are particularly important because they bound the middle 95% of the standard normal distribution, forming the basis for 95% confidence intervals.
+
+### Z-Scores
+
+A z-score is a standardized value that tells us how many standard deviations an observation is from the mean:
+
+$$z_i = \frac{x_i - \bar{x}}{s}$$
+
+Z-scores allow us to compare values from different normal distributions on a common scale. This is particularly useful when comparing measurements that have different units or very different magnitudes—for example, comparing the relative leg length of mice versus elephants.
+
+### Why the Normal Distribution is Special in Biology
+
+The normal distribution appears throughout biology because many biological traits are influenced by numerous factors, each contributing a small effect. This is particularly evident in quantitative genetics.
+
+![The genetic model of complex traits explains why many biological measurements are normally distributed.](../images/ch12/ch12_genetic_model.jpeg){#fig-genetic-model fig-align="center"}
+
+Consider a trait influenced by multiple genes. If we have many loci, each with a small additive effect, the distribution of trait values in a population will approximate a normal distribution—even if the contribution at each locus follows a simple Mendelian pattern.
+
+![The distribution of genotypes in an F2 cross approaches normality as the number of contributing loci increases.](../images/ch12/ch12_f2_distribution.jpeg){#fig-f2-distribution fig-align="center"}
+
+This connection between many small independent effects and the normal distribution is formalized by the Central Limit Theorem, which we explore below.
+
+### Checking Normality
+
+Many statistical methods assume normally distributed data. Before applying these methods, you should check whether the assumption is reasonable.
+
+Visual methods include histograms and Q-Q (quantile-quantile) plots:
+
+```{r}
+#| label: fig-qq-plots
+#| fig-cap: "Q-Q plots for assessing normality: normally distributed data (left) follows the diagonal line, while skewed data (right) deviates"
+#| fig-width: 8
+#| fig-height: 4
+# Generate some data
+set.seed(42)
+normal_data <- rnorm(200, mean = 50, sd = 10)
+skewed_data <- rexp(200, rate = 0.1)
+
+par(mfrow = c(1, 2))
+
+# Q-Q plot for normal data
+qqnorm(normal_data, main = "Normal Data")
+qqline(normal_data, col = "red")
+
+# Q-Q plot for skewed data
+qqnorm(skewed_data, main = "Skewed Data")
+qqline(skewed_data, col = "red")
+```
+
+In a Q-Q plot, normally distributed data should fall approximately along the diagonal line. Systematic deviations indicate non-normality.
+
+## The Central Limit Theorem
+
+The Central Limit Theorem (CLT) states that the sampling distribution of the mean approaches normality as sample size increases, regardless of the shape of the population distribution. This is why the normal distribution appears so frequently in statistics—we often work with means or other sums of random variables.
+
+```{r}
+#| label: fig-clt-demo
+#| fig-cap: "The Central Limit Theorem: sampling distributions of means become normal regardless of the population distribution as sample size increases"
+#| fig-width: 9
+#| fig-height: 6
+# Demonstrate CLT with exponential distribution
+set.seed(123)
+
+# Exponential distribution is quite skewed
+par(mfrow = c(2, 2))
+
+# Original distribution
+hist(rexp(10000, rate = 1), breaks = 50, main = "Original: Exponential",
+     xlab = "x", col = "lightblue")
+
+# Means of samples of size 5
+means_5 <- replicate(10000, mean(rexp(5, rate = 1)))
+hist(means_5, breaks = 50, main = "Means of n=5",
+     xlab = "Sample Mean", col = "lightblue")
+
+# Means of samples of size 30
+means_30 <- replicate(10000, mean(rexp(30, rate = 1)))
+hist(means_30, breaks = 50, main = "Means of n=30",
+     xlab = "Sample Mean", col = "lightblue")
+
+# Means of samples of size 100
+means_100 <- replicate(10000, mean(rexp(100, rate = 1)))
+hist(means_100, breaks = 50, main = "Means of n=100",
+     xlab = "Sample Mean", col = "lightblue")
+```
+
+Even though the exponential distribution is strongly right-skewed, the distribution of sample means becomes increasingly normal as sample size grows. This is the Central Limit Theorem in action.
+
+## Summary of Distribution Functions in R
+
+R provides consistent functions for all distributions:
+
+| Distribution | d (density) | p (cumulative) | q (quantile) | r (random) |
+|:-------------|:------------|:---------------|:-------------|:-----------|
+| Uniform | `dunif` | `punif` | `qunif` | `runif` |
+| Exponential | `dexp` | `pexp` | `qexp` | `rexp` |
+| Normal | `dnorm` | `pnorm` | `qnorm` | `rnorm` |
+| Gamma | `dgamma` | `pgamma` | `qgamma` | `rgamma` |
+
+Understanding these distributions and their properties prepares you for statistical inference, where we use sampling distributions to make probabilistic statements about population parameters.
+
+## Exercises
+
+::: {.callout-note}
+### Exercise C.1: Normal Distribution Calculations
+
+Heights of adult males in a population are normally distributed with mean 175 cm and standard deviation 7 cm.
+
+a) What proportion of males are taller than 185 cm?
+b) What proportion are between 170 and 180 cm?
+c) What height represents the 90th percentile?
+d) If you randomly sample 4 males, what is the probability that their average height exceeds 180 cm? (Hint: use the sampling distribution of the mean)
+
+```{r}
+#| eval: false
+# Your code here
+```
+:::
+
+::: {.callout-note}
+### Exercise C.2: Exponential Waiting Times
+
+The time between arrivals of patients at an emergency room follows an exponential distribution with mean 12 minutes.
+
+a) What is the rate parameter λ?
+b) What is the probability that the next patient arrives within 5 minutes?
+c) What is the probability that more than 20 minutes elapse before the next patient?
+d) Simulate 1000 inter-arrival times and compare the empirical distribution to the theoretical exponential distribution
+
+```{r}
+#| eval: false
+# Your code here
+```
+:::
+
+::: {.callout-note}
+### Exercise C.3: Central Limit Theorem Exploration
+
+Consider a highly skewed distribution: the chi-square distribution with 2 degrees of freedom.
+
+a) Generate and plot 10,000 values from this distribution to visualize its shape
+b) Now repeatedly sample n=5 observations from this distribution, calculate their mean, and repeat 10,000 times. Plot the distribution of these means.
+c) Repeat part (b) with sample sizes of n=10, n=30, and n=50
+d) For each sample size, calculate the mean and standard deviation of your sample means. Compare to the theoretical values predicted by the CLT.
+e) At what sample size does the distribution of means look approximately normal?
+
+```{r}
+#| eval: false
+# Your code here
+```
+:::
+
+::: {.callout-note}
+### Exercise C.4: Q-Q Plots for Assessing Normality
+
+You have collected the following measurements of protein concentration (mg/mL):
+```
+data <- c(23.1, 24.5, 22.8, 25.3, 26.1, 24.9, 23.7, 25.8, 24.2, 26.5,
+          23.9, 25.1, 24.6, 23.4, 25.9, 24.3, 26.2, 23.6, 25.4, 24.8)
+```
+
+a) Create a histogram of this data
+b) Create a Q-Q plot to assess normality
+c) Perform a Shapiro-Wilk test for normality (`shapiro.test()`)
+d) Based on these assessments, does the normality assumption seem reasonable?
+e) Now add two outliers to the data (values of 30 and 19) and repeat parts (b) and (c). How do outliers affect the normality assessment?
+
+```{r}
+#| eval: false
+# Your code here
+```
+:::
+
+::: {.callout-note}
+### Exercise C.5: Comparing Uniform and Normal
+
+a) Generate 1000 random values from a uniform distribution on the interval [0, 10]
+b) Generate 1000 random values from a normal distribution with mean 5 and standard deviation chosen so that approximately 95% of values fall between 0 and 10
+c) Create side-by-side histograms of both distributions
+d) Calculate and compare: the mean, median, standard deviation, and IQR for both distributions
+e) For each distribution, what proportion of values fall within one standard deviation of the mean? How does this compare to the theoretical value for the normal distribution (68%)?
+f) Explain why the uniform distribution does or does not follow the 68-95-99.7 rule
+
+```{r}
+#| eval: false
+# Your code here
+```
+:::
+
+## Additional Resources
+
+- @irizarry2019introduction - Excellent chapters on probability distributions and the Central Limit Theorem
+- @logan2010biostatistical - Comprehensive treatment of distributions in the context of biological statistics

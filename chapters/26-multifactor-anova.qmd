@@ -1,0 +1,840 @@
+# Multi-Factor ANOVA {#sec-multifactor-anova}
+
+```{r}
+#| echo: false
+#| message: false
+library(tidyverse)
+theme_set(theme_minimal())
+```
+
+## Introduction to Factorial Designs
+
+While one-way ANOVA compares groups defined by a single factor, many biological experiments manipulate multiple factors simultaneously. A factorial design examines all combinations of factor levels, allowing us to study not only the independent effect of each factor but also how factors interact with each other.
+
+Consider an experiment testing the effects of both temperature and nutrient concentration on algal growth. A factorial design would include all combinations: high temperature with high nutrients, high temperature with low nutrients, low temperature with high nutrients, and low temperature with low nutrients. This approach is more efficient than conducting separate experiments for each factor, and it reveals interactions that single-factor designs would miss.
+
+**Factorial designs** are characterized by:
+- Multiple factors (independent variables)
+- All combinations of factor levels are tested
+- Ability to test for interactions between factors
+- Greater efficiency than separate one-factor experiments
+
+The notation $a \times b$ factorial design means factor A has $a$ levels and factor B has $b$ levels, producing $a \times b$ treatment combinations. A $2 \times 3$ design has 6 treatment groups; a $2 \times 2 \times 2$ design has 8 treatment groups.
+
+## Two-Way ANOVA
+
+Two-way ANOVA analyzes data from a two-factor experimental design. The model partitions variance into:
+
+1. **Main effect of Factor A**: The average effect of Factor A across all levels of Factor B
+2. **Main effect of Factor B**: The average effect of Factor B across all levels of Factor A
+3. **Interaction effect (A × B)**: The extent to which the effect of one factor depends on the level of the other factor
+4. **Residual (error)**: Unexplained variation within treatment groups
+
+The statistical model is:
+
+$$y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha\beta)_{ij} + \epsilon_{ijk}$$
+
+where:
+- $\mu$ is the grand mean
+- $\alpha_i$ is the effect of level $i$ of Factor A
+- $\beta_j$ is the effect of level $j$ of Factor B
+- $(\alpha\beta)_{ij}$ is the interaction effect
+- $\epsilon_{ijk}$ is the random error for observation $k$ in treatment combination $ij$
+
+```{r}
+#| label: fig-factorial-design
+#| fig-cap: "Two-way ANOVA factorial design showing main effects and interaction"
+#| fig-width: 8
+#| fig-height: 6
+
+# Simulated factorial experiment: Temperature × Nutrient effects on growth
+set.seed(123)
+n <- 15  # replicates per treatment
+
+# Create factorial design data
+temperature <- rep(c("Low", "High"), each = 2*n)
+nutrient <- rep(rep(c("Low", "High"), each = n), 2)
+
+# Simulate growth with main effects AND interaction
+# Low temp & low nutrient: baseline 10
+# High nutrient adds 5
+# High temp adds 3
+# BUT interaction: high temp × high nutrient gives extra boost of 4
+growth <- numeric(4*n)
+growth[temperature == "Low" & nutrient == "Low"] <- rnorm(n, 10, 1.5)
+growth[temperature == "Low" & nutrient == "High"] <- rnorm(n, 15, 1.5)
+growth[temperature == "High" & nutrient == "Low"] <- rnorm(n, 13, 1.5)
+growth[temperature == "High" & nutrient == "High"] <- rnorm(n, 22, 1.5)  # Synergistic effect
+
+factorial_data <- data.frame(
+  temperature = factor(temperature, levels = c("Low", "High")),
+  nutrient = factor(nutrient, levels = c("Low", "High")),
+  growth = growth
+)
+
+# Visualize the design
+ggplot(factorial_data, aes(x = temperature, y = growth, fill = nutrient)) +
+  geom_boxplot(alpha = 0.7) +
+  geom_jitter(width = 0.1, alpha = 0.3, size = 1) +
+  labs(title = "Factorial Design: Temperature × Nutrient",
+       subtitle = "Each combination of factor levels is tested",
+       x = "Temperature",
+       y = "Growth Rate",
+       fill = "Nutrient\nLevel") +
+  scale_fill_manual(values = c("Low" = "#E69F00", "High" = "#56B4E9")) +
+  theme_minimal(base_size = 12)
+```
+
+```{r}
+# Fit the two-way ANOVA model
+factorial_aov <- aov(growth ~ temperature * nutrient, data = factorial_data)
+summary(factorial_aov)
+```
+
+The ANOVA table shows three F-tests:
+- **temperature**: Tests whether the main effect of temperature is significant
+- **nutrient**: Tests whether the main effect of nutrient is significant
+- **temperature:nutrient**: Tests whether the interaction is significant
+
+## Understanding Interactions
+
+An **interaction** occurs when the effect of one factor depends on the level of another factor. Interactions are one of the most important features of factorial designs—they reveal that factors do not operate independently.
+
+**Types of effects:**
+
+1. **Additive effects (no interaction)**: The effect of Factor A is the same regardless of Factor B's level. Effects simply add together.
+
+2. **Synergistic interaction**: The combined effect is greater than the sum of individual effects. For example, two drugs together might be more effective than expected from their individual effects.
+
+3. **Antagonistic interaction**: The combined effect is less than expected. One factor might diminish or reverse the effect of another.
+
+### Interaction Plots
+
+The clearest way to understand interactions is through **interaction plots**, which show the mean response at each factor combination.
+
+```{r}
+#| label: fig-interaction-plot
+#| fig-cap: "Interaction plot showing non-parallel lines indicating interaction between factors"
+#| fig-width: 8
+#| fig-height: 6
+
+# Calculate means for each combination
+means_data <- factorial_data %>%
+  group_by(temperature, nutrient) %>%
+  summarize(mean_growth = mean(growth),
+            se = sd(growth) / sqrt(n()),
+            .groups = "drop")
+
+# Create interaction plot
+ggplot(means_data, aes(x = temperature, y = mean_growth,
+                       color = nutrient, group = nutrient)) +
+  geom_line(linewidth = 1.2) +
+  geom_point(size = 4) +
+  geom_errorbar(aes(ymin = mean_growth - se, ymax = mean_growth + se),
+                width = 0.1, linewidth = 1) +
+  labs(title = "Interaction Plot: Temperature × Nutrient",
+       subtitle = "Non-parallel lines indicate an interaction effect",
+       x = "Temperature",
+       y = "Mean Growth Rate",
+       color = "Nutrient\nLevel") +
+  scale_color_manual(values = c("Low" = "#E69F00", "High" = "#56B4E9")) +
+  theme_minimal(base_size = 12) +
+  theme(legend.position = "right")
+
+# Alternative: base R interaction.plot
+interaction.plot(
+  x.factor = factorial_data$temperature,
+  trace.factor = factorial_data$nutrient,
+  response = factorial_data$growth,
+  col = c("#E69F00", "#56B4E9"),
+  lwd = 2,
+  xlab = "Temperature",
+  ylab = "Mean Growth Rate",
+  trace.label = "Nutrient"
+)
+```
+
+**Interpreting interaction plots:**
+
+- **Parallel lines** suggest no interaction—the effect of one factor is constant across levels of the other
+- **Non-parallel lines** suggest an interaction—the effect of one factor changes depending on the other factor
+- **Crossing lines** indicate a strong interaction, potentially with a reversal of effects
+
+![Illustration of interaction patterns showing parallel versus non-parallel lines](../images/ch26/ch26_interaction_patterns.jpeg){#fig-interaction-patterns fig-align="center"}
+
+The figure above illustrates common interaction patterns. In panel (a), parallel lines indicate no interaction—the effect of Factor A is the same at both levels of Factor B. In panel (b), non-parallel lines reveal an interaction—the effect of Factor A differs depending on Factor B's level.
+
+## Interpreting Main Effects vs Interactions
+
+When a significant interaction exists, interpreting main effects requires caution. The main effect represents an average across levels of the other factor, but if there's an interaction, this average may not meaningfully represent what happens at any particular level.
+
+::: {.callout-important}
+## When Interactions are Present
+
+If the interaction is significant, focus on **simple effects**—the effect of one factor at each level of the other factor—rather than main effects. The main effect is an average that may obscure important differences.
+:::
+
+**Simple effects analysis** examines the effect of one factor separately at each level of the other factor:
+
+```{r}
+# Simple effects: effect of nutrient at each temperature level
+# Low temperature
+low_temp_data <- factorial_data %>% filter(temperature == "Low")
+t.test(growth ~ nutrient, data = low_temp_data)
+
+# High temperature
+high_temp_data <- factorial_data %>% filter(temperature == "High")
+t.test(growth ~ nutrient, data = high_temp_data)
+```
+
+In our example, the nutrient effect is significant at both temperatures, but the magnitude differs—the interaction shows that the nutrient boost is stronger at high temperature.
+
+## ANCOVA: Analysis of Covariance
+
+**Analysis of Covariance (ANCOVA)** combines ANOVA with regression by including both categorical factors and continuous covariates. The covariate is a continuous variable that you want to control for—it's not a treatment you manipulate, but a source of variation you want to account for.
+
+**Common uses of ANCOVA:**
+- Controlling for pre-existing differences (baseline measurements)
+- Increasing precision by removing variance explained by the covariate
+- Adjusting for confounding variables
+- Testing whether regression slopes differ across groups
+
+### The ANCOVA Model
+
+The ANCOVA model for one factor and one covariate is:
+
+$$y_{ij} = \mu + \alpha_i + \beta(x_{ij} - \bar{x}) + \epsilon_{ij}$$
+
+where:
+- $\mu$ is the overall mean
+- $\alpha_i$ is the effect of group $i$
+- $\beta$ is the regression slope (common to all groups)
+- $x_{ij}$ is the covariate value
+- $\bar{x}$ is the mean of the covariate
+- $\epsilon_{ij}$ is the random error
+
+The key assumption is that the relationship between the covariate and response has the **same slope in all groups** (homogeneity of regression slopes).
+
+```{r}
+#| label: fig-ancova-example
+#| fig-cap: "ANCOVA example showing treatment effects on final weight while controlling for initial weight"
+#| fig-width: 8
+#| fig-height: 6
+
+# Simulated ANCOVA example: Effect of diet on final weight, controlling for initial weight
+set.seed(567)
+n_per_group <- 20
+
+# Three diet treatments
+diet_data <- data.frame(
+  diet = factor(rep(c("Control", "Low-fat", "High-protein"), each = n_per_group)),
+  initial_weight = c(
+    rnorm(n_per_group, 75, 8),   # Control group
+    rnorm(n_per_group, 78, 8),   # Low-fat (slightly heavier initially)
+    rnorm(n_per_group, 73, 8)    # High-protein (slightly lighter initially)
+  )
+) %>%
+  mutate(
+    # Final weight depends on diet AND initial weight
+    # Diet effects: Control = 0, Low-fat = -3, High-protein = -5
+    diet_effect = case_when(
+      diet == "Control" ~ 0,
+      diet == "Low-fat" ~ -3,
+      diet == "High-protein" ~ -5
+    ),
+    # Final weight = initial + diet effect + some regression to mean + noise
+    final_weight = initial_weight + diet_effect + 0.3 * (initial_weight - 75) + rnorm(n(), 0, 3)
+  )
+
+# Visualize the ANCOVA setup
+ggplot(diet_data, aes(x = initial_weight, y = final_weight, color = diet)) +
+  geom_point(alpha = 0.7, size = 2) +
+  geom_smooth(method = "lm", se = FALSE, linewidth = 1) +
+  labs(title = "ANCOVA: Diet Effect on Final Weight",
+       subtitle = "Parallel regression lines show diet effects while controlling for initial weight",
+       x = "Initial Weight (kg)",
+       y = "Final Weight (kg)",
+       color = "Diet") +
+  scale_color_manual(values = c("Control" = "#E69F00", "Low-fat" = "#56B4E9", "High-protein" = "#009E73")) +
+  theme_minimal(base_size = 12)
+```
+
+### Fitting ANCOVA in R
+
+```{r}
+# Fit ANCOVA model
+ancova_model <- aov(final_weight ~ initial_weight + diet, data = diet_data)
+summary(ancova_model)
+```
+
+Note the order of terms: the covariate (`initial_weight`) is entered first to remove its effect before testing the factor (`diet`).
+
+```{r}
+# Compare to ANOVA without covariate
+anova_only <- aov(final_weight ~ diet, data = diet_data)
+summary(anova_only)
+
+# The ANCOVA has smaller residual SS and more power
+cat("\nResidual SS (ANOVA):", round(sum(residuals(anova_only)^2), 1), "\n")
+cat("Residual SS (ANCOVA):", round(sum(residuals(ancova_model)^2), 1), "\n")
+```
+
+### Adjusted Means
+
+ANCOVA produces **adjusted means**—the group means estimated at the overall mean of the covariate. These are the means we would expect if all groups had started with the same covariate value.
+
+```{r}
+# Get adjusted means
+library(emmeans)
+ancova_emm <- emmeans(ancova_model, "diet")
+ancova_emm
+
+# Pairwise comparisons of adjusted means
+pairs(ancova_emm, adjust = "tukey")
+```
+
+### Testing Homogeneity of Slopes
+
+A critical assumption is that regression slopes are equal across groups. Test this by including the interaction term:
+
+```{r}
+# Test for unequal slopes (interaction between covariate and factor)
+slope_test <- aov(final_weight ~ initial_weight * diet, data = diet_data)
+summary(slope_test)
+```
+
+A significant interaction indicates slopes differ across groups, violating the ANCOVA assumption. In that case, you should:
+1. Report separate regressions for each group
+2. Use a more complex model (separate slopes ANCOVA)
+3. Consider whether the interaction itself is scientifically meaningful
+
+```{r}
+#| label: fig-ancova-slopes
+#| fig-cap: "Testing homogeneity of slopes: parallel lines indicate the assumption is met"
+#| fig-width: 8
+#| fig-height: 6
+
+# Visualize slopes by group
+ggplot(diet_data, aes(x = initial_weight, y = final_weight, color = diet)) +
+  geom_point(alpha = 0.6) +
+  geom_smooth(method = "lm", se = TRUE, alpha = 0.2) +
+  labs(title = "Testing Homogeneity of Regression Slopes",
+       subtitle = "Slopes should be approximately parallel for valid ANCOVA",
+       x = "Initial Weight (kg)",
+       y = "Final Weight (kg)",
+       color = "Diet") +
+  scale_color_manual(values = c("Control" = "#E69F00", "Low-fat" = "#56B4E9", "High-protein" = "#009E73")) +
+  theme_minimal(base_size = 12)
+```
+
+::: {.callout-warning}
+## ANCOVA Assumptions
+
+1. **Independence** of observations
+2. **Normality** of residuals
+3. **Homogeneity of variance** across groups
+4. **Linear relationship** between covariate and response
+5. **Homogeneity of regression slopes** (equal slopes across groups)
+6. **Covariate measured without error** (or with negligible error)
+7. **Covariate independent of treatment** (especially important in observational studies)
+
+The last assumption is critical: if the treatment affects the covariate, ANCOVA can remove real treatment effects. The covariate should ideally be measured before treatment is applied.
+:::
+
+### When to Use ANCOVA
+
+**Use ANCOVA when:**
+- You have a continuous covariate measured before treatment
+- You want to increase precision by accounting for baseline variation
+- Groups differ on the covariate (but not due to treatment)
+- The covariate-response relationship is linear with equal slopes
+
+**Avoid ANCOVA when:**
+- The covariate is affected by treatment
+- Slopes clearly differ across groups
+- The covariate is categorical (use factorial ANOVA instead)
+- Sample sizes are very small
+
+## Nested Designs
+
+In **nested designs**, levels of one factor exist only within levels of another factor. This differs from a factorial design where all combinations of factors are crossed.
+
+**Common examples in biology:**
+- Students nested within classrooms (each student is in only one classroom)
+- Samples nested within sites (each sample comes from one site)
+- Technicians nested within labs (each technician works in one lab)
+- Subsamples nested within experimental units
+
+In a nested design, we cannot estimate an interaction because not all factor combinations exist. The nested factor is typically a random effect representing sampling variability.
+
+**Notation:** Factor B is nested within Factor A, written as B(A) or B/A.
+
+```{r}
+#| label: fig-nested-design
+#| fig-cap: "Nested design example: technicians nested within labs"
+#| fig-width: 8
+#| fig-height: 5
+
+# Simulated nested design: Technicians (nested within Labs)
+set.seed(456)
+n_labs <- 3
+n_techs_per_lab <- 3
+n_measurements <- 5
+
+lab <- rep(paste0("Lab", 1:n_labs), each = n_techs_per_lab * n_measurements)
+tech <- rep(paste0("Tech", 1:(n_labs * n_techs_per_lab)), each = n_measurements)
+
+# Lab effects (fixed)
+lab_effects <- c(100, 105, 110)
+# Technician effects (random, nested within labs)
+tech_effects <- rnorm(n_labs * n_techs_per_lab, 0, 3)
+
+measurement <- numeric(length(lab))
+for (i in 1:length(lab)) {
+  lab_idx <- as.numeric(substr(lab[i], 4, 4))
+  tech_idx <- as.numeric(substr(tech[i], 5, 5))
+  measurement[i] <- lab_effects[lab_idx] + tech_effects[tech_idx] + rnorm(1, 0, 2)
+}
+
+nested_data <- data.frame(
+  lab = factor(lab),
+  tech = factor(tech),
+  measurement = measurement
+)
+
+# Visualize nested structure
+ggplot(nested_data, aes(x = tech, y = measurement, color = lab)) +
+  geom_point(alpha = 0.6, size = 2) +
+  stat_summary(fun = mean, geom = "point", size = 4, shape = 18) +
+  facet_wrap(~ lab, scales = "free_x") +
+  labs(title = "Nested Design: Technicians within Labs",
+       subtitle = "Each technician works in only one lab",
+       x = "Technician",
+       y = "Measurement") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        legend.position = "none")
+```
+
+```{r}
+# Analysis of nested design
+# Technician is nested within lab: tech %in% lab or tech/lab
+nested_aov <- aov(measurement ~ lab + Error(tech %in% lab), data = nested_data)
+summary(nested_aov)
+
+# Alternative using lme4 for mixed effects
+library(lme4)
+nested_lmer <- lmer(measurement ~ lab + (1|lab:tech), data = nested_data)
+summary(nested_lmer)
+```
+
+The nested design partitions variance into:
+- **Between labs** (fixed effect)
+- **Between technicians within labs** (random effect)
+- **Within technicians** (residual error)
+
+## Repeated Measures ANOVA
+
+When the same subjects are measured multiple times under different conditions, observations are not independent. **Repeated measures ANOVA** accounts for the correlation structure in the data by treating subjects as a blocking factor or random effect.
+
+**Advantages:**
+- Increased statistical power (controls for individual differences)
+- Requires fewer subjects
+- Each subject serves as their own control
+
+**Assumptions:**
+- **Sphericity**: The variance of differences between all pairs of repeated measures should be equal
+- Violations of sphericity can be corrected using Greenhouse-Geisser or Huynh-Feldt adjustments
+
+```{r}
+#| label: fig-repeated-measures
+#| fig-cap: "Repeated measures design showing within-subject changes over time"
+#| fig-width: 8
+#| fig-height: 6
+
+# Simulated repeated measures: Drug effect over time
+set.seed(789)
+n_subjects <- 12
+timepoints <- c("Baseline", "Week_1", "Week_2", "Week_4")
+
+# Each subject has a baseline level
+baseline_values <- rnorm(n_subjects, 50, 10)
+
+# Treatment effect increases over time
+time_effects <- c(0, -3, -6, -8)
+
+# Create data
+rm_data <- expand.grid(
+  subject = factor(1:n_subjects),
+  time = factor(timepoints, levels = timepoints)
+) %>%
+  arrange(subject, time) %>%
+  mutate(
+    baseline = rep(baseline_values, each = length(timepoints)),
+    time_num = as.numeric(time),
+    response = baseline + time_effects[time_num] + rnorm(n(), 0, 2)
+  )
+
+# Visualize repeated measures
+ggplot(rm_data, aes(x = time, y = response, group = subject)) +
+  geom_line(alpha = 0.4, color = "gray40") +
+  geom_point(alpha = 0.4, size = 2) +
+  stat_summary(aes(group = 1), fun = mean, geom = "line",
+               color = "red", linewidth = 1.5) +
+  stat_summary(aes(group = 1), fun = mean, geom = "point",
+               color = "red", size = 4) +
+  labs(title = "Repeated Measures: Drug Response Over Time",
+       subtitle = "Gray lines show individual subjects; red line shows mean response",
+       x = "Time Point",
+       y = "Response Variable") +
+  theme_minimal(base_size = 12)
+```
+
+```{r}
+# Traditional repeated measures ANOVA
+# Error term specifies within-subject factor
+rm_aov <- aov(response ~ time + Error(subject/time), data = rm_data)
+summary(rm_aov)
+
+# Check sphericity assumption
+library(car)
+# Reshape to wide format for Mauchly's test
+rm_wide <- rm_data %>%
+  select(subject, time, response) %>%
+  pivot_wider(names_from = time, values_from = response)
+
+# Alternative: Use mixed effects model (handles violations better)
+library(lme4)
+rm_lmer <- lmer(response ~ time + (1|subject), data = rm_data)
+summary(rm_lmer)
+anova(rm_lmer)
+```
+
+**Post-hoc tests for repeated measures:**
+
+```{r}
+# Pairwise comparisons with correction for multiple testing
+library(emmeans)
+rm_emm <- emmeans(rm_lmer, "time")
+pairs(rm_emm, adjust = "bonferroni")
+```
+
+## Mixed Effects Models
+
+**Mixed effects models** (also called **multilevel models** or **hierarchical models**) include both **fixed effects** (factors of primary interest) and **random effects** (sources of random variation).
+
+**When to use mixed effects models:**
+- Repeated measures or longitudinal data
+- Nested or hierarchical data structures
+- Multiple sources of random variation
+- Unbalanced designs or missing data
+- Continuous covariates combined with grouping factors
+
+**Fixed vs Random Effects:**
+
+- **Fixed effects**: Specific levels you chose (e.g., specific drug treatments, particular temperatures)
+- **Random effects**: Levels sampled from a larger population (e.g., subjects, batches, field sites)
+
+The `lme4` package in R provides powerful tools for mixed effects models:
+
+```{r}
+# Example: Growth curve with random intercepts and slopes
+set.seed(321)
+n_individuals <- 15
+n_timepoints <- 6
+
+growth_data <- expand.grid(
+  individual = factor(1:n_individuals),
+  time = 0:(n_timepoints-1)
+) %>%
+  mutate(
+    # Random intercept for each individual
+    intercept = rep(rnorm(n_individuals, 5, 1), each = n_timepoints),
+    # Random slope for each individual
+    slope = rep(rnorm(n_individuals, 0.8, 0.15), each = n_timepoints),
+    # Generate size with individual variation
+    size = intercept + slope * time + rnorm(n(), 0, 0.3)
+  )
+
+# Fit mixed effects model with random intercepts and slopes
+mixed_model <- lmer(size ~ time + (time|individual), data = growth_data)
+summary(mixed_model)
+
+# Compare to model with only random intercepts
+mixed_model_int <- lmer(size ~ time + (1|individual), data = growth_data)
+
+# Likelihood ratio test
+anova(mixed_model_int, mixed_model)
+```
+
+```{r}
+#| label: fig-mixed-effects
+#| fig-cap: "Mixed effects model showing fixed effect (population trend) and random effects (individual variation)"
+#| fig-width: 8
+#| fig-height: 6
+
+# Visualize random effects
+ggplot(growth_data, aes(x = time, y = size, group = individual)) +
+  geom_line(alpha = 0.3, color = "gray40") +
+  geom_point(alpha = 0.3, size = 1.5) +
+  geom_abline(intercept = fixef(mixed_model)[1],
+              slope = fixef(mixed_model)[2],
+              color = "red", linewidth = 1.5) +
+  labs(title = "Mixed Effects Model: Growth Curves",
+       subtitle = "Gray lines show individuals; red line shows population average (fixed effect)",
+       x = "Time",
+       y = "Size") +
+  theme_minimal(base_size = 12)
+```
+
+## Split-Plot Designs
+
+**Split-plot designs** arise when different factors are applied at different scales or when complete randomization is impractical. Originally developed for agricultural field trials, they're common in biological experiments.
+
+**Structure:**
+- **Whole plots**: Larger experimental units receiving one factor (hard-to-change factor)
+- **Split plots** (or **subplots**): Smaller units within whole plots receiving another factor (easy-to-change factor)
+
+**Example:** Testing the effect of irrigation (whole plot factor) and fertilizer (split-plot factor) on crop yield. Irrigation is applied to large field plots, while different fertilizers can be applied to smaller areas within each irrigation plot.
+
+**In laboratory settings:**
+- Whole plot: Temperature chambers (hard to randomize, limited number)
+- Split plot: Different nutrient treatments within each chamber (easy to randomize)
+
+```{r}
+#| label: fig-split-plot
+#| fig-cap: "Split-plot design showing hierarchical structure of experimental units"
+#| fig-width: 8
+#| fig-height: 6
+
+# Simulated split-plot design
+# Whole plot: Temperature (2 levels, 4 replicates each = 8 chambers)
+# Split plot: Nutrient (3 levels per chamber)
+set.seed(654)
+
+n_chambers_per_temp <- 4
+n_nutrients <- 3
+n_reps <- 2  # technical replicates within each split plot
+
+split_plot_data <- expand.grid(
+  temp = factor(rep(c("Low", "High"), each = n_chambers_per_temp)),
+  chamber = factor(1:(2 * n_chambers_per_temp)),
+  nutrient = factor(paste0("N", 1:n_nutrients)),
+  rep = 1:n_reps
+) %>%
+  mutate(
+    temp_effect = ifelse(temp == "Low", 0, 5),
+    # Chambers vary even at same temperature (whole plot error)
+    chamber_effect = rep(rnorm(2 * n_chambers_per_temp, 0, 1.5),
+                        each = n_nutrients * n_reps),
+    nutrient_effect = rep(c(0, 3, 6), times = 2 * n_chambers_per_temp * n_reps),
+    # Interaction between temp and nutrient
+    interaction = ifelse(temp == "High" & nutrient == "N3", 3, 0),
+    yield = 10 + temp_effect + chamber_effect + nutrient_effect +
+            interaction + rnorm(n(), 0, 1)
+  )
+
+# Visualize split-plot structure
+ggplot(split_plot_data, aes(x = nutrient, y = yield, color = temp)) +
+  geom_point(alpha = 0.4, position = position_jitterdodge(jitter.width = 0.2, dodge.width = 0.5)) +
+  stat_summary(fun = mean, geom = "point", size = 4,
+               position = position_dodge(width = 0.5)) +
+  stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.2,
+               position = position_dodge(width = 0.5)) +
+  facet_wrap(~ temp) +
+  labs(title = "Split-Plot Design: Temperature (whole plot) × Nutrient (split plot)",
+       subtitle = "Temperature applied to whole chambers; nutrients varied within chambers",
+       x = "Nutrient Level (Split-Plot Factor)",
+       y = "Yield",
+       color = "Temperature\n(Whole-Plot)") +
+  theme_minimal(base_size = 11)
+```
+
+```{r}
+# Analysis of split-plot design
+# Whole plot factor: temperature (tested against chamber error)
+# Split plot factor: nutrient (tested against split-plot error)
+# Use mixed model with chamber as random effect
+
+library(lme4)
+split_plot_model <- lmer(yield ~ temp * nutrient + (1|chamber),
+                         data = split_plot_data)
+summary(split_plot_model)
+anova(split_plot_model)
+
+# Note: The whole-plot factor (temp) has fewer degrees of freedom
+# because it varies only among chambers, not within them
+```
+
+**Key features of split-plot analysis:**
+- Different error terms for whole-plot and split-plot factors
+- Whole-plot tests have fewer degrees of freedom (less powerful)
+- Split-plot tests are more powerful (more replication)
+- Interactions use split-plot error term
+
+## Practical Considerations for Complex Designs
+
+### Sample Size and Power
+
+Complex designs require careful power analysis. The power for detecting:
+- **Main effects** depends on the number of replicates and effect size
+- **Interactions** is typically lower than for main effects—interactions require larger samples
+
+Use simulation-based power analysis for complex designs where analytical solutions are difficult.
+
+### Balanced vs Unbalanced Designs
+
+**Balanced designs** (equal sample sizes in all cells) are preferable:
+- Simpler interpretation
+- Greater statistical power
+- Robust to assumption violations
+- Easier to test for interactions
+
+**Unbalanced designs** complicate analysis:
+- Type I, II, and III sums of squares give different results
+- Main effects and interactions are correlated
+- Reduced power for some effects
+
+When unavoidable, use Type III sums of squares with caution and consider mixed effects models.
+
+### Effect Sizes in Multi-Factor ANOVA
+
+Report effect sizes for all significant effects:
+
+**Partial eta-squared** ($\eta^2_p$): Proportion of variance explained by each effect, removing variance from other effects:
+
+$$\eta^2_p = \frac{SS_{effect}}{SS_{effect} + SS_{error}}$$
+
+```{r}
+# Calculate effect sizes from factorial ANOVA
+library(effectsize)
+eta_squared(factorial_aov, partial = TRUE)
+```
+
+### Multiple Comparisons
+
+With many factor levels and combinations, multiple comparison corrections become crucial:
+
+```{r}
+# Post-hoc comparisons for factorial design
+library(emmeans)
+factorial_emm <- emmeans(factorial_aov, ~ temperature * nutrient)
+
+# All pairwise comparisons
+pairs(factorial_emm, adjust = "tukey")
+
+# Simple effects: nutrient effect at each temperature
+nutrient_simple <- emmeans(factorial_aov, ~ nutrient | temperature)
+pairs(nutrient_simple, adjust = "bonferroni")
+```
+
+### Model Assumptions
+
+Check assumptions for all error terms in complex designs:
+
+```{r}
+#| label: fig-diagnostic-plots
+#| fig-cap: "Diagnostic plots for checking ANOVA assumptions"
+#| fig-width: 10
+#| fig-height: 8
+
+# Diagnostic plots
+par(mfrow = c(2, 2))
+plot(factorial_aov)
+par(mfrow = c(1, 1))
+
+# Test homogeneity of variance
+library(car)
+leveneTest(growth ~ temperature * nutrient, data = factorial_data)
+
+# Test normality of residuals
+shapiro.test(residuals(factorial_aov))
+```
+
+### Reporting Results
+
+When reporting multi-factor ANOVA results, include:
+
+1. **Descriptive statistics** for each cell (means, SDs, sample sizes)
+2. **ANOVA table** with F-values, degrees of freedom, and p-values for all effects
+3. **Effect sizes** (partial eta-squared or omega-squared)
+4. **Post-hoc tests** or simple effects when interactions are significant
+5. **Diagnostic plots** confirming assumptions (in supplementary materials)
+6. **Graphical display** of means with error bars (interaction plots for two-way designs)
+
+Example reporting:
+
+> We conducted a 2 × 2 factorial ANOVA to examine the effects of temperature (low vs. high) and nutrient level (low vs. high) on algal growth rate. There was a significant main effect of temperature, F(1, 56) = 45.2, p < .001, $\eta^2_p$ = 0.45, and a significant main effect of nutrient level, F(1, 56) = 89.7, p < .001, $\eta^2_p$ = 0.62. Critically, there was a significant temperature × nutrient interaction, F(1, 56) = 12.3, p < .001, $\eta^2_p$ = 0.18. Simple effects analysis revealed that the nutrient effect was significant at both temperatures (both p < .001), but the magnitude was greater at high temperature (Δ = 9.1 units) than at low temperature (Δ = 5.2 units).
+
+## Summary
+
+Multi-factor ANOVA extends the basic ANOVA framework to designs with multiple factors:
+
+- **Factorial designs** test all combinations of factor levels, allowing estimation of main effects and interactions
+- **Interactions** reveal that factors do not operate independently—the effect of one factor depends on another
+- **Interaction plots** with non-parallel lines indicate interactions; interpret simple effects rather than main effects when interactions are significant
+- **ANCOVA** combines categorical factors with continuous covariates, controlling for baseline variation and increasing statistical power
+- **Nested designs** have hierarchical structure where levels of one factor exist only within another; common in hierarchical sampling
+- **Repeated measures ANOVA** accounts for correlation when the same subjects are measured multiple times
+- **Mixed effects models** include both fixed and random effects, providing flexibility for complex data structures
+- **Split-plot designs** arise when factors are applied at different scales or complete randomization is impractical
+- Always report effect sizes, check assumptions, and use appropriate corrections for multiple comparisons
+- Balanced designs are preferable but mixed effects models can handle unbalanced data
+
+Understanding when and how to use multi-factor ANOVA is essential for designing efficient experiments and extracting maximum information from biological data. The ability to test for interactions is particularly valuable—discovering that factors interact often leads to deeper biological insights than finding main effects alone.
+
+## Practice Exercises
+
+1. **Design Question**: You want to test the effect of three fertilizer types (A, B, C) and two watering regimes (low, high) on plant growth.
+   - How many treatment combinations are in this design?
+   - Draw a diagram showing all treatment groups
+   - Is this a balanced design if you have 10 plants per treatment?
+
+2. **Interaction Interpretation**: An experiment tests the effect of drug (present vs. absent) and exercise (yes vs. no) on weight loss. The means are:
+   - No drug, no exercise: 2 kg lost
+   - No drug, exercise: 5 kg lost
+   - Drug, no exercise: 6 kg lost
+   - Drug + exercise: 8 kg lost
+
+   - Sketch an interaction plot
+   - Is there an interaction? How do you know?
+   - Interpret the results in practical terms
+
+3. **Data Analysis**: Using the built-in `ToothGrowth` dataset in R, which examines the effect of Vitamin C dose (0.5, 1.0, 2.0 mg) and delivery method (orange juice vs. ascorbic acid) on tooth length in guinea pigs:
+   ```r
+   data(ToothGrowth)
+   ```
+   - Conduct a two-way ANOVA
+   - Create an interaction plot
+   - Is there a significant interaction?
+   - Calculate effect sizes
+   - Write a brief results paragraph
+
+4. **Nested vs. Crossed**: For each scenario, identify whether the design is nested or crossed:
+   - (a) Students within schools, testing two teaching methods across all schools
+   - (b) Patients within clinics, with each clinic using all three drug treatments
+   - (c) Leaves within trees, where trees are sampled from three different forests
+   - (d) Two temperature conditions and three light conditions, all combinations tested
+
+5. **Repeated Measures**: Design a repeated measures experiment to test whether a new drug reduces anxiety over time.
+   - Specify your factors and levels
+   - How many participants would you need for 80% power?
+   - What would your repeated measure be?
+   - What assumptions must you check?
+
+6. **Sample Size**: In a 3 × 2 factorial design:
+   - How many treatment combinations exist?
+   - If you want 20 observations per cell, how many total observations do you need?
+   - Which effect (main or interaction) typically requires larger sample sizes to detect?
+
+7. **Mixed Effects Application**: You measure bacterial growth in 20 Petri dishes, with 5 measurements per dish across four timepoints.
+   - What is the fixed effect?
+   - What is the random effect?
+   - Write the `lmer()` model formula
+   - Why is a mixed effects model appropriate here?
+
+8. **Practical Design**: You have access to 4 growth chambers and want to test 3 light conditions and 2 CO₂ levels.
+   - Why might a split-plot design be necessary?
+   - Which factor should be the whole-plot factor? Why?
+   - Sketch the design layout
+   - What are the implications for statistical power?

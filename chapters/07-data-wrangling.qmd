@@ -1,0 +1,829 @@
+# Data Wrangling with dplyr {#sec-data-wrangling}
+
+```{r}
+#| echo: false
+#| message: false
+library(tidyverse)
+theme_set(theme_minimal())
+```
+
+Data wrangling is the process of transforming, cleaning, and organizing data to make it suitable for analysis. The **dplyr** package, part of the tidyverse, provides a powerful and intuitive grammar for data manipulation. This chapter covers the essential tools and techniques for working with data in R.
+
+## The Pipe Operator
+
+One of the most important concepts in modern R programming is the pipe operator. The pipe `|>` (or the tidyverse's `%>%`) passes the result of one operation as the first argument of the next, allowing you to chain operations together in a readable sequence.
+
+```{r}
+#| eval: false
+# Without pipe: nested and hard to read
+summarize(group_by(filter(flights, !is.na(arr_delay)), dest),
+          mean_delay = mean(arr_delay))
+
+# With pipe: clear sequence of operations
+flights |>
+  filter(!is.na(arr_delay)) |>
+  group_by(dest) |>
+  summarize(mean_delay = mean(arr_delay))
+```
+
+Read the pipe as "then"—take flights, then filter, then group, then summarize. This left-to-right, top-to-bottom flow mirrors how we think about data transformations.
+
+![The pipe operator passes results from one operation to the next, enabling clear data transformation workflows](../images/ch07/ch07_pipe_operator.jpeg){#fig-pipe-operator fig-align="center"}
+
+## Key dplyr Verbs
+
+The `dplyr` package provides a grammar for data manipulation centered around five key verbs. These verbs handle most common data manipulation tasks and can be combined to solve complex problems.
+
+### filter(): Subset Rows
+
+`filter()` selects rows that meet specified conditions. This is essential for focusing your analysis on specific subsets of data.
+
+```{r}
+#| eval: false
+# Load example data
+library(nycflights13)
+data(flights)
+
+# Flights in November or December
+flights |> filter(month == 11 | month == 12)
+
+# Flights with arrival delay greater than 2 hours
+flights |> filter(arr_delay > 120)
+
+# Multiple conditions with AND
+flights |> filter(month == 1, day == 1)
+
+# Using %in% for set membership
+flights |> filter(dest %in% c("SFO", "OAK", "SJC"))
+```
+
+Conditions use comparison operators:
+- `==` (equals), `!=` (not equals)
+- `<`, `>`, `<=`, `>=` (comparison)
+- `&` (and), `|` (or)
+- `!` (not)
+- `%in%` (membership in a set)
+
+### select(): Choose Columns
+
+`select()` picks columns by name, which is useful when working with wide datasets containing many variables.
+
+```{r}
+#| eval: false
+# Select specific columns
+flights |> select(year, month, day)
+
+# Select a range of columns
+flights |> select(year:day)
+
+# Drop columns with minus sign
+flights |> select(-year, -month)
+
+# Select by pattern
+flights |> select(starts_with("dep"))
+flights |> select(ends_with("time"))
+flights |> select(contains("delay"))
+
+# Reorder columns
+flights |> select(carrier, flight, everything())
+```
+
+Helper functions for `select()`:
+- `starts_with()`, `ends_with()`, `contains()` - match patterns
+- `matches()` - regular expressions
+- `num_range()` - numeric ranges like "x1", "x2", "x3"
+- `everything()` - all remaining columns
+
+### arrange(): Sort Rows
+
+`arrange()` reorders rows by column values. By default, it sorts in ascending order.
+
+```{r}
+#| eval: false
+# Sort by year, then month, then day
+flights |> arrange(year, month, day)
+
+# Sort in descending order
+flights |> arrange(desc(dep_delay))
+
+# Missing values always sorted to the end
+flights |> arrange(dep_time)
+```
+
+### mutate(): Create New Columns
+
+`mutate()` adds new columns that are functions of existing columns. This is one of the most frequently used dplyr functions.
+
+```{r}
+#| eval: false
+# Create single new column
+flights |> mutate(gain = arr_delay - dep_delay)
+
+# Create multiple columns, referencing newly created ones
+flights |>
+  mutate(
+    gain = arr_delay - dep_delay,
+    hours = air_time / 60,
+    gain_per_hour = gain / hours
+  )
+
+# Keep only new variables with transmute()
+flights |>
+  transmute(
+    gain = arr_delay - dep_delay,
+    hours = air_time / 60,
+    gain_per_hour = gain / hours
+  )
+```
+
+Common functions used with `mutate()`:
+- Arithmetic: `+`, `-`, `*`, `/`, `^`
+- Modular arithmetic: `%/%` (integer division), `%%` (remainder)
+- Logs: `log()`, `log2()`, `log10()`
+- Offsets: `lead()`, `lag()`
+- Cumulative: `cumsum()`, `cumprod()`, `cummin()`, `cummax()`
+- Ranking: `min_rank()`, `row_number()`, `dense_rank()`
+
+### summarize(): Aggregate Data
+
+`summarize()` (or `summarise()`) collapses multiple rows into summary values. It's particularly powerful when combined with `group_by()`.
+
+```{r}
+#| eval: false
+# Single summary statistic
+flights |>
+  summarize(mean_delay = mean(dep_delay, na.rm = TRUE))
+
+# Multiple summary statistics
+flights |>
+  summarize(
+    mean_delay = mean(dep_delay, na.rm = TRUE),
+    median_delay = median(dep_delay, na.rm = TRUE),
+    sd_delay = sd(dep_delay, na.rm = TRUE),
+    n = n()
+  )
+```
+
+Common summary functions:
+- Central tendency: `mean()`, `median()`
+- Spread: `sd()`, `var()`, `IQR()`, `mad()`
+- Range: `min()`, `max()`, `quantile()`
+- Position: `first()`, `last()`, `nth()`
+- Count: `n()`, `n_distinct()`
+
+## Grouping with group_by()
+
+The real power of `summarize()` emerges when combined with `group_by()`, which splits data into groups for separate analysis. This is fundamental for comparative statistics.
+
+```{r}
+#| eval: false
+# Group by destination, then summarize
+flights |>
+  group_by(dest) |>
+  summarize(
+    count = n(),
+    mean_delay = mean(arr_delay, na.rm = TRUE),
+    mean_distance = mean(distance)
+  )
+
+# Group by multiple variables
+flights |>
+  group_by(year, month, day) |>
+  summarize(
+    flights = n(),
+    mean_delay = mean(dep_delay, na.rm = TRUE)
+  )
+
+# Grouping affects mutate() too
+flights |>
+  group_by(dest) |>
+  mutate(
+    delay_rank = min_rank(desc(arr_delay)),
+    delay_vs_mean = arr_delay - mean(arr_delay, na.rm = TRUE)
+  )
+```
+
+Important notes about grouping:
+- `summarize()` removes one level of grouping
+- Use `ungroup()` to remove all grouping
+- Grouped data frames print with group information at the top
+
+```{r}
+#| eval: false
+# Remove grouping
+flights |>
+  group_by(dest) |>
+  summarize(mean_delay = mean(arr_delay, na.rm = TRUE)) |>
+  ungroup()
+```
+
+## Handling Missing Values
+
+Missing values are ubiquitous in real data. In R, missing values are represented as `NA` (Not Available). Most operations involving `NA` return `NA`, which requires careful handling.
+
+```{r}
+#| eval: false
+# Example of NA behavior
+x <- c(1, 2, NA, 4)
+mean(x)              # Returns NA
+mean(x, na.rm = TRUE)  # Returns 2.333333
+```
+
+### Detecting Missing Values
+
+Use `is.na()` to identify missing values:
+
+```{r}
+#| eval: false
+# Check for NAs
+is.na(x)
+
+# Count missing values
+sum(is.na(x))
+
+# Count missing values per column
+flights |>
+  summarize(across(everything(), ~sum(is.na(.))))
+```
+
+### Filtering Missing Values
+
+```{r}
+#| eval: false
+# Remove rows with NA in specific column
+flights |> filter(!is.na(dep_delay))
+
+# Keep only complete cases (no NAs in any column)
+flights |> filter(complete.cases(flights))
+
+# Using tidyr's drop_na()
+flights |> drop_na(dep_delay)  # Drop rows with NA in dep_delay
+flights |> drop_na()            # Drop rows with NA in any column
+```
+
+### Replacing Missing Values
+
+```{r}
+#| eval: false
+# Replace NA with specific value
+flights |>
+  mutate(dep_delay = replace_na(dep_delay, 0))
+
+# Replace NA with mean
+flights |>
+  mutate(dep_delay = if_else(is.na(dep_delay),
+                              mean(dep_delay, na.rm = TRUE),
+                              dep_delay))
+
+# Using tidyr's replace_na() for multiple columns
+flights |>
+  replace_na(list(dep_delay = 0, arr_delay = 0))
+```
+
+## Joining Data
+
+Real data often comes in multiple tables that need to be combined. Join operations merge tables based on matching values in key columns. Understanding joins is essential for working with relational data.
+
+### Basic Join Example
+
+```{r}
+#| eval: false
+# Example tables
+samples <- tibble(
+  sample_id = c("S1", "S2", "S3"),
+  treatment = c("control", "low", "high"),
+  concentration = c(0.0, 0.1, 1.0)
+)
+
+measurements <- tibble(
+  sample_id = c("S1", "S1", "S2", "S2", "S3", "S3"),
+  replicate = c(1, 2, 1, 2, 1, 2),
+  value = c(2.3, 2.1, 5.4, 5.6, 10.2, 10.8)
+)
+
+# Join tables
+measurements |>
+  left_join(samples, by = "sample_id")
+```
+
+### Types of Joins
+
+Different joins handle non-matching rows differently:
+
+| Join Type | Function | Result |
+|:----------|:---------|:-------|
+| **Left Join** | `left_join()` | Keep all rows from left table, add matching data from right table. Non-matching right rows are dropped, creating NAs in right columns. |
+| **Right Join** | `right_join()` | Keep all rows from right table, add matching data from left table. Non-matching left rows are dropped, creating NAs in left columns. |
+| **Inner Join** | `inner_join()` | Keep only rows with matches in both tables. Most restrictive join, only complete matches retained. |
+| **Full Join** | `full_join()` | Keep all rows from both tables. Creates NAs where matches don't exist. Most inclusive join. |
+| **Semi Join** | `semi_join()` | Keep rows from left table that have matches in right table, but don't add columns from right. Filtering join. |
+| **Anti Join** | `anti_join()` | Keep rows from left table with NO matches in right table. Useful for finding mismatches. Filtering join. |
+
+### Practical Join Examples
+
+```{r}
+#| eval: false
+# Inner join: only complete matches
+inner_join(measurements, samples, by = "sample_id")
+
+# Left join: keep all measurements
+left_join(measurements, samples, by = "sample_id")
+
+# Full join: keep everything
+full_join(measurements, samples, by = "sample_id")
+
+# Anti join: find measurements without sample info (data quality check)
+measurements |>
+  anti_join(samples, by = "sample_id")
+
+# Semi join: filter samples that have measurements
+samples |>
+  semi_join(measurements, by = "sample_id")
+```
+
+### Joining on Multiple Keys
+
+```{r}
+#| eval: false
+# Join on multiple columns
+table1 |>
+  left_join(table2, by = c("sample_id", "time_point"))
+
+# Join when column names differ
+table1 |>
+  left_join(table2, by = c("id" = "sample_id"))
+```
+
+## Additional dplyr Functions
+
+Beyond the five core verbs, dplyr provides many specialized functions for common data manipulation tasks.
+
+### case_when(): Vectorized Conditional Logic
+
+The `case_when()` function provides a clean way to handle multiple if-else conditions:
+
+```{r}
+#| eval: false
+# Create sample data
+expression_data <- tibble(
+  gene = c("BRCA1", "TP53", "EGFR", "KRAS", "MYC"),
+  fold_change = c(0.5, 1.2, 3.5, -2.1, 0.9)
+)
+
+# Classify regulation status
+expression_data |>
+  mutate(
+    regulation = case_when(
+      fold_change > 2 ~ "strongly upregulated",
+      fold_change > 1 ~ "upregulated",
+      fold_change < -2 ~ "strongly downregulated",
+      fold_change < -1 ~ "downregulated",
+      TRUE ~ "unchanged"  # default case
+    )
+  )
+```
+
+The syntax is: `condition ~ value`. Conditions are evaluated in order, and the first TRUE condition determines the result. Use `TRUE ~ value` as a catch-all default.
+
+### count() and n_distinct()
+
+`count()` is a convenient shortcut for grouping and counting:
+
+```{r}
+#| eval: false
+# Count observations per group
+flights |> count(carrier)
+
+# Equivalent to:
+flights |>
+  group_by(carrier) |>
+  summarize(n = n())
+
+# Count with sorting
+flights |> count(carrier, sort = TRUE)
+
+# Count combinations
+flights |> count(carrier, origin)
+
+# Add weights
+flights |> count(carrier, wt = distance)  # sum of distance, not count
+```
+
+Use `n_distinct()` to count unique values:
+
+```{r}
+#| eval: false
+# Count unique destinations per carrier
+flights |>
+  group_by(carrier) |>
+  summarize(
+    n_flights = n(),
+    n_destinations = n_distinct(dest)
+  )
+```
+
+### slice() Variants: Select Rows by Position
+
+While `filter()` selects rows by condition, `slice()` and its variants select by position or rank:
+
+```{r}
+#| eval: false
+# First n rows
+flights |> slice_head(n = 5)
+
+# Last n rows
+flights |> slice_tail(n = 5)
+
+# Random sample
+flights |> slice_sample(n = 10)
+flights |> slice_sample(prop = 0.01)  # 1% of rows
+
+# Top n by value
+flights |> slice_max(dep_delay, n = 5)
+flights |> slice_min(dep_delay, n = 5)
+
+# Works with groups
+flights |>
+  group_by(carrier) |>
+  slice_max(distance, n = 1)  # Longest flight per carrier
+```
+
+### pull(): Extract a Column as a Vector
+
+`select()` returns a data frame with one column. `pull()` extracts a column as a vector:
+
+```{r}
+#| eval: false
+# Returns a tibble with one column
+flights |> select(dep_delay)
+
+# Returns a vector
+flights |> pull(dep_delay)
+
+# Useful for piping into functions that expect vectors
+flights |>
+  filter(month == 1) |>
+  pull(dep_delay) |>
+  mean(na.rm = TRUE)
+```
+
+### distinct(): Remove Duplicate Rows
+
+Remove duplicate rows based on specified columns:
+
+```{r}
+#| eval: false
+# Unique values in one column
+flights |> distinct(carrier)
+
+# Unique combinations of multiple columns
+flights |> distinct(carrier, origin)
+
+# Keep all columns (removes only exact duplicate rows)
+flights |> distinct()
+
+# Keep other columns along with distinct values
+flights |> distinct(carrier, .keep_all = TRUE)
+```
+
+## Working with Factors
+
+Factors are R's way of representing categorical data with a fixed set of possible values (called levels). The **forcats** package (part of tidyverse) provides tools for working with factors, which is essential for controlling category order in analyses and visualizations.
+
+### Why Factor Order Matters
+
+By default, R orders factor levels alphabetically, which often produces suboptimal visualizations:
+
+```{r}
+#| label: fig-gene-alphabetical
+#| fig-cap: "Gene expression in default alphabetical order makes comparison difficult"
+#| fig-width: 6
+#| fig-height: 4
+#| eval: false
+
+# Sample data
+gene_data <- tibble(
+  gene = c("BRCA1", "TP53", "EGFR", "KRAS", "MYC"),
+  expression = c(5.2, 8.1, 3.4, 6.7, 9.2)
+)
+
+# Default: alphabetical order
+ggplot(gene_data, aes(x = gene, y = expression)) +
+  geom_col(fill = "steelblue") +
+  labs(
+    title = "Gene Expression (Alphabetical Order)",
+    x = "Gene",
+    y = "Expression Level"
+  ) +
+  theme_minimal()
+```
+
+### Reordering Factors
+
+Use `fct_reorder()` to order factors by another variable:
+
+```{r}
+#| label: fig-gene-ordered
+#| fig-cap: "Gene expression ordered by value facilitates easy comparison and pattern recognition"
+#| fig-width: 6
+#| fig-height: 4
+#| eval: false
+
+# Reorder by expression value
+library(forcats)
+
+gene_data |>
+  mutate(gene = fct_reorder(gene, expression)) |>
+  ggplot(aes(x = gene, y = expression)) +
+  geom_col(fill = "steelblue") +
+  labs(
+    title = "Gene Expression (Ordered by Value)",
+    x = "Gene",
+    y = "Expression Level"
+  ) +
+  theme_minimal()
+```
+
+### Additional forcats Functions
+
+```{r}
+#| eval: false
+# Reorder by frequency
+gene_counts |>
+  mutate(gene = fct_infreq(gene))
+
+# Reverse factor order
+gene_data |>
+  mutate(gene = fct_rev(gene))
+
+# Reorder manually
+gene_data |>
+  mutate(gene = fct_relevel(gene, "TP53", "MYC", "BRCA1"))
+```
+
+### Recoding Factor Levels
+
+Use `fct_recode()` to change level names:
+
+```{r}
+#| eval: false
+# Original factor
+status <- factor(c("WT", "WT", "KO", "HET", "KO"))
+
+# Recode to more descriptive names
+status_full <- fct_recode(status,
+  "Wild Type" = "WT",
+  "Knockout" = "KO",
+  "Heterozygous" = "HET"
+)
+```
+
+### Collapsing Factor Levels
+
+Combine rare categories using `fct_lump_n()` or `fct_lump_prop()`:
+
+```{r}
+#| eval: false
+# Keep only the top 3 most common levels
+gene_variants |>
+  mutate(variant = fct_lump_n(variant, n = 3))
+
+# Combine levels that appear in less than 5% of data
+gene_variants |>
+  mutate(variant = fct_lump_prop(variant, prop = 0.05))
+
+# Combine manually
+gene_variants |>
+  mutate(variant = fct_collapse(variant,
+    common = c("SNP1", "SNP2", "SNP3"),
+    rare = c("SNP4", "SNP5")
+  ))
+```
+
+## Practice Exercises
+
+### Exercise 1: Basic Data Manipulation
+
+Using the `nycflights13::flights` dataset:
+
+1. Find all flights that departed in summer (June, July, August)
+2. Select columns related to departure and arrival times
+3. Sort flights by total delay (departure + arrival delay)
+4. Create a new variable for flight speed in mph
+
+```{r}
+#| eval: false
+library(nycflights13)
+
+# Your solution here
+flights |>
+  filter(month %in% c(6, 7, 8)) |>
+  select(month, day, dep_time, arr_time, dep_delay, arr_delay) |>
+  mutate(
+    total_delay = dep_delay + arr_delay,
+    speed_mph = distance / (air_time / 60)
+  ) |>
+  arrange(desc(total_delay))
+```
+
+### Exercise 2: Grouping and Summarizing
+
+1. Calculate the mean, median, and standard deviation of departure delays by carrier
+2. Find which carrier has the most flights to each destination
+3. Determine the busiest hour of the day (by scheduled departure)
+
+```{r}
+#| eval: false
+# Part 1: Delay statistics by carrier
+flights |>
+  group_by(carrier) |>
+  summarize(
+    mean_delay = mean(dep_delay, na.rm = TRUE),
+    median_delay = median(dep_delay, na.rm = TRUE),
+    sd_delay = sd(dep_delay, na.rm = TRUE),
+    n_flights = n()
+  ) |>
+  arrange(desc(mean_delay))
+
+# Part 2: Top carrier per destination
+flights |>
+  count(dest, carrier) |>
+  group_by(dest) |>
+  slice_max(n, n = 1)
+
+# Part 3: Busiest departure hour
+flights |>
+  mutate(hour = dep_time %/% 100) |>
+  count(hour, sort = TRUE)
+```
+
+### Exercise 3: Data Joining
+
+Create two datasets and practice joining them:
+
+```{r}
+#| eval: false
+# Create sample data
+cell_lines <- tibble(
+  cell_line = c("HEK293", "HeLa", "CHO", "Jurkat"),
+  cell_type = c("epithelial", "epithelial", "ovary", "lymphocyte"),
+  species = c("human", "human", "hamster", "human")
+)
+
+experiments <- tibble(
+  cell_line = c("HEK293", "HEK293", "HeLa", "Jurkat", "Jurkat", "PC12"),
+  treatment = c("control", "drug_A", "drug_A", "control", "drug_B", "control"),
+  viability = c(98, 65, 45, 99, 82, 95)
+)
+
+# Questions:
+# 1. Add cell type and species information to experiments
+# 2. Find cell lines in the database with no experiments
+# 3. Find experiments for cell lines not in the database
+# 4. Create a complete dataset with all cell lines and experiments
+
+# Solutions:
+# 1. Left join
+experiments |>
+  left_join(cell_lines, by = "cell_line")
+
+# 2. Anti join
+cell_lines |>
+  anti_join(experiments, by = "cell_line")
+
+# 3. Anti join (reverse)
+experiments |>
+  anti_join(cell_lines, by = "cell_line")
+
+# 4. Full join
+experiments |>
+  full_join(cell_lines, by = "cell_line")
+```
+
+### Exercise 4: Complex Wrangling Pipeline
+
+Analyze flight delays by time of day and season:
+
+```{r}
+#| eval: false
+flights |>
+  # Create time and season categories
+  mutate(
+    time_of_day = case_when(
+      dep_time < 600 ~ "night",
+      dep_time < 1200 ~ "morning",
+      dep_time < 1800 ~ "afternoon",
+      TRUE ~ "evening"
+    ),
+    season = case_when(
+      month %in% c(12, 1, 2) ~ "winter",
+      month %in% c(3, 4, 5) ~ "spring",
+      month %in% c(6, 7, 8) ~ "summer",
+      month %in% c(9, 10, 11) ~ "fall"
+    )
+  ) |>
+  # Remove NAs
+  filter(!is.na(dep_delay), !is.na(time_of_day)) |>
+  # Group and summarize
+  group_by(season, time_of_day) |>
+  summarize(
+    mean_delay = mean(dep_delay),
+    median_delay = median(dep_delay),
+    n_flights = n(),
+    .groups = "drop"
+  ) |>
+  # Arrange for readability
+  arrange(season, time_of_day)
+```
+
+### Exercise 5: Working with Factors
+
+Create a publication-ready plot with properly ordered factors:
+
+```{r}
+#| eval: false
+# Sample biological data
+enzyme_data <- tibble(
+  enzyme = rep(c("Lipase", "Amylase", "Protease", "Cellulase"), each = 5),
+  temperature = rep(c(20, 30, 40, 50, 60), 4),
+  activity = c(
+    # Lipase
+    12, 24, 48, 36, 18,
+    # Amylase
+    18, 32, 55, 42, 20,
+    # Protease
+    8, 16, 35, 28, 12,
+    # Cellulase
+    15, 28, 62, 48, 22
+  )
+)
+
+# Calculate optimal temperature for each enzyme
+optimal_temps <- enzyme_data |>
+  group_by(enzyme) |>
+  summarize(optimal_temp = temperature[which.max(activity)])
+
+# Reorder enzymes by optimal temperature
+enzyme_data |>
+  left_join(optimal_temps, by = "enzyme") |>
+  mutate(enzyme = fct_reorder(enzyme, optimal_temp)) |>
+  ggplot(aes(x = temperature, y = activity, color = enzyme)) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 2) +
+  labs(
+    title = "Enzyme Activity vs Temperature",
+    subtitle = "Ordered by optimal temperature",
+    x = "Temperature (°C)",
+    y = "Enzyme Activity (U/mL)",
+    color = "Enzyme"
+  ) +
+  theme_minimal()
+```
+
+### Exercise 6: Missing Data Handling
+
+Practice different strategies for handling missing values:
+
+```{r}
+#| eval: false
+# Create data with missing values
+messy_data <- tibble(
+  sample_id = 1:10,
+  measurement_1 = c(5.2, NA, 6.8, 7.1, NA, 8.9, 9.2, NA, 7.5, 6.9),
+  measurement_2 = c(12.1, 13.5, NA, 14.2, 15.8, NA, 16.9, 17.2, NA, 14.8),
+  measurement_3 = c(NA, 22.5, 23.1, NA, 24.8, 25.3, NA, 26.7, 27.2, 28.1)
+)
+
+# Questions:
+# 1. How many missing values are in each column?
+# 2. Remove rows with any missing values
+# 3. Remove rows with missing values in measurement_1 only
+# 4. Replace missing values with column means
+# 5. Flag which measurements are missing
+
+# Solutions:
+# 1. Count NAs per column
+messy_data |>
+  summarize(across(everything(), ~sum(is.na(.))))
+
+# 2. Complete cases only
+messy_data |>
+  drop_na()
+
+# 3. Drop NAs in specific column
+messy_data |>
+  drop_na(measurement_1)
+
+# 4. Replace with means
+messy_data |>
+  mutate(across(starts_with("measurement"),
+                ~replace_na(., mean(., na.rm = TRUE))))
+
+# 5. Create missing indicators
+messy_data |>
+  mutate(across(starts_with("measurement"),
+                ~is.na(.),
+                .names = "{.col}_missing"))
+```
+
+These exercises cover the core data wrangling operations you'll use in most analyses. Practice combining these techniques to solve real-world data problems efficiently.
