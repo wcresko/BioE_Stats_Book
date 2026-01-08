@@ -282,6 +282,14 @@ Transformers power the large language models like GPT and BERT that have transfo
 
 Autoencoders are used for dimensionality reduction (as an alternative to PCA), denoising data by learning to reconstruct clean inputs from corrupted ones, anomaly detection by identifying inputs that are difficult to reconstruct, and generating new samples through **variational autoencoders** that learn probability distributions in the compressed space.
 
+### Discriminative vs. Generative Models
+
+Before introducing GANs, it's helpful to understand a fundamental distinction in AI models. Most machine learning methods covered in this book are **discriminative models**—they learn to distinguish between classes by finding decision boundaries in the feature space. Given an input, they output a class label or prediction.
+
+**Generative models**, by contrast, learn the underlying probability distribution of the data itself. Rather than just distinguishing cats from dogs, a generative model learns "what does a cat look like?" This allows them to generate entirely new samples that resemble the training data. @fig-discriminative-generative illustrates this distinction.
+
+![Discriminative vs. generative AI models. Discriminative models (left) learn decision boundaries to classify inputs into categories. Generative models (right) learn the probability distribution of each class, enabling them to generate new samples. Most traditional machine learning is discriminative; recent advances in AI (like GPT, DALL-E, and AlphaFold) increasingly leverage generative approaches.](../images/ch39/ch39_discriminative_generative.png){#fig-discriminative-generative fig-align="center" width="85%"}
+
 ### Generative Adversarial Networks (GANs)
 
 **GANs** consist of two networks trained in competition. The **generator** tries to create realistic fake data, while the **discriminator** tries to distinguish real examples from fake ones. Through this adversarial process—each network trying to beat the other—the generator learns to produce increasingly realistic samples.

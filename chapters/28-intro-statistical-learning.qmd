@@ -184,7 +184,9 @@ There is no universally best method. The **No Free Lunch theorem** formalizes th
 
 ## The Statistical Learning Workflow
 
-A typical statistical learning analysis follows a structured workflow that helps ensure reliable results. The process begins with clearly defining the problem: What are you trying to predict or understand? What would a useful answer look like? This clarity guides all subsequent decisions.
+A typical statistical learning analysis follows a structured workflow that helps ensure reliable results (@fig-ml-workflow). The process begins with clearly defining the problem: What are you trying to predict or understand? What would a useful answer look like? This clarity guides all subsequent decisions.
+
+![The general workflow for machine learning projects. This pipeline—from data collection through deployment—provides a roadmap for statistical learning analyses. Note that the process is often iterative: poor model performance may send you back to feature engineering or data collection.](../images/ch28/ch28_ml_workflow.png){#fig-ml-workflow fig-align="center" width="85%"}
 
 With the problem defined, the next phase is data preparation. Real data is messy—missing values, outliers, inconsistent formatting, variables on incompatible scales. Careful cleaning and transformation are essential before modeling. This is also when you split your data into training and test sets, setting aside the test data for final evaluation.
 

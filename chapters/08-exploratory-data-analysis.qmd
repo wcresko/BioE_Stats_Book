@@ -20,6 +20,8 @@ The term "Exploratory Data Analysis" was popularized by John Tukey in his ground
 "Exploratory data analysis is detective work—numerical detective work—or counting detective work—or graphical detective work... The most important maxim for data analysis is: 'Far better an approximate answer to the right question, which is often vague, than an exact answer to the wrong question, which can always be made precise.'" — John Tukey
 :::
 
+![John Tukey (1915–2000), the father of Exploratory Data Analysis. Tukey invented the boxplot, coined the terms "bit" and "software," and fundamentally shaped how statisticians think about data exploration versus confirmation.](../images/ch08/ch08_john_tukey.jpg){#fig-john-tukey fig-align="center" width="50%"}
+
 EDA serves several critical purposes:
 
 - **Understanding data structure**: What variables do you have? What types are they? How are they organized?
@@ -40,7 +42,9 @@ Effective exploratory analysis requires a particular mindset. Be curious but ske
 
 **Document your exploration**. Keep notes about what you find, questions that arise, and decisions you make. This documentation serves both as a record for yourself and as the foundation for your eventual analysis narrative.
 
-**Trust your visual system**. Humans are extraordinarily good at pattern detection. A well-designed plot can reveal relationships that summary statistics obscure. Anscombe's Quartet demonstrated this dramatically—four datasets with identical means, variances, and correlations but completely different underlying patterns visible only through visualization.
+**Trust your visual system**. Humans are extraordinarily good at pattern detection. A well-designed plot can reveal relationships that summary statistics obscure. Anscombe's Quartet demonstrated this dramatically—four datasets with identical means, variances, and correlations but completely different underlying patterns visible only through visualization (@fig-anscombe-quartet).
+
+![Anscombe's Quartet: four datasets with nearly identical summary statistics (same means, variances, correlations, and regression lines) but strikingly different patterns when visualized. This classic example demonstrates why visualization is essential—summary statistics alone can be profoundly misleading.](../images/ch08/ch08_anscombe_quartet.png){#fig-anscombe-quartet fig-align="center" width="85%"}
 
 ## Understanding Your Data
 

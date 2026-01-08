@@ -34,6 +34,8 @@ Two types of mistakes are possible in hypothesis testing.
 
 A **Type I error** occurs when we reject a true null hypothesis—concluding there is an effect when there is not. The probability of a Type I error is denoted $\alpha$ and is called the significance level. By convention, $\alpha$ is often set to 0.05, meaning we accept a 5% chance of falsely rejecting a true null.
 
+![R.A. Fisher's original 1926 paper "The Arrangement of Field Experiments" where he proposed the 0.05 significance threshold. Fisher wrote that results reaching "the 5 per cent. point" provide "reasonable grounds for calling the result significant." This arbitrary but practical convention has shaped statistical practice for nearly a century.](../images/ch15/ch15_fisher_pvalue.jpg){#fig-fisher-pvalue fig-align="center" width="80%"}
+
 A **Type II error** occurs when we fail to reject a false null hypothesis—concluding there is no effect when there actually is one. The probability of a Type II error is denoted $\beta$.
 
 **Power** is the probability of correctly rejecting a false null hypothesis: Power = $1 - \beta$. Power depends on the effect size (how big the true effect is), sample size, significance level, and variability in the data.
