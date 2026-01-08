@@ -737,6 +737,7 @@ mpg |>
 
 ## Practice Exercises
 
+::: {.callout-note}
 ### Exercise E.1: Basic Data Inspection
 
 Load the `mtcars` dataset and perform a basic inspection:
@@ -751,7 +752,9 @@ Load the `mtcars` dataset and perform a basic inspection:
 data(mtcars)
 
 ```
+:::
 
+::: {.callout-note}
 ### Exercise E.2: Univariate Analysis
 
 Using the `mtcars` dataset:
@@ -765,7 +768,9 @@ Using the `mtcars` dataset:
 # Your code here
 
 ```
+:::
 
+::: {.callout-note}
 ### Exercise E.3: Grouped Comparisons
 
 Compare `mpg` across different numbers of cylinders (`cyl`):
@@ -779,7 +784,9 @@ Compare `mpg` across different numbers of cylinders (`cyl`):
 # Your code here
 
 ```
+:::
 
+::: {.callout-note}
 ### Exercise E.4: Bivariate Relationships
 
 Explore the relationship between `wt` (weight) and `mpg`:
@@ -793,7 +800,9 @@ Explore the relationship between `wt` (weight) and `mpg`:
 # Your code here
 
 ```
+:::
 
+::: {.callout-note}
 ### Exercise E.5: Outlier Detection
 
 Identify potential outliers in the `mtcars` dataset:
@@ -807,7 +816,9 @@ Identify potential outliers in the `mtcars` dataset:
 # Your code here
 
 ```
+:::
 
+::: {.callout-note}
 ### Exercise E.6: Comprehensive EDA
 
 Perform a complete EDA on the `diamonds` dataset (from ggplot2):
@@ -825,6 +836,7 @@ Perform a complete EDA on the `diamonds` dataset (from ggplot2):
 data(diamonds)
 
 ```
+:::
 
 ::: {.callout-tip}
 ## EDA Never Ends

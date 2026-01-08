@@ -44,45 +44,38 @@ book:
         - chapters/16-t-tests.qmd
         - chapters/17-nonparametric-tests.qmd
         - chapters/18-bootstrapping.qmd
+        - chapters/19-presenting-results.qmd
 
     - part: "Linear Models"
       chapters:
-        - chapters/19-what-are-models.qmd
-        - chapters/20-correlation.qmd
-        - chapters/21-simple-linear-regression.qmd
-        - chapters/22-residual-analysis.qmd
-        - chapters/23-statistical-power.qmd
-        - chapters/24-multiple-regression.qmd
-        - chapters/25-single-factor-anova.qmd
-        - chapters/26-multifactor-anova.qmd
-        - chapters/27-glm.qmd
+        - chapters/20-what-are-models.qmd
+        - chapters/21-correlation.qmd
+        - chapters/22-simple-linear-regression.qmd
+        - chapters/23-residual-analysis.qmd
+        - chapters/24-statistical-power.qmd
+        - chapters/25-multiple-regression.qmd
+        - chapters/26-single-factor-anova.qmd
+        - chapters/27-multifactor-anova.qmd
+        - chapters/28-glm.qmd
 
     - part: "Statistical Learning"
       chapters:
-        - chapters/28-intro-statistical-learning.qmd
-        - chapters/29-model-validation.qmd
-        - chapters/30-regularization.qmd
-        - chapters/31-smoothing.qmd
-        - chapters/32-classification-methods.qmd
-        - chapters/33-trees-forests.qmd
-        - chapters/34-svm.qmd
-        - chapters/35-clustering.qmd
-        - chapters/36-dimensionality-reduction.qmd
-        - chapters/37-tsne-umap.qmd
-        - chapters/38-bayesian-statistics.qmd
-        - chapters/39-deep-learning.qmd
-        - chapters/40-high-performance-computing.qmd
-
-    - part: "Scientific Communication"
-      chapters:
-        - chapters/41-presenting-results.qmd
-
-    - part: "Historical Context"
-      chapters:
-        - chapters/A1-eugenics-history.qmd
+        - chapters/29-intro-statistical-learning.qmd
+        - chapters/30-model-validation.qmd
+        - chapters/31-regularization.qmd
+        - chapters/32-smoothing.qmd
+        - chapters/33-classification-methods.qmd
+        - chapters/34-trees-forests.qmd
+        - chapters/35-svm.qmd
+        - chapters/36-clustering.qmd
+        - chapters/37-dimensionality-reduction.qmd
+        - chapters/38-tsne-umap.qmd
+        - chapters/39-bayesian-statistics.qmd
+        - chapters/40-deep-learning.qmd
 
     - part: "Appendices"
       chapters:
+        - chapters/A1-eugenics-history.qmd
         - chapters/A2-keyboard-shortcuts.qmd
         - chapters/A3-unix-reference.qmd
         - chapters/A4-r-reference.qmd
@@ -92,6 +85,7 @@ book:
         - chapters/A8-probability-distributions.qmd
         - chapters/A9-sampling-distributions.qmd
         - chapters/A10-matrix-algebra.qmd
+        - chapters/A11-high-performance-computing.qmd
 
     - references.qmd
 

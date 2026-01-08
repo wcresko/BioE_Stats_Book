@@ -741,6 +741,7 @@ The function infers the format from the file extension. Specify dimensions and r
 
 The best way to learn ggplot2 is to use it. Take a dataset you care about and try different visualizations. Experiment with aesthetics, geoms, and facets. Read error messages carefully—they often point directly to the problem.
 
+::: {.callout-note}
 ### Exercise V.1: Basic ggplot2
 
 Create your first ggplot visualizations:
@@ -759,7 +760,9 @@ ggplot(mpg, aes(x = displ, y = hwy)) +
 2. Add color based on vehicle class
 3. Add appropriate axis labels and a title
 4. Try different themes (`theme_minimal()`, `theme_classic()`, `theme_bw()`)
+:::
 
+::: {.callout-note}
 ### Exercise V.2: Geometric Objects
 
 Practice with different geoms:
@@ -768,7 +771,9 @@ Practice with different geoms:
 2. Create a boxplot of highway mpg by vehicle class using `geom_boxplot()`
 3. Create a bar chart showing the count of vehicles by manufacturer using `geom_bar()`
 4. Create a line plot (use a time series dataset or create synthetic data)
+:::
 
+::: {.callout-note}
 ### Exercise V.3: Aesthetic Mappings
 
 Explore different aesthetic mappings:
@@ -790,7 +795,9 @@ ggplot(mpg, aes(x = displ, y = hwy, color = class)) +
 ggplot(mpg, aes(x = displ, y = hwy)) +
   geom_point(color = "steelblue", size = 3)
 ```
+:::
 
+::: {.callout-note}
 ### Exercise V.4: Faceting
 
 Practice creating small multiples:
@@ -807,7 +814,9 @@ ggplot(mpg, aes(x = displ, y = hwy)) +
   geom_point() +
   facet_wrap(~ class, nrow = 2)
 ```
+:::
 
+::: {.callout-note}
 ### Exercise V.5: Combining Layers
 
 Build complex visualizations by layering:
@@ -831,7 +840,9 @@ ggplot(mpg, aes(x = displ, y = hwy)) +
   ) +
   theme_minimal()
 ```
+:::
 
+::: {.callout-note}
 ### Exercise V.6: Publication-Quality Figures
 
 Create a polished figure suitable for publication:
@@ -841,3 +852,4 @@ Create a polished figure suitable for publication:
 3. Use an appropriate color palette
 4. Adjust theme elements for clarity
 5. Save the figure using `ggsave()` with appropriate dimensions and resolution
+:::

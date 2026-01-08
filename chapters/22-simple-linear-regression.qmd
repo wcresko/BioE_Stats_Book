@@ -466,6 +466,7 @@ Simple linear regression models the relationship between a predictor and respons
 
 ## Practice Exercises
 
+::: {.callout-note}
 ### Exercise R.1: Simple Linear Regression
 
 1. Using a dataset of your choice (or the built-in `mtcars`), fit a linear model with `lm()`
@@ -488,7 +489,9 @@ abline(model, col = "red")
 plot(model$fitted.values, model$residuals)
 abline(h = 0, col = "red", lty = 2)
 ```
+:::
 
+::: {.callout-note}
 ### Exercise R.2: Interpreting Coefficients
 
 Using your model from Exercise R.1:
@@ -497,7 +500,9 @@ Using your model from Exercise R.1:
 2. What does the slope represent?
 3. What is the R-squared value and what does it mean?
 4. Is the relationship statistically significant?
+:::
 
+::: {.callout-note}
 ### Exercise R.3: Model Diagnostics
 
 Check the assumptions of your linear model:
@@ -506,7 +511,9 @@ Check the assumptions of your linear model:
 2. Are the residuals normally distributed? (Q-Q plot)
 3. Is there constant variance? (Residuals vs. Fitted)
 4. Are there influential points? (Cook's distance)
+:::
 
+::: {.callout-note}
 ### Exercise R.4: Prediction
 
 Using your fitted model:
@@ -521,6 +528,7 @@ Using your fitted model:
 new_data <- data.frame(wt = 3.5)
 predict(model, newdata = new_data, interval = "confidence")
 ```
+:::
 
 ## Additional Resources
 

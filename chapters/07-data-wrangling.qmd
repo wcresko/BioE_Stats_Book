@@ -602,6 +602,7 @@ gene_variants |>
 
 ## Practice Exercises
 
+::: {.callout-note}
 ### Exercise 1: Basic Data Manipulation
 
 Using the `nycflights13::flights` dataset:
@@ -625,7 +626,9 @@ flights |>
   ) |>
   arrange(desc(total_delay))
 ```
+:::
 
+::: {.callout-note}
 ### Exercise 2: Grouping and Summarizing
 
 1. Calculate the mean, median, and standard deviation of departure delays by carrier
@@ -656,7 +659,9 @@ flights |>
   mutate(hour = dep_time %/% 100) |>
   count(hour, sort = TRUE)
 ```
+:::
 
+::: {.callout-note}
 ### Exercise 3: Data Joining
 
 Create two datasets and practice joining them:
@@ -699,7 +704,9 @@ experiments |>
 experiments |>
   full_join(cell_lines, by = "cell_line")
 ```
+:::
 
+::: {.callout-note}
 ### Exercise 4: Complex Wrangling Pipeline
 
 Analyze flight delays by time of day and season:
@@ -735,7 +742,9 @@ flights |>
   # Arrange for readability
   arrange(season, time_of_day)
 ```
+:::
 
+::: {.callout-note}
 ### Exercise 5: Working with Factors
 
 Create a publication-ready plot with properly ordered factors:
@@ -779,7 +788,9 @@ enzyme_data |>
   ) +
   theme_minimal()
 ```
+:::
 
+::: {.callout-note}
 ### Exercise 6: Missing Data Handling
 
 Practice different strategies for handling missing values:
@@ -825,5 +836,6 @@ messy_data |>
                 ~is.na(.),
                 .names = "{.col}_missing"))
 ```
+:::
 
 These exercises cover the core data wrangling operations you'll use in most analyses. Practice combining these techniques to solve real-world data problems efficiently.
