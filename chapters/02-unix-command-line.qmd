@@ -584,6 +584,212 @@ chmod +x myscript.sh
 
 The `#!/bin/bash` line at the top of the script (called a "shebang") tells Unix which program should interpret the script.
 
+## Bioinformatics File Formats
+
+Biological data comes in many specialized file formats. Understanding these formats is essential for working with genomic, transcriptomic, and other biological data. Most of these formats are plain text (or compressed plain text), making them amenable to Unix command-line processing.
+
+### Tabular Data Formats
+
+**CSV (Comma-Separated Values)** and **TSV (Tab-Separated Values)** are general-purpose formats for tabular data. CSV files use commas as delimiters, while TSV files use tabs. TSV is often preferred in bioinformatics because biological data may contain commas (e.g., in gene descriptions).
+
+```bash
+# View a CSV file
+head data.csv
+
+# Count rows in a TSV file (excluding header)
+tail -n +2 data.tsv | wc -l
+
+# Extract specific columns from TSV
+cut -f1,3,5 data.tsv
+```
+
+### FASTA Format
+
+**FASTA** is the most common format for storing nucleotide or protein sequences. Each sequence has a header line starting with `>` followed by the sequence identifier and optional description, then the sequence itself on subsequent lines.
+
+```
+>sequence_1 Human beta-globin
+MVHLTPEEKSAVTALWGKVNVDEVGGEALGRLLVVYPWTQRFFESFGDLSTPDAVMGNPK
+VKAHGKKVLGAFSDGLAHLDNLKGTFATLSELHCDKLHVDPENFRLLGNVLVCVLAHHFG
+>sequence_2 Mouse beta-globin
+MVHLTDAEKAAVSCLWGKVNSDEVGGEALGRLLVVYPWTQRYFDSFGDLSSASAIMGNPK
+```
+
+```bash
+# Count sequences in a FASTA file
+grep -c "^>" sequences.fasta
+
+# Extract sequence headers
+grep "^>" sequences.fasta
+
+# Get sequence IDs only (first word after >)
+grep "^>" sequences.fasta | cut -d" " -f1 | sed 's/>//'
+
+# Find sequences containing a specific pattern
+grep -B1 "ATCGATCG" sequences.fasta
+```
+
+### FASTQ Format
+
+**FASTQ** extends FASTA by including quality scores for each base, essential for next-generation sequencing data. Each record has four lines:
+
+1. Header line starting with `@`
+2. Sequence
+3. Separator line starting with `+`
+4. Quality scores (ASCII-encoded)
+
+```
+@SEQ_ID_001
+GATTTGGGGTTCAAAGCAGTATCGATCAAATAGTAAATCCATTTGTTCAACTCACAGTTT
++
+!''*((((***+))%%%++)(%%%%).1***-+*''))**55CCF>>>>>>CCCCCCC65
+```
+
+Quality scores are encoded as ASCII characters, where each character represents a quality value. Higher ASCII values indicate higher confidence in the base call.
+
+```bash
+# Count reads in a FASTQ file (4 lines per read)
+echo $(( $(wc -l < reads.fastq) / 4 ))
+
+# Extract just the sequences (every 2nd line of each 4-line record)
+awk 'NR % 4 == 2' reads.fastq
+
+# View quality scores only
+awk 'NR % 4 == 0' reads.fastq | head
+```
+
+::: {.callout-note}
+## Compressed Files
+FASTQ files are often compressed with gzip (`.fastq.gz` or `.fq.gz`). Use `zcat` or `gunzip -c` to read them without decompressing:
+```bash
+zcat reads.fastq.gz | head -8  # View first two reads
+```
+:::
+
+### SAM/BAM Format
+
+**SAM (Sequence Alignment/Map)** stores sequence alignments—how sequencing reads map to a reference genome. **BAM** is the compressed binary version of SAM.
+
+SAM files have a header section (lines starting with `@`) followed by alignment records. Each alignment record is tab-separated with fields including read name, flags, reference name, position, mapping quality, CIGAR string (alignment description), and the sequence.
+
+```bash
+# View SAM header
+samtools view -H alignment.bam
+
+# Count aligned reads
+samtools view -c alignment.bam
+
+# View first few alignments
+samtools view alignment.bam | head
+
+# Extract reads aligning to a specific chromosome
+samtools view alignment.bam chr1 | head
+
+# Convert BAM to SAM
+samtools view -h alignment.bam > alignment.sam
+```
+
+::: {.callout-tip}
+## SAMtools
+The `samtools` program is essential for working with SAM/BAM files. It provides functions for viewing, filtering, sorting, and indexing alignment data. Install it through conda or your system package manager.
+:::
+
+### BED Format
+
+**BED (Browser Extensible Data)** describes genomic intervals—regions on chromosomes. The first three columns are required: chromosome, start position (0-based), and end position. Additional columns can include name, score, strand, and visualization parameters.
+
+```
+chr1    1000    5000    gene_A    100    +
+chr1    7000    9000    gene_B    200    -
+chr2    3000    4000    gene_C    150    +
+```
+
+```bash
+# Count features
+wc -l features.bed
+
+# Extract features on chromosome 1
+awk '$1 == "chr1"' features.bed
+
+# Find features longer than 1000 bp
+awk '($3 - $2) > 1000' features.bed
+
+# Sort by chromosome and start position
+sort -k1,1 -k2,2n features.bed
+```
+
+### VCF Format
+
+**VCF (Variant Call Format)** stores genetic variants—SNPs, insertions, deletions, and structural variants. It has a header section (lines starting with `##` for metadata and `#CHROM` for column names) followed by variant records.
+
+Each variant record includes chromosome, position, ID, reference allele, alternate allele(s), quality score, filter status, and additional information. Sample genotypes appear in subsequent columns.
+
+```
+##fileformat=VCFv4.2
+##INFO=<ID=DP,Number=1,Type=Integer,Description="Total Depth">
+#CHROM  POS     ID      REF     ALT     QUAL    FILTER  INFO    FORMAT  SAMPLE1
+chr1    10177   rs367896724     A       AC      100     PASS    DP=30   GT:DP   0/1:15
+chr1    10352   rs555500075     T       TA      100     PASS    DP=25   GT:DP   0/0:20
+```
+
+```bash
+# Count variants (excluding header)
+grep -v "^#" variants.vcf | wc -l
+
+# Extract SNPs only (single-character REF and ALT)
+awk '!/^#/ && length($4)==1 && length($5)==1' variants.vcf
+
+# Find variants on a specific chromosome
+awk '$1 == "chr1"' variants.vcf | grep -v "^#"
+
+# Extract passing variants only
+awk '$7 == "PASS" || /^#/' variants.vcf
+```
+
+::: {.callout-tip}
+## BCFtools
+The `bcftools` program provides powerful tools for VCF manipulation, including filtering, merging, and statistical analysis. Combined with `tabix` for indexing, these tools enable efficient processing of large variant datasets.
+:::
+
+### GFF/GTF Format
+
+**GFF (General Feature Format)** and **GTF (Gene Transfer Format)** describe genomic features like genes, exons, and regulatory elements. Both are tab-separated with nine columns: chromosome, source, feature type, start, end, score, strand, frame, and attributes.
+
+```bash
+# Count genes
+awk '$3 == "gene"' annotations.gff | wc -l
+
+# Extract all exons for a specific gene
+grep "gene_name \"TP53\"" annotations.gtf | awk '$3 == "exon"'
+
+# List all feature types
+cut -f3 annotations.gff | sort | uniq -c
+```
+
+### Working with Compressed Files
+
+Bioinformatics files are frequently compressed to save space. Common compression formats include:
+
+- **gzip** (`.gz`): Standard compression, use `zcat`, `zgrep`, `zless`
+- **bgzip** (`.gz`): Block-gzip for indexed access, compatible with gzip tools
+- **bzip2** (`.bz2`): Higher compression ratio, use `bzcat`, `bzgrep`
+
+```bash
+# Read compressed files without decompressing
+zcat sequences.fasta.gz | head
+zgrep "^>" sequences.fasta.gz | wc -l
+zless large_file.txt.gz
+
+# Decompress files
+gunzip file.gz          # removes .gz, creates uncompressed file
+gunzip -k file.gz       # keep original compressed file
+gunzip -c file.gz > output.txt  # decompress to stdout
+
+# Compress files
+gzip file.txt           # creates file.txt.gz
+gzip -k file.txt        # keep original uncompressed file
+```
+
 ## Connecting to Remote Systems
 
 The `ssh` command (secure shell) lets you connect to remote computers.
