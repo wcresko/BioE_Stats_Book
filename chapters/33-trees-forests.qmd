@@ -19,6 +19,10 @@ Trees are popular for several compelling reasons. They are highly interpretable�
 
 However, individual trees have high variance and are prone to overfitting. **Random forests** address this limitation by averaging many trees together, dramatically improving prediction accuracy at the cost of some interpretability.
 
+@fig-decision-tree-example shows a bioengineering application of decision trees: predicting musculoskeletal injury risk based on physiological factors. The tree structure makes the decision process transparent—you can trace the path from root to leaf and understand exactly why a particular prediction was made. Each internal node asks a yes/no question (Is BMI ≥ 30? Is exercise frequency ≥ 3x/week?), and each leaf node provides a prediction with an associated probability.
+
+![A decision tree for predicting musculoskeletal injury risk using bioengineering variables. The tree partitions patients based on BMI, exercise frequency, and age, assigning each leaf node an injury risk probability. This interpretability—being able to trace exactly how a prediction is made—is a key advantage of tree-based methods.](../images/ch33/ch33_decision_tree_example.png){#fig-decision-tree-example fig-align="center" width="90%"}
+
 ## Decision Trees (CART)
 
 **Classification and Regression Trees (CART)** make predictions by recursively partitioning the feature space. At each node, the algorithm asks a yes/no question about a single feature, splitting observations into two groups.

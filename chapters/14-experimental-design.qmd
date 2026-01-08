@@ -23,6 +23,10 @@ In bioengineering, experimental design is particularly critical because:
 
 This chapter covers the fundamental principles that underlie all good experimental design, from laboratory studies to clinical trials. These principles apply whether you are testing a new biomaterial, characterizing cellular responses, or evaluating a medical device.
 
+Before diving into design principles, it helps to establish precise terminology. @fig-experimental-terms provides clear definitions of key terms that are often confused—measurement, observation, population, sample, and variable—with concrete biological examples.
+
+![Key experimental terminology with definitions and examples. Understanding the distinction between these terms—particularly the difference between a statistical population and a sample—is essential for proper experimental design and analysis.](../images/ch14/ch14_experimental_terms.jpg){#fig-experimental-terms fig-align="center" width="85%"}
+
 ## Key Principles of Experimental Design
 
 ### Replication
@@ -276,6 +280,10 @@ Understanding study types helps you choose appropriate designs and recognize the
 - Researchers do not assign treatments
 - Cannot control confounding variables
 - Can identify associations but not prove causation
+
+A classic illustration of how confounding can mislead is **Simpson's Paradox**, shown in @fig-simpsons-paradox. The famous Berkeley admissions data appeared to show gender bias in graduate admissions—overall, men were admitted at higher rates than women. However, when examining admission rates within each department separately, women were actually admitted at equal or higher rates. The paradox arose because women disproportionately applied to more competitive departments with lower overall admission rates. This example demonstrates why controlling for confounding variables is essential in observational studies.
+
+![Simpson's Paradox illustrated with university admission data by gender and department. While aggregate data suggested bias against women, department-level analysis revealed that women applied disproportionately to departments with lower admission rates. This classic example shows how confounding variables can completely reverse apparent relationships.](../images/ch14/ch14_simpsons_paradox.png){#fig-simpsons-paradox fig-align="center" width="90%"}
 
 **Examples:**
 - Cohort studies following patients with different genetic variants

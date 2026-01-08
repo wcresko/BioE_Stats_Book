@@ -129,6 +129,10 @@ Prediction error has two main components:
 
 **Variance**: Error from sensitivity to training data. Complex models have high variance—they change substantially with different training samples.
 
+@fig-bias-variance-concept illustrates this tradeoff visually. On the left, an underfit model (high bias) misses the pattern in the data. On the right, an overfit model (high variance) captures noise rather than signal. The optimal model complexity, shown in the middle, balances these competing concerns to minimize total error.
+
+![The bias-variance tradeoff visualized. Simple models (left) underfit the data, showing high bias. Complex models (right) overfit, showing high variance. The optimal model complexity (center) minimizes total error by balancing bias and variance. The U-shaped total error curve emerges because decreasing bias eventually comes at the cost of increasing variance.](../images/ch29/ch29_bias_variance.jpeg){#fig-bias-variance-concept fig-align="center" width="80%"}
+
 Mathematically, for a given test point $x_0$, the expected prediction error can be decomposed as:
 
 $$E[(y_0 - \hat{f}(x_0))^2] = \text{Var}(\hat{f}(x_0)) + [\text{Bias}(\hat{f}(x_0))]^2 + \text{Var}(\epsilon)$$

@@ -447,6 +447,12 @@ rect(max(length_cm), -50, 6, 600, col = rgb(1, 0, 0, 0.1), border = NA)
 text(5, 100, "Extrapolation\nzone", col = "red")
 ```
 
+## Choosing Your Curve-Fitting Method
+
+As you continue through this book, you will encounter many approaches to modeling relationships in data beyond simple linear regression. @fig-curve-fitting-humor offers a tongue-in-cheek guide to the different "messages" sent by various curve-fitting choices. While humorous, it makes an important point: the method you choose communicates something about your analysis. A simple linear fit says "I believe there's a basic linear relationship." A polynomial fit says "I want a curved line." LOESS says "I'm letting the data speak for itself." And confidence intervals say "I'm honestly quantifying my uncertainty." As you learn more sophisticated methods, keep in mind that simpler approaches are often preferable when they adequately describe the data.
+
+![A humorous guide to curve-fitting methods and the messages they send. While satirical, this comic highlights an important truth: your choice of model communicates assumptions about the relationship in your data. Simple, interpretable models are often preferable to complex approaches that overfit.](../images/ch21/ch21_curve_fitting_humor.png){#fig-curve-fitting-humor fig-align="center" width="70%"}
+
 ## Summary
 
 Simple linear regression models the relationship between a predictor and response variable:
