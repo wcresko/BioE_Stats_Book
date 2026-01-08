@@ -1,0 +1,471 @@
+# Support Vector Machines {#sec-svm}
+
+```{r}
+#| echo: false
+#| message: false
+library(tidyverse)
+library(e1071)
+library(kernlab)
+theme_set(theme_minimal())
+```
+
+## Introduction to Support Vector Machines
+
+**Support Vector Machines (SVMs)** are powerful supervised learning algorithms that excel at classification tasks, particularly when decision boundaries are complex. SVMs work by finding the optimal **hyperplane** that separates classes with the maximum margin.
+
+SVMs were developed by Vladimir Vapnik and colleagues in the 1990s and quickly became one of the most popular machine learning methods before the rise of deep learning. They remain valuable tools, especially for:
+
+- Problems with many features relative to samples
+- Small to medium-sized datasets
+- Applications requiring robust generalization
+- Biological sequence classification (proteins, genes)
+- Image classification before the deep learning era
+
+## The Maximum Margin Classifier
+
+### Separating Hyperplanes
+
+Consider a simple two-class classification problem with two features. If the classes are **linearly separable**—they can be perfectly separated by a straight line (or hyperplane in higher dimensions)—there are infinitely many possible separating lines.
+
+```{r}
+#| label: fig-separating-hyperplanes
+#| fig-cap: "Multiple hyperplanes can separate linearly separable classes. Which one is best?"
+#| fig-width: 7
+#| fig-height: 6
+# Generate linearly separable data
+set.seed(42)
+n <- 50
+x1 <- c(rnorm(n/2, -1, 0.5), rnorm(n/2, 1, 0.5))
+x2 <- c(rnorm(n/2, -1, 0.5), rnorm(n/2, 1, 0.5))
+y <- factor(c(rep(-1, n/2), rep(1, n/2)))
+data_sep <- data.frame(x1 = x1, x2 = x2, y = y)
+
+plot(x1, x2, col = c("red", "blue")[as.numeric(y)], pch = 19,
+     main = "Multiple Separating Hyperplanes")
+
+# Several possible separating lines
+abline(-0.1, 1, lty = 2, col = "gray")
+abline(0.2, 0.9, lty = 2, col = "gray")
+abline(-0.3, 1.1, lty = 2, col = "gray")
+abline(0, 1, lwd = 2, col = "darkgreen")  # Best one
+
+legend("topleft", c("Class -1", "Class +1"),
+       col = c("red", "blue"), pch = 19)
+```
+
+### The Margin
+
+The **maximum margin classifier** chooses the hyperplane that maximizes the distance to the nearest points from either class. This distance is called the **margin**.
+
+A hyperplane in $p$ dimensions is defined by:
+$$\beta_0 + \beta_1 X_1 + \beta_2 X_2 + \cdots + \beta_p X_p = 0$$
+
+For a new observation $x^*$, we classify based on which side of the hyperplane it falls:
+$$\text{sign}(\beta_0 + \beta_1 x_1^* + \beta_2 x_2^* + \cdots + \beta_p x_p^*) = \pm 1$$
+
+```{r}
+#| label: fig-margin
+#| fig-cap: "The maximum margin classifier finds the hyperplane that maximizes the margin (distance to nearest points). Support vectors are the points on the margin boundaries."
+#| fig-width: 7
+#| fig-height: 6
+# Fit SVM (linear kernel)
+library(e1071)
+svm_fit <- svm(y ~ x1 + x2, data = data_sep, kernel = "linear", scale = FALSE)
+
+# Plot
+plot(x1, x2, col = c("red", "blue")[as.numeric(y)], pch = 19,
+     main = "Maximum Margin Classifier")
+
+# Extract coefficients
+w <- t(svm_fit$coefs) %*% svm_fit$SV
+b <- -svm_fit$rho
+
+# Decision boundary
+abline(-b/w[2], -w[1]/w[2], lwd = 2)
+
+# Margins
+abline((-b-1)/w[2], -w[1]/w[2], lty = 2)
+abline((-b+1)/w[2], -w[1]/w[2], lty = 2)
+
+# Highlight support vectors
+points(svm_fit$SV, col = "black", cex = 2, lwd = 2)
+
+legend("topleft", c("Class -1", "Class +1", "Support Vectors"),
+       col = c("red", "blue", "black"), pch = c(19, 19, 1), pt.cex = c(1, 1, 2))
+```
+
+### Support Vectors
+
+The observations that lie exactly on the margin boundary are called **support vectors**. These points "support" the hyperplane—if they were moved, the optimal hyperplane would change. Points farther from the margin have no effect on the solution.
+
+This property makes SVMs:
+- **Sparse**: Only support vectors matter for prediction
+- **Efficient**: Prediction depends only on distances to support vectors
+- **Robust**: Points far from the boundary don't affect the model
+
+## The Support Vector Classifier (Soft Margin)
+
+Real data is rarely perfectly separable. The **support vector classifier** (soft margin SVM) allows some violations of the margin:
+
+```{r}
+#| label: fig-nonseparable
+#| fig-cap: "When classes overlap, perfect separation is impossible. The soft margin SVM allows some points to be on the wrong side."
+#| fig-width: 7
+#| fig-height: 6
+# Generate non-separable data
+set.seed(123)
+x1_ns <- c(rnorm(n/2, -0.5, 0.7), rnorm(n/2, 0.5, 0.7))
+x2_ns <- c(rnorm(n/2, -0.5, 0.7), rnorm(n/2, 0.5, 0.7))
+data_ns <- data.frame(x1 = x1_ns, x2 = x2_ns, y = y)
+
+plot(x1_ns, x2_ns, col = c("red", "blue")[as.numeric(y)], pch = 19,
+     main = "Non-Separable Classes")
+legend("topleft", c("Class -1", "Class +1"), col = c("red", "blue"), pch = 19)
+```
+
+The soft margin formulation introduces **slack variables** $\xi_i$ that allow points to violate the margin:
+
+$$\text{Minimize: } \frac{1}{2}||\beta||^2 + C \sum_{i=1}^n \xi_i$$
+
+subject to:
+$$y_i(\beta_0 + \beta^T x_i) \geq 1 - \xi_i, \quad \xi_i \geq 0$$
+
+### The Cost Parameter C
+
+The parameter **C** controls the tradeoff between margin width and violations:
+
+- **Large C**: Few violations allowed (narrow margin, risk of overfitting)
+- **Small C**: More violations tolerated (wider margin, risk of underfitting)
+
+```{r}
+#| label: fig-svm-cost
+#| fig-cap: "Effect of cost parameter C on the support vector classifier. Larger C allows fewer violations but may overfit."
+#| fig-width: 9
+#| fig-height: 4
+par(mfrow = c(1, 3))
+
+for (C_val in c(0.1, 1, 100)) {
+  svm_c <- svm(y ~ x1 + x2, data = data_ns, kernel = "linear",
+               cost = C_val, scale = FALSE)
+
+  plot(x1_ns, x2_ns, col = c("red", "blue")[as.numeric(y)], pch = 19,
+       main = paste("C =", C_val))
+
+  # Decision boundary
+  w <- t(svm_c$coefs) %*% svm_c$SV
+  b <- -svm_c$rho
+  abline(-b/w[2], -w[1]/w[2], lwd = 2)
+
+  # Support vectors
+  points(svm_c$SV, col = "black", cex = 1.5, lwd = 2)
+  text(0, 2, paste(nrow(svm_c$SV), "SVs"), cex = 0.8)
+}
+```
+
+As C decreases, more support vectors are used and the margin widens. This is another manifestation of the bias-variance tradeoff.
+
+## The Kernel Trick: Non-Linear SVMs
+
+Linear boundaries are often insufficient. The **kernel trick** allows SVMs to learn non-linear decision boundaries by implicitly mapping data to higher-dimensional space.
+
+### Why Kernels?
+
+Consider data that's not linearly separable:
+
+```{r}
+#| label: fig-nonlinear-data
+#| fig-cap: "Data requiring a non-linear decision boundary. No straight line can separate these classes."
+#| fig-width: 7
+#| fig-height: 6
+# Generate data requiring non-linear boundary
+set.seed(42)
+n <- 200
+r1 <- rnorm(n/2, 1, 0.3)
+r2 <- rnorm(n/2, 2.5, 0.3)
+theta <- runif(n, 0, 2*pi)
+
+x1_nl <- c(r1 * cos(theta[1:(n/2)]), r2 * cos(theta[(n/2+1):n]))
+x2_nl <- c(r1 * sin(theta[1:(n/2)]), r2 * sin(theta[(n/2+1):n]))
+y_nl <- factor(c(rep(-1, n/2), rep(1, n/2)))
+data_nl <- data.frame(x1 = x1_nl, x2 = x2_nl, y = y_nl)
+
+plot(x1_nl, x2_nl, col = c("red", "blue")[as.numeric(y_nl)], pch = 19,
+     main = "Non-Linear Decision Boundary Needed")
+```
+
+A linear SVM fails on this data. But if we map to a higher-dimensional space using features like $x_1^2$, $x_2^2$, $x_1 x_2$, the classes might become linearly separable.
+
+### Common Kernels
+
+**Linear Kernel**: $K(x_i, x_j) = x_i^T x_j$
+- Equivalent to standard support vector classifier
+
+**Polynomial Kernel**: $K(x_i, x_j) = (1 + x_i^T x_j)^d$
+- Creates polynomial decision boundaries of degree $d$
+
+**Radial Basis Function (RBF/Gaussian) Kernel**: $K(x_i, x_j) = \exp(-\gamma ||x_i - x_j||^2)$
+- Creates flexible, local decision boundaries
+- Most commonly used for non-linear problems
+- $\gamma$ controls the influence radius of each training point
+
+```{r}
+#| label: fig-kernel-comparison
+#| fig-cap: "Comparison of different SVM kernels on non-linear data"
+#| fig-width: 9
+#| fig-height: 4
+# Create grid for visualization
+x1_seq <- seq(-4, 4, length.out = 100)
+x2_seq <- seq(-4, 4, length.out = 100)
+grid <- expand.grid(x1 = x1_seq, x2 = x2_seq)
+
+par(mfrow = c(1, 3))
+
+# Linear kernel
+svm_linear <- svm(y ~ x1 + x2, data = data_nl, kernel = "linear")
+grid$pred <- predict(svm_linear, grid)
+plot(grid$x1, grid$x2,
+     col = c(rgb(1,0,0,0.1), rgb(0,0,1,0.1))[as.numeric(grid$pred)],
+     pch = 15, cex = 0.3, main = "Linear Kernel")
+points(x1_nl, x2_nl, col = c("red", "blue")[as.numeric(y_nl)], pch = 19)
+
+# Polynomial kernel
+svm_poly <- svm(y ~ x1 + x2, data = data_nl, kernel = "polynomial", degree = 2)
+grid$pred <- predict(svm_poly, grid)
+plot(grid$x1, grid$x2,
+     col = c(rgb(1,0,0,0.1), rgb(0,0,1,0.1))[as.numeric(grid$pred)],
+     pch = 15, cex = 0.3, main = "Polynomial Kernel (d=2)")
+points(x1_nl, x2_nl, col = c("red", "blue")[as.numeric(y_nl)], pch = 19)
+
+# RBF kernel
+svm_rbf <- svm(y ~ x1 + x2, data = data_nl, kernel = "radial", gamma = 0.5)
+grid$pred <- predict(svm_rbf, grid)
+plot(grid$x1, grid$x2,
+     col = c(rgb(1,0,0,0.1), rgb(0,0,1,0.1))[as.numeric(grid$pred)],
+     pch = 15, cex = 0.3, main = "RBF Kernel")
+points(x1_nl, x2_nl, col = c("red", "blue")[as.numeric(y_nl)], pch = 19)
+```
+
+The RBF kernel successfully captures the circular decision boundary.
+
+### Tuning the RBF Kernel
+
+The RBF kernel has two parameters to tune:
+
+- **C** (cost): Controls margin violations
+- **gamma** ($\gamma$): Controls kernel width
+
+```{r}
+#| label: fig-gamma-effect
+#| fig-cap: "Effect of gamma on RBF SVM: small gamma gives smoother boundaries, large gamma fits training data more closely"
+#| fig-width: 9
+#| fig-height: 4
+par(mfrow = c(1, 3))
+
+for (gamma_val in c(0.1, 1, 10)) {
+  svm_g <- svm(y ~ x1 + x2, data = data_nl, kernel = "radial",
+               gamma = gamma_val, cost = 1)
+  grid$pred <- predict(svm_g, grid)
+
+  plot(grid$x1, grid$x2,
+       col = c(rgb(1,0,0,0.1), rgb(0,0,1,0.1))[as.numeric(grid$pred)],
+       pch = 15, cex = 0.3, main = paste("gamma =", gamma_val))
+  points(x1_nl, x2_nl, col = c("red", "blue")[as.numeric(y_nl)], pch = 19)
+}
+```
+
+- **Small gamma**: Large kernel width, smooth boundaries (high bias, low variance)
+- **Large gamma**: Small kernel width, complex boundaries (low bias, high variance)
+
+### Cross-Validation for Parameter Selection
+
+```{r}
+# Grid search with cross-validation
+set.seed(42)
+tune_result <- tune(svm, y ~ x1 + x2, data = data_nl,
+                     kernel = "radial",
+                     ranges = list(
+                       cost = c(0.1, 1, 10, 100),
+                       gamma = c(0.1, 0.5, 1, 2)
+                     ))
+
+# Best parameters
+print(tune_result$best.parameters)
+cat("\nBest cross-validation error:", round(tune_result$best.performance, 4), "\n")
+
+# Summary of all models
+summary(tune_result)
+```
+
+## Multi-Class SVMs
+
+SVMs are naturally binary classifiers. For multi-class problems, two strategies are common:
+
+**One-vs-One (OvO)**: Train $\binom{K}{2}$ classifiers for each pair of classes. Predict by majority voting.
+
+**One-vs-All (OvA)**: Train $K$ classifiers, each separating one class from all others. Predict based on highest confidence.
+
+```{r}
+#| label: fig-multiclass-svm
+#| fig-cap: "Multi-class SVM classification on the iris dataset"
+#| fig-width: 8
+#| fig-height: 6
+# Multi-class SVM on iris
+data(iris)
+svm_iris <- svm(Species ~ Petal.Length + Petal.Width, data = iris,
+                 kernel = "radial", gamma = 0.5, cost = 1)
+
+# Create grid
+pl_seq <- seq(0, 7, length.out = 100)
+pw_seq <- seq(0, 3, length.out = 100)
+grid_iris <- expand.grid(Petal.Length = pl_seq, Petal.Width = pw_seq)
+grid_iris$pred <- predict(svm_iris, grid_iris)
+
+# Plot
+plot(grid_iris$Petal.Length, grid_iris$Petal.Width,
+     col = c(rgb(1,0,0,0.1), rgb(0,1,0,0.1), rgb(0,0,1,0.1))[grid_iris$pred],
+     pch = 15, cex = 0.3,
+     xlab = "Petal Length", ylab = "Petal Width",
+     main = "Multi-Class SVM on Iris Data")
+points(iris$Petal.Length, iris$Petal.Width,
+       col = c("red", "green", "blue")[iris$Species], pch = 19)
+legend("topleft", levels(iris$Species),
+       col = c("red", "green", "blue"), pch = 19)
+
+# Confusion matrix
+pred_iris <- predict(svm_iris, iris)
+table(Predicted = pred_iris, Actual = iris$Species)
+```
+
+## Support Vector Regression (SVR)
+
+SVMs can be extended to regression problems. **Support Vector Regression (SVR)** fits a tube of width $\epsilon$ around the data, ignoring errors within the tube:
+
+```{r}
+#| label: fig-svr
+#| fig-cap: "Support Vector Regression fits a tube around the data. Only points outside the tube affect the model."
+#| fig-width: 7
+#| fig-height: 5
+# Generate regression data
+set.seed(42)
+n <- 100
+x_reg <- sort(runif(n, 0, 10))
+y_reg <- sin(x_reg) + rnorm(n, sd = 0.3)
+data_reg <- data.frame(x = x_reg, y = y_reg)
+
+# Fit SVR
+svr_fit <- svm(y ~ x, data = data_reg, type = "eps-regression",
+                kernel = "radial", gamma = 0.5, epsilon = 0.3)
+
+# Predictions
+x_grid <- seq(0, 10, length.out = 200)
+y_pred <- predict(svr_fit, newdata = data.frame(x = x_grid))
+
+# Plot
+plot(x_reg, y_reg, pch = 16, col = "gray50",
+     main = "Support Vector Regression")
+lines(x_grid, y_pred, col = "blue", lwd = 2)
+lines(x_grid, y_pred + 0.3, col = "blue", lty = 2)  # Epsilon tube
+lines(x_grid, y_pred - 0.3, col = "blue", lty = 2)
+lines(x_grid, sin(x_grid), col = "red", lwd = 2, lty = 2)
+
+# Highlight support vectors
+sv_idx <- svr_fit$index
+points(x_reg[sv_idx], y_reg[sv_idx], col = "black", cex = 1.5, lwd = 2)
+
+legend("topright", c("Data", "SVR fit", "Epsilon tube", "True function", "Support vectors"),
+       col = c("gray50", "blue", "blue", "red", "black"),
+       pch = c(16, NA, NA, NA, 1), lty = c(NA, 1, 2, 2, NA), lwd = c(1, 2, 1, 2, 2))
+```
+
+## Practical Considerations
+
+### Feature Scaling
+
+SVMs are sensitive to feature scales. Always standardize features before training:
+
+```{r}
+# With scaling (default)
+svm_scaled <- svm(Species ~ ., data = iris, scale = TRUE)
+
+# Without scaling (not recommended)
+# svm_unscaled <- svm(Species ~ ., data = iris, scale = FALSE)
+```
+
+### Choosing the Kernel
+
+::: {.callout-tip}
+## Kernel Selection Guidelines
+
+1. **Start with RBF**: The radial basis function kernel is a good default—it handles most non-linear problems
+2. **Try linear first if**: Many features relative to samples, or data is expected to be linearly separable
+3. **Polynomial kernels**: When you have domain knowledge suggesting polynomial relationships
+4. **Custom kernels**: Domain-specific knowledge (e.g., string kernels for sequences)
+:::
+
+### Advantages and Limitations
+
+**Advantages:**
+- Effective in high-dimensional spaces
+- Memory efficient (uses only support vectors)
+- Versatile through kernel choice
+- Good generalization (maximum margin principle)
+
+**Limitations:**
+- Slow for large datasets (training is $O(n^2)$ to $O(n^3)$)
+- Sensitive to feature scaling
+- No probability estimates by default
+- Kernel and parameter selection requires care
+
+## Exercises
+
+::: {.callout-note}
+### Exercise SVM.1: Linear SVM
+
+1. Generate linearly separable data in two dimensions. Fit an SVM with a linear kernel.
+
+2. Identify the support vectors. How many are there?
+
+3. Add noise to make the classes overlap. How does the number of support vectors change with different values of C?
+:::
+
+::: {.callout-note}
+### Exercise SVM.2: Non-Linear Classification
+
+4. Generate data that requires a non-linear decision boundary (e.g., circles or moons).
+
+5. Fit SVMs with polynomial and RBF kernels. Compare performance.
+
+6. Use cross-validation to select optimal parameters (C, gamma or degree).
+:::
+
+::: {.callout-note}
+### Exercise SVM.3: Real Data
+
+7. Load the `tissue_gene_expression` dataset. Use SVM to classify tissue types.
+
+8. Compare linear and RBF kernels. Which performs better?
+
+9. How does SVM compare to random forests on this data?
+:::
+
+## Summary
+
+- **Support Vector Machines** find optimal separating hyperplanes with maximum margin
+- **Support vectors** are the training points that determine the decision boundary
+- The **cost parameter C** controls the tradeoff between margin width and violations
+- The **kernel trick** enables non-linear decision boundaries:
+  - Linear: Standard support vector classifier
+  - Polynomial: Polynomial decision boundaries
+  - RBF: Flexible, localized boundaries (most common)
+- **Gamma** ($\gamma$) controls RBF kernel width—larger values give more complex boundaries
+- **Cross-validation** is essential for selecting C and gamma
+- SVMs extend to **multi-class** (one-vs-one or one-vs-all) and **regression** (SVR)
+- **Feature scaling** is required before training
+- SVMs work well in high dimensions but can be slow for large datasets
+
+## Additional Resources
+
+- @james2023islr - Accessible introduction to SVMs
+- @hastie2009elements - Theoretical foundations
+- Cristianini & Shawe-Taylor (2000). *An Introduction to Support Vector Machines* - Classic reference
+- `e1071` and `kernlab` package documentation

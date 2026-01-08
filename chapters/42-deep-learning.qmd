@@ -1,0 +1,502 @@
+# Introduction to Deep Learning {#sec-deep-learning}
+
+```{r}
+#| echo: false
+#| message: false
+library(tidyverse)
+theme_set(theme_minimal())
+```
+
+## What is Deep Learning?
+
+**Deep learning** is a subset of machine learning that uses artificial neural networks with multiple layers (hence "deep") to learn representations of data. While the statistical learning methods covered in previous chapters work well with carefully engineered features, deep learning methods can automatically discover the features needed for classification or regression.
+
+Deep learning has achieved remarkable success in areas that were previously difficult for computers:
+
+- Image recognition and computer vision
+- Speech recognition and natural language processing
+- Protein structure prediction (AlphaFold)
+- Game playing (AlphaGo, chess)
+- Drug discovery and molecular property prediction
+- Medical image analysis
+
+This chapter provides a conceptual overview of deep learning—how it differs from traditional statistical learning, the major architectures, and when it's appropriate to use.
+
+## How Deep Learning Differs from Statistical Learning
+
+### Feature Engineering vs. Feature Learning
+
+Traditional statistical learning requires careful **feature engineering**—domain experts must decide which variables to measure and how to transform them. For example, to classify cell types from microscopy images, you might extract features like:
+
+- Cell area and perimeter
+- Nuclear-to-cytoplasmic ratio
+- Texture measures
+- Intensity histograms
+
+Deep learning, by contrast, performs **automatic feature learning**. Given raw data (pixels, sequences, etc.), the network learns to extract relevant features at multiple levels of abstraction.
+
+```{r}
+#| label: fig-feature-learning
+#| fig-cap: "Traditional ML requires feature engineering; deep learning learns features automatically from raw data"
+#| fig-width: 9
+#| fig-height: 4
+#| echo: false
+par(mfrow = c(1, 2), mar = c(2, 2, 3, 1))
+
+# Traditional ML
+plot.new()
+plot.window(xlim = c(0, 10), ylim = c(0, 10))
+title("Traditional Machine Learning")
+
+# Data box
+rect(0.5, 7, 2.5, 9, col = "lightblue", border = "darkblue")
+text(1.5, 8, "Raw\nData", cex = 0.8)
+
+# Feature engineering (manual)
+rect(3.5, 7, 6.5, 9, col = "lightyellow", border = "orange")
+text(5, 8, "Feature\nEngineering\n(Manual)", cex = 0.7)
+
+# Model
+rect(7.5, 7, 9.5, 9, col = "lightgreen", border = "darkgreen")
+text(8.5, 8, "ML\nModel", cex = 0.8)
+
+# Arrows
+arrows(2.5, 8, 3.5, 8, length = 0.1, lwd = 2)
+arrows(6.5, 8, 7.5, 8, length = 0.1, lwd = 2)
+
+# Expert
+text(5, 5.5, "Domain Expert\nRequired", cex = 0.9, col = "red")
+arrows(5, 6, 5, 7, length = 0.1, lwd = 1.5, col = "red")
+
+# Deep Learning
+plot.new()
+plot.window(xlim = c(0, 10), ylim = c(0, 10))
+title("Deep Learning")
+
+# Data box
+rect(0.5, 7, 2.5, 9, col = "lightblue", border = "darkblue")
+text(1.5, 8, "Raw\nData", cex = 0.8)
+
+# Neural Network (learns features)
+rect(4, 6, 8, 10, col = "lavender", border = "purple")
+text(6, 8, "Neural Network\n(Learns Features\nAutomatically)", cex = 0.7)
+
+# Arrow
+arrows(2.5, 8, 4, 8, length = 0.1, lwd = 2)
+
+# Output
+rect(8.5, 7, 9.5, 9, col = "lightgreen", border = "darkgreen")
+text(9, 8, "Output", cex = 0.8)
+arrows(8, 8, 8.5, 8, length = 0.1, lwd = 2)
+```
+
+### Model Complexity and Data Requirements
+
+Statistical learning methods typically have interpretable structures and modest data requirements:
+
+| Aspect | Statistical Learning | Deep Learning |
+|:-------|:--------------------|:--------------|
+| **Model complexity** | Low to moderate | Very high (millions of parameters) |
+| **Data required** | Hundreds to thousands | Thousands to millions |
+| **Features** | Manually engineered | Automatically learned |
+| **Interpretability** | Often interpretable | Usually black-box |
+| **Training time** | Minutes to hours | Hours to weeks |
+| **Hardware** | CPU sufficient | GPU often required |
+
+### The Universal Approximation Theorem
+
+Neural networks can, in theory, approximate any continuous function to arbitrary precision. This **universal approximation theorem** explains their flexibility—but doesn't guarantee they'll find a good solution in practice or generalize well to new data.
+
+## Neural Network Fundamentals
+
+### The Artificial Neuron
+
+The basic building block is an **artificial neuron** (or unit), inspired loosely by biological neurons:
+
+$$z = \sigma\left(\sum_{i=1}^{p} w_i x_i + b\right) = \sigma(w^T x + b)$$
+
+where:
+- $x_i$ are inputs
+- $w_i$ are weights (learned parameters)
+- $b$ is a bias term
+- $\sigma$ is an **activation function**
+
+```{r}
+#| label: fig-neuron
+#| fig-cap: "A single artificial neuron computes a weighted sum of inputs, adds a bias, and applies an activation function"
+#| fig-width: 7
+#| fig-height: 5
+#| echo: false
+plot.new()
+plot.window(xlim = c(0, 10), ylim = c(0, 8))
+title("Artificial Neuron", cex.main = 1.2)
+
+# Input nodes
+for (i in 1:3) {
+  y_pos <- 7 - (i-1) * 2
+  points(1, y_pos, pch = 19, cex = 3, col = "steelblue")
+  text(0.3, y_pos, paste0("x", i), cex = 1.2)
+}
+text(1, 2, "...", cex = 1.5)
+points(1, 1, pch = 19, cex = 3, col = "steelblue")
+text(0.3, 1, "xp", cex = 1.2)
+
+# Central neuron
+points(5, 4, pch = 19, cex = 5, col = "coral")
+text(5, 4, expression(Sigma), cex = 1.5)
+
+# Connections with weights
+arrows(1.3, 7, 4.5, 4.3, length = 0.1, lwd = 1.5)
+arrows(1.3, 5, 4.5, 4.1, length = 0.1, lwd = 1.5)
+arrows(1.3, 3, 4.5, 3.9, length = 0.1, lwd = 1.5)
+arrows(1.3, 1, 4.5, 3.7, length = 0.1, lwd = 1.5)
+
+text(2.5, 6, expression(w[1]), cex = 0.9)
+text(2.5, 4.8, expression(w[2]), cex = 0.9)
+text(2.5, 3.2, expression(w[3]), cex = 0.9)
+text(2.5, 2, expression(w[p]), cex = 0.9)
+
+# Activation function
+rect(6.5, 3, 8, 5, border = "darkgreen", lwd = 2)
+text(7.25, 4, expression(sigma), cex = 1.2)
+arrows(5.5, 4, 6.5, 4, length = 0.1, lwd = 1.5)
+
+# Output
+arrows(8, 4, 9, 4, length = 0.1, lwd = 1.5)
+text(9.5, 4, "Output", cex = 1)
+
+# Bias
+text(5, 2, "+b", cex = 1)
+```
+
+### Activation Functions
+
+The activation function introduces non-linearity, allowing networks to learn complex patterns:
+
+```{r}
+#| label: fig-activations
+#| fig-cap: "Common activation functions used in neural networks"
+#| fig-width: 9
+#| fig-height: 4
+par(mfrow = c(1, 4))
+x <- seq(-3, 3, length.out = 100)
+
+# Sigmoid
+plot(x, 1/(1 + exp(-x)), type = "l", lwd = 2, col = "blue",
+     main = "Sigmoid", xlab = "x", ylab = expression(sigma(x)))
+abline(h = c(0, 1), lty = 3, col = "gray")
+
+# Tanh
+plot(x, tanh(x), type = "l", lwd = 2, col = "red",
+     main = "Tanh", xlab = "x", ylab = "tanh(x)")
+abline(h = c(-1, 1), lty = 3, col = "gray")
+
+# ReLU
+plot(x, pmax(0, x), type = "l", lwd = 2, col = "darkgreen",
+     main = "ReLU", xlab = "x", ylab = "max(0, x)")
+
+# Softmax (conceptual - for single value)
+plot(x, exp(x)/(1 + exp(x)), type = "l", lwd = 2, col = "purple",
+     main = "Softmax (1D)", xlab = "x", ylab = "exp(x)/(1+exp(x))")
+```
+
+**ReLU (Rectified Linear Unit)** is most commonly used in hidden layers:
+$$\text{ReLU}(x) = \max(0, x)$$
+
+**Sigmoid** and **softmax** are used for output layers in classification problems.
+
+### Layers and Depth
+
+A neural network consists of:
+
+- **Input layer**: Receives raw features
+- **Hidden layers**: Transform representations
+- **Output layer**: Produces predictions
+
+The "depth" refers to the number of hidden layers. Networks with many hidden layers can learn hierarchical representations—simple features combine into more complex ones at each layer.
+
+```{r}
+#| label: fig-network-architecture
+#| fig-cap: "A feedforward neural network with two hidden layers. Information flows from input to output through successive transformations."
+#| fig-width: 9
+#| fig-height: 5
+#| echo: false
+plot.new()
+plot.window(xlim = c(0, 10), ylim = c(0, 10))
+title("Feedforward Neural Network", cex.main = 1.2)
+
+# Layer positions
+layer_x <- c(1, 3.5, 6, 8.5)
+layer_names <- c("Input\nLayer", "Hidden\nLayer 1", "Hidden\nLayer 2", "Output\nLayer")
+layer_sizes <- c(4, 5, 4, 2)
+
+# Draw nodes
+for (l in 1:4) {
+  n <- layer_sizes[l]
+  y_positions <- seq(2, 8, length.out = n)
+  for (i in 1:n) {
+    col <- c("steelblue", "coral", "coral", "lightgreen")[l]
+    points(layer_x[l], y_positions[i], pch = 19, cex = 2.5, col = col)
+  }
+  text(layer_x[l], 0.8, layer_names[l], cex = 0.8)
+}
+
+# Draw connections (simplified - not all shown)
+for (l in 1:3) {
+  n1 <- layer_sizes[l]
+  n2 <- layer_sizes[l+1]
+  y1 <- seq(2, 8, length.out = n1)
+  y2 <- seq(2, 8, length.out = n2)
+  for (i in 1:n1) {
+    for (j in 1:n2) {
+      segments(layer_x[l] + 0.15, y1[i], layer_x[l+1] - 0.15, y2[j],
+               col = rgb(0, 0, 0, 0.15), lwd = 0.5)
+    }
+  }
+}
+```
+
+### Training Neural Networks
+
+Neural networks are trained by **backpropagation**:
+
+1. **Forward pass**: Compute predictions from inputs
+2. **Compute loss**: Compare predictions to true values
+3. **Backward pass**: Compute gradients of loss with respect to all weights
+4. **Update weights**: Adjust weights to reduce loss
+
+This process repeats for many **epochs** (passes through the training data) using **stochastic gradient descent** or variants (Adam, RMSprop, etc.).
+
+## Major Types of Deep Learning Architectures
+
+### Feedforward Neural Networks (Multilayer Perceptrons)
+
+The simplest architecture where information flows in one direction from input to output. Good for:
+
+- Tabular data with numerical features
+- Simple classification and regression
+- When the number of features is fixed
+
+### Convolutional Neural Networks (CNNs)
+
+**CNNs** are designed for grid-like data, especially images. They use **convolutional layers** that apply learnable filters across the input, capturing local patterns.
+
+Key properties:
+- **Local connectivity**: Each unit connects to a small region of the input
+- **Parameter sharing**: Same filter applied across the entire image
+- **Translation invariance**: Can recognize patterns regardless of position
+
+CNNs learn hierarchical features automatically:
+- Early layers: Edges, textures, colors
+- Middle layers: Parts, shapes, patterns
+- Later layers: Objects, concepts
+
+**Applications in biology:**
+- Medical image analysis (tumors, cell types)
+- Microscopy image classification
+- Protein structure visualization
+
+### Recurrent Neural Networks (RNNs) and LSTMs
+
+**RNNs** are designed for sequential data where order matters. They maintain a "memory" (hidden state) that captures information from previous time steps.
+
+**Long Short-Term Memory (LSTM)** networks are an improved RNN architecture that can capture long-range dependencies without suffering from vanishing gradients.
+
+**Applications:**
+- Time series analysis (gene expression over time)
+- Sequence modeling (DNA, protein sequences)
+- Natural language processing
+
+### Transformers and Attention Mechanisms
+
+**Transformers** have revolutionized deep learning, particularly in natural language processing. Instead of processing sequences step-by-step like RNNs, they use **attention mechanisms** to relate all positions simultaneously.
+
+Key innovation: **Self-attention** allows the model to weigh the importance of different parts of the input when producing each output.
+
+**Applications:**
+- Language models (GPT, BERT)
+- Protein structure prediction (AlphaFold uses attention)
+- Genomic sequence analysis
+
+### Autoencoders
+
+**Autoencoders** learn compressed representations by training to reconstruct their input through a bottleneck layer.
+
+Structure:
+- Encoder: Compresses input to a lower-dimensional representation
+- Decoder: Reconstructs input from the compressed representation
+
+**Applications:**
+- Dimensionality reduction
+- Denoising data
+- Anomaly detection
+- Generating new samples (variational autoencoders)
+
+### Generative Adversarial Networks (GANs)
+
+**GANs** consist of two networks trained in competition:
+- **Generator**: Tries to create realistic fake data
+- **Discriminator**: Tries to distinguish real from fake
+
+Through this adversarial process, the generator learns to produce increasingly realistic samples.
+
+**Applications:**
+- Image synthesis
+- Data augmentation
+- Drug molecule generation
+
+## Deep Learning vs. Traditional Methods
+
+### When to Use Deep Learning
+
+::: {.callout-tip}
+## Deep Learning is Often Best When:
+
+1. **Large datasets available**: Deep learning excels with thousands to millions of samples
+2. **Complex, high-dimensional input**: Images, sequences, audio
+3. **Raw data available**: No need for feature engineering
+4. **Sufficient compute resources**: GPUs or TPUs available
+5. **Prediction accuracy is paramount**: Interpretability less important
+6. **Patterns are hierarchical**: Features build on features
+:::
+
+### When Traditional Methods May Be Better
+
+::: {.callout-note}
+## Consider Statistical Learning Methods When:
+
+1. **Small datasets**: Hundreds of samples or fewer
+2. **Tabular data**: Structured data with engineered features
+3. **Interpretability required**: Need to explain predictions
+4. **Limited compute**: CPU-only environment
+5. **Domain knowledge available**: Can engineer informative features
+6. **Uncertainty quantification needed**: Confidence intervals, p-values
+7. **Regulatory requirements**: Need auditable, explainable models
+:::
+
+### A Practical Comparison
+
+| Task | Traditional ML | Deep Learning |
+|:-----|:--------------|:--------------|
+| Predicting disease from 50 biomarkers | Random Forest, SVM | Probably overkill |
+| Classifying tumors from histopathology images | Feature engineering + classifier | CNN (likely better) |
+| Predicting protein structure | Difficult | AlphaFold revolutionized this |
+| Analyzing 100-patient clinical trial | Regression, ANOVA | Not enough data |
+| Detecting arrhythmias from ECG | Feature-based classifiers | CNNs/RNNs work well |
+| Gene expression analysis (RNA-seq) | Depends on sample size | Autoencoders useful for dimensionality reduction |
+
+## Deep Learning in Biology: Selected Applications
+
+### AlphaFold: Protein Structure Prediction
+
+Perhaps the most transformative application of deep learning in biology. AlphaFold2 uses attention mechanisms to predict 3D protein structure from amino acid sequences with unprecedented accuracy, solving a 50-year-old problem.
+
+### Medical Imaging
+
+- Detecting diabetic retinopathy from retinal images
+- Identifying skin cancer from dermoscopy
+- Analyzing pathology slides for cancer diagnosis
+- Segmenting organs in CT/MRI scans
+
+### Genomics and Sequencing
+
+- Predicting regulatory elements from DNA sequence
+- Calling variants from sequencing data
+- Predicting gene expression from sequence
+- Single-cell RNA-seq analysis
+
+### Drug Discovery
+
+- Predicting drug-target interactions
+- Generating novel molecular structures
+- Predicting drug toxicity and side effects
+- Virtual screening of compound libraries
+
+## Getting Started with Deep Learning
+
+### Software Frameworks
+
+Popular frameworks for deep learning:
+
+- **TensorFlow/Keras**: Google's framework, widely used
+- **PyTorch**: Facebook's framework, popular in research
+- **R interfaces**: `keras` and `torch` packages in R
+
+### Practical Tips
+
+1. **Start simple**: Begin with established architectures before creating custom ones
+2. **Use transfer learning**: Pre-trained models can be fine-tuned on your data
+3. **Monitor for overfitting**: Use validation sets and regularization
+4. **Normalize inputs**: Neural networks are sensitive to input scale
+5. **Use data augmentation**: Especially for image data with limited samples
+6. **Experiment with learning rates**: Critical hyperparameter
+7. **Consider computational costs**: GPU training can be expensive
+
+## Limitations and Considerations
+
+### Black Box Nature
+
+Deep learning models are difficult to interpret. While methods like:
+- Attention visualization
+- Gradient-based saliency maps
+- SHAP values
+
+can provide some insight, understanding *why* a network makes a prediction remains challenging.
+
+### Data Hunger
+
+Deep learning typically requires large datasets. With small samples, traditional methods often perform better and are less prone to overfitting.
+
+### Computational Requirements
+
+Training deep networks requires significant computational resources:
+- GPUs (Graphics Processing Units)
+- Cloud computing
+- Large amounts of memory
+
+### Reproducibility Challenges
+
+Neural network training involves:
+- Random initialization
+- Stochastic optimization
+- Hardware-dependent operations
+
+Making results fully reproducible requires careful attention to random seeds and environment configuration.
+
+## Summary
+
+- **Deep learning** uses multi-layer neural networks to automatically learn features from data
+- Unlike traditional ML, deep learning can work directly with raw data (images, sequences)
+- **Key architectures**:
+  - **Feedforward networks**: General-purpose, tabular data
+  - **CNNs**: Images and spatial data
+  - **RNNs/LSTMs**: Sequential data
+  - **Transformers**: Attention-based, state-of-the-art for sequences
+  - **Autoencoders**: Compression and generation
+  - **GANs**: Generating realistic synthetic data
+- Deep learning excels with **large datasets** and **complex inputs**
+- Traditional statistical learning is often better for **small datasets**, **interpretability**, and **tabular data**
+- Biological applications include protein structure prediction, medical imaging, genomics, and drug discovery
+- Deep learning requires significant **computational resources** and **large amounts of data**
+- The field is evolving rapidly—architectures and best practices continue to change
+
+## Additional Resources
+
+### Books
+- Goodfellow, Bengio, & Courville (2016). *Deep Learning*. MIT Press. (The definitive textbook)
+- Chollet (2021). *Deep Learning with Python*. Manning. (Practical introduction)
+
+### Online Courses
+- fast.ai - Practical deep learning for coders
+- deeplearning.ai - Andrew Ng's courses
+- Stanford CS231n - Convolutional Neural Networks for Visual Recognition
+
+### Biological Applications
+- @jumper2021alphafold - AlphaFold paper
+- Ching et al. (2018). Opportunities and obstacles for deep learning in biology and medicine
+- Eraslan et al. (2019). Deep learning: new computational modelling techniques for genomics
+
+### Software Documentation
+- TensorFlow: https://www.tensorflow.org
+- PyTorch: https://pytorch.org
+- Keras R package: https://keras.rstudio.com

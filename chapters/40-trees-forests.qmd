@@ -1,0 +1,504 @@
+# Decision Trees and Random Forests {#sec-trees-forests}
+
+```{r}
+#| echo: false
+#| message: false
+library(tidyverse)
+library(rpart)
+library(rpart.plot)
+library(randomForest)
+library(dslabs)
+theme_set(theme_minimal())
+```
+
+## Introduction to Tree-Based Methods
+
+**Decision trees** are a fundamentally different approach to prediction. Instead of fitting a smooth function or finding nearest neighbors, trees partition the feature space into rectangular regions and make a simple prediction within each region.
+
+Trees are popular because they:
+
+- Are highly interpretable—easy to explain to non-statisticians
+- Handle both numeric and categorical predictors naturally
+- Capture non-linear relationships and interactions automatically
+- Are robust to outliers and don't require feature scaling
+
+However, individual trees have high variance and are prone to overfitting. **Random forests** address this by averaging many trees, dramatically improving prediction accuracy.
+
+## Decision Trees (CART)
+
+**Classification and Regression Trees (CART)** make predictions by recursively partitioning the feature space. At each node, the algorithm asks a yes/no question about a single feature, splitting observations into two groups.
+
+### Motivating Example: Olive Oil Classification
+
+Consider a dataset of olive oil samples from three regions of Italy, with measurements of 8 fatty acids:
+
+```{r}
+data("olive")
+names(olive)
+table(olive$region)
+```
+
+We want to predict the region of origin from fatty acid composition. Let's examine how some predictors separate regions:
+
+```{r}
+#| label: fig-olive-eda
+#| fig-cap: "Distribution of two fatty acids by region. These predictors clearly separate the regions."
+#| fig-width: 9
+#| fig-height: 4
+olive <- select(olive, -area)
+
+par(mfrow = c(1, 2))
+boxplot(eicosenoic ~ region, data = olive, col = c("coral", "lightgreen", "lightblue"),
+        main = "Eicosenoic by Region")
+boxplot(linoleic ~ region, data = olive, col = c("coral", "lightgreen", "lightblue"),
+        main = "Linoleic by Region")
+```
+
+Notice that eicosenoic is only present in Southern Italy, and linoleic separates Northern Italy from Sardinia. We can visualize this separation:
+
+```{r}
+#| label: fig-olive-two-predictors
+#| fig-cap: "With just two predictors, simple rules can perfectly separate the regions"
+#| fig-width: 7
+#| fig-height: 5
+olive %>%
+  ggplot(aes(eicosenoic, linoleic, color = region)) +
+  geom_point() +
+  geom_vline(xintercept = 0.065, lty = 2) +
+  geom_segment(x = -0.2, y = 10.54, xend = 0.065, yend = 10.54,
+               color = "black", lty = 2) +
+  labs(title = "Perfect Classification with Simple Rules")
+```
+
+By eye, we can construct a prediction rule:
+
+- If eicosenoic > 0.065 → Southern Italy
+- Else if linoleic > 10.535 → Sardinia
+- Otherwise → Northern Italy
+
+This is exactly what a decision tree learns from data—a flow chart of yes/no questions.
+
+### How Trees Work
+
+Trees create partitions recursively. We start with one partition (the entire dataset). After the first split we have two partitions, then four, and so on.
+
+For each split, we find a predictor $j$ and value $s$ that define two new partitions:
+
+$$R_1(j,s) = \{x : x_j < s\} \quad \text{and} \quad R_2(j,s) = \{x : x_j \geq s\}$$
+
+**For regression trees**, we choose the split that minimizes the **residual sum of squares (RSS)**:
+
+$$\sum_{i: x_i \in R_1} (y_i - \hat{y}_{R_1})^2 + \sum_{i: x_i \in R_2} (y_i - \hat{y}_{R_2})^2$$
+
+**For classification trees**, we use **Gini impurity**:
+
+$$\text{Gini}(j) = \sum_{k=1}^K \hat{p}_{j,k}(1-\hat{p}_{j,k})$$
+
+where $\hat{p}_{j,k}$ is the proportion of observations in partition $j$ that are of class $k$. A pure node (all one class) has Gini = 0.
+
+### Building a Classification Tree
+
+```{r}
+#| label: fig-cart-classification
+#| fig-cap: "A CART decision tree for classifying iris species. Each node shows the predicted class and the splitting rule."
+#| fig-width: 8
+#| fig-height: 6
+# Build a classification tree
+data(iris)
+tree_class <- rpart(Species ~ ., data = iris, method = "class")
+
+# Visualize with rpart.plot
+rpart.plot(tree_class, extra = 104, box.palette = "RdYlGn",
+           main = "Classification Tree for Iris Species")
+```
+
+### Interpreting Tree Output
+
+The tree visualization shows:
+
+- **Node prediction**: The predicted class (most common class in that region)
+- **Split rule**: The feature and threshold used to split
+- **Proportions**: Distribution of classes at each node
+- **Sample size**: Percentage of observations reaching each node
+
+```{r}
+# Detailed tree summary
+summary(tree_class, cp = 0.1)
+```
+
+### Regression Trees
+
+When the outcome is continuous, we call the method a **regression tree**:
+
+```{r}
+#| label: fig-polls-tree
+#| fig-cap: "Regression tree for poll data. The tree partitions time into regions with constant predictions."
+#| fig-width: 8
+#| fig-height: 5
+data("polls_2008")
+
+fit <- rpart(margin ~ ., data = polls_2008)
+rafalib::mypar()
+plot(fit, margin = 0.1)
+text(fit, cex = 0.75)
+```
+
+The tree creates a step function:
+
+```{r}
+#| label: fig-polls-tree-fit
+#| fig-cap: "Regression tree predictions form a step function"
+#| fig-width: 7
+#| fig-height: 5
+polls_2008 %>%
+  mutate(y_hat = predict(fit)) %>%
+  ggplot() +
+  geom_point(aes(day, margin)) +
+  geom_step(aes(day, y_hat), col = "red", linewidth = 1) +
+  labs(title = "Regression Tree Fit", x = "Day", y = "Poll margin")
+```
+
+### Decision Boundaries
+
+Trees partition the feature space into rectangular regions:
+
+```{r}
+#| label: fig-tree-boundary
+#| fig-cap: "Decision tree partition of feature space. Each rectangular region is assigned to a class."
+#| fig-width: 8
+#| fig-height: 6
+# Visualize decision boundary for 2D case
+tree_2d <- rpart(Species ~ Petal.Length + Petal.Width, data = iris, method = "class")
+
+# Create grid for prediction
+petal_length_seq <- seq(0, 7, length.out = 200)
+petal_width_seq <- seq(0, 3, length.out = 200)
+grid <- expand.grid(Petal.Length = petal_length_seq,
+                    Petal.Width = petal_width_seq)
+grid$pred <- predict(tree_2d, grid, type = "class")
+
+# Plot
+plot(grid$Petal.Length, grid$Petal.Width,
+     col = c(rgb(1,0,0,0.1), rgb(0,1,0,0.1), rgb(0,0,1,0.1))[grid$pred],
+     pch = 15, cex = 0.3,
+     xlab = "Petal Length", ylab = "Petal Width",
+     main = "Decision Tree Boundaries")
+points(iris$Petal.Length, iris$Petal.Width,
+       col = c("red", "green", "blue")[iris$Species],
+       pch = 19, cex = 0.8)
+legend("topleft", levels(iris$Species),
+       col = c("red", "green", "blue"), pch = 19)
+```
+
+### Controlling Tree Complexity
+
+Trees easily overfit—they can keep splitting until each leaf contains a single observation. Several parameters control complexity:
+
+- **cp (complexity parameter)**: The tree must improve RSS by this factor to add a split. Larger values = simpler trees.
+- **minsplit**: Minimum observations in a node to attempt a split (default: 20)
+- **minbucket**: Minimum observations in each terminal node
+- **maxdepth**: Maximum depth of tree
+
+```{r}
+#| label: fig-tree-complexity
+#| fig-cap: "Effect of complexity parameter on tree structure: smaller cp allows more complexity"
+#| fig-width: 9
+#| fig-height: 4
+par(mfrow = c(1, 3))
+
+for (cp_val in c(0.1, 0.02, 0.001)) {
+  tree <- rpart(Species ~ ., data = iris, cp = cp_val)
+  rpart.plot(tree, main = paste("cp =", cp_val))
+}
+```
+
+### Overfitting Example
+
+Setting cp = 0 and minsplit = 2 causes severe overfitting:
+
+```{r}
+#| label: fig-polls-overfit
+#| fig-cap: "With cp=0 and minsplit=2, the tree overfits by memorizing every point"
+#| fig-width: 7
+#| fig-height: 5
+fit_overfit <- rpart(margin ~ ., data = polls_2008,
+                      control = rpart.control(cp = 0, minsplit = 2))
+
+polls_2008 %>%
+  mutate(y_hat = predict(fit_overfit)) %>%
+  ggplot() +
+  geom_point(aes(day, margin)) +
+  geom_step(aes(day, y_hat), col = "red") +
+  labs(title = "Overfitting with cp = 0", x = "Day", y = "Poll margin")
+```
+
+### Pruning with Cross-Validation
+
+We use cross-validation to select optimal complexity:
+
+```{r}
+#| label: fig-tree-cv
+#| fig-cap: "Cross-validation error vs. tree complexity. The dashed line shows one SE above minimum."
+#| fig-width: 7
+#| fig-height: 5
+# Fit full tree
+full_tree <- rpart(Species ~ ., data = iris, cp = 0.001)
+
+# Plot CV error vs complexity
+plotcp(full_tree)
+
+# Print CP table
+printcp(full_tree)
+
+# Prune to optimal cp
+best_cp <- full_tree$cptable[which.min(full_tree$cptable[, "xerror"]), "CP"]
+pruned_tree <- prune(full_tree, cp = best_cp)
+```
+
+## Random Forests
+
+**Random forests** [@breiman2001random] address trees' high variance by averaging many trees. The key insight: averaging many noisy but unbiased estimators reduces variance.
+
+### The Random Forest Algorithm
+
+1. Build $B$ decision trees using the training set
+2. For each tree:
+   - Draw a bootstrap sample (sample with replacement)
+   - At each split, consider only a random subset of $m$ features
+3. For prediction:
+   - **Classification**: Majority vote across all trees
+   - **Regression**: Average predictions across all trees
+
+```{r}
+#| label: fig-rf-smoothing
+#| fig-cap: "Random forest predictions are smoother than single trees because averaging step functions produces smooth curves"
+#| fig-width: 9
+#| fig-height: 4
+par(mfrow = c(1, 2))
+
+# Single tree
+fit_tree <- rpart(margin ~ ., data = polls_2008)
+polls_2008 %>%
+  mutate(y_hat = predict(fit_tree)) %>%
+  with(plot(day, margin, pch = 16, cex = 0.5,
+            main = "Single Regression Tree"))
+polls_2008 %>%
+  mutate(y_hat = predict(fit_tree)) %>%
+  with(lines(day, y_hat, col = "red", type = "s", lwd = 2))
+
+# Random forest
+set.seed(42)
+fit_rf <- randomForest(margin ~ ., data = polls_2008)
+polls_2008 %>%
+  mutate(y_hat = predict(fit_rf, newdata = polls_2008)) %>%
+  with(plot(day, margin, pch = 16, cex = 0.5,
+            main = "Random Forest"))
+polls_2008 %>%
+  mutate(y_hat = predict(fit_rf, newdata = polls_2008)) %>%
+  with(lines(day, y_hat, col = "blue", lwd = 2))
+```
+
+### Random Forests in R
+
+```{r}
+#| label: fig-rf-model
+#| fig-cap: "Random forest OOB error rate decreasing as more trees are added"
+#| fig-width: 7
+#| fig-height: 5
+set.seed(42)
+
+# Fit random forest
+rf_model <- randomForest(Species ~ ., data = iris,
+                          ntree = 500,       # Number of trees
+                          mtry = 2,          # Features tried at each split
+                          importance = TRUE)  # Calculate variable importance
+
+# Model summary
+print(rf_model)
+
+# Plot error vs number of trees
+plot(rf_model, main = "Random Forest: Error vs. Number of Trees")
+legend("topright", colnames(rf_model$err.rate), col = 1:4, lty = 1:4)
+```
+
+### Out-of-Bag (OOB) Error
+
+Each bootstrap sample uses about 63% of observations. The remaining 37% (**out-of-bag** samples) provide a built-in test set:
+
+```{r}
+# OOB confusion matrix
+rf_model$confusion
+
+# OOB error rate
+cat("OOB Error Rate:", round(1 - sum(diag(rf_model$confusion[,1:3])) /
+                              sum(rf_model$confusion[,1:3]), 3), "\n")
+```
+
+OOB error is nearly as accurate as cross-validation but comes "for free" during training.
+
+### Variable Importance
+
+Random forests provide measures of predictor importance:
+
+```{r}
+#| label: fig-rf-importance
+#| fig-cap: "Variable importance: Mean Decrease Accuracy measures how much removing a variable hurts prediction; Mean Decrease Gini measures total reduction in node impurity"
+#| fig-width: 8
+#| fig-height: 5
+# Variable importance plot
+varImpPlot(rf_model, main = "Variable Importance")
+
+# Numeric importance values
+importance(rf_model)
+```
+
+**Mean Decrease Accuracy**: For each tree, predictions are made on OOB samples. Then variable $j$ is randomly permuted and predictions are made again. The decrease in accuracy measures importance.
+
+**Mean Decrease Gini**: Total decrease in Gini impurity from splits on variable $j$, averaged over all trees.
+
+### Tuning Random Forests
+
+Key parameters to tune:
+
+- **ntree**: Number of trees (more is better, but with diminishing returns)
+- **mtry**: Number of features considered at each split
+- **nodesize**: Minimum size of terminal nodes
+
+```{r}
+#| label: fig-rf-tuning
+#| fig-cap: "Random forest OOB error as a function of mtry"
+#| fig-width: 7
+#| fig-height: 5
+# Tune mtry
+oob_error <- sapply(1:4, function(m) {
+  rf <- randomForest(Species ~ ., data = iris, mtry = m, ntree = 200)
+  rf$err.rate[200, "OOB"]
+})
+
+plot(1:4, oob_error, type = "b", pch = 19,
+     xlab = "mtry (features at each split)",
+     ylab = "OOB Error Rate",
+     main = "Tuning mtry Parameter")
+```
+
+Default values are often reasonable:
+- Classification: $m = \sqrt{p}$
+- Regression: $m = p/3$
+
+### Random Forest for Regression
+
+```{r}
+# Regression random forest
+set.seed(42)
+rf_reg <- randomForest(mpg ~ ., data = mtcars, ntree = 500, importance = TRUE)
+
+# Performance
+cat("Variance explained:", round(rf_reg$rsq[500] * 100, 1), "%\n")
+cat("MSE:", round(rf_reg$mse[500], 2), "\n")
+
+# Variable importance
+varImpPlot(rf_reg, main = "Variable Importance for MPG Prediction")
+```
+
+## Comparing Trees and Forests
+
+| Aspect | Decision Tree | Random Forest |
+|:-------|:--------------|:--------------|
+| **Interpretability** | High | Medium |
+| **Variance** | High | Low |
+| **Bias** | Medium | Medium-Low |
+| **Overfitting** | Prone | Resistant |
+| **Speed** | Fast | Slower |
+| **Variable importance** | Limited | Built-in |
+
+::: {.callout-tip}
+## When to Use Each Method
+
+**Use decision trees when:**
+- Interpretability is paramount
+- You need to explain the model to stakeholders
+- You're doing exploratory analysis
+
+**Use random forests when:**
+- Prediction accuracy is the goal
+- You have sufficient data
+- You want variable importance measures
+- You're willing to sacrifice some interpretability
+:::
+
+## Exercises
+
+::: {.callout-note}
+### Exercise TF.1: Decision Trees
+
+1. Create a simple dataset:
+```{r}
+#| eval: false
+n <- 1000
+sigma <- 0.25
+x <- rnorm(n, 0, 1)
+y <- 0.75 * x + rnorm(n, 0, sigma)
+dat <- data.frame(x = x, y = y)
+```
+
+2. Use `rpart` to fit a regression tree. Plot the tree.
+
+3. Make a scatterplot of y vs x with the predicted values overlaid.
+
+4. Try different values of `cp`. How does tree complexity change?
+:::
+
+::: {.callout-note}
+### Exercise TF.2: Random Forests
+
+5. Using the same data, fit a random forest with `randomForest`.
+
+6. Plot the predictions. How do they differ from the single tree?
+
+7. Use `plot(rf)` to check if the forest has converged.
+
+8. Experiment with `nodesize` and `maxnodes` to control smoothness.
+:::
+
+::: {.callout-note}
+### Exercise TF.3: Classification Trees
+
+9. Use the `tissue_gene_expression` dataset:
+```{r}
+#| eval: false
+library(dslabs)
+data("tissue_gene_expression")
+```
+
+10. Fit a classification tree using `caret::train` with `method = "rpart"`. Use cross-validation to select optimal `cp`.
+
+11. Examine the confusion matrix. Which tissues are most often confused?
+
+12. Compare to a random forest. Does it improve accuracy?
+:::
+
+## Summary
+
+- **Decision trees (CART)** recursively partition data using simple rules
+  - Highly interpretable—can be drawn as a flow chart
+  - Handle non-linear relationships and interactions automatically
+  - Prone to overfitting without careful tuning
+  - Complexity controlled by cp, minsplit, maxdepth
+  - Cross-validation selects optimal complexity
+- **Random forests** combine many trees for robust prediction
+  - Bootstrap aggregation (bagging) reduces variance
+  - Random feature selection decorrelates trees
+  - Out-of-bag (OOB) error provides built-in validation
+  - Variable importance identifies key predictors
+- Trees have high variance; forests reduce variance through averaging
+- For interpretability, use pruned trees; for accuracy, use random forests
+- Key tuning parameters:
+  - Trees: cp, minsplit, maxdepth
+  - Forests: ntree, mtry, nodesize
+
+## Additional Resources
+
+- @james2023islr - Comprehensive treatment of tree-based methods
+- @hastie2009elements - Theoretical foundations
+- @breiman2001random - Original random forest paper
+- `rpart` and `randomForest` package documentation

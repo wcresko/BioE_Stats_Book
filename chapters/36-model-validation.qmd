@@ -1,0 +1,488 @@
+# Model Validation and the Bias-Variance Tradeoff {#sec-model-validation}
+
+```{r}
+#| echo: false
+#| message: false
+library(tidyverse)
+library(boot)
+theme_set(theme_minimal())
+```
+
+## The Overfitting Problem
+
+Models are built to fit training data as closely as possible. A linear regression minimizes squared errors; a logistic regression maximizes likelihood. But models that fit training data too well often predict poorly on new data.
+
+**Overfitting** occurs when a model captures noise specific to the training data rather than the true underlying pattern. Complex models with many parameters are especially susceptible.
+
+The solution is to evaluate models on data they have not seen—held-out test data or through cross-validation.
+
+## Loss Functions: Quantifying Prediction Error
+
+A **loss function** (or **cost function**) measures how wrong a prediction is. It quantifies the penalty for predicting $\hat{y}$ when the true value is $y$.
+
+### Common Loss Functions for Regression
+
+**Squared Error Loss** (L2): The most common loss for continuous outcomes:
+$$L(y, \hat{y}) = (y - \hat{y})^2$$
+
+Squaring penalizes large errors more heavily than small ones. Linear regression minimizes the sum of squared errors (SSE or RSS).
+
+**Absolute Error Loss** (L1): Less sensitive to outliers:
+$$L(y, \hat{y}) = |y - \hat{y}|$$
+
+**Mean Squared Error (MSE)** and **Root Mean Squared Error (RMSE)** are averages across all predictions:
+$$\text{MSE} = \frac{1}{n}\sum_{i=1}^n (y_i - \hat{y}_i)^2, \quad \text{RMSE} = \sqrt{\text{MSE}}$$
+
+### Common Loss Functions for Classification
+
+**0-1 Loss**: The simplest classification loss—1 if wrong, 0 if correct:
+$$L(y, \hat{y}) = \mathbb{I}(y \neq \hat{y})$$
+
+The average 0-1 loss is the **error rate**; one minus the error rate is **accuracy**.
+
+**Log Loss** (Cross-Entropy): Used when we have predicted probabilities $\hat{p}$:
+$$L(y, \hat{p}) = -[y \log(\hat{p}) + (1-y) \log(1-\hat{p})]$$
+
+Log loss penalizes confident wrong predictions severely—predicting probability 0.99 for the wrong class incurs much larger loss than predicting 0.6.
+
+```{r}
+#| label: fig-loss-functions
+#| fig-cap: "Comparison of squared loss (penalizes large errors heavily) versus absolute loss (more robust to outliers)"
+#| fig-width: 8
+#| fig-height: 4
+par(mfrow = c(1, 2))
+
+# Regression loss functions
+errors <- seq(-3, 3, length.out = 100)
+plot(errors, errors^2, type = "l", col = "blue", lwd = 2,
+     xlab = "Prediction Error (y - ŷ)", ylab = "Loss",
+     main = "Regression Loss Functions")
+lines(errors, abs(errors), col = "red", lwd = 2)
+legend("top", c("Squared (L2)", "Absolute (L1)"),
+       col = c("blue", "red"), lwd = 2)
+
+# Classification log loss
+p <- seq(0.01, 0.99, length.out = 100)
+plot(p, -log(p), type = "l", col = "blue", lwd = 2,
+     xlab = "Predicted Probability for True Class", ylab = "Log Loss",
+     main = "Classification Log Loss")
+abline(v = 0.5, lty = 2, col = "gray")
+```
+
+### Why Loss Functions Matter
+
+Different loss functions lead to different optimal predictions:
+
+- **Squared loss** → optimal prediction is the **mean**
+- **Absolute loss** → optimal prediction is the **median**
+- **0-1 loss** → optimal prediction is the **mode** (most frequent class)
+
+The choice of loss function should reflect how errors affect your application. Medical diagnosis may weight false negatives (missed disease) more heavily than false positives.
+
+## Training Error vs. Test Error
+
+A fundamental insight of statistical learning is that **training error** (how well we fit the data used to build the model) is an overly optimistic estimate of **test error** (how well we predict new data).
+
+```{r}
+#| label: fig-train-test-error
+#| fig-cap: "Training error always decreases with model complexity, but test error eventually increases due to overfitting. The optimal model minimizes test error."
+#| fig-width: 8
+#| fig-height: 5
+# Demonstrate training vs test error
+set.seed(42)
+n <- 100
+x <- sort(runif(n, 0, 10))
+y_true <- sin(x) + 0.5 * cos(0.5 * x)
+y <- y_true + rnorm(n, sd = 0.3)
+
+# Split into training and test
+train_idx <- sample(1:n, 70)
+train_data <- data.frame(x = x[train_idx], y = y[train_idx])
+test_data <- data.frame(x = x[-train_idx], y = y[-train_idx])
+
+# Fit polynomials of increasing degree
+library(splines)
+degrees <- 1:15
+train_error <- test_error <- numeric(length(degrees))
+
+for (i in seq_along(degrees)) {
+  d <- degrees[i]
+  fit <- lm(y ~ poly(x, d), data = train_data)
+  train_error[i] <- mean((train_data$y - predict(fit, train_data))^2)
+  test_error[i] <- mean((test_data$y - predict(fit, test_data))^2)
+}
+
+# Plot
+plot(degrees, train_error, type = "b", pch = 19, col = "blue",
+     xlab = "Model Complexity (Polynomial Degree)",
+     ylab = "Mean Squared Error",
+     main = "Training vs Test Error", ylim = c(0, max(test_error)))
+lines(degrees, test_error, type = "b", pch = 19, col = "red")
+legend("topright", c("Training Error", "Test Error"),
+       col = c("blue", "red"), pch = 19, lty = 1)
+abline(v = degrees[which.min(test_error)], lty = 2, col = "gray")
+```
+
+Notice that training error keeps decreasing as complexity increases, eventually reaching near zero. But test error follows a U-shape—it decreases initially as the model captures true patterns, then increases as the model starts fitting noise.
+
+## The Bias-Variance Tradeoff
+
+Prediction error has two main components:
+
+**Bias**: Error from approximating a complex reality with a simpler model. Simple models have high bias—they may miss important patterns.
+
+**Variance**: Error from sensitivity to training data. Complex models have high variance—they change substantially with different training samples.
+
+Mathematically, for a given test point $x_0$, the expected prediction error can be decomposed as:
+
+$$E[(y_0 - \hat{f}(x_0))^2] = \text{Var}(\hat{f}(x_0)) + [\text{Bias}(\hat{f}(x_0))]^2 + \text{Var}(\epsilon)$$
+
+where:
+- $\text{Var}(\hat{f}(x_0))$ is the variance of the model predictions
+- $\text{Bias}(\hat{f}(x_0))$ is the bias (systematic error)
+- $\text{Var}(\epsilon)$ is the irreducible error (noise in the data)
+
+```{r}
+#| label: fig-bias-variance
+#| fig-cap: "The bias-variance tradeoff: as model complexity increases, bias decreases but variance increases. The optimal model minimizes total error."
+#| fig-width: 8
+#| fig-height: 5
+# Illustrate bias-variance tradeoff conceptually
+complexity <- seq(0.1, 10, length.out = 100)
+bias_sq <- 5 / complexity
+variance <- 0.1 * complexity^1.5
+irreducible <- rep(0.5, length(complexity))
+total <- bias_sq + variance + irreducible
+
+plot(complexity, total, type = "l", lwd = 3, col = "black",
+     xlab = "Model Complexity", ylab = "Error",
+     main = "Bias-Variance Tradeoff", ylim = c(0, max(total)))
+lines(complexity, bias_sq, lwd = 2, col = "blue", lty = 2)
+lines(complexity, variance, lwd = 2, col = "red", lty = 2)
+lines(complexity, irreducible, lwd = 2, col = "gray", lty = 3)
+
+# Mark optimal
+opt_idx <- which.min(total)
+abline(v = complexity[opt_idx], lty = 2, col = "darkgreen")
+points(complexity[opt_idx], total[opt_idx], pch = 19, cex = 2, col = "darkgreen")
+
+legend("topright", c("Total Error", "Bias²", "Variance", "Irreducible Error", "Optimal"),
+       col = c("black", "blue", "red", "gray", "darkgreen"),
+       lty = c(1, 2, 2, 3, 2), lwd = c(3, 2, 2, 2, 1), pch = c(NA, NA, NA, NA, 19))
+```
+
+The best predictions come from models that balance bias and variance. As model complexity increases:
+
+- **Bias decreases**: More complex models can fit more patterns
+- **Variance increases**: More complex models are more sensitive to training data
+- **Total error**: Initially decreases (bias reduction dominates), then increases (variance inflation dominates)
+
+::: {.callout-tip}
+## Understanding Bias and Variance
+
+**High bias** (underfitting):
+- Model is too simple
+- Consistently wrong predictions
+- Predictions don't change much with different training data
+- Example: Fitting a straight line to curved data
+
+**High variance** (overfitting):
+- Model is too complex
+- Predictions vary wildly with different training samples
+- Fits training data well but generalizes poorly
+- Example: High-degree polynomial fitting noise
+:::
+
+## Cross-Validation
+
+Cross-validation estimates how well a model will generalize to new data without requiring a separate test set.
+
+### K-Fold Cross-Validation
+
+**K-fold cross-validation**:
+1. Split data into k roughly equal parts (folds)
+2. For each fold: train on k-1 folds, test on the held-out fold
+3. Average performance across all folds
+
+```{r}
+#| label: fig-cross-validation-diagram
+#| fig-cap: "K-fold cross-validation: each fold takes turns being the test set"
+#| fig-width: 8
+#| fig-height: 4
+# Visualize 5-fold CV
+par(mar = c(2, 4, 2, 2))
+plot(1, type = "n", xlim = c(0, 5), ylim = c(0.5, 5.5),
+     xlab = "", ylab = "Fold", xaxt = "n", yaxt = "n",
+     main = "5-Fold Cross-Validation")
+axis(2, at = 1:5, labels = paste("Iteration", 5:1), las = 1)
+
+colors <- c("lightcoral", rep("lightblue", 4))
+for (i in 1:5) {
+  for (j in 1:5) {
+    col <- ifelse(j == i, "lightcoral", "lightblue")
+    rect(j - 1, 6 - i - 0.4, j, 6 - i + 0.4, col = col, border = "white")
+  }
+}
+legend("bottom", c("Test Fold", "Training Folds"), fill = c("lightcoral", "lightblue"),
+       horiz = TRUE, bty = "n")
+axis(1, at = 0.5:4.5, labels = paste("Fold", 1:5))
+```
+
+```{r}
+# Simple CV example with linear regression
+set.seed(42)
+x <- rnorm(100)
+y <- 2 + 3*x + rnorm(100)
+data <- data.frame(x, y)
+
+# Fit model and perform CV
+model <- glm(y ~ x, data = data)
+
+# 10-fold cross-validation
+cv_result <- cv.glm(data, model, K = 10)
+cat("CV estimate of prediction error:", round(cv_result$delta[1], 3), "\n")
+```
+
+### Leave-One-Out Cross-Validation (LOOCV)
+
+**Leave-one-out cross-validation (LOOCV)** is k-fold with k = n: each observation is held out once.
+
+```{r}
+# LOOCV
+cv_loocv <- cv.glm(data, model, K = nrow(data))
+cat("LOOCV estimate of prediction error:", round(cv_loocv$delta[1], 3), "\n")
+```
+
+**Tradeoffs:**
+- LOOCV has lower bias (nearly all data used for training) but higher variance
+- 5-fold or 10-fold CV provides a good balance of bias and variance
+- LOOCV is computationally expensive for large datasets
+
+### Bootstrap for Error Estimation
+
+The **bootstrap** can also estimate prediction error:
+
+1. Draw a bootstrap sample (n observations with replacement)
+2. Fit the model on the bootstrap sample
+3. Evaluate on observations NOT selected (the "out-of-bag" observations)
+4. Repeat and average
+
+This is similar to cross-validation but uses the natural ~37% of observations left out of each bootstrap sample.
+
+```{r}
+# Bootstrap estimate of prediction error
+set.seed(123)
+n_boot <- 100
+boot_errors <- numeric(n_boot)
+
+for (b in 1:n_boot) {
+  # Bootstrap sample
+  boot_idx <- sample(1:nrow(data), replace = TRUE)
+  oob_idx <- setdiff(1:nrow(data), unique(boot_idx))
+
+  if (length(oob_idx) > 0) {
+    fit <- lm(y ~ x, data = data[boot_idx, ])
+    boot_errors[b] <- mean((data$y[oob_idx] - predict(fit, data[oob_idx, ]))^2)
+  }
+}
+
+cat("Bootstrap estimate of prediction error:", round(mean(boot_errors), 3), "\n")
+```
+
+::: {.callout-tip}
+## Choosing a CV Strategy
+
+- **k = 5 or k = 10**: Standard choices that balance bias and variance
+- **LOOCV (k = n)**: Low bias but high variance; expensive for large n
+- **Bootstrap**: Useful when you also want confidence intervals
+- **Repeated CV**: Run k-fold multiple times with different splits for more stable estimates
+:::
+
+## Using Cross-Validation for Model Selection
+
+Cross-validation is essential for tuning hyperparameters—values that control model complexity but are not learned from data.
+
+```{r}
+#| label: fig-cv-model-selection
+#| fig-cap: "Using cross-validation to select the optimal polynomial degree. The optimal model minimizes CV error."
+#| fig-width: 8
+#| fig-height: 5
+# Generate data
+set.seed(42)
+n <- 100
+x <- runif(n, 0, 10)
+y <- sin(x) + rnorm(n, sd = 0.3)
+cv_data <- data.frame(x = x, y = y)
+
+# Cross-validation for polynomial degree selection
+degrees <- 1:15
+cv_errors <- numeric(length(degrees))
+
+for (d in degrees) {
+  model <- glm(y ~ poly(x, d), data = cv_data)
+  cv_result <- cv.glm(cv_data, model, K = 10)
+  cv_errors[d] <- cv_result$delta[1]
+}
+
+# Plot
+plot(degrees, cv_errors, type = "b", pch = 19, col = "blue",
+     xlab = "Polynomial Degree", ylab = "CV Error (MSE)",
+     main = "Cross-Validation for Model Selection")
+best_degree <- which.min(cv_errors)
+points(best_degree, cv_errors[best_degree], pch = 19, col = "red", cex = 2)
+abline(v = best_degree, lty = 2, col = "red")
+text(best_degree + 1, cv_errors[best_degree], paste("Optimal:", best_degree), col = "red")
+```
+
+### The One Standard Error Rule
+
+When selecting among models with similar CV error, we often choose the simplest model within one standard error of the minimum. This guards against overfitting to the CV procedure itself.
+
+```{r}
+#| label: fig-one-se-rule
+#| fig-cap: "The one standard error rule: select the simplest model within one SE of the minimum CV error"
+#| fig-width: 8
+#| fig-height: 5
+# Calculate SE of CV errors (simplified - would need repeated CV for proper SE)
+set.seed(42)
+
+# Repeated 10-fold CV for better SE estimates
+n_repeats <- 20
+cv_matrix <- matrix(NA, n_repeats, length(degrees))
+
+for (rep in 1:n_repeats) {
+  for (d in degrees) {
+    model <- glm(y ~ poly(x, d), data = cv_data)
+    cv_result <- cv.glm(cv_data, model, K = 10)
+    cv_matrix[rep, d] <- cv_result$delta[1]
+  }
+}
+
+cv_means <- colMeans(cv_matrix)
+cv_se <- apply(cv_matrix, 2, sd) / sqrt(n_repeats)
+
+# Plot with error bars
+plot(degrees, cv_means, type = "b", pch = 19, col = "blue",
+     xlab = "Polynomial Degree", ylab = "CV Error (MSE)",
+     main = "One Standard Error Rule",
+     ylim = c(min(cv_means - cv_se), max(cv_means + cv_se)))
+arrows(degrees, cv_means - cv_se, degrees, cv_means + cv_se,
+       code = 3, angle = 90, length = 0.05, col = "blue")
+
+# Find minimum and 1-SE model
+min_idx <- which.min(cv_means)
+threshold <- cv_means[min_idx] + cv_se[min_idx]
+one_se_idx <- min(which(cv_means <= threshold))
+
+abline(h = threshold, lty = 2, col = "red")
+points(min_idx, cv_means[min_idx], pch = 19, col = "red", cex = 2)
+points(one_se_idx, cv_means[one_se_idx], pch = 17, col = "darkgreen", cex = 2)
+
+legend("topright", c("Minimum CV error", "1-SE rule selection", "1-SE threshold"),
+       pch = c(19, 17, NA), lty = c(NA, NA, 2), col = c("red", "darkgreen", "red"))
+```
+
+## Information Criteria
+
+An alternative to cross-validation is using information criteria, which balance fit quality against model complexity:
+
+**Akaike Information Criterion (AIC)**:
+$$\text{AIC} = -2 \log L + 2k$$
+
+**Bayesian Information Criterion (BIC)**:
+$$\text{BIC} = -2 \log L + k \log n$$
+
+where $L$ is the likelihood, $k$ is the number of parameters, and $n$ is the sample size.
+
+- Lower values indicate better models
+- BIC penalizes complexity more heavily than AIC
+- AIC tends to select more complex models
+
+```{r}
+# Compare AIC and BIC for polynomial models
+aic_values <- bic_values <- numeric(length(degrees))
+
+for (d in degrees) {
+  model <- lm(y ~ poly(x, d), data = cv_data)
+  aic_values[d] <- AIC(model)
+  bic_values[d] <- BIC(model)
+}
+
+cat("Best degree by AIC:", which.min(aic_values), "\n")
+cat("Best degree by BIC:", which.min(bic_values), "\n")
+cat("Best degree by CV:", best_degree, "\n")
+```
+
+## Practical Workflow
+
+A typical model validation workflow:
+
+1. **Split data** into training set (e.g., 80%) and test set (20%)
+2. **Explore** the training data—never look at the test set!
+3. **Use cross-validation** on the training set to:
+   - Compare different model types
+   - Tune hyperparameters
+   - Estimate expected performance
+4. **Select final model** based on CV performance
+5. **Refit** on full training data
+6. **Evaluate once** on held-out test data
+7. **Report** the test error as the honest estimate of performance
+
+::: {.callout-warning}
+## Common Mistakes
+
+1. **Using test data during model development**: The test set must be locked away until final evaluation
+2. **Reporting training error**: Training error is optimistic and misleading
+3. **Selecting models based on test error, then reporting test error**: This invalidates the test error estimate
+4. **Not setting random seeds**: Results should be reproducible
+5. **Ignoring variance in CV estimates**: Single CV runs can be noisy
+:::
+
+## Exercises
+
+::: {.callout-note}
+### Exercise MV.1: Training vs. Test Error
+
+1. Generate data from the model $y = \sin(x) + \epsilon$ where $\epsilon \sim N(0, 0.25)$ and $x$ ranges from 0 to $2\pi$. Split into 80% training and 20% test.
+
+2. Fit polynomial models of degrees 1 through 15. Plot both training and test error. At what degree does overfitting begin?
+:::
+
+::: {.callout-note}
+### Exercise MV.2: Cross-Validation Practice
+
+3. Using the same data, implement 5-fold and 10-fold cross-validation. Compare the selected optimal degree between the two approaches. Which is more variable across different random seeds?
+
+4. Implement LOOCV and compare to k-fold CV. How do the computational costs compare?
+:::
+
+::: {.callout-note}
+### Exercise MV.3: The One Standard Error Rule
+
+5. Generate 100 random training/test splits. For each, use 10-fold CV to select the optimal polynomial degree. Plot the distribution of selected degrees.
+
+6. Repeat using the one standard error rule. How does the distribution change?
+:::
+
+## Summary
+
+- **Overfitting** occurs when models fit training noise rather than true patterns
+- **Loss functions** quantify prediction error—choice should match application goals
+- **Training error** underestimates true prediction error; always evaluate on held-out data
+- The **bias-variance tradeoff** governs model complexity:
+  - Simple models: high bias, low variance
+  - Complex models: low bias, high variance
+  - Optimal models balance both
+- **Cross-validation** estimates generalization error without wasting data:
+  - K-fold (typically k=5 or 10) balances bias and variance
+  - LOOCV has low bias but high variance and computational cost
+  - Bootstrap provides alternative estimates with confidence intervals
+- The **one standard error rule** guards against overfitting in model selection
+- **Information criteria** (AIC, BIC) provide alternatives to CV for model comparison
+- A disciplined workflow separates training, validation, and testing phases
+
+## Additional Resources
+
+- @james2023islr - Comprehensive treatment of resampling methods
+- @hastie2009elements - Theoretical foundations of bias-variance tradeoff
+- @thulin2025msr - Practical model validation in R

@@ -1,0 +1,306 @@
+# Introduction to Statistical Learning {#sec-intro-statistical-learning}
+
+```{r}
+#| echo: false
+#| message: false
+library(tidyverse)
+theme_set(theme_minimal())
+```
+
+## What is Statistical Learning?
+
+**Statistical learning** refers to a vast set of tools for understanding data. These tools can be classified as **supervised** or **unsupervised**. Broadly speaking, supervised statistical learning involves building a statistical model for predicting, or estimating, an output based on one or more inputs. With unsupervised statistical learning, there are inputs but no supervising output; nevertheless we can learn relationships and structure from such data [@james2023islr; @hastie2009elements].
+
+Statistical learning emerged from statistics but has been heavily influenced by fields such as computer science and artificial intelligence. The term **machine learning** is often used interchangeably, though machine learning tends to emphasize prediction and computational efficiency, while statistical learning places more emphasis on interpretability and uncertainty quantification.
+
+## From Inference to Prediction
+
+Traditional statistics emphasizes **inference**—understanding relationships, testing hypotheses, and quantifying uncertainty. Statistical learning shifts focus toward **prediction**—building models that accurately predict outcomes for new data.
+
+Both approaches use similar mathematical tools, but the goals differ:
+
+| Goal | Questions | Methods | Output |
+|:-----|:----------|:--------|:-------|
+| **Inference** | Which variables are associated? How strong is the relationship? Is the effect significant? | Linear regression, hypothesis testing, confidence intervals | Understanding, p-values, effect sizes |
+| **Prediction** | What will happen for new observations? How can we minimize prediction error? | Cross-validation, regularization, ensemble methods | Predictions, prediction intervals |
+
+In practice, most analyses involve elements of both. A biologist might want to predict disease outcomes (prediction) while also understanding which genes drive the prediction (inference).
+
+## Key Components of Statistical Learning
+
+Regardless of the specific method, statistical learning problems share common elements:
+
+### Inputs and Outputs
+
+We have data consisting of observations on variables. **Input variables** (also called predictors, features, or independent variables) are denoted $X$. **Output variables** (also called response or dependent variables) are denoted $Y$.
+
+In supervised learning, we observe both inputs and outputs:
+
+$$\{(x_1, y_1), (x_2, y_2), \ldots, (x_n, y_n)\}$$
+
+In unsupervised learning, we observe only inputs:
+
+$$\{x_1, x_2, \ldots, x_n\}$$
+
+### The Learning Task
+
+The goal of supervised learning is to find a function $f$ such that:
+
+$$Y \approx f(X)$$
+
+This function captures the systematic relationship between inputs and outputs. The quality of $f$ is measured by how well it predicts $Y$ for new observations.
+
+### Training and Test Data
+
+We typically split data into:
+
+- **Training data**: Used to build (train) the model
+- **Test data**: Held out to evaluate how well the model generalizes to new observations
+
+This separation is crucial because models can "memorize" training data without learning generalizable patterns—a phenomenon called **overfitting**.
+
+### Model Complexity
+
+Every statistical learning method must navigate the **bias-variance tradeoff**:
+
+- **Simple models** (few parameters) may be too rigid to capture true patterns → high bias
+- **Complex models** (many parameters) may fit noise in the training data → high variance
+
+The optimal model balances these competing concerns, captured by the familiar U-shaped curve of test error versus model complexity.
+
+## Categories of Statistical Learning
+
+Statistical learning methods fall into several broad categories:
+
+### Supervised vs. Unsupervised Learning
+
+```{r}
+#| echo: false
+#| label: fig-learning-categories
+#| fig-cap: "Overview of supervised versus unsupervised learning. Supervised learning uses labeled data to predict outcomes; unsupervised learning discovers structure in unlabeled data."
+#| fig-width: 9
+#| fig-height: 4
+par(mfrow = c(1, 2), mar = c(4, 4, 3, 1))
+
+# Supervised learning example
+set.seed(42)
+x <- rnorm(50)
+y <- 2 * x + rnorm(50, sd = 0.5)
+plot(x, y, pch = 19, col = "steelblue",
+     xlab = "Input (X)", ylab = "Output (Y)",
+     main = "Supervised Learning")
+abline(lm(y ~ x), col = "red", lwd = 2)
+text(0, 3, "Known outputs", col = "red", cex = 0.9)
+
+# Unsupervised learning example
+set.seed(42)
+x1 <- c(rnorm(25, -2), rnorm(25, 2))
+x2 <- c(rnorm(25, -2), rnorm(25, 2))
+plot(x1, x2, pch = 19, col = c(rep("steelblue", 25), rep("coral", 25)),
+     xlab = "Variable 1", ylab = "Variable 2",
+     main = "Unsupervised Learning")
+text(0, 3, "No labels—discover structure", col = "gray30", cex = 0.9)
+```
+
+**Supervised learning** problems have labeled data—we know the correct output for each observation. The task is to learn a mapping from inputs to outputs that generalizes to new data.
+
+- **Regression**: Output is continuous (e.g., predicting gene expression levels)
+- **Classification**: Output is categorical (e.g., predicting disease status)
+
+**Unsupervised learning** problems have no labeled outputs. Instead, we seek to discover patterns, groupings, or structure in the data.
+
+- **Clustering**: Group similar observations together
+- **Dimensionality reduction**: Find lower-dimensional representations
+
+### Parametric vs. Non-Parametric Methods
+
+**Parametric methods** assume a specific functional form for $f$:
+
+1. Make an assumption about the shape of $f$ (e.g., linear: $f(X) = \beta_0 + \beta_1 X_1 + \ldots + \beta_p X_p$)
+2. Estimate the parameters ($\beta$ coefficients) from training data
+
+Advantages: Computationally efficient, interpretable, works with smaller samples
+Disadvantages: May be too restrictive if the true relationship differs from the assumed form
+
+**Non-parametric methods** make no explicit assumptions about $f$:
+
+- Let the data determine the shape of $f$
+- Examples: K-nearest neighbors, decision trees, kernel methods
+
+Advantages: Can capture complex, non-linear relationships
+Disadvantages: Require more data, more prone to overfitting, less interpretable
+
+### Flexible vs. Inflexible Methods
+
+Statistical learning methods span a spectrum of flexibility:
+
+| Method | Flexibility | Interpretability | Typical Use |
+|:-------|:-----------|:-----------------|:------------|
+| Linear regression | Low | High | When linearity is reasonable |
+| Ridge/Lasso | Low | High | High-dimensional linear problems |
+| K-nearest neighbors | Medium-High | Low | Non-linear patterns |
+| Decision trees | Medium | High | Interpretable non-linear models |
+| Random forests | High | Medium | General-purpose prediction |
+| Support vector machines | High | Low | Complex boundaries |
+| Neural networks | Very high | Very low | Image, text, complex patterns |
+
+## Overview of Methods Covered
+
+This section of the book covers the major categories of statistical learning:
+
+### Model Validation and Selection
+
+Before diving into specific methods, we need tools for evaluating and comparing models:
+
+- **Cross-validation** estimates how well a model will generalize
+- **Loss functions** quantify prediction errors
+- The **bias-variance tradeoff** guides model complexity choices
+
+See @sec-model-validation for details.
+
+### Regularization
+
+When we have many predictors, standard regression can overfit. **Regularization** methods add penalties that shrink coefficients, reducing variance at the cost of a small increase in bias:
+
+- **Ridge regression**: Shrinks coefficients toward zero
+- **Lasso**: Shrinks coefficients and performs variable selection
+- **Elastic net**: Combines ridge and lasso penalties
+
+See @sec-regularization for details.
+
+### Smoothing Methods
+
+When relationships are non-linear, we need flexible curve-fitting methods:
+
+- **Kernel smoothing**: Weighted local averaging
+- **Splines**: Piecewise polynomials with smooth joins
+- **LOESS**: Local polynomial regression
+
+See @sec-smoothing for details.
+
+### Classification
+
+Many biological problems involve predicting categories:
+
+- **K-nearest neighbors**: Simple, intuitive classification
+- **Confusion matrices**: Evaluate classification performance
+- **ROC curves**: Compare classifiers across thresholds
+
+See @sec-classification-methods for details.
+
+### Tree-Based Methods
+
+Decision trees partition the predictor space using simple rules:
+
+- **Decision trees (CART)**: Interpretable recursive partitioning
+- **Random forests**: Ensemble of trees for robust prediction
+- **Variable importance**: Identify key predictors
+
+See @sec-trees-forests for details.
+
+### Support Vector Machines
+
+SVMs find optimal boundaries between classes:
+
+- **Maximum margin classifiers**: Linear separation
+- **Kernel trick**: Non-linear boundaries
+- **Support vector regression**: Extension to continuous outcomes
+
+See @sec-svm for details.
+
+### Clustering
+
+Group observations based on similarity without predefined labels:
+
+- **Hierarchical clustering**: Nested groupings visualized as dendrograms
+- **K-means**: Partition data into k clusters
+- **Heatmaps**: Visualize clustered data
+
+See @sec-clustering for details.
+
+### Dimensionality Reduction
+
+Reduce high-dimensional data to fewer informative dimensions:
+
+- **PCA**: Find directions of maximum variance
+- **t-SNE and UMAP**: Non-linear methods for visualization
+
+See @sec-dimensionality-reduction and @sec-tsne-umap for details.
+
+### Bayesian Approaches
+
+Incorporate prior knowledge and quantify uncertainty:
+
+- **Bayes' theorem**: Update beliefs with evidence
+- **Hierarchical models**: Borrow strength across related observations
+- **Credible intervals**: Direct probability statements about parameters
+
+See @sec-bayesian-statistics for details.
+
+### Deep Learning
+
+Neural networks with many layers can learn complex patterns:
+
+- **How deep learning differs** from traditional statistical learning
+- **Major architectures**: Feedforward, convolutional, recurrent networks
+- **When to use** deep learning versus classical methods
+
+See @sec-deep-learning for a conceptual introduction.
+
+## Choosing the Right Method
+
+With so many methods available, how do you choose? Consider:
+
+1. **Your goal**: Prediction, inference, or exploration?
+2. **Data characteristics**: Sample size, number of predictors, types of variables
+3. **Interpretability needs**: Do you need to explain the model?
+4. **Computational resources**: Some methods scale better than others
+5. **Domain knowledge**: What do you know about the underlying process?
+
+There is no universally best method. The **No Free Lunch theorem** states that no single algorithm works best for all problems. The best approach is often to try multiple methods and compare their performance using proper validation techniques.
+
+## The Statistical Learning Workflow
+
+A typical analysis follows these steps:
+
+1. **Define the problem**: What are you trying to predict or understand?
+2. **Prepare the data**: Clean, transform, handle missing values
+3. **Split the data**: Separate training and test sets
+4. **Explore the data**: Understand distributions and relationships
+5. **Select candidate models**: Choose methods appropriate for your problem
+6. **Train and tune**: Fit models, use cross-validation for hyperparameter selection
+7. **Evaluate**: Compare models on held-out test data
+8. **Interpret**: Understand what the model learned
+9. **Deploy**: Apply to new data
+
+Throughout this process, guard against **data leakage**—using information from test data during training. Keep the test set locked away until final evaluation.
+
+## Statistical Learning in Biology and Bioengineering
+
+Statistical learning has transformed biological research:
+
+- **Genomics**: Predict gene expression, identify regulatory elements, classify disease subtypes
+- **Proteomics**: Predict protein structure and function, identify biomarkers
+- **Drug discovery**: Predict drug-target interactions, optimize compounds
+- **Medical imaging**: Detect tumors, classify cell types
+- **Ecology**: Model species distributions, predict population dynamics
+- **Bioengineering**: Optimize bioreactor conditions, predict material properties
+
+The methods in this section provide the foundation for tackling these problems. As biological data continues to grow in scale and complexity, statistical learning will become even more essential.
+
+## Summary
+
+- **Statistical learning** encompasses methods for understanding data through modeling
+- **Supervised learning** predicts outputs from inputs; **unsupervised learning** discovers structure
+- **Parametric methods** assume specific functional forms; **non-parametric methods** are more flexible
+- The **bias-variance tradeoff** is fundamental—simple models may underfit, complex models may overfit
+- **Model validation** using held-out data is essential for honest performance assessment
+- Method choice depends on goals, data characteristics, and interpretability needs
+- The following chapters cover specific methods in detail: validation, regularization, smoothing, classification, trees, SVMs, clustering, dimensionality reduction, and Bayesian approaches
+- A final chapter introduces **deep learning** as a powerful extension of these concepts
+
+## Additional Resources
+
+- @james2023islr - The standard introduction to statistical learning
+- @hastie2009elements - A comprehensive and more advanced treatment
+- @thulin2025msr - Modern statistical methods with R

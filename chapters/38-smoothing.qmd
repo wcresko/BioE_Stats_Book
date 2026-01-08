@@ -1,0 +1,533 @@
+# Smoothing and Non-Parametric Regression {#sec-smoothing}
+
+```{r}
+#| echo: false
+#| message: false
+library(tidyverse)
+library(splines)
+theme_set(theme_minimal())
+```
+
+## Beyond Linear Relationships
+
+Linear regression assumes a straight-line relationship between predictors and outcomes. But biological relationships are often curved:
+
+- Enzyme kinetics follow Michaelis-Menten curves
+- Growth rates change non-linearly with temperature
+- Dose-response relationships are typically sigmoidal
+- Gene expression may have complex temporal patterns
+
+When the relationship between a predictor and outcome is non-linear, we need methods more flexible than linear regression. **Smoothing** methods estimate curves by averaging nearby observations, allowing the data to reveal its own pattern.
+
+## From Simple Averages to Flexible Curves
+
+The fundamental idea behind smoothing is simple: estimate the value at a point by averaging nearby observations. The challenge is defining "nearby" and deciding how to weight different observations.
+
+### Bin Smoothing
+
+The simplest smoothing approach is **bin smoothing** (also called **binning**): divide the predictor into intervals (bins) and estimate the outcome as the average within each bin.
+
+```{r}
+#| label: fig-bin-smoothing
+#| fig-cap: "Bin smoothing divides data into intervals and estimates each segment as the mean of points in that bin"
+#| fig-width: 8
+#| fig-height: 5
+# Generate non-linear data
+set.seed(42)
+n <- 200
+x <- runif(n, 0, 10)
+y <- sin(x) + rnorm(n, sd = 0.3)
+
+# Bin smoothing with different bin widths
+par(mfrow = c(1, 2))
+
+# Narrow bins
+n_bins <- 20
+breaks <- seq(min(x), max(x), length.out = n_bins + 1)
+bin_means <- sapply(1:n_bins, function(i) {
+  in_bin <- x >= breaks[i] & x < breaks[i + 1]
+  if (sum(in_bin) > 0) mean(y[in_bin]) else NA
+})
+bin_centers <- (breaks[-1] + breaks[-(n_bins + 1)]) / 2
+
+plot(x, y, pch = 16, col = "gray60", main = "Narrow bins (20)")
+points(bin_centers, bin_means, col = "blue", pch = 19, cex = 1.5)
+lines(bin_centers, bin_means, col = "blue", lwd = 2)
+
+# Wide bins
+n_bins <- 5
+breaks <- seq(min(x), max(x), length.out = n_bins + 1)
+bin_means <- sapply(1:n_bins, function(i) {
+  in_bin <- x >= breaks[i] & x < breaks[i + 1]
+  if (sum(in_bin) > 0) mean(y[in_bin]) else NA
+})
+bin_centers <- (breaks[-1] + breaks[-(n_bins + 1)]) / 2
+
+plot(x, y, pch = 16, col = "gray60", main = "Wide bins (5)")
+points(bin_centers, bin_means, col = "red", pch = 19, cex = 1.5)
+lines(bin_centers, bin_means, col = "red", lwd = 2)
+```
+
+Bin smoothing illustrates the **bias-variance tradeoff** in smoothing:
+
+- **Narrow bins**: Capture local variation (low bias) but are noisy (high variance)
+- **Wide bins**: Smooth over noise (low variance) but may miss true curvature (high bias)
+
+The main limitation of bin smoothing is the **discontinuity** at bin boundaries—the estimate jumps from one bin to the next.
+
+## Kernel Smoothing
+
+**Kernel smoothing** improves on binning by using weighted averages, where closer points receive more weight. This creates smooth, continuous estimates.
+
+The estimate at any point $x_0$ is:
+
+$$\hat{f}(x_0) = \frac{\sum_{i=1}^n K\left(\frac{x_i - x_0}{h}\right) y_i}{\sum_{i=1}^n K\left(\frac{x_i - x_0}{h}\right)}$$
+
+where $K$ is a **kernel function** (typically Gaussian or Epanechnikov) and $h$ is the **bandwidth** controlling smoothness.
+
+### The Kernel Function
+
+Common kernel functions include:
+
+- **Gaussian**: $K(u) = \exp(-u^2/2)$
+- **Epanechnikov**: $K(u) = \frac{3}{4}(1-u^2)$ for $|u| \leq 1$
+- **Uniform**: $K(u) = 1$ for $|u| \leq 1$ (equivalent to bin smoothing)
+
+```{r}
+#| label: fig-kernel-functions
+#| fig-cap: "Common kernel functions used in kernel smoothing"
+#| fig-width: 8
+#| fig-height: 4
+u <- seq(-3, 3, length.out = 100)
+
+par(mfrow = c(1, 3))
+
+# Gaussian
+plot(u, dnorm(u), type = "l", lwd = 2, col = "blue",
+     main = "Gaussian Kernel", xlab = "u", ylab = "K(u)")
+
+# Epanechnikov
+epan <- ifelse(abs(u) <= 1, 0.75 * (1 - u^2), 0)
+plot(u, epan, type = "l", lwd = 2, col = "red",
+     main = "Epanechnikov Kernel", xlab = "u", ylab = "K(u)")
+
+# Uniform
+unif <- ifelse(abs(u) <= 1, 0.5, 0)
+plot(u, unif, type = "s", lwd = 2, col = "darkgreen",
+     main = "Uniform Kernel", xlab = "u", ylab = "K(u)")
+```
+
+### Effect of Bandwidth
+
+```{r}
+#| label: fig-kernel-smoothing
+#| fig-cap: "Kernel smoothing uses weighted averages with Gaussian weights. The bandwidth controls the degree of smoothing."
+#| fig-width: 9
+#| fig-height: 4
+# Kernel smoothing function
+kernel_smooth <- function(x0, x, y, bandwidth) {
+  weights <- dnorm(x, mean = x0, sd = bandwidth)
+  sum(weights * y) / sum(weights)
+}
+
+# Apply to grid of points
+x_grid <- seq(0, 10, length.out = 200)
+
+par(mfrow = c(1, 3))
+
+for (bw in c(0.2, 0.5, 1.0)) {
+  y_smooth <- sapply(x_grid, function(x0) kernel_smooth(x0, x, y, bw))
+
+  plot(x, y, pch = 16, col = "gray60", main = paste("Bandwidth =", bw))
+  lines(x_grid, y_smooth, col = "blue", lwd = 2)
+  lines(x_grid, sin(x_grid), col = "red", lwd = 2, lty = 2)
+  legend("topright", c("Kernel smooth", "True function"),
+         col = c("blue", "red"), lty = c(1, 2), lwd = 2, cex = 0.7)
+}
+```
+
+The **bandwidth** parameter plays the same role as the number of bins:
+
+- **Small bandwidth**: More local, follows the data closely (risk of overfitting)
+- **Large bandwidth**: More global, smoother curve (risk of over-smoothing)
+
+Kernel smoothing eliminates the discontinuity problem of bin smoothing while retaining its intuitive local-averaging interpretation.
+
+### Bandwidth Selection
+
+Bandwidth can be chosen by cross-validation:
+
+```{r}
+#| label: fig-bandwidth-cv
+#| fig-cap: "Cross-validation error as a function of bandwidth for kernel smoothing"
+#| fig-width: 7
+#| fig-height: 5
+# Leave-one-out CV for bandwidth selection
+bandwidths <- seq(0.1, 1.5, by = 0.05)
+cv_errors <- sapply(bandwidths, function(bw) {
+  errors <- sapply(1:n, function(i) {
+    # Leave out observation i
+    y_pred <- kernel_smooth(x[i], x[-i], y[-i], bw)
+    (y[i] - y_pred)^2
+  })
+  mean(errors)
+})
+
+plot(bandwidths, cv_errors, type = "l", lwd = 2, col = "blue",
+     xlab = "Bandwidth", ylab = "LOOCV Error",
+     main = "Bandwidth Selection via Cross-Validation")
+best_bw <- bandwidths[which.min(cv_errors)]
+abline(v = best_bw, lty = 2, col = "red")
+text(best_bw + 0.1, max(cv_errors) * 0.9, paste("Best:", round(best_bw, 2)), col = "red")
+```
+
+## LOESS: Local Polynomial Regression
+
+**LOESS** (Locally Estimated Scatterplot Smoothing) [@cleveland1979robust] fits local polynomial regressions to subsets of data, weighted by distance from each point. It extends kernel smoothing by fitting a polynomial (rather than a constant) at each point.
+
+```{r}
+#| label: fig-loess-comparison
+#| fig-cap: "Comparison of linear regression and LOESS smoothing for non-linear data"
+#| fig-width: 7
+#| fig-height: 5
+# Generate sinusoidal data
+set.seed(123)
+x_loess <- seq(0, 4*pi, length.out = 100)
+y_loess <- sin(x_loess) + rnorm(100, sd = 0.3)
+
+plot(x_loess, y_loess, pch = 16, col = "gray60", main = "Linear vs LOESS")
+abline(lm(y_loess ~ x_loess), col = "red", lwd = 2)
+lines(x_loess, predict(loess(y_loess ~ x_loess, span = 0.3)), col = "blue", lwd = 2)
+legend("topright", c("Linear", "LOESS"), col = c("red", "blue"), lwd = 2)
+```
+
+### The Span Parameter
+
+The **span** parameter controls smoothness: smaller values fit more locally (more flexible), larger values average more broadly (smoother).
+
+```{r}
+#| label: fig-loess-span
+#| fig-cap: "Effect of span on LOESS smoothing: smaller span fits data more closely, larger span produces smoother curves"
+#| fig-width: 9
+#| fig-height: 4
+par(mfrow = c(1, 3))
+
+for (sp in c(0.2, 0.5, 0.8)) {
+  loess_fit <- loess(y_loess ~ x_loess, span = sp)
+
+  plot(x_loess, y_loess, pch = 16, col = "gray60", main = paste("Span =", sp))
+  lines(x_loess, predict(loess_fit), col = "blue", lwd = 2)
+  lines(x_loess, sin(x_loess), col = "red", lwd = 2, lty = 2)
+}
+```
+
+### LOESS in ggplot2
+
+LOESS is the default smoother in `ggplot2`:
+
+```{r}
+#| label: fig-ggplot-loess
+#| fig-cap: "LOESS smoothing with confidence bands in ggplot2"
+#| fig-width: 7
+#| fig-height: 5
+data.frame(x = x_loess, y = y_loess) |>
+  ggplot(aes(x, y)) +
+  geom_point(alpha = 0.5) +
+  geom_smooth(method = "loess", span = 0.3, se = TRUE) +
+  labs(title = "LOESS Smoothing with Confidence Band")
+```
+
+## Splines: Piecewise Polynomials
+
+While LOESS provides local smoothing, **splines** offer a more structured approach to fitting flexible curves. A spline is a piecewise polynomial function that joins smoothly at points called **knots**.
+
+### Why Splines?
+
+Linear regression assumes a straight-line relationship, which is often too restrictive. We could fit polynomial regression (e.g., $y = \beta_0 + \beta_1 x + \beta_2 x^2 + \beta_3 x^3$), but polynomials can behave erratically, especially at the edges of the data.
+
+Splines provide flexibility while maintaining smooth, well-behaved curves.
+
+### Regression Splines
+
+**Regression splines** fit piecewise polynomials at fixed knot locations. The `splines` package provides basis functions for incorporating splines into linear models:
+
+```{r}
+#| label: fig-spline-comparison
+#| fig-cap: "Comparison of linear, polynomial, and spline fits for non-linear data"
+#| fig-width: 9
+#| fig-height: 4
+# Generate non-linear data
+set.seed(42)
+x_sp <- seq(0, 10, length.out = 100)
+y_sp <- sin(x_sp) + 0.5 * cos(2*x_sp) + rnorm(100, sd = 0.3)
+data_sp <- data.frame(x = x_sp, y = y_sp)
+
+# Fit different models
+fit_linear <- lm(y ~ x, data = data_sp)
+fit_poly <- lm(y ~ poly(x, 5), data = data_sp)
+fit_spline <- lm(y ~ bs(x, df = 6), data = data_sp)  # B-spline with 6 df
+
+# Predictions
+data_sp$pred_linear <- predict(fit_linear)
+data_sp$pred_poly <- predict(fit_poly)
+data_sp$pred_spline <- predict(fit_spline)
+
+par(mfrow = c(1, 3))
+
+plot(x_sp, y_sp, pch = 16, col = "gray60", main = "Linear")
+lines(x_sp, data_sp$pred_linear, col = "red", lwd = 2)
+
+plot(x_sp, y_sp, pch = 16, col = "gray60", main = "Polynomial (degree 5)")
+lines(x_sp, data_sp$pred_poly, col = "blue", lwd = 2)
+
+plot(x_sp, y_sp, pch = 16, col = "gray60", main = "Spline (6 df)")
+lines(x_sp, data_sp$pred_spline, col = "darkgreen", lwd = 2)
+```
+
+### B-Splines and Natural Splines
+
+**B-splines** (`bs()`) are a flexible basis for regression splines. You specify either:
+- The degrees of freedom (df), or
+- The number and location of knots
+
+**Natural splines** (`ns()`) add the constraint that the function is linear beyond the boundary knots. This prevents the wild behavior that polynomials often exhibit at the edges:
+
+```{r}
+#| label: fig-natural-spline
+#| fig-cap: "Natural splines constrain the fit to be linear beyond the data boundaries, reducing edge effects"
+#| fig-width: 7
+#| fig-height: 5
+# Compare B-spline and natural spline
+fit_bs <- lm(y ~ bs(x, df = 6), data = data_sp)
+fit_ns <- lm(y ~ ns(x, df = 6), data = data_sp)
+
+# Extend prediction range to see edge behavior
+x_ext <- seq(-2, 12, length.out = 200)
+pred_bs <- predict(fit_bs, newdata = data.frame(x = x_ext))
+pred_ns <- predict(fit_ns, newdata = data.frame(x = x_ext))
+
+plot(x_sp, y_sp, pch = 16, col = "gray60", xlim = c(-2, 12), ylim = c(-3, 3),
+     main = "B-spline vs Natural Spline at Boundaries")
+lines(x_ext, pred_bs, col = "blue", lwd = 2)
+lines(x_ext, pred_ns, col = "darkgreen", lwd = 2)
+abline(v = range(x_sp), lty = 2, col = "gray")
+legend("topright", c("B-spline", "Natural spline", "Data range"),
+       col = c("blue", "darkgreen", "gray"), lty = c(1, 1, 2), lwd = c(2, 2, 1))
+```
+
+### Choosing Degrees of Freedom
+
+The degrees of freedom control spline flexibility:
+
+```{r}
+#| label: fig-spline-df
+#| fig-cap: "Effect of degrees of freedom on spline flexibility"
+#| fig-width: 9
+#| fig-height: 4
+par(mfrow = c(1, 3))
+
+for (df_val in c(3, 6, 10)) {
+  fit <- lm(y ~ ns(x, df = df_val), data = data_sp)
+
+  plot(x_sp, y_sp, pch = 16, col = "gray60", main = paste("df =", df_val))
+  lines(x_sp, predict(fit), col = "darkgreen", lwd = 2)
+}
+```
+
+## Smoothing Splines
+
+**Smoothing splines** take a different approach: instead of pre-specifying knots, they place a knot at every data point and control smoothness through a penalty on the second derivative:
+
+$$\text{Minimize: } \sum_{i=1}^n (y_i - f(x_i))^2 + \lambda \int f''(x)^2 dx$$
+
+The first term measures fit to the data; the second penalizes curvature. The smoothing parameter $\lambda$ controls the tradeoff:
+
+- $\lambda = 0$: Interpolates all points (maximally wiggly)
+- $\lambda \to \infty$: Straight line (no curvature)
+
+```{r}
+#| label: fig-smoothing-spline
+#| fig-cap: "Smoothing spline with automatic cross-validation selection of the smoothing parameter"
+#| fig-width: 7
+#| fig-height: 5
+# Fit smoothing spline with cross-validation
+smooth_fit <- smooth.spline(x_sp, y_sp, cv = TRUE)
+
+plot(x_sp, y_sp, pch = 16, col = "gray60", main = "Smoothing Spline")
+lines(smooth_fit, col = "purple", lwd = 2)
+cat("Optimal degrees of freedom:", round(smooth_fit$df, 2), "\n")
+```
+
+### Effect of Smoothing Parameter
+
+```{r}
+#| label: fig-smooth-spline-lambda
+#| fig-cap: "Effect of smoothing parameter on smoothing splines. The spar parameter controls smoothness."
+#| fig-width: 9
+#| fig-height: 4
+par(mfrow = c(1, 3))
+
+for (spar_val in c(0.2, 0.5, 0.8)) {
+  fit <- smooth.spline(x_sp, y_sp, spar = spar_val)
+
+  plot(x_sp, y_sp, pch = 16, col = "gray60",
+       main = paste("spar =", spar_val, "(df ≈", round(fit$df, 1), ")"))
+  lines(fit, col = "purple", lwd = 2)
+}
+```
+
+## Generalized Additive Models (GAMs)
+
+**Generalized Additive Models** extend smoothing to multiple predictors. Instead of assuming linearity, GAMs fit smooth functions of each predictor:
+
+$$y = \beta_0 + f_1(x_1) + f_2(x_2) + \cdots + f_p(x_p) + \epsilon$$
+
+where each $f_j$ is a smooth function.
+
+```{r}
+#| label: fig-gam-example
+#| fig-cap: "Generalized Additive Model fits smooth functions of multiple predictors"
+#| fig-width: 8
+#| fig-height: 6
+#| message: false
+library(mgcv)
+
+# Generate data with two non-linear effects
+set.seed(42)
+n <- 200
+x1 <- runif(n, 0, 10)
+x2 <- runif(n, 0, 10)
+y_gam <- sin(x1) + 0.5 * x2^0.5 + rnorm(n, sd = 0.3)
+data_gam <- data.frame(y = y_gam, x1 = x1, x2 = x2)
+
+# Fit GAM
+gam_fit <- gam(y ~ s(x1) + s(x2), data = data_gam)
+summary(gam_fit)
+
+# Plot partial effects
+par(mfrow = c(1, 2))
+plot(gam_fit, shade = TRUE, main = "Partial Effects")
+```
+
+## Comparing Smoothing Methods
+
+| Method | Approach | Parameters | Best For |
+|:-------|:---------|:-----------|:---------|
+| Bin smoothing | Average within intervals | Number of bins | Quick exploration |
+| Kernel smoothing | Weighted local average | Bandwidth | Smooth curves, one predictor |
+| LOESS | Local polynomial regression | Span | Visualization, ggplot2 |
+| Regression splines | Piecewise polynomials | df or knots | Including in regression models |
+| Smoothing splines | Penalized fitting | λ (automatic via CV) | Automatic smoothing |
+| GAM | Additive smooth functions | df per predictor | Multiple non-linear predictors |
+
+::: {.callout-note}
+## Choosing the Right Approach
+
+- **Regression splines (bs, ns)**: When you want to include splines in a regression model with other predictors
+- **Natural splines**: When extrapolation behavior matters
+- **Smoothing splines**: For exploratory smoothing with automatic tuning
+- **LOESS**: For local, non-parametric smoothing (especially useful for visualization)
+- **GAMs**: When you have multiple predictors with potentially non-linear effects
+:::
+
+## Practical Considerations
+
+### Cross-Validation for Parameter Selection
+
+All smoothing methods have a smoothness parameter. Cross-validation provides an objective way to choose it:
+
+```{r}
+# Example: CV for number of knots in regression spline
+df_values <- 3:15
+cv_errors <- sapply(df_values, function(df) {
+  # 10-fold CV
+  folds <- sample(rep(1:10, length.out = n))
+  fold_errors <- sapply(1:10, function(k) {
+    train <- data_sp[folds != k, ]
+    test <- data_sp[folds == k, ]
+    fit <- lm(y ~ ns(x, df = df), data = train)
+    mean((test$y - predict(fit, test))^2)
+  })
+  mean(fold_errors)
+})
+
+cat("Best df by CV:", df_values[which.min(cv_errors)], "\n")
+```
+
+### Confidence Bands
+
+Smoothing methods can provide uncertainty estimates:
+
+```{r}
+#| label: fig-smooth-ci
+#| fig-cap: "LOESS smoothing with confidence band showing uncertainty in the smooth"
+#| fig-width: 7
+#| fig-height: 5
+ggplot(data_sp, aes(x, y)) +
+  geom_point(alpha = 0.5) +
+  geom_smooth(method = "loess", span = 0.5, level = 0.95) +
+  labs(title = "LOESS with 95% Confidence Band")
+```
+
+### Extrapolation Warning
+
+Most smoothing methods are designed for interpolation, not extrapolation. Predictions outside the range of the training data should be treated with extreme caution.
+
+## Exercises
+
+::: {.callout-note}
+### Exercise Sm.1: Kernel Smoothing
+
+1. Generate 100 observations from $y = x^2 + \epsilon$ where $x \in [0, 5]$ and $\epsilon \sim N(0, 1)$.
+
+2. Implement kernel smoothing with bandwidths of 0.3, 0.6, and 1.0. Compare the fits to the true function.
+
+3. Use leave-one-out cross-validation to select the optimal bandwidth.
+:::
+
+::: {.callout-note}
+### Exercise Sm.2: Spline Comparison
+
+4. Using the same data, fit:
+   - B-spline with 5 degrees of freedom
+   - Natural spline with 5 degrees of freedom
+   - Smoothing spline with cross-validation
+
+5. Compare the fits and their behavior at the boundaries.
+:::
+
+::: {.callout-note}
+### Exercise Sm.3: GAMs
+
+6. Generate data with $y = \sin(x_1) + x_2^2 + x_1 \cdot x_2 + \epsilon$.
+
+7. Fit a GAM with smooth terms for $x_1$ and $x_2$ (ignoring the interaction). Does the model capture the main effects?
+
+8. How would you modify the model to include an interaction?
+:::
+
+## Summary
+
+- **Smoothing methods** estimate flexible curves without assuming a parametric form
+- **Bin smoothing** divides data into intervals and computes averages—simple but discontinuous
+- **Kernel smoothing** uses weighted averages for smooth, continuous estimates
+  - Bandwidth controls the bias-variance tradeoff
+  - Cross-validation selects optimal bandwidth
+- **LOESS** fits local polynomial regressions weighted by distance
+  - Span parameter controls smoothness
+  - Default smoother in ggplot2
+- **Regression splines** fit piecewise polynomials with smooth joins at knots
+  - B-splines provide a flexible basis
+  - Natural splines are linear at boundaries
+- **Smoothing splines** place knots at every point and penalize curvature
+  - Smoothing parameter selected automatically by cross-validation
+- **GAMs** extend smoothing to multiple predictors with additive structure
+- All methods face the bias-variance tradeoff: more smoothing reduces variance but increases bias
+- Cross-validation provides objective parameter selection across methods
+
+## Additional Resources
+
+- @james2023islr - Moving beyond linearity with splines and GAMs
+- @hastie2009elements - Theoretical foundations of smoothing
+- @cleveland1979robust - Original LOESS paper
+- `mgcv` package documentation - Comprehensive GAM implementation

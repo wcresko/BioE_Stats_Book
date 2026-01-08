@@ -1,0 +1,665 @@
+# Classification and Performance Metrics {#sec-classification-methods}
+
+```{r}
+#| echo: false
+#| message: false
+library(tidyverse)
+library(class)
+library(caret)
+theme_set(theme_minimal())
+```
+
+## Introduction to Classification
+
+Classification is a supervised learning task where the goal is to predict categorical outcomes. Given a set of features (predictors), we want to assign observations to one of several predefined classes.
+
+Classification problems are ubiquitous in biology and bioengineering:
+
+- Diagnosing disease states from biomarkers
+- Classifying cell types from gene expression
+- Predicting protein function from sequence
+- Identifying species from morphological measurements
+
+## Distance: The Foundation of Classification
+
+Many classification algorithms rely on measuring how similar or different observations are. **Distance** quantifies this similarity—observations that are close together are considered similar.
+
+### Euclidean Distance
+
+The most common distance measure is **Euclidean distance**, the straight-line distance between two points.
+
+For two points in two dimensions:
+$$
+d(A, B) = \sqrt{(A_x - B_x)^2 + (A_y - B_y)^2}
+$$
+
+In higher dimensions with $p$ features:
+$$
+d(i, j) = \sqrt{\sum_{k=1}^{p} (x_{ik} - x_{jk})^2}
+$$
+
+### Example: Distance Between Digit Images
+
+```{r}
+library(dslabs)
+if (!exists("mnist")) mnist <- read_mnist()
+
+set.seed(1995)
+ind <- which(mnist$train$labels %in% c(2, 7)) %>% sample(500)
+x <- mnist$train$images[ind, ]
+y <- mnist$train$labels[ind]
+
+# First three labels
+y[1:3]
+
+# Compute distances
+x_1 <- x[1, ]
+x_2 <- x[2, ]
+x_3 <- x[3, ]
+
+# Distance between two 7s
+dist_same <- sqrt(sum((x_1 - x_2)^2))
+
+# Distance between a 7 and a 2
+dist_diff_1 <- sqrt(sum((x_1 - x_3)^2))
+dist_diff_2 <- sqrt(sum((x_2 - x_3)^2))
+
+cat("Distance between two 7s:", round(dist_same, 1), "\n")
+cat("Distance between 7 and 2:", round(dist_diff_1, 1), "and", round(dist_diff_2, 1), "\n")
+```
+
+As expected, the two 7s are closer to each other than to the 2.
+
+### Other Distance Metrics
+
+Beyond Euclidean distance, other metrics are sometimes appropriate:
+
+**Manhattan Distance** (L1 norm): Sum of absolute differences
+$$d(x_i, x_j) = \sum_{k=1}^{p} |x_{ik} - x_{jk}|$$
+
+**Minkowski Distance** (generalized):
+$$d(x_i, x_j) = \left(\sum_{k=1}^{p} |x_{ik} - x_{jk}|^q\right)^{1/q}$$
+
+When $q = 2$, this is Euclidean; when $q = 1$, this is Manhattan.
+
+## K-Nearest Neighbors (KNN)
+
+**K-Nearest Neighbors** is one of the simplest and most intuitive classification algorithms. To classify a new observation, KNN finds the k closest observations in the training data and assigns the most common class among those neighbors.
+
+### The KNN Algorithm
+
+1. Choose the number of neighbors $k$
+2. For a new observation, find the $k$ closest training points
+3. Assign the class that is most common among these neighbors (majority vote)
+
+```{r}
+#| label: fig-knn-concept
+#| fig-cap: "K-nearest neighbors classification: the new point (star) is classified based on its k nearest training points"
+#| fig-width: 7
+#| fig-height: 5
+# Simulate two-class data
+set.seed(42)
+n <- 100
+class1 <- data.frame(
+  x1 = rnorm(n/2, mean = 2, sd = 1),
+  x2 = rnorm(n/2, mean = 2, sd = 1),
+  class = "A"
+)
+class2 <- data.frame(
+  x1 = rnorm(n/2, mean = 4, sd = 1),
+  x2 = rnorm(n/2, mean = 4, sd = 1),
+  class = "B"
+)
+train_data <- rbind(class1, class2)
+
+# New point to classify
+new_point <- data.frame(x1 = 3.2, x2 = 3.5)
+
+# Find 5 nearest neighbors
+distances <- sqrt((train_data$x1 - new_point$x1)^2 +
+                  (train_data$x2 - new_point$x2)^2)
+nearest <- order(distances)[1:5]
+
+# Plot
+plot(train_data$x1, train_data$x2,
+     col = ifelse(train_data$class == "A", "blue", "red"),
+     pch = 16, xlab = "Feature 1", ylab = "Feature 2",
+     main = "K-Nearest Neighbors (k=5)")
+points(new_point$x1, new_point$x2, pch = 8, cex = 2, lwd = 2)
+
+# Highlight nearest neighbors
+points(train_data$x1[nearest], train_data$x2[nearest],
+       cex = 2, col = ifelse(train_data$class[nearest] == "A", "blue", "red"))
+legend("topleft", c("Class A", "Class B", "New point"),
+       col = c("blue", "red", "black"), pch = c(16, 16, 8))
+```
+
+### The Effect of K: Bias-Variance Tradeoff
+
+The choice of $k$ is critical and illustrates the **bias-variance tradeoff**:
+
+- **Small k** (e.g., k=1): Very flexible decision boundary, low bias but high variance. The boundary follows noise in the training data—prone to overfitting.
+- **Large k**: Smoother decision boundary, higher bias but lower variance. May miss local patterns—prone to underfitting.
+
+```{r}
+#| label: fig-knn-k-comparison
+#| fig-cap: "Effect of k on KNN decision boundaries: small k creates complex boundaries (overfitting risk), large k creates smooth boundaries (underfitting risk)"
+#| fig-width: 9
+#| fig-height: 4
+# Create a grid for visualization
+x1_grid <- seq(0, 6, length.out = 100)
+x2_grid <- seq(0, 6, length.out = 100)
+grid <- expand.grid(x1 = x1_grid, x2 = x2_grid)
+
+par(mfrow = c(1, 3))
+
+for (k_val in c(1, 15, 50)) {
+  # Predict on grid
+  pred <- knn(train = train_data[, 1:2],
+              test = grid,
+              cl = train_data$class,
+              k = k_val)
+
+  # Plot decision regions
+  plot(grid$x1, grid$x2,
+       col = ifelse(pred == "A", rgb(0, 0, 1, 0.1), rgb(1, 0, 0, 0.1)),
+       pch = 15, cex = 0.5, xlab = "Feature 1", ylab = "Feature 2",
+       main = paste("k =", k_val))
+  points(train_data$x1, train_data$x2,
+         col = ifelse(train_data$class == "A", "blue", "red"), pch = 16)
+}
+```
+
+### Selecting K with Cross-Validation
+
+We choose the optimal $k$ using cross-validation:
+
+```{r}
+#| label: fig-knn-cv
+#| fig-cap: "Training vs test accuracy as a function of k. Training accuracy is perfect at k=1, but test accuracy reveals true generalization."
+#| fig-width: 7
+#| fig-height: 5
+# Split data
+set.seed(123)
+test_idx <- sample(1:nrow(train_data), 30)
+train_subset <- train_data[-test_idx, ]
+test_subset <- train_data[test_idx, ]
+
+k_values <- seq(1, 50, by = 2)
+
+accuracy <- sapply(k_values, function(k) {
+  pred <- knn(train = train_subset[, 1:2],
+              test = test_subset[, 1:2],
+              cl = train_subset$class,
+              k = k)
+  mean(pred == test_subset$class)
+})
+
+train_accuracy <- sapply(k_values, function(k) {
+  pred <- knn(train = train_subset[, 1:2],
+              test = train_subset[, 1:2],
+              cl = train_subset$class,
+              k = k)
+  mean(pred == train_subset$class)
+})
+
+plot(k_values, train_accuracy, type = "l", col = "blue", lwd = 2,
+     xlab = "k (number of neighbors)", ylab = "Accuracy",
+     main = "Training vs Test Accuracy", ylim = c(0.5, 1))
+lines(k_values, accuracy, col = "red", lwd = 2)
+legend("bottomright", c("Training", "Test"), col = c("blue", "red"), lwd = 2)
+```
+
+When k=1, training accuracy is perfect—each point is its own nearest neighbor. But test accuracy reveals how well the model actually generalizes.
+
+## Confusion Matrices
+
+Classification performance is evaluated with a **confusion matrix**:
+
+|  | Predicted Positive | Predicted Negative |
+|:--|:--:|:--:|
+| Actual Positive | True Positive (TP) | False Negative (FN) |
+| Actual Negative | False Positive (FP) | True Negative (TN) |
+
+```{r}
+#| label: fig-confusion-matrix
+#| fig-cap: "Structure of a confusion matrix showing the four possible outcomes"
+#| fig-width: 6
+#| fig-height: 5
+# Visualize confusion matrix structure
+par(mar = c(2, 6, 4, 2))
+cm <- matrix(c("True\nPositive\n(TP)", "False\nPositive\n(FP)",
+               "False\nNegative\n(FN)", "True\nNegative\n(TN)"),
+             nrow = 2, byrow = TRUE)
+
+plot(c(0, 3), c(0, 3), type = "n", axes = FALSE, xlab = "", ylab = "",
+     main = "Confusion Matrix")
+rect(0.5, 0.5, 1.5, 1.5, col = "lightgreen")
+rect(1.5, 0.5, 2.5, 1.5, col = "lightcoral")
+rect(0.5, 1.5, 1.5, 2.5, col = "lightcoral")
+rect(1.5, 1.5, 2.5, 2.5, col = "lightgreen")
+
+text(1, 2, "True\nPositive\n(TP)", cex = 1)
+text(2, 2, "False\nNegative\n(FN)", cex = 1)
+text(1, 1, "False\nPositive\n(FP)", cex = 1)
+text(2, 1, "True\nNegative\n(TN)", cex = 1)
+
+text(1.5, 2.7, "Predicted", font = 2)
+text(1, 2.5, "Positive")
+text(2, 2.5, "Negative")
+text(0.3, 1.5, "Actual", font = 2, srt = 90)
+text(0.5, 2, "Positive", srt = 90)
+text(0.5, 1, "Negative", srt = 90)
+```
+
+### Key Classification Metrics
+
+**Accuracy**: Overall proportion correct
+$$\text{Accuracy} = \frac{TP + TN}{TP + TN + FP + FN}$$
+
+**Sensitivity** (Recall, True Positive Rate): How many positives were caught
+$$\text{Sensitivity} = \frac{TP}{TP + FN}$$
+
+**Specificity** (True Negative Rate): How many negatives were correctly identified
+$$\text{Specificity} = \frac{TN}{TN + FP}$$
+
+**Precision** (Positive Predictive Value): Among positive predictions, how many were correct
+$$\text{Precision} = \frac{TP}{TP + FP}$$
+
+```{r}
+# Example calculation
+set.seed(42)
+actual <- factor(c(rep("Positive", 30), rep("Negative", 70)))
+predicted <- factor(c(rep("Positive", 25), rep("Negative", 5),   # 25 TP, 5 FN
+                       rep("Positive", 10), rep("Negative", 60))) # 10 FP, 60 TN
+
+# Confusion matrix
+cm <- table(Actual = actual, Predicted = predicted)
+print(cm)
+
+# Calculate metrics
+TP <- cm["Positive", "Positive"]
+TN <- cm["Negative", "Negative"]
+FP <- cm["Negative", "Positive"]
+FN <- cm["Positive", "Negative"]
+
+cat("\nMetrics:\n")
+cat("Accuracy:", round((TP + TN) / sum(cm), 3), "\n")
+cat("Sensitivity (Recall):", round(TP / (TP + FN), 3), "\n")
+cat("Specificity:", round(TN / (TN + FP), 3), "\n")
+cat("Precision:", round(TP / (TP + FP), 3), "\n")
+```
+
+### The Problem with Accuracy
+
+Accuracy can be misleading with **imbalanced classes**. If 95% of emails are legitimate, a classifier that labels everything as "not spam" achieves 95% accuracy while being completely useless.
+
+```{r}
+# Imbalanced class example
+set.seed(42)
+# 95% negative, 5% positive (e.g., rare disease screening)
+n <- 1000
+actual <- factor(c(rep("Negative", 950), rep("Positive", 50)))
+
+# Naive classifier: always predict negative
+naive_pred <- factor(rep("Negative", n), levels = c("Negative", "Positive"))
+
+# Calculate metrics
+TP <- sum(naive_pred == "Positive" & actual == "Positive")
+TN <- sum(naive_pred == "Negative" & actual == "Negative")
+FP <- sum(naive_pred == "Positive" & actual == "Negative")
+FN <- sum(naive_pred == "Negative" & actual == "Positive")
+
+cat("Naive classifier (always predict negative):\n")
+cat("Accuracy:", (TP + TN) / n, "\n")
+cat("Sensitivity (Recall):", TP / (TP + FN), "\n")
+cat("The classifier catches 0% of positive cases!\n")
+```
+
+### F1 Score and Balanced Accuracy
+
+For imbalanced data, better metrics include:
+
+**F1 Score**: The harmonic mean of precision and recall:
+$$F_1 = 2 \cdot \frac{\text{Precision} \cdot \text{Recall}}{\text{Precision} + \text{Recall}} = \frac{2 \cdot TP}{2 \cdot TP + FP + FN}$$
+
+**Balanced Accuracy**: The average of sensitivity and specificity:
+$$\text{Balanced Accuracy} = \frac{\text{Sensitivity} + \text{Specificity}}{2}$$
+
+```{r}
+# Better classifier for the imbalanced data
+set.seed(123)
+better_pred <- actual  # Start with actual
+pos_idx <- which(actual == "Positive")
+neg_idx <- which(actual == "Negative")
+better_pred[sample(pos_idx, 10)] <- "Negative"  # Miss 10 of 50 positives
+better_pred[sample(neg_idx, 50)] <- "Positive"  # 50 false positives
+
+# Confusion matrix
+TP <- sum(better_pred == "Positive" & actual == "Positive")
+TN <- sum(better_pred == "Negative" & actual == "Negative")
+FP <- sum(better_pred == "Positive" & actual == "Negative")
+FN <- sum(better_pred == "Negative" & actual == "Positive")
+
+precision <- TP / (TP + FP)
+recall <- TP / (TP + FN)
+specificity <- TN / (TN + FP)
+
+# Calculate metrics
+accuracy <- (TP + TN) / n
+f1 <- 2 * precision * recall / (precision + recall)
+balanced_acc <- (recall + specificity) / 2
+
+cat("\nBetter classifier:\n")
+cat("Accuracy:", round(accuracy, 3), "\n")
+cat("Precision:", round(precision, 3), "\n")
+cat("Recall (Sensitivity):", round(recall, 3), "\n")
+cat("F1 Score:", round(f1, 3), "\n")
+cat("Balanced Accuracy:", round(balanced_acc, 3), "\n")
+```
+
+::: {.callout-tip}
+## Which Metric to Use?
+
+- **Accuracy**: Only when classes are balanced
+- **F1 Score**: When you care about both precision and recall equally
+- **Sensitivity/Recall**: When missing positives is costly (disease screening)
+- **Precision**: When false positives are costly (spam filtering)
+- **Balanced Accuracy**: Quick summary for imbalanced data
+:::
+
+## ROC Curves and AUC
+
+Many classifiers output probabilities rather than hard class labels. By varying the **threshold** for classifying as positive, we trade off sensitivity against specificity.
+
+The **Receiver Operating Characteristic (ROC) curve** plots sensitivity (true positive rate) against 1 - specificity (false positive rate) at all possible thresholds.
+
+```{r}
+#| label: fig-roc-curve
+#| fig-cap: "ROC curve showing the tradeoff between sensitivity and false positive rate. The dashed diagonal represents random guessing."
+#| fig-width: 7
+#| fig-height: 6
+# Simulate a classifier with probabilities
+set.seed(42)
+n <- 500
+actual <- factor(c(rep(1, 100), rep(0, 400)))  # 20% positive
+
+# Generate predicted probabilities (imperfect classifier)
+probs <- c(rbeta(100, 3, 2),   # Positives: higher probs
+           rbeta(400, 2, 3))   # Negatives: lower probs
+
+# Calculate ROC curve manually
+thresholds <- seq(0, 1, by = 0.01)
+roc_data <- data.frame(
+  threshold = thresholds,
+  TPR = sapply(thresholds, function(t) {
+    pred <- ifelse(probs >= t, 1, 0)
+    sum(pred == 1 & actual == 1) / sum(actual == 1)
+  }),
+  FPR = sapply(thresholds, function(t) {
+    pred <- ifelse(probs >= t, 1, 0)
+    sum(pred == 1 & actual == 0) / sum(actual == 0)
+  })
+)
+
+# Plot ROC curve
+plot(roc_data$FPR, roc_data$TPR, type = "l", lwd = 2, col = "blue",
+     xlab = "False Positive Rate (1 - Specificity)",
+     ylab = "True Positive Rate (Sensitivity)",
+     main = "ROC Curve")
+abline(0, 1, lty = 2, col = "gray")  # Random classifier line
+
+# Add points for specific thresholds
+highlight <- c(0.3, 0.5, 0.7)
+for (t in highlight) {
+  idx <- which.min(abs(roc_data$threshold - t))
+  points(roc_data$FPR[idx], roc_data$TPR[idx], pch = 19, cex = 1.5)
+  text(roc_data$FPR[idx] + 0.05, roc_data$TPR[idx],
+       paste("t =", t), cex = 0.8)
+}
+legend("bottomright", c("ROC Curve", "Random Classifier"),
+       col = c("blue", "gray"), lty = c(1, 2), lwd = c(2, 1))
+```
+
+### Area Under the Curve (AUC)
+
+The **AUC** (Area Under the ROC Curve) summarizes classifier performance:
+
+- **AUC = 0.5**: No better than random guessing
+- **AUC = 1.0**: Perfect classification
+- **AUC > 0.8**: Generally considered good
+
+```{r}
+# Calculate AUC using trapezoidal rule
+roc_sorted <- roc_data[order(roc_data$FPR), ]
+auc <- sum(diff(roc_sorted$FPR) *
+           (head(roc_sorted$TPR, -1) + tail(roc_sorted$TPR, -1)) / 2)
+cat("AUC:", round(abs(auc), 3), "\n")
+```
+
+### Comparing Classifiers
+
+ROC curves allow direct comparison of classifiers:
+
+```{r}
+#| label: fig-roc-comparison
+#| fig-cap: "Comparing classifiers using ROC curves: higher curves (larger AUC) indicate better performance"
+#| fig-width: 7
+#| fig-height: 6
+# Simulate three classifiers of varying quality
+set.seed(42)
+
+# Good classifier
+probs_good <- c(rbeta(100, 4, 1.5), rbeta(400, 1.5, 4))
+
+# Medium classifier (our original)
+probs_medium <- probs
+
+# Poor classifier
+probs_poor <- c(rbeta(100, 2, 2), rbeta(400, 2, 2))
+
+# Function to calculate ROC data
+calc_roc <- function(probs, actual) {
+  thresholds <- seq(0, 1, by = 0.01)
+  data.frame(
+    TPR = sapply(thresholds, function(t) {
+      pred <- ifelse(probs >= t, 1, 0)
+      sum(pred == 1 & actual == 1) / sum(actual == 1)
+    }),
+    FPR = sapply(thresholds, function(t) {
+      pred <- ifelse(probs >= t, 1, 0)
+      sum(pred == 1 & actual == 0) / sum(actual == 0)
+    })
+  )
+}
+
+roc_good <- calc_roc(probs_good, actual)
+roc_medium <- calc_roc(probs_medium, actual)
+roc_poor <- calc_roc(probs_poor, actual)
+
+# Plot comparison
+plot(roc_good$FPR, roc_good$TPR, type = "l", lwd = 2, col = "darkgreen",
+     xlab = "False Positive Rate", ylab = "True Positive Rate",
+     main = "ROC Curve Comparison")
+lines(roc_medium$FPR, roc_medium$TPR, lwd = 2, col = "blue")
+lines(roc_poor$FPR, roc_poor$TPR, lwd = 2, col = "red")
+abline(0, 1, lty = 2, col = "gray")
+
+legend("bottomright",
+       c("Good (AUC ≈ 0.90)", "Medium (AUC ≈ 0.75)", "Poor (AUC ≈ 0.50)"),
+       col = c("darkgreen", "blue", "red"), lwd = 2)
+```
+
+### Precision-Recall Curves
+
+For highly imbalanced data, **precision-recall curves** can be more informative than ROC curves because they focus on the minority (positive) class:
+
+```{r}
+#| label: fig-pr-curve
+#| fig-cap: "Precision-recall curve for imbalanced classification. The horizontal dashed line shows baseline precision."
+#| fig-width: 7
+#| fig-height: 5
+# Calculate precision-recall curve
+pr_data <- data.frame(
+  threshold = thresholds,
+  precision = sapply(thresholds, function(t) {
+    pred <- ifelse(probs >= t, 1, 0)
+    tp <- sum(pred == 1 & actual == 1)
+    fp <- sum(pred == 1 & actual == 0)
+    if (tp + fp == 0) return(NA)
+    tp / (tp + fp)
+  }),
+  recall = sapply(thresholds, function(t) {
+    pred <- ifelse(probs >= t, 1, 0)
+    sum(pred == 1 & actual == 1) / sum(actual == 1)
+  })
+)
+
+# Remove NA values
+pr_data <- pr_data[!is.na(pr_data$precision), ]
+
+plot(pr_data$recall, pr_data$precision, type = "l", lwd = 2, col = "purple",
+     xlab = "Recall (Sensitivity)", ylab = "Precision",
+     main = "Precision-Recall Curve", ylim = c(0, 1))
+abline(h = mean(actual == 1), lty = 2, col = "gray")  # Baseline
+legend("topright", c("PR Curve", "Baseline (random)"),
+       col = c("purple", "gray"), lty = c(1, 2), lwd = c(2, 1))
+```
+
+## The Curse of Dimensionality
+
+Methods like KNN face a challenge when many predictors are used, known as the **curse of dimensionality**. In high-dimensional spaces:
+
+- All points become approximately equidistant
+- "Local" neighborhoods must span nearly the entire data
+- The concept of "nearest" becomes less meaningful
+
+```{r}
+#| label: fig-curse-dimensionality
+#| fig-cap: "As dimensions increase, the neighborhood size needed to include a fixed proportion of data grows rapidly."
+#| fig-width: 7
+#| fig-height: 5
+p <- 1:100
+plot(p, .1^(1/p), type = "l", lwd = 2, col = "steelblue",
+     xlab = "Number of Dimensions (p)",
+     ylab = "Side Length to Include 10% of Data",
+     main = "The Curse of Dimensionality",
+     ylim = c(0, 1))
+abline(h = 1, lty = 2, col = "gray50")
+```
+
+By the time we reach 100 predictors, the neighborhood is no longer very local—each side covers almost the entire dataset. This motivates methods like decision trees and random forests (see @sec-trees-forests) that adapt better to high dimensions.
+
+## Feature Scaling
+
+KNN and other distance-based methods are sensitive to feature scales. A variable ranging from 0-1000 will dominate distance calculations compared to a variable ranging from 0-1.
+
+**Always standardize features before applying KNN:**
+
+```{r}
+# Demonstrate importance of scaling
+set.seed(42)
+data_unscaled <- data.frame(
+  x1 = rnorm(100, 0, 1),         # Small scale
+  x2 = rnorm(100, 0, 1000),      # Large scale
+  y = factor(rep(c("A", "B"), 50))
+)
+
+# Without scaling - x2 dominates
+data_scaled <- data_unscaled
+data_scaled[, 1:2] <- scale(data_scaled[, 1:2])
+
+cat("Without scaling:\n")
+cat("  Contribution of x1 to distance: ~1\n")
+cat("  Contribution of x2 to distance: ~1000\n")
+cat("\nWith scaling:\n")
+cat("  Both contribute equally\n")
+```
+
+## KNN for Regression
+
+KNN can also predict continuous outcomes. Instead of majority voting, we average the neighbors' values:
+
+$$\hat{y} = \frac{1}{k} \sum_{x_i \in N_k(x)} y_i$$
+
+```{r}
+#| label: fig-knn-regression
+#| fig-cap: "KNN regression with different values of k: smaller k gives more flexible fits"
+#| fig-width: 9
+#| fig-height: 4
+# Generate non-linear data
+set.seed(42)
+n <- 100
+x_reg <- seq(0, 2*pi, length.out = n)
+y_reg <- sin(x_reg) + rnorm(n, sd = 0.3)
+reg_data <- data.frame(x = x_reg, y = y_reg)
+
+par(mfrow = c(1, 3))
+
+for (k_val in c(3, 10, 30)) {
+  # Predict using KNN regression
+  x_grid <- seq(0, 2*pi, length.out = 200)
+
+  pred <- sapply(x_grid, function(xnew) {
+    dists <- abs(reg_data$x - xnew)
+    neighbors <- order(dists)[1:k_val]
+    mean(reg_data$y[neighbors])
+  })
+
+  plot(x_reg, y_reg, pch = 16, col = "gray60", main = paste("k =", k_val))
+  lines(x_grid, pred, col = "blue", lwd = 2)
+  lines(x_grid, sin(x_grid), col = "red", lwd = 2, lty = 2)
+  legend("topright", c("KNN fit", "True function"),
+         col = c("blue", "red"), lty = c(1, 2), lwd = 2, cex = 0.7)
+}
+```
+
+## Exercises
+
+::: {.callout-note}
+### Exercise CM.1: KNN Classification
+
+1. Load the `tissue_gene_expression` dataset. Split into training (80%) and test (20%) sets.
+
+2. Use KNN to classify tissue type with k = 1, 3, 5, 7, 9, 11. Report test accuracy for each.
+
+3. Use 10-fold cross-validation to select the optimal k.
+:::
+
+::: {.callout-note}
+### Exercise CM.2: Confusion Matrix Analysis
+
+4. For your best KNN model, create a confusion matrix. Which tissue types are most often confused with each other?
+
+5. Calculate sensitivity, specificity, and F1 score for each class.
+:::
+
+::: {.callout-note}
+### Exercise CM.3: ROC Curves
+
+6. Build a binary classifier (e.g., distinguishing one tissue type from all others). Create an ROC curve and calculate AUC.
+
+7. Compare AUC for KNN models with different values of k. Is higher k always better for AUC?
+:::
+
+## Summary
+
+- **Distance** measures similarity between observations and is fundamental to many classification methods
+- **K-Nearest Neighbors (KNN)** classifies based on the majority class of nearby training points
+  - Choice of k represents a bias-variance tradeoff
+  - Small k: flexible but noisy; large k: smooth but may miss local patterns
+  - Cross-validation should be used to select optimal k
+- **Feature scaling** is critical for distance-based methods
+- **Confusion matrices** summarize classification performance:
+  - Accuracy can be misleading for imbalanced classes
+  - F1 score and balanced accuracy are better for imbalanced data
+- **ROC curves** show the tradeoff between sensitivity and specificity
+  - AUC summarizes overall classifier performance
+- **Precision-recall curves** are preferred for highly imbalanced problems
+- The **curse of dimensionality** limits KNN in high-dimensional spaces
+
+## Additional Resources
+
+- @james2023islr - Comprehensive treatment of classification methods
+- @hastie2009elements - Theoretical foundations
+- @thulin2025msr - Modern classification with R
