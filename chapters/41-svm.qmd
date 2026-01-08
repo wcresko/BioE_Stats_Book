@@ -193,6 +193,8 @@ The **Polynomial Kernel**, $K(x_i, x_j) = (1 + x_i^T x_j)^d$, creates polynomial
 
 The **Radial Basis Function (RBF) Kernel**, also called the Gaussian kernel, is defined as $K(x_i, x_j) = \exp(-\gamma ||x_i - x_j||^2)$. It creates flexible, localized decision boundaries and is the most commonly used kernel for non-linear problems. The parameter $\gamma$ controls the influence radius of each training point—larger values of $\gamma$ mean that each point influences only its immediate neighborhood, while smaller values create smoother boundaries where each point influences a wider region.
 
+The **Sigmoid Kernel**, $K(x_i, x_j) = \tanh(\gamma x_i^T x_j + r)$, mimics neural network activation functions and is occasionally used when you want to relate SVMs to neural networks. However, it is not a valid kernel for all parameter values and is less commonly used than the others.
+
 ```{r}
 #| label: fig-kernel-comparison
 #| fig-cap: "Comparison of different SVM kernels on non-linear data"
@@ -372,6 +374,39 @@ svm_scaled <- svm(Species ~ ., data = iris, scale = TRUE)
 # svm_unscaled <- svm(Species ~ ., data = iris, scale = FALSE)
 ```
 
+### Probability Estimates
+
+By default, SVMs output only class predictions. However, you can obtain probability estimates using **Platt scaling**, which fits a sigmoid function to the decision values:
+
+```{r}
+# Train SVM with probability estimates enabled
+svm_prob <- svm(Species ~ ., data = iris,
+                kernel = "radial",
+                probability = TRUE)
+
+# Predict with probabilities
+pred_prob <- predict(svm_prob, iris, probability = TRUE)
+
+# Extract probability matrix
+probs <- attr(pred_prob, "probabilities")
+head(probs)
+```
+
+Platt scaling works by fitting a logistic regression model to the SVM's decision values after training. While this provides calibrated probabilities, it adds computational overhead and may be less reliable when training data is limited. For applications requiring well-calibrated probabilities (such as medical diagnosis where you need to communicate uncertainty), consider whether logistic regression or other natively probabilistic methods might be more appropriate.
+
+### Decision Values
+
+For more detailed analysis, you can extract the raw **decision values**—the signed distances from the decision boundary:
+
+```{r}
+# Get decision values
+pred_dv <- predict(svm_prob, iris, decision.values = TRUE)
+decision_vals <- attr(pred_dv, "decision.values")
+head(decision_vals)
+```
+
+For a two-class problem, the decision value represents how far and on which side of the hyperplane an observation lies. Larger absolute values indicate higher confidence in the classification. For multi-class problems using one-vs-one classification, you get decision values for each pair of classes.
+
 ### Choosing the Kernel
 
 ### Kernel Selection Guidelines
@@ -387,6 +422,62 @@ The choice of kernel depends on your data and prior knowledge about the problem.
 SVMs have several important advantages. They are effective in high-dimensional spaces, often working well even when the number of features exceeds the number of samples. They are memory efficient because the final model depends only on the support vectors, not all training observations. They are versatile through the choice of kernel, allowing them to learn complex non-linear boundaries. And the maximum margin principle provides a form of regularization that often leads to good generalization.
 
 However, SVMs also have significant limitations. Training time scales as $O(n^2)$ to $O(n^3)$ with the number of observations, making them impractical for very large datasets. They are sensitive to feature scaling—variables must be standardized before training. They do not naturally provide probability estimates (though these can be obtained through additional computation). And selecting the appropriate kernel and tuning the parameters requires care, often necessitating extensive cross-validation.
+
+### Comparison with Other Methods
+
+How do SVMs compare to other classification methods? Each approach has different strengths:
+
+| Aspect | SVM | Random Forest | Logistic Regression | Neural Networks |
+|--------|-----|---------------|---------------------|-----------------|
+| **Interpretability** | Low (except linear) | Medium (variable importance) | High (coefficients) | Low |
+| **Probability estimates** | Requires Platt scaling | Natural (vote proportions) | Natural | Natural (softmax) |
+| **High dimensions** | Excellent | Good | Good with regularization | Needs many samples |
+| **Non-linear boundaries** | Via kernels | Natural | Needs feature engineering | Natural |
+| **Training speed** | Slow for large n | Fast (parallelizable) | Very fast | Slow |
+| **Hyperparameters** | C, kernel params | Trees, depth, features | Regularization | Many (architecture) |
+| **Robustness to noise** | Moderate | Excellent | Moderate | Sensitive |
+
+Choose **SVMs** when you have limited samples, many features, and need good generalization. Choose **Random Forests** when you need variable importance, robustness, or have many observations. Choose **Logistic Regression** when interpretability is paramount and relationships are approximately linear. Choose **Neural Networks** when you have massive data and complex patterns to capture.
+
+### Feature Importance
+
+Unlike random forests, SVMs don't provide built-in variable importance measures. However, several approaches can help interpret which features matter:
+
+For **linear SVMs**, the magnitude of the weight coefficients indicates feature importance:
+
+```{r}
+# Fit linear SVM
+svm_linear_iris <- svm(Species ~ ., data = iris, kernel = "linear", scale = TRUE)
+
+# Extract weights (for binary classification)
+# For multi-class, examine each one-vs-one classifier
+# Here we use a simpler 2-class example
+iris_binary <- iris[iris$Species != "setosa",]
+iris_binary$Species <- droplevels(iris_binary$Species)
+
+svm_binary <- svm(Species ~ ., data = iris_binary, kernel = "linear", scale = TRUE)
+w <- t(svm_binary$coefs) %*% svm_binary$SV
+cat("Feature weights (absolute values indicate importance):\n")
+print(abs(w))
+```
+
+For **non-linear SVMs**, permutation importance provides a model-agnostic approach—shuffle each feature and measure the decrease in accuracy. Alternatively, you can examine which features have the most support vectors in high-density regions.
+
+### Scaling for Large Datasets
+
+Standard SVM implementations struggle with large datasets due to their $O(n^2)$ to $O(n^3)$ training complexity. For datasets with many observations, consider these alternatives.
+
+The **LiblineaR** package implements linear SVMs that scale to millions of observations. It uses a coordinate descent algorithm that is much faster than the standard quadratic programming approach:
+```{r}
+#| eval: false
+library(LiblineaR)
+# Much faster for large datasets with linear kernel
+model <- LiblineaR(data = X_train, target = y_train, type = 1)
+```
+
+**Stochastic gradient descent** approaches approximate the SVM solution by processing data in batches, making them suitable for online learning and very large datasets.
+
+For kernel SVMs on large data, **random Fourier features** or **Nyström approximation** can approximate the kernel mapping, allowing linear methods to be applied to the transformed features.
 
 ## Exercises
 
