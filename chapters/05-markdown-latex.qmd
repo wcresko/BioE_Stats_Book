@@ -452,6 +452,7 @@ These tools have become standard in data science. Learning them now will pay div
 
 ## Practice Exercises
 
+::: {.callout-note}
 ### Exercise M.1: R Markdown Basics
 
 Create a new R Markdown document and practice:
@@ -462,7 +463,9 @@ Create a new R Markdown document and practice:
 4. Inserting a hyperlink
 5. Creating a code chunk that generates output
 6. Knitting the document to HTML
+:::
 
+::: {.callout-note}
 ### Exercise M.2: Code Chunk Options
 
 Experiment with code chunk options:
@@ -471,7 +474,9 @@ Experiment with code chunk options:
 2. Create the same code chunk with `echo=FALSE`—what happens?
 3. Try `eval=FALSE`—what happens?
 4. Use `fig.width` and `fig.height` to control plot dimensions
+:::
 
+::: {.callout-note}
 ### Exercise M.3: LaTeX Mathematical Notation
 
 Practice writing equations in LaTeX:
@@ -480,7 +485,9 @@ Practice writing equations in LaTeX:
 2. Write the equation for variance
 3. Write the normal distribution probability density function
 4. Use both inline math (`$...$`) and display math (`$$...$$`)
+:::
 
+::: {.callout-note}
 ### Exercise M.4: Tables in Markdown
 
 Create tables using:
@@ -493,3 +500,4 @@ Create tables using:
 library(knitr)
 kable(head(iris, 5))
 ```
+:::

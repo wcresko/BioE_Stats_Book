@@ -813,6 +813,7 @@ For comprehensive R Markdown documentation, see the [R Markdown introduction](ht
 
 ## Practice Exercises
 
+::: {.callout-note}
 ### Exercise R.1: Exploring RStudio
 
 Take a few minutes to familiarize yourself with the RStudio environment:
@@ -828,7 +829,9 @@ Take a few minutes to familiarize yourself with the RStudio environment:
 3. See what types of new files can be made in RStudio by clicking File → New File
 
 4. Open a new R script and a new R Markdown file to see the difference
+:::
 
+::: {.callout-note}
 ### Exercise R.2: Basic Mathematics in R
 
 Insert a code chunk and complete the following tasks:
@@ -843,7 +846,9 @@ Insert a code chunk and complete the following tasks:
 # Example:
 (4 + 3 * 2^2) / 5 - 1
 ```
+:::
 
+::: {.callout-note}
 ### Exercise R.3: Assigning Variables and Functions
 
 1. Assign three variables using basic mathematical operations
@@ -859,7 +864,9 @@ y <- x * 2
 z <- sqrt(x + y)
 print(paste("The value of z is", z))
 ```
+:::
 
+::: {.callout-note}
 ### Exercise R.4: Vectors and Factors
 
 1. Create a numeric vector using the `c()` function with at least 5 elements
@@ -875,7 +882,9 @@ levels(fac1)
 
 3. Use `str()` and `class()` to evaluate your variables
 4. What is the difference between a character vector and a factor?
+:::
 
+::: {.callout-note}
 ### Exercise R.5: Basic Statistics
 
 1. Create a numeric vector with at least 10 elements
@@ -890,7 +899,9 @@ my_vector <- c(12, 15, 18, 22, 25, 28, 31, 35, 38, 42)
 mean(my_vector)
 sd(my_vector)
 ```
+:::
 
+::: {.callout-note}
 ### Exercise R.6: Creating Sequences and Random Sampling
 
 Set the random seed for reproducibility, then:
@@ -903,7 +914,9 @@ set.seed(42)
 2. Create a variable and `sample()` it with equal probability—experiment with the `size` and `replace` arguments
 3. Create a normally distributed variable of 10000 elements using `rnorm()`, then sample that distribution with and without replacement
 4. Use `hist()` to plot your normally distributed variable
+:::
 
+::: {.callout-note}
 ### Exercise R.7: Basic Visualization
 
 Create visualizations with proper axis labels and colors:
@@ -926,7 +939,9 @@ y <- rnorm(1000)
 hist(y, breaks = 10, main = "10 Breaks", col = "lightblue")
 hist(y, breaks = 50, main = "50 Breaks", col = "lightgreen")
 ```
+:::
 
+::: {.callout-note}
 ### Exercise R.8: Creating Data Frames
 
 1. Create a data frame with at least three columns: one character/factor, one numeric, and one logical
@@ -944,7 +959,9 @@ significant <- c(FALSE, TRUE, TRUE, TRUE, FALSE, TRUE)
 my_data <- data.frame(treatment, response, significant)
 str(my_data)
 ```
+:::
 
+::: {.callout-note}
 ### Exercise R.9: Data Import and Indexing
 
 1. Create a simple CSV file or use a built-in dataset like `iris`
@@ -966,7 +983,9 @@ iris[1:3, ]  # First 3 rows
 plot(iris$Sepal.Length, iris$Petal.Length, col = iris$Species)
 tapply(iris$Sepal.Length, iris$Species, mean)
 ```
+:::
 
+::: {.callout-note}
 ### Exercise R.10: Understanding Object Types
 
 Explore how R handles different data types:
@@ -975,6 +994,7 @@ Explore how R handles different data types:
 2. What happens when you try to perform arithmetic on character data?
 3. Experiment with type coercion using `as.numeric()`, `as.character()`, and `as.factor()`
 4. What happens when you add a character element to a numeric vector?
+:::
 
 ## Additional Resources
 

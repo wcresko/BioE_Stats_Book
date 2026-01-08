@@ -316,16 +316,20 @@ With these tools installed, you are ready to begin learning data science and sta
 
 ## Practice Exercises
 
+::: {.callout-note}
 ### Exercise I.1: Verify Your Installation
 
 1. Open RStudio and run `sessionInfo()` to see your R configuration
 2. Install the tidyverse package if you have not already
 3. Create a new Quarto document and render it to PDF
 4. Open a terminal and run `pwd` (Mac/Linux) or `cd` (Windows) to verify command-line access
+:::
 
+::: {.callout-note}
 ### Exercise I.2: Explore RStudio
 
 1. Familiarize yourself with the four main panes in RStudio
 2. Try the keyboard shortcut `Ctrl+Enter` (Windows/Linux) or `Cmd+Enter` (Mac) to run code
 3. Create and save an R script (.R file)
 4. Access the built-in help by typing `?mean` in the console
+:::

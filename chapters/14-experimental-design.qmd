@@ -924,6 +924,7 @@ Time invested in design pays enormous dividends in the quality and interpretabil
 
 ## Practice Exercises
 
+::: {.callout-note}
 ### Exercise 11.1: Identifying Pseudoreplication
 
 For each scenario, identify whether pseudoreplication is present and explain why:
@@ -935,7 +936,9 @@ b) Testing biomaterial: Create 5 scaffolds per material type, cut each scaffold 
 c) Clinical trial: Randomize 50 patients per treatment, measure blood pressure 3 times at each visit, average the 3 measurements for each patient, analyze with n = 50 per treatment.
 
 d) Gene expression: Extract RNA from 6 independent cell cultures per treatment, run each sample in qPCR with technical triplicates, analyze with n = 18 per treatment.
+:::
 
+::: {.callout-note}
 ### Exercise 11.2: Designing a Blocked Experiment
 
 You are testing three drug formulations (A, B, C) on cell proliferation. You have cells from 5 different donors, and you know donor-to-donor variability is substantial.
@@ -949,7 +952,9 @@ You are testing three drug formulations (A, B, C) on cell proliferation. You hav
 #| eval: false
 # Your code here
 ```
+:::
 
+::: {.callout-note}
 ### Exercise 11.3: Factorial Design
 
 Design a 2 × 2 factorial experiment testing:
@@ -966,7 +971,9 @@ Design a 2 × 2 factorial experiment testing:
 #| eval: false
 # Your code here
 ```
+:::
 
+::: {.callout-note}
 ### Exercise 11.4: Sample Size Calculation
 
 You are planning a study comparing a new wound dressing to standard care. Previous studies suggest:
@@ -983,7 +990,9 @@ You are planning a study comparing a new wound dressing to standard care. Previo
 library(pwr)
 # Your code here
 ```
+:::
 
+::: {.callout-note}
 ### Exercise 11.5: Choosing a Design
 
 For each research question, recommend an appropriate experimental design and justify your choice:
@@ -999,7 +1008,9 @@ c) **Question:** Does exercise improve outcomes in patients receiving a new impl
 
 d) **Question:** What combination of growth factors produces optimal tissue engineering outcomes?
    - **Factors to consider:** Testing EGF (0, 10, 50 ng/mL) and VEGF (0, 20, 100 ng/mL)
+:::
 
+::: {.callout-note}
 ### Exercise 11.6: Critique a Design
 
 A researcher wants to test whether a new scaffold improves bone regeneration. They propose:
@@ -1016,7 +1027,9 @@ A researcher wants to test whether a new scaffold improves bone regeneration. Th
 3. How could randomization be incorporated?
 4. How could blocking be used to improve the design?
 5. Propose an improved design with explicit justification for changes
+:::
 
+::: {.callout-note}
 ### Exercise 11.7: Simulation Study
 
 Use simulation to demonstrate the value of blocking:
@@ -1060,7 +1073,9 @@ power_unblocked <- mean(p_unblocked < 0.05)
 cat("Power with blocking:", power_blocked, "\n")
 cat("Power without blocking:", power_unblocked, "\n")
 ```
+:::
 
+::: {.callout-note}
 ### Exercise 11.8: Clinical Trial Design
 
 You are designing a Phase III clinical trial for a new drug-eluting stent:
@@ -1085,6 +1100,7 @@ You are designing a Phase III clinical trial for a new drug-eluting stent:
 library(pwr)
 # Sample size calculation for two proportions
 ```
+:::
 
 ## Additional Resources
 

@@ -455,6 +455,7 @@ measurements |>
 
 ## Practice Exercises
 
+::: {.callout-note}
 ### Exercise 7.1: Understanding Data Types
 
 Consider the following variables from a biological experiment. For each, identify:
@@ -473,7 +474,9 @@ Consider the following variables from a biological experiment. For each, identif
 8. Body mass in grams
 9. Sample collection date
 10. pH level
+:::
 
+::: {.callout-note}
 ### Exercise 7.2: Creating Tibbles
 
 Create a tibble with data from a hypothetical experiment:
@@ -492,7 +495,9 @@ After creating the tibble:
 2. Use `glimpse()` to get an overview
 3. Extract the measurement column as a vector
 4. Calculate the mean measurement for each treatment group
+:::
 
+::: {.callout-note}
 ### Exercise 7.3: Reshaping Data
 
 Create a wide-format dataset with measurements at three time points:
@@ -509,7 +514,9 @@ wide_experiment <- tibble(
 1. Convert this to long format using `pivot_longer()`
 2. Create a new column indicating the fold-change from hour 0
 3. Convert back to wide format, with columns for each time point's fold-change
+:::
 
+::: {.callout-note}
 ### Exercise 7.4: Combining and Separating Columns
 
 You have data where sample IDs encode multiple pieces of information:
@@ -524,7 +531,9 @@ messy_samples <- tibble(
 
 1. Use `separate()` to split `sample_id` into: experiment, treatment, and replicate
 2. After analysis, use `unite()` to create a new ID combining treatment and replicate
+:::
 
+::: {.callout-note}
 ### Exercise 7.5: Data File Organization
 
 Review a data file you have used (or create a sample one). Evaluate it against the best practices:
@@ -537,7 +546,9 @@ Review a data file you have used (or create a sample one). Evaluate it against t
 6. Is the data in tidy format (each variable a column, each observation a row)?
 
 If any issues exist, create a cleaned version following best practices.
+:::
 
+::: {.callout-note}
 ### Exercise 7.6: Working with Real Data
 
 Load the built-in `airquality` dataset:
@@ -553,7 +564,9 @@ air <- as_tibble(airquality)
 3. Convert Month to a factor with meaningful labels (e.g., "May", "June")
 4. The data is already in tidy format. Explain why.
 5. Create a wider version where each month becomes a column showing mean Ozone levels
+:::
 
+::: {.callout-note}
 ### Exercise 7.7: Identifying Non-Tidy Data
 
 Consider this dataset structure:
@@ -572,3 +585,4 @@ non_tidy <- tibble(
 2. What are the actual variables in this dataset?
 3. Reshape it into tidy format
 4. What are the advantages of the tidy version for analysis and visualization?
+:::

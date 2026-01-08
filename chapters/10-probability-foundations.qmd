@@ -486,6 +486,7 @@ Understanding these foundations is essential for all statistical inference that 
 
 ## Practice Exercises
 
+::: {.callout-note}
 ### Exercise P.1: Simulating Coin Flips
 
 Use R to simulate coin flips:
@@ -510,7 +511,9 @@ mean(flips)  # Proportion of heads (1s)
 flips <- sample(c("H", "T"), n_flips, replace = TRUE)
 mean(flips == "H")
 ```
+:::
 
+::: {.callout-note}
 ### Exercise P.2: Binomial Distribution
 
 Explore the binomial distribution:
@@ -533,7 +536,9 @@ hist(results, breaks = 20, col = "steelblue",
      main = "Number of Heads in 20 Flips",
      xlab = "Number of Heads")
 ```
+:::
 
+::: {.callout-note}
 ### Exercise P.3: The Birthday Problem
 
 Use Monte Carlo simulation to explore the birthday problem:
@@ -561,7 +566,9 @@ plot(sizes, probs, type = "l",
      xlab = "Group Size", ylab = "Probability of Shared Birthday")
 abline(h = 0.5, col = "red", lty = 2)
 ```
+:::
 
+::: {.callout-note}
 ### Exercise P.4: Conditional Probability
 
 Explore conditional probability with card simulations:
@@ -570,7 +577,9 @@ Explore conditional probability with card simulations:
 2. Calculate the probability of drawing a King
 3. Given that the first card drawn is a King, what is the probability the second card is also a King?
 4. Use simulation to verify your calculation
+:::
 
+::: {.callout-note}
 ### Exercise P.5: The Monty Hall Problem
 
 Simulate the Monty Hall problem:
@@ -579,6 +588,7 @@ Simulate the Monty Hall problem:
 2. Compare the win rate when you stick versus when you switch
 3. Run 10,000 simulations for each strategy
 4. Does switching really double your chances?
+:::
 
 ## Additional Resources
 

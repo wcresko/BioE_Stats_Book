@@ -811,6 +811,7 @@ scp username@server.edu:~/remote_file.txt ./local_copy.txt
 
 The best way to learn command-line skills is through practice. Save a digital record of your work so that you can study it later if you need to.
 
+::: {.callout-note}
 ### Exercise U.1: Basic Navigation and File Operations
 
 Open up a terminal and execute the following using Unix commands:
@@ -824,7 +825,9 @@ Open up a terminal and execute the following using Unix commands:
 7. Delete all files in `dir_3` using `rm`
 8. List all of the contents of your current directory line-by-line using `ls -l`
 9. Delete `dir_3` using `rmdir`
+:::
 
+::: {.callout-note}
 ### Exercise U.2: Working with Data Files
 
 For this exercise, create a sample tab-separated file or download a GFF file from a genomics database.
@@ -840,7 +843,9 @@ For this exercise, create a sample tab-separated file or download a GFF file fro
 9. Sort the file based on reverse numeric order in a specific field using `sort -k -nr`
 10. Capture specific fields and write to a new file using `cut` and redirection
 11. Replace all instances of one string with another using `sed 's/old/new/g'`
+:::
 
+::: {.callout-note}
 ### Exercise U.3: Building Pipelines
 
 Practice combining commands with pipes to answer questions about your data:
@@ -861,7 +866,9 @@ Practice combining commands with pipes to answer questions about your data:
    ```bash
    awk '$5 > 1000 {print $1, $2, $5}' data.tsv
    ```
+:::
 
+::: {.callout-note}
 ### Exercise U.4: File Permissions and Scripts
 
 1. Create a simple shell script that prints "Hello, World!" and the current date
@@ -870,6 +877,7 @@ Practice combining commands with pipes to answer questions about your data:
 4. Run the script and verify it works
 5. Examine the permissions of various files in your system using `ls -l`
 6. Practice changing permissions using both symbolic notation (`chmod u+x`) and octal notation (`chmod 755`)
+:::
 
 ## Additional Resources
 
