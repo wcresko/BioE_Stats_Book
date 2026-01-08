@@ -15,14 +15,9 @@ theme_set(theme_minimal())
 
 **Decision trees** are a fundamentally different approach to prediction. Instead of fitting a smooth function or finding nearest neighbors, trees partition the feature space into rectangular regions and make a simple prediction within each region.
 
-Trees are popular because they:
+Trees are popular for several compelling reasons. They are highly interpretable—you can draw a tree as a flow chart and explain it to non-statisticians who may never have taken a statistics course. They handle both numeric and categorical predictors naturally, without requiring dummy variables or other transformations. They capture non-linear relationships and interactions automatically through their recursive splitting structure. And they are robust to outliers and don't require feature scaling, since only the rank order of values matters for splitting.
 
-- Are highly interpretable—easy to explain to non-statisticians
-- Handle both numeric and categorical predictors naturally
-- Capture non-linear relationships and interactions automatically
-- Are robust to outliers and don't require feature scaling
-
-However, individual trees have high variance and are prone to overfitting. **Random forests** address this by averaging many trees, dramatically improving prediction accuracy.
+However, individual trees have high variance and are prone to overfitting. **Random forests** address this limitation by averaging many trees together, dramatically improving prediction accuracy at the cost of some interpretability.
 
 ## Decision Trees (CART)
 
@@ -70,13 +65,9 @@ olive %>%
   labs(title = "Perfect Classification with Simple Rules")
 ```
 
-By eye, we can construct a prediction rule:
+By eye, we can construct a simple prediction rule: if eicosenoic is greater than 0.065, predict Southern Italy. If not, check linoleic—if it's greater than 10.535, predict Sardinia; otherwise, predict Northern Italy.
 
-- If eicosenoic > 0.065 → Southern Italy
-- Else if linoleic > 10.535 → Sardinia
-- Otherwise → Northern Italy
-
-This is exactly what a decision tree learns from data—a flow chart of yes/no questions.
+This is exactly what a decision tree learns from data—a flow chart of yes/no questions that partition the feature space into regions, each assigned to a single class.
 
 ### How Trees Work
 
@@ -114,12 +105,7 @@ rpart.plot(tree_class, extra = 104, box.palette = "RdYlGn",
 
 ### Interpreting Tree Output
 
-The tree visualization shows:
-
-- **Node prediction**: The predicted class (most common class in that region)
-- **Split rule**: The feature and threshold used to split
-- **Proportions**: Distribution of classes at each node
-- **Sample size**: Percentage of observations reaching each node
+The tree visualization conveys several pieces of information at each node. The **node prediction** shows the class that would be assigned to observations reaching that node—this is simply the most common class in that region of the feature space. The **split rule** shows which feature and threshold value are used to partition observations into the left and right child nodes. The **proportions** display the distribution of classes among observations at that node, helping you see how "pure" each region is. Finally, the **sample size** indicates what percentage of the training data reaches each node, showing which branches contain most of the data.
 
 ```{r}
 # Detailed tree summary
@@ -192,12 +178,9 @@ legend("topleft", levels(iris$Species),
 
 ### Controlling Tree Complexity
 
-Trees easily overfit—they can keep splitting until each leaf contains a single observation. Several parameters control complexity:
+Trees easily overfit—without constraints, they can keep splitting until each leaf contains a single observation, perfectly memorizing the training data. Several parameters control complexity to prevent this.
 
-- **cp (complexity parameter)**: The tree must improve RSS by this factor to add a split. Larger values = simpler trees.
-- **minsplit**: Minimum observations in a node to attempt a split (default: 20)
-- **minbucket**: Minimum observations in each terminal node
-- **maxdepth**: Maximum depth of tree
+The **complexity parameter (cp)** requires that each split must improve the model's fit by at least this factor, measured as a proportion of the initial error. Larger values of cp produce simpler trees with fewer splits. The **minsplit** parameter sets the minimum number of observations required in a node before the algorithm will attempt to split it (the default is 20). Similarly, **minbucket** sets the minimum number of observations allowed in each terminal (leaf) node. Finally, **maxdepth** directly limits how deep the tree can grow, restricting the number of sequential splitting decisions.
 
 ```{r}
 #| label: fig-tree-complexity
@@ -261,13 +244,11 @@ pruned_tree <- prune(full_tree, cp = best_cp)
 
 ### The Random Forest Algorithm
 
-1. Build $B$ decision trees using the training set
-2. For each tree:
-   - Draw a bootstrap sample (sample with replacement)
-   - At each split, consider only a random subset of $m$ features
-3. For prediction:
-   - **Classification**: Majority vote across all trees
-   - **Regression**: Average predictions across all trees
+The random forest algorithm builds $B$ decision trees using the training set, but with two sources of randomness that make the trees different from one another.
+
+First, each tree is trained on a **bootstrap sample**—a sample of $n$ observations drawn with replacement from the training data. This means each tree sees a slightly different dataset. Second, at each split, the algorithm considers only a random subset of $m$ features rather than all available predictors. This "random feature selection" prevents all trees from splitting on the same strong predictors and produces more diverse trees.
+
+For prediction, the forest combines the predictions of all $B$ trees. In classification, the final prediction is the **majority vote** across all trees—whichever class is predicted most often wins. In regression, the final prediction is simply the **average** of all individual tree predictions.
 
 ```{r}
 #| label: fig-rf-smoothing
@@ -358,11 +339,11 @@ importance(rf_model)
 
 ### Tuning Random Forests
 
-Key parameters to tune:
+Random forests have several key parameters that can be tuned to optimize performance.
 
-- **ntree**: Number of trees (more is better, but with diminishing returns)
-- **mtry**: Number of features considered at each split
-- **nodesize**: Minimum size of terminal nodes
+The **ntree** parameter specifies the number of trees in the forest. Generally, more trees are better—the error decreases and stabilizes as trees are added—but with diminishing returns beyond a certain point. The computational cost grows linearly with the number of trees, so practical considerations often limit this to a few hundred or thousand trees.
+
+The **mtry** parameter determines how many features are randomly considered at each split. Smaller values increase the diversity among trees (reducing correlation), while larger values allow each tree to use the strongest predictors more often. The **nodesize** parameter controls the minimum size of terminal nodes, affecting how deep trees can grow. Smaller values allow trees to grow deeper and capture more complex patterns, but may overfit.
 
 ```{r}
 #| label: fig-rf-tuning
@@ -381,9 +362,7 @@ plot(1:4, oob_error, type = "b", pch = 19,
      main = "Tuning mtry Parameter")
 ```
 
-Default values are often reasonable:
-- Classification: $m = \sqrt{p}$
-- Regression: $m = p/3$
+Default values for mtry are often reasonable starting points. For classification problems, the default is $m = \sqrt{p}$, the square root of the number of predictors. For regression problems, the default is $m = p/3$, one-third of the predictors. These defaults strike a balance between allowing strong predictors to contribute while maintaining diversity among trees.
 
 ### Random Forest for Regression
 
@@ -411,20 +390,13 @@ varImpPlot(rf_reg, main = "Variable Importance for MPG Prediction")
 | **Speed** | Fast | Slower |
 | **Variable importance** | Limited | Built-in |
 
-::: {.callout-tip}
-## When to Use Each Method
+### When to Use Each Method
 
-**Use decision trees when:**
-- Interpretability is paramount
-- You need to explain the model to stakeholders
-- You're doing exploratory analysis
+The choice between decision trees and random forests depends on your priorities.
 
-**Use random forests when:**
-- Prediction accuracy is the goal
-- You have sufficient data
-- You want variable importance measures
-- You're willing to sacrifice some interpretability
-:::
+**Decision trees** are the right choice when interpretability is paramount. If you need to explain the model to stakeholders—clinicians, regulators, or business managers—a single tree can be drawn as a simple flow chart that anyone can follow. Trees are also valuable during exploratory analysis, when you want to understand which variables matter and how they interact before committing to a more complex model.
+
+**Random forests** are preferred when prediction accuracy is the primary goal. They consistently outperform single trees across a wide range of problems. They work best when you have sufficient data to support averaging many trees, and when you want built-in variable importance measures to understand which predictors contribute most to predictions. The tradeoff is that random forests are less interpretable—you can no longer point to a single decision rule and explain exactly why a prediction was made.
 
 ## Exercises
 
@@ -479,22 +451,13 @@ data("tissue_gene_expression")
 
 ## Summary
 
-- **Decision trees (CART)** recursively partition data using simple rules
-  - Highly interpretable—can be drawn as a flow chart
-  - Handle non-linear relationships and interactions automatically
-  - Prone to overfitting without careful tuning
-  - Complexity controlled by cp, minsplit, maxdepth
-  - Cross-validation selects optimal complexity
-- **Random forests** combine many trees for robust prediction
-  - Bootstrap aggregation (bagging) reduces variance
-  - Random feature selection decorrelates trees
-  - Out-of-bag (OOB) error provides built-in validation
-  - Variable importance identifies key predictors
-- Trees have high variance; forests reduce variance through averaging
-- For interpretability, use pruned trees; for accuracy, use random forests
-- Key tuning parameters:
-  - Trees: cp, minsplit, maxdepth
-  - Forests: ntree, mtry, nodesize
+This chapter introduced **decision trees** and **random forests**, two of the most widely used machine learning methods.
+
+**Decision trees (CART)** recursively partition the data using simple yes/no rules based on predictor values. Their greatest strength is interpretability—a tree can be drawn as a flow chart that anyone can understand. They handle non-linear relationships and interactions automatically through their splitting structure, without requiring you to specify these features in advance. However, individual trees are prone to overfitting without careful tuning. The complexity parameter (cp), minsplit, and maxdepth control how complex a tree can become, and cross-validation helps select the optimal level of complexity.
+
+**Random forests** combine many trees to achieve robust prediction. By training each tree on a bootstrap sample and considering only a random subset of features at each split, the algorithm produces diverse trees whose errors tend to cancel out when averaged. The out-of-bag (OOB) error provides a built-in estimate of generalization performance without needing a separate validation set. Variable importance measures identify which predictors contribute most to predictions.
+
+The fundamental tradeoff is between interpretability and accuracy. Individual trees have high variance—small changes in the training data can produce very different trees—but they are easy to interpret. Random forests reduce variance through averaging, achieving substantially better prediction accuracy, but sacrifice the simple interpretability of a single tree. For maximum interpretability, use a carefully pruned decision tree. For maximum prediction accuracy, use a random forest.
 
 ## Additional Resources
 

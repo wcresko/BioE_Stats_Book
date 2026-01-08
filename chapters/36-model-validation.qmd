@@ -71,13 +71,9 @@ abline(v = 0.5, lty = 2, col = "gray")
 
 ### Why Loss Functions Matter
 
-Different loss functions lead to different optimal predictions:
+Different loss functions lead to different optimal predictions, which has profound implications for how we should model data. Under squared loss, the optimal prediction at any point is the **mean** of the outcome distribution—this is why ordinary least squares produces predictions that minimize average squared error. Under absolute loss, the optimal prediction is the **median**, which is more robust to outliers. For classification under 0-1 loss, the optimal prediction is simply the **mode**—the most frequent class.
 
-- **Squared loss** → optimal prediction is the **mean**
-- **Absolute loss** → optimal prediction is the **median**
-- **0-1 loss** → optimal prediction is the **mode** (most frequent class)
-
-The choice of loss function should reflect how errors affect your application. Medical diagnosis may weight false negatives (missed disease) more heavily than false positives.
+The choice of loss function should reflect how errors affect your application. In medical diagnosis, the consequences of different types of errors are typically asymmetric: missing a disease (false negative) may be far more costly than a false alarm (false positive). A thoughtful analysis would weight these errors differently rather than treating all misclassifications equally.
 
 ## Training Error vs. Test Error
 
@@ -171,11 +167,9 @@ legend("topright", c("Total Error", "Bias²", "Variance", "Irreducible Error", "
        lty = c(1, 2, 2, 3, 2), lwd = c(3, 2, 2, 2, 1), pch = c(NA, NA, NA, NA, 19))
 ```
 
-The best predictions come from models that balance bias and variance. As model complexity increases:
+The best predictions come from models that balance bias and variance. As model complexity increases, bias decreases because more complex models can fit more patterns—they have the flexibility to capture structure that simpler models miss. But simultaneously, variance increases because more complex models are more sensitive to the particular training data used—with different training samples, they would produce substantially different predictions.
 
-- **Bias decreases**: More complex models can fit more patterns
-- **Variance increases**: More complex models are more sensitive to training data
-- **Total error**: Initially decreases (bias reduction dominates), then increases (variance inflation dominates)
+The total prediction error reflects both components. Initially, as we add complexity, the reduction in bias dominates and total error decreases. But eventually, further complexity provides diminishing bias reduction while variance continues to grow. At this point, adding complexity hurts more than it helps, and total error begins to increase. The optimal model sits at the bottom of this U-shaped curve, complex enough to capture the true patterns but not so complex that it fits noise.
 
 ::: {.callout-tip}
 ## Understanding Bias and Variance
@@ -199,10 +193,7 @@ Cross-validation estimates how well a model will generalize to new data without 
 
 ### K-Fold Cross-Validation
 
-**K-fold cross-validation**:
-1. Split data into k roughly equal parts (folds)
-2. For each fold: train on k-1 folds, test on the held-out fold
-3. Average performance across all folds
+**K-fold cross-validation** works by splitting the data into k roughly equal parts called folds. The algorithm then trains the model k times, each time holding out one fold as a test set and training on the remaining k-1 folds. Each observation ends up in the test set exactly once. The final performance estimate is the average across all k iterations, giving us a robust estimate of how the model will perform on new data.
 
 ```{r}
 #| label: fig-cross-validation-diagram
@@ -253,21 +244,13 @@ cv_loocv <- cv.glm(data, model, K = nrow(data))
 cat("LOOCV estimate of prediction error:", round(cv_loocv$delta[1], 3), "\n")
 ```
 
-**Tradeoffs:**
-- LOOCV has lower bias (nearly all data used for training) but higher variance
-- 5-fold or 10-fold CV provides a good balance of bias and variance
-- LOOCV is computationally expensive for large datasets
+Like all statistical methods, cross-validation involves tradeoffs. LOOCV has lower bias than k-fold CV because nearly all the data (n-1 observations) is used for training in each iteration—the training sets closely resemble the full dataset. However, LOOCV has higher variance because the n training sets are almost identical to each other, so the n fitted models are highly correlated. In practice, 5-fold or 10-fold CV provides a good balance of bias and variance, and empirical studies suggest these choices often give the best estimates of test error. LOOCV is also computationally expensive for large datasets, requiring n separate model fits rather than just k.
 
 ### Bootstrap for Error Estimation
 
-The **bootstrap** can also estimate prediction error:
+The **bootstrap** provides another approach to estimating prediction error. For each bootstrap iteration, we draw a sample of n observations with replacement from the training data—some observations appear multiple times, others not at all. We fit the model on this bootstrap sample and evaluate it on the observations that were not selected, called the "out-of-bag" (OOB) observations. On average, about 37% of observations are left out of each bootstrap sample. By repeating this process many times and averaging the OOB errors, we obtain an estimate of prediction error.
 
-1. Draw a bootstrap sample (n observations with replacement)
-2. Fit the model on the bootstrap sample
-3. Evaluate on observations NOT selected (the "out-of-bag" observations)
-4. Repeat and average
-
-This is similar to cross-validation but uses the natural ~37% of observations left out of each bootstrap sample.
+The bootstrap approach is similar in spirit to cross-validation but uses the natural randomness of sampling with replacement rather than deterministic fold assignments. It's particularly useful when you also want confidence intervals for model parameters or predictions.
 
 ```{r}
 # Bootstrap estimate of prediction error
@@ -392,11 +375,9 @@ $$\text{AIC} = -2 \log L + 2k$$
 **Bayesian Information Criterion (BIC)**:
 $$\text{BIC} = -2 \log L + k \log n$$
 
-where $L$ is the likelihood, $k$ is the number of parameters, and $n$ is the sample size.
+where $L$ is the likelihood, $k$ is the number of parameters, and $n$ is the sample size. Both criteria balance fit quality (the likelihood term) against model complexity (the penalty term), but they weight these differently.
 
-- Lower values indicate better models
-- BIC penalizes complexity more heavily than AIC
-- AIC tends to select more complex models
+Lower values indicate better models for both criteria. BIC penalizes complexity more heavily than AIC because its penalty term grows with $\log n$, whereas AIC's penalty is fixed at 2 per parameter. As a result, BIC tends to select simpler models, especially with larger sample sizes. AIC, being more lenient toward complexity, tends to select more complex models. Neither is universally better—the appropriate choice depends on whether you prioritize prediction (favor AIC) or identification of the true model structure (favor BIC).
 
 ```{r}
 # Compare AIC and BIC for polynomial models
@@ -415,18 +396,11 @@ cat("Best degree by CV:", best_degree, "\n")
 
 ## Practical Workflow
 
-A typical model validation workflow:
+A disciplined approach to model validation requires separating the data you use for development from the data you use for final evaluation. Begin by splitting your data into a training set (typically 70-80% of observations) and a test set (the remainder). The test set should be locked away—never look at it during model development.
 
-1. **Split data** into training set (e.g., 80%) and test set (20%)
-2. **Explore** the training data—never look at the test set!
-3. **Use cross-validation** on the training set to:
-   - Compare different model types
-   - Tune hyperparameters
-   - Estimate expected performance
-4. **Select final model** based on CV performance
-5. **Refit** on full training data
-6. **Evaluate once** on held-out test data
-7. **Report** the test error as the honest estimate of performance
+Work exclusively with the training data during the model development phase. Explore the data to understand distributions and relationships. Use cross-validation on the training set to compare different model types, tune hyperparameters, and estimate expected performance. This iterative process of trying models, evaluating them with CV, and refining your approach may involve many cycles.
+
+Once you have settled on a final model based on cross-validation performance, refit that model on the full training data to use all available information for parameter estimation. Only then—when all modeling decisions are complete—evaluate this final model on the held-out test set. This single evaluation provides an honest estimate of how your model will perform on truly new data. Report this test error as your final performance metric, resisting any temptation to go back and revise the model based on test set results.
 
 ::: {.callout-warning}
 ## Common Mistakes
@@ -466,20 +440,17 @@ A typical model validation workflow:
 
 ## Summary
 
-- **Overfitting** occurs when models fit training noise rather than true patterns
-- **Loss functions** quantify prediction error—choice should match application goals
-- **Training error** underestimates true prediction error; always evaluate on held-out data
-- The **bias-variance tradeoff** governs model complexity:
-  - Simple models: high bias, low variance
-  - Complex models: low bias, high variance
-  - Optimal models balance both
-- **Cross-validation** estimates generalization error without wasting data:
-  - K-fold (typically k=5 or 10) balances bias and variance
-  - LOOCV has low bias but high variance and computational cost
-  - Bootstrap provides alternative estimates with confidence intervals
-- The **one standard error rule** guards against overfitting in model selection
-- **Information criteria** (AIC, BIC) provide alternatives to CV for model comparison
-- A disciplined workflow separates training, validation, and testing phases
+This chapter addressed one of the central challenges in statistical learning: how do we build models that generalize well to new data rather than merely memorizing the training set? **Overfitting** occurs when models capture noise specific to the training data rather than true underlying patterns, and avoiding this trap requires careful attention to model validation.
+
+We quantify prediction quality through **loss functions**—squared error for regression, log loss or 0-1 loss for classification—and the choice should reflect how errors affect your particular application. A key insight is that **training error** systematically underestimates true prediction error; models always look better on the data used to fit them than on genuinely new observations.
+
+The **bias-variance tradeoff** provides the conceptual framework for understanding model complexity. Simple models have high bias (they may miss important patterns) but low variance (they're stable across different training samples). Complex models have the opposite problem: low bias but high variance. The optimal model balances these competing concerns, achieving the lowest total error.
+
+**Cross-validation** provides a practical tool for estimating generalization error without wasting data on a held-out test set. K-fold cross-validation with k=5 or 10 typically offers a good balance of bias and variance. LOOCV reduces bias but increases variance and computational cost. The bootstrap provides an alternative approach, particularly useful when confidence intervals are also needed.
+
+When multiple models have similar cross-validation error, the **one standard error rule** suggests choosing the simplest model within one standard error of the minimum, guarding against overfitting to the CV procedure itself. **Information criteria** like AIC and BIC offer alternatives that balance fit against complexity without requiring repeated model fitting.
+
+Finally, a disciplined workflow that strictly separates training, validation, and testing phases is essential for honest performance assessment. The test set must remain untouched until final evaluation—peeking at it during development invalidates the entire exercise.
 
 ## Additional Resources
 

@@ -14,13 +14,11 @@ Standard linear regression estimates coefficients by minimizing the residual sum
 
 $$\text{RSS} = \sum_{i=1}^n \left(y_i - \beta_0 - \sum_{j=1}^p \beta_j x_{ij}\right)^2$$
 
-This works well when you have many more observations than predictors ($n \gg p$) and the predictors are not highly correlated. But problems arise when:
+This works well when you have many more observations than predictors ($n \gg p$) and the predictors are not highly correlated. But problems arise in several common situations.
 
-- **Many predictors** ($p$ large relative to $n$): Coefficients become unstable, and variance is high
-- **Correlated predictors** (multicollinearity): Small changes in data cause large changes in coefficients
-- **Overfitting**: The model fits training data well but predicts poorly
+When you have **many predictors** relative to the number of observations, coefficient estimates become unstable and their variance is high. The model has too many degrees of freedom to estimate reliably from the available data. When predictors are **highly correlated** (multicollinearity), the problem is compounded: small changes in the data can cause dramatic swings in the estimated coefficients, even though predictions remain stable. In either case, the result is often **overfitting**—the model fits the training data well but predicts poorly on new observations.
 
-**Regularization** addresses these issues by adding a penalty term that shrinks coefficients toward zero, trading a small increase in bias for a substantial reduction in variance.
+**Regularization** addresses these issues by adding a penalty term that shrinks coefficients toward zero. This intentionally introduces a small amount of bias in exchange for a substantial reduction in variance. The net effect is usually better predictions on new data, especially when the number of predictors is large relative to the sample size.
 
 ## The Regularization Idea
 
@@ -28,15 +26,11 @@ Regularized regression minimizes a modified objective:
 
 $$\text{Minimize: } \text{RSS} + \lambda \cdot P(\beta)$$
 
-where:
-- $P(\beta)$ is a **penalty function** that penalizes large coefficients
-- $\lambda \geq 0$ is the **regularization parameter** controlling penalty strength
+In this formulation, $P(\beta)$ is a **penalty function** that penalizes large coefficients, and $\lambda \geq 0$ is the **regularization parameter** that controls the strength of the penalty.
 
-The penalty shrinks coefficients toward zero:
-- $\lambda = 0$: No penalty, equivalent to ordinary least squares
-- $\lambda \to \infty$: Very strong penalty, coefficients shrink to zero
+The effect of the penalty is to shrink coefficients toward zero, with $\lambda$ controlling how aggressively. When $\lambda = 0$, there is no penalty and we recover ordinary least squares. As $\lambda$ increases, the penalty becomes stronger and coefficients shrink more. In the limit as $\lambda \to \infty$, all coefficients are forced to zero.
 
-Different penalty functions lead to different regularization methods.
+Different choices of the penalty function $P(\beta)$ lead to different regularization methods, each with distinct properties and use cases.
 
 ## Ridge Regression (L2 Penalty)
 
@@ -50,11 +44,7 @@ $$\hat{\beta}^{\text{ridge}} = \arg\min_\beta \left\{ \sum_{i=1}^n \left(y_i - \
 
 ### Properties of Ridge Regression
 
-Ridge regression shrinks all coefficients toward zero but **never exactly to zero**. This means:
-
-- All predictors remain in the model
-- Useful when you believe all predictors are relevant
-- Particularly effective for correlated predictors (handles multicollinearity)
+Ridge regression shrinks all coefficients toward zero but **never exactly to zero**. This means all predictors remain in the model regardless of how large $\lambda$ becomes—coefficients get very small but never vanish entirely. This property makes ridge regression particularly useful when you believe all predictors are relevant to some degree. It is also especially effective when predictors are highly correlated (multicollinearity), as the penalty stabilizes the coefficient estimates that would otherwise be wildly unstable in ordinary least squares.
 
 ```{r}
 #| label: fig-ridge-path
@@ -130,11 +120,7 @@ $$\hat{\beta}^{\text{lasso}} = \arg\min_\beta \left\{ \sum_{i=1}^n \left(y_i - \
 
 ### Properties of Lasso Regression
 
-Unlike ridge, lasso can shrink coefficients **exactly to zero**, effectively performing **variable selection**:
-
-- Produces **sparse models** with fewer predictors
-- Easier to interpret than ridge (identifies "important" variables)
-- May struggle when predictors are highly correlated (tends to select one arbitrarily)
+Unlike ridge, lasso can shrink coefficients **exactly to zero**, effectively performing **variable selection**. This produces **sparse models** with fewer predictors, making the resulting models easier to interpret since they explicitly identify which variables are "important." However, lasso may struggle when predictors are highly correlated—in such cases, it tends to select one predictor from a correlated group arbitrarily while setting the others to zero, rather than distributing the effect among them as ridge would.
 
 ```{r}
 #| label: fig-lasso-path
@@ -193,12 +179,9 @@ legend("bottomleft", c("Constraint region", "RSS contours"),
 
 $$P(\beta) = \alpha \sum_{j=1}^p |\beta_j| + (1-\alpha) \sum_{j=1}^p \beta_j^2$$
 
-The mixing parameter $\alpha$ controls the balance:
-- $\alpha = 0$: Pure ridge
-- $\alpha = 1$: Pure lasso
-- $0 < \alpha < 1$: Combination
+The mixing parameter $\alpha$ controls the balance between the two penalties. When $\alpha = 0$, elastic net reduces to pure ridge regression. When $\alpha = 1$, it becomes pure lasso. Values between 0 and 1 give a combination of both penalties, often with $\alpha = 0.5$ as a natural starting point.
 
-Elastic net is often preferred when predictors are correlated—it tends to select groups of correlated variables together rather than arbitrarily choosing one.
+Elastic net is often preferred when predictors are correlated. Unlike lasso, which arbitrarily selects one variable from a correlated group, elastic net tends to select groups of correlated variables together. This behavior often produces more stable and interpretable models when the underlying science suggests that correlated predictors genuinely contribute to the outcome.
 
 ```{r}
 #| label: fig-elastic-net
@@ -305,10 +288,7 @@ rownames(comparison) <- c("Intercept", paste0("X", 1:p))
 round(comparison, 3)
 ```
 
-Notice that:
-- **OLS** estimates have high variance, especially for the zero-coefficient variables
-- **Ridge** shrinks all coefficients toward zero but doesn't eliminate any
-- **Lasso** correctly identifies many of the zero coefficients
+The comparison reveals the distinct behavior of each method. **OLS** estimates show high variance, especially for the variables whose true coefficients are zero—these spuriously appear nonzero due to fitting noise. **Ridge** shrinks all coefficients toward zero, reducing variance, but it doesn't eliminate any predictors from the model. **Lasso** strikes a different balance: it correctly identifies many of the zero coefficients and sets them exactly to zero, producing a sparse model that more closely matches the true data-generating process.
 
 ## Visualizing the Comparison
 
@@ -364,27 +344,15 @@ cat("  Lasso:", round(mse_lasso, 3), "\n")
 
 ## When to Use Each Method
 
-::: {.callout-tip}
-## Choosing a Regularization Method
+Choosing among regularization methods depends on your goals and the structure of your data.
 
-**Use Ridge when:**
-- You believe all predictors are relevant
-- Predictors are highly correlated
-- You want stable predictions
-- Interpretation of individual coefficients is less important
+**Ridge regression** is the natural choice when you believe all predictors are genuinely relevant to the outcome, even if their individual effects are small. It is particularly effective when predictors are highly correlated, as the L2 penalty stabilizes coefficient estimates. Ridge tends to produce the most stable predictions, though the resulting model includes all variables, which may complicate interpretation.
 
-**Use Lasso when:**
-- You want automatic variable selection
-- A sparse, interpretable model is preferred
-- You believe only a subset of predictors are truly relevant
+**Lasso** is preferred when you want automatic variable selection and believe only a subset of predictors are truly relevant. The resulting sparse models are easier to interpret and communicate, since they explicitly identify which variables matter. However, lasso can behave arbitrarily when predictors are correlated, selecting one while zeroing out others that may be equally important.
 
-**Use Elastic Net when:**
-- Predictors are correlated and you want variable selection
-- You want to select groups of correlated variables together
-- Neither ridge nor lasso alone performs well
+**Elastic net** offers a middle ground that is often optimal in practice. Use it when predictors are correlated but you still want variable selection—elastic net tends to select groups of correlated variables together rather than making arbitrary choices. It's also a sensible default when you're unsure whether ridge or lasso is more appropriate, as cross-validation can select an optimal mixing parameter.
 
-**Important**: Always standardize predictors before applying regularization, as the penalty treats all coefficients equally. The `glmnet` function does this automatically by default.
-:::
+One practical note: always standardize predictors before applying regularization, as the penalty treats all coefficients equally and would otherwise penalize variables on larger scales more heavily. The `glmnet` function handles this automatically by default.
 
 ## Regularization in Practice
 
@@ -474,21 +442,13 @@ which(logit_coef[-1] != 0)
 
 ## Summary
 
-- **Regularization** adds penalty terms to prevent overfitting, especially with many predictors
-- **Ridge regression** (L2 penalty) shrinks coefficients toward zero but never to exactly zero
-  - Best when all predictors may be relevant
-  - Handles multicollinearity well
-- **Lasso regression** (L1 penalty) can shrink coefficients exactly to zero
-  - Performs variable selection automatically
-  - Produces sparse, interpretable models
-- **Elastic net** combines L1 and L2 penalties
-  - Select groups of correlated variables together
-  - Often outperforms pure lasso with correlated predictors
-- **Cross-validation** selects the optimal regularization strength ($\lambda$)
-  - `lambda.min` minimizes CV error
-  - `lambda.1se` (one standard error rule) gives more parsimonious models
-- **Standardization** of predictors is essential before regularization
-- Regularization extends to classification (regularized logistic regression) and other models
+This chapter introduced **regularization** as a powerful technique for preventing overfitting, especially when the number of predictors is large relative to the sample size. The core idea is to add a penalty term that shrinks coefficients toward zero, trading a small increase in bias for a substantial reduction in variance.
+
+**Ridge regression** uses an L2 penalty (sum of squared coefficients) that shrinks all coefficients toward zero but never exactly to zero. This makes ridge ideal when all predictors may be relevant and particularly effective for handling multicollinearity. **Lasso regression** uses an L1 penalty (sum of absolute values) that can shrink coefficients exactly to zero, automatically performing variable selection. The resulting sparse models are easier to interpret, though lasso can behave arbitrarily with correlated predictors. **Elastic net** combines both penalties, offering the variable selection of lasso with the stability of ridge for correlated predictors.
+
+The regularization parameter $\lambda$ controls the penalty strength and is typically selected by **cross-validation**. The `lambda.min` value minimizes cross-validation error, while the `lambda.1se` (one standard error rule) often provides a more parsimonious model with nearly equivalent performance.
+
+**Standardization** of predictors is essential before applying regularization, since the penalty treats all coefficients equally and would otherwise unfairly penalize variables measured on larger scales. Finally, regularization extends naturally beyond regression to classification problems through regularized logistic regression and other generalized linear models.
 
 ## Additional Resources
 

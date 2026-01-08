@@ -13,13 +13,7 @@ theme_set(theme_minimal())
 
 **Support Vector Machines (SVMs)** are powerful supervised learning algorithms that excel at classification tasks, particularly when decision boundaries are complex. SVMs work by finding the optimal **hyperplane** that separates classes with the maximum margin.
 
-SVMs were developed by Vladimir Vapnik and colleagues in the 1990s and quickly became one of the most popular machine learning methods before the rise of deep learning. They remain valuable tools, especially for:
-
-- Problems with many features relative to samples
-- Small to medium-sized datasets
-- Applications requiring robust generalization
-- Biological sequence classification (proteins, genes)
-- Image classification before the deep learning era
+SVMs were developed by Vladimir Vapnik and colleagues in the 1990s and quickly became one of the most popular machine learning methods before the rise of deep learning. They remain valuable tools today, particularly for problems with many features relative to samples, where their maximum margin principle helps prevent overfitting. They work well on small to medium-sized datasets where deep learning would lack sufficient data, and they are often preferred in applications requiring robust generalization with limited tuning. In biology, SVMs have been particularly successful for sequence classification—predicting protein structure or function from amino acid sequences, identifying splice sites in genes, or classifying regulatory elements in DNA.
 
 ## The Maximum Margin Classifier
 
@@ -98,10 +92,7 @@ legend("topleft", c("Class -1", "Class +1", "Support Vectors"),
 
 The observations that lie exactly on the margin boundary are called **support vectors**. These points "support" the hyperplane—if they were moved, the optimal hyperplane would change. Points farther from the margin have no effect on the solution.
 
-This property makes SVMs:
-- **Sparse**: Only support vectors matter for prediction
-- **Efficient**: Prediction depends only on distances to support vectors
-- **Robust**: Points far from the boundary don't affect the model
+This property has important practical implications. SVMs are **sparse** in the sense that only support vectors matter for prediction—the model can discard all other training points without affecting its predictions. This makes SVMs **efficient** at prediction time, since classification depends only on distances to the support vectors rather than to all training observations. And it makes SVMs **robust** to outliers that are far from the decision boundary, since such points don't influence the model at all.
 
 ## The Support Vector Classifier (Soft Margin)
 
@@ -132,10 +123,9 @@ $$y_i(\beta_0 + \beta^T x_i) \geq 1 - \xi_i, \quad \xi_i \geq 0$$
 
 ### The Cost Parameter C
 
-The parameter **C** controls the tradeoff between margin width and violations:
+The parameter **C** controls the tradeoff between margin width and the number of violations allowed.
 
-- **Large C**: Few violations allowed (narrow margin, risk of overfitting)
-- **Small C**: More violations tolerated (wider margin, risk of underfitting)
+When **C is large**, the penalty for violations is high, so the algorithm tries hard to classify all training points correctly. This typically produces a narrow margin with few violations, but risks overfitting to noise in the training data. When **C is small**, violations are tolerated more easily, resulting in a wider margin that may misclassify some training points. This trades off training accuracy for a simpler decision boundary that often generalizes better to new data.
 
 ```{r}
 #| label: fig-svm-cost
@@ -197,16 +187,11 @@ A linear SVM fails on this data. But if we map to a higher-dimensional space usi
 
 ### Common Kernels
 
-**Linear Kernel**: $K(x_i, x_j) = x_i^T x_j$
-- Equivalent to standard support vector classifier
+The **Linear Kernel**, $K(x_i, x_j) = x_i^T x_j$, is equivalent to the standard support vector classifier with no transformation—it finds linear decision boundaries in the original feature space.
 
-**Polynomial Kernel**: $K(x_i, x_j) = (1 + x_i^T x_j)^d$
-- Creates polynomial decision boundaries of degree $d$
+The **Polynomial Kernel**, $K(x_i, x_j) = (1 + x_i^T x_j)^d$, creates polynomial decision boundaries of degree $d$. This allows curved boundaries while still having a clear interpretation in terms of polynomial features.
 
-**Radial Basis Function (RBF/Gaussian) Kernel**: $K(x_i, x_j) = \exp(-\gamma ||x_i - x_j||^2)$
-- Creates flexible, local decision boundaries
-- Most commonly used for non-linear problems
-- $\gamma$ controls the influence radius of each training point
+The **Radial Basis Function (RBF) Kernel**, also called the Gaussian kernel, is defined as $K(x_i, x_j) = \exp(-\gamma ||x_i - x_j||^2)$. It creates flexible, localized decision boundaries and is the most commonly used kernel for non-linear problems. The parameter $\gamma$ controls the influence radius of each training point—larger values of $\gamma$ mean that each point influences only its immediate neighborhood, while smaller values create smoother boundaries where each point influences a wider region.
 
 ```{r}
 #| label: fig-kernel-comparison
@@ -249,10 +234,7 @@ The RBF kernel successfully captures the circular decision boundary.
 
 ### Tuning the RBF Kernel
 
-The RBF kernel has two parameters to tune:
-
-- **C** (cost): Controls margin violations
-- **gamma** ($\gamma$): Controls kernel width
+The RBF kernel has two parameters that must be tuned together. The **cost parameter C** controls margin violations as before—how much the algorithm penalizes misclassifications. The **gamma parameter** ($\gamma$) controls the kernel width, determining how far the influence of a single training example reaches.
 
 ```{r}
 #| label: fig-gamma-effect
@@ -273,8 +255,7 @@ for (gamma_val in c(0.1, 1, 10)) {
 }
 ```
 
-- **Small gamma**: Large kernel width, smooth boundaries (high bias, low variance)
-- **Large gamma**: Small kernel width, complex boundaries (low bias, high variance)
+With **small gamma**, each training point has a wide influence, creating smooth decision boundaries. This corresponds to high bias but low variance—the model may be too simple but is stable across different training samples. With **large gamma**, each training point only affects its immediate neighborhood, allowing complex, highly curved boundaries. This corresponds to low bias but high variance—the model can capture intricate patterns but may overfit to the specific training sample.
 
 ### Cross-Validation for Parameter Selection
 
@@ -393,28 +374,19 @@ svm_scaled <- svm(Species ~ ., data = iris, scale = TRUE)
 
 ### Choosing the Kernel
 
-::: {.callout-tip}
-## Kernel Selection Guidelines
+### Kernel Selection Guidelines
 
-1. **Start with RBF**: The radial basis function kernel is a good default—it handles most non-linear problems
-2. **Try linear first if**: Many features relative to samples, or data is expected to be linearly separable
-3. **Polynomial kernels**: When you have domain knowledge suggesting polynomial relationships
-4. **Custom kernels**: Domain-specific knowledge (e.g., string kernels for sequences)
-:::
+The choice of kernel depends on your data and prior knowledge about the problem.
+
+**Start with the RBF kernel** as a sensible default—it handles most non-linear problems well and has the flexibility to approximate a wide range of decision boundaries. However, **try a linear kernel first** if you have many features relative to samples, as the data may already be linearly separable in the high-dimensional feature space without needing additional transformation. Linear kernels are also faster to train and easier to interpret.
+
+**Polynomial kernels** are useful when you have domain knowledge suggesting polynomial relationships—for instance, when interactions between features are expected to matter. **Custom kernels** allow you to encode domain-specific knowledge; string kernels for biological sequences, for example, measure similarity based on shared subsequences rather than Euclidean distance.
 
 ### Advantages and Limitations
 
-**Advantages:**
-- Effective in high-dimensional spaces
-- Memory efficient (uses only support vectors)
-- Versatile through kernel choice
-- Good generalization (maximum margin principle)
+SVMs have several important advantages. They are effective in high-dimensional spaces, often working well even when the number of features exceeds the number of samples. They are memory efficient because the final model depends only on the support vectors, not all training observations. They are versatile through the choice of kernel, allowing them to learn complex non-linear boundaries. And the maximum margin principle provides a form of regularization that often leads to good generalization.
 
-**Limitations:**
-- Slow for large datasets (training is $O(n^2)$ to $O(n^3)$)
-- Sensitive to feature scaling
-- No probability estimates by default
-- Kernel and parameter selection requires care
+However, SVMs also have significant limitations. Training time scales as $O(n^2)$ to $O(n^3)$ with the number of observations, making them impractical for very large datasets. They are sensitive to feature scaling—variables must be standardized before training. They do not naturally provide probability estimates (though these can be obtained through additional computation). And selecting the appropriate kernel and tuning the parameters requires care, often necessitating extensive cross-validation.
 
 ## Exercises
 
@@ -450,18 +422,13 @@ svm_scaled <- svm(Species ~ ., data = iris, scale = TRUE)
 
 ## Summary
 
-- **Support Vector Machines** find optimal separating hyperplanes with maximum margin
-- **Support vectors** are the training points that determine the decision boundary
-- The **cost parameter C** controls the tradeoff between margin width and violations
-- The **kernel trick** enables non-linear decision boundaries:
-  - Linear: Standard support vector classifier
-  - Polynomial: Polynomial decision boundaries
-  - RBF: Flexible, localized boundaries (most common)
-- **Gamma** ($\gamma$) controls RBF kernel width—larger values give more complex boundaries
-- **Cross-validation** is essential for selecting C and gamma
-- SVMs extend to **multi-class** (one-vs-one or one-vs-all) and **regression** (SVR)
-- **Feature scaling** is required before training
-- SVMs work well in high dimensions but can be slow for large datasets
+This chapter introduced **Support Vector Machines**, a powerful class of algorithms that find optimal separating hyperplanes with maximum margin. The fundamental idea is to choose the decision boundary that is as far as possible from the nearest training points of each class.
+
+**Support vectors** are the training points that lie on the margin boundary and determine the decision boundary. All other points are irrelevant to the model, making SVMs sparse and efficient at prediction time. The **cost parameter C** controls the tradeoff between margin width and the number of violations allowed—larger C means fewer violations but risks overfitting.
+
+The **kernel trick** extends SVMs to non-linear decision boundaries by implicitly mapping data to higher-dimensional spaces. The linear kernel corresponds to the standard support vector classifier. The polynomial kernel creates polynomial boundaries of specified degree. The RBF (radial basis function) kernel is the most commonly used choice for non-linear problems, creating flexible, localized decision boundaries. The **gamma parameter** ($\gamma$) controls the RBF kernel width—larger values produce more complex boundaries with higher variance.
+
+**Cross-validation** is essential for selecting the parameters C and gamma, since both substantially affect model performance. SVMs extend naturally to **multi-class** problems through one-vs-one or one-vs-all strategies, and to **regression** through Support Vector Regression (SVR). **Feature scaling** is required before training because SVMs are sensitive to the relative scales of different variables. While SVMs work remarkably well in high dimensions, their training time scales poorly with the number of observations, limiting their applicability to very large datasets.
 
 ## Additional Resources
 

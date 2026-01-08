@@ -13,12 +13,7 @@ theme_set(theme_minimal())
 
 Classification is a supervised learning task where the goal is to predict categorical outcomes. Given a set of features (predictors), we want to assign observations to one of several predefined classes.
 
-Classification problems are ubiquitous in biology and bioengineering:
-
-- Diagnosing disease states from biomarkers
-- Classifying cell types from gene expression
-- Predicting protein function from sequence
-- Identifying species from morphological measurements
+Classification problems are ubiquitous in biology and bioengineering. Clinicians diagnose disease states from biomarkers in blood or tissue samples. Researchers classify cell types based on gene expression profiles, enabling the exploration of cellular heterogeneity in complex tissues. Computational biologists predict protein function from amino acid sequences. Ecologists identify species from morphological measurements in the field. In each case, the goal is the same: use measurable features to assign observations to the correct category.
 
 ## Distance: The Foundation of Classification
 
@@ -88,9 +83,7 @@ When $q = 2$, this is Euclidean; when $q = 1$, this is Manhattan.
 
 ### The KNN Algorithm
 
-1. Choose the number of neighbors $k$
-2. For a new observation, find the $k$ closest training points
-3. Assign the class that is most common among these neighbors (majority vote)
+The KNN algorithm is remarkably straightforward. First, you choose the number of neighbors $k$ to consider. Then, for each new observation you want to classify, you find the $k$ training points that are closest to it in feature space. Finally, you assign the class that is most common among those $k$ neighbors—a simple majority vote. If three of your five nearest neighbors are class A and two are class B, you predict class A.
 
 ```{r}
 #| label: fig-knn-concept
@@ -136,10 +129,11 @@ legend("topleft", c("Class A", "Class B", "New point"),
 
 ### The Effect of K: Bias-Variance Tradeoff
 
-The choice of $k$ is critical and illustrates the **bias-variance tradeoff**:
+The choice of $k$ is critical and illustrates the **bias-variance tradeoff** that runs through all of statistical learning.
 
-- **Small k** (e.g., k=1): Very flexible decision boundary, low bias but high variance. The boundary follows noise in the training data—prone to overfitting.
-- **Large k**: Smoother decision boundary, higher bias but lower variance. May miss local patterns—prone to underfitting.
+When $k$ is small (for example, $k = 1$), the decision boundary becomes very flexible, adapting tightly to the training data. This produces low bias—the model can capture complex, irregular boundaries—but high variance, because the boundary follows noise in the training data. The result is often overfitting: excellent performance on training data but poor generalization to new observations.
+
+When $k$ is large, the decision boundary becomes smoother because each prediction averages over many neighbors. This increases bias—the model may miss genuinely local patterns—but reduces variance because individual noisy points have less influence. Too large a $k$ leads to underfitting, where the model is too simple to capture the true class boundaries.
 
 ```{r}
 #| label: fig-knn-k-comparison
@@ -358,15 +352,19 @@ cat("F1 Score:", round(f1, 3), "\n")
 cat("Balanced Accuracy:", round(balanced_acc, 3), "\n")
 ```
 
-::: {.callout-tip}
-## Which Metric to Use?
+### Choosing the Right Metric
 
-- **Accuracy**: Only when classes are balanced
-- **F1 Score**: When you care about both precision and recall equally
-- **Sensitivity/Recall**: When missing positives is costly (disease screening)
-- **Precision**: When false positives are costly (spam filtering)
-- **Balanced Accuracy**: Quick summary for imbalanced data
-:::
+The appropriate metric depends on the costs of different errors in your specific application.
+
+**Accuracy** is appropriate only when classes are balanced and all errors are equally costly. When classes are imbalanced, accuracy can be misleading because a naive classifier that always predicts the majority class achieves high accuracy while being useless for identifying the minority class.
+
+**F1 Score** balances precision and recall and is appropriate when you care about both equally. It is particularly useful for imbalanced problems because it focuses on the minority class.
+
+**Sensitivity (recall)** should be prioritized when missing positive cases is costly. In disease screening, for example, failing to detect a cancer (false negative) is typically far worse than flagging a healthy patient for follow-up testing (false positive).
+
+**Precision** matters most when false positives are costly. In spam filtering, incorrectly flagging a legitimate email as spam may cause the user to miss important messages, so we want to be confident before labeling something as spam.
+
+**Balanced accuracy**, the average of sensitivity and specificity, provides a quick summary measure that is less misleading than raw accuracy for imbalanced data.
 
 ## ROC Curves and AUC
 
@@ -423,11 +421,7 @@ legend("bottomright", c("ROC Curve", "Random Classifier"),
 
 ### Area Under the Curve (AUC)
 
-The **AUC** (Area Under the ROC Curve) summarizes classifier performance:
-
-- **AUC = 0.5**: No better than random guessing
-- **AUC = 1.0**: Perfect classification
-- **AUC > 0.8**: Generally considered good
+The **AUC** (Area Under the ROC Curve) summarizes classifier performance in a single number. An AUC of 0.5 means the classifier is no better than random guessing—you might as well flip a coin. An AUC of 1.0 represents perfect classification, where the classifier can completely separate the two classes at some threshold. In practice, AUC values above 0.8 are generally considered good, though the acceptable threshold depends on the application. The AUC has an intuitive interpretation: it equals the probability that a randomly chosen positive example is ranked higher than a randomly chosen negative example.
 
 ```{r}
 # Calculate AUC using trapezoidal rule
@@ -528,11 +522,7 @@ legend("topright", c("PR Curve", "Baseline (random)"),
 
 ## The Curse of Dimensionality
 
-Methods like KNN face a challenge when many predictors are used, known as the **curse of dimensionality**. In high-dimensional spaces:
-
-- All points become approximately equidistant
-- "Local" neighborhoods must span nearly the entire data
-- The concept of "nearest" becomes less meaningful
+Methods like KNN face a fundamental challenge when many predictors are used, known as the **curse of dimensionality**. In high-dimensional spaces, the geometry of distance becomes counterintuitive. All points become approximately equidistant from each other—the variation in distances shrinks relative to the average distance. As a consequence, "local" neighborhoods must span nearly the entire dataset to include enough observations, and the concept of "nearest" becomes less meaningful when all points are similarly far away.
 
 ```{r}
 #| label: fig-curse-dimensionality
@@ -644,19 +634,17 @@ for (k_val in c(3, 10, 30)) {
 
 ## Summary
 
-- **Distance** measures similarity between observations and is fundamental to many classification methods
-- **K-Nearest Neighbors (KNN)** classifies based on the majority class of nearby training points
-  - Choice of k represents a bias-variance tradeoff
-  - Small k: flexible but noisy; large k: smooth but may miss local patterns
-  - Cross-validation should be used to select optimal k
-- **Feature scaling** is critical for distance-based methods
-- **Confusion matrices** summarize classification performance:
-  - Accuracy can be misleading for imbalanced classes
-  - F1 score and balanced accuracy are better for imbalanced data
-- **ROC curves** show the tradeoff between sensitivity and specificity
-  - AUC summarizes overall classifier performance
-- **Precision-recall curves** are preferred for highly imbalanced problems
-- The **curse of dimensionality** limits KNN in high-dimensional spaces
+This chapter introduced **classification**, the supervised learning task of predicting categorical outcomes, along with the tools needed to evaluate classifier performance.
+
+**Distance** measures similarity between observations and is fundamental to many classification methods. **K-Nearest Neighbors (KNN)** takes the simplest possible approach: classify each new observation based on the majority class of the $k$ closest training points. The choice of $k$ embodies the bias-variance tradeoff—small $k$ produces flexible but noisy predictions, while large $k$ produces smoother predictions that may miss local patterns. Cross-validation provides an objective method for selecting the optimal $k$.
+
+**Feature scaling** is critical for distance-based methods because variables on different scales contribute unequally to distance calculations. Always standardize predictors before applying KNN.
+
+**Confusion matrices** organize the four possible outcomes—true positives, true negatives, false positives, and false negatives—providing the foundation for all classification metrics. While **accuracy** is intuitive, it can be deeply misleading for imbalanced classes. **F1 score** and **balanced accuracy** provide better summaries when class frequencies differ substantially.
+
+**ROC curves** visualize the tradeoff between sensitivity (catching positives) and specificity (avoiding false alarms) across all possible classification thresholds. The **AUC** summarizes overall classifier performance in a single number, with higher values indicating better discrimination. For highly imbalanced problems, **precision-recall curves** often provide more informative summaries because they focus on the minority class.
+
+Finally, the **curse of dimensionality** limits KNN and other distance-based methods in high-dimensional spaces, where the concept of "nearness" becomes increasingly meaningless. This motivates methods like decision trees and random forests that adapt better to many predictors.
 
 ## Additional Resources
 

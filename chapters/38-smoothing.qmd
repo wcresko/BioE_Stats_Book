@@ -10,12 +10,7 @@ theme_set(theme_minimal())
 
 ## Beyond Linear Relationships
 
-Linear regression assumes a straight-line relationship between predictors and outcomes. But biological relationships are often curved:
-
-- Enzyme kinetics follow Michaelis-Menten curves
-- Growth rates change non-linearly with temperature
-- Dose-response relationships are typically sigmoidal
-- Gene expression may have complex temporal patterns
+Linear regression assumes a straight-line relationship between predictors and outcomes. But biological relationships are often curved. Enzyme kinetics follow Michaelis-Menten saturation curves. Growth rates change non-linearly with temperature, typically rising to an optimum before declining. Dose-response relationships are usually sigmoidal, with little effect at low doses, rapid change in the middle range, and saturation at high doses. Gene expression over time often shows complex patterns that no simple function could describe.
 
 When the relationship between a predictor and outcome is non-linear, we need methods more flexible than linear regression. **Smoothing** methods estimate curves by averaging nearby observations, allowing the data to reveal its own pattern.
 
@@ -68,12 +63,9 @@ points(bin_centers, bin_means, col = "red", pch = 19, cex = 1.5)
 lines(bin_centers, bin_means, col = "red", lwd = 2)
 ```
 
-Bin smoothing illustrates the **bias-variance tradeoff** in smoothing:
+Bin smoothing illustrates the **bias-variance tradeoff** that pervades all smoothing methods. **Narrow bins** capture local variation—they have low bias because they can follow the data closely, but they are noisy with high variance because each bin contains few observations. **Wide bins** smooth over the noise, achieving low variance, but they may miss true curvature in the relationship, resulting in high bias.
 
-- **Narrow bins**: Capture local variation (low bias) but are noisy (high variance)
-- **Wide bins**: Smooth over noise (low variance) but may miss true curvature (high bias)
-
-The main limitation of bin smoothing is the **discontinuity** at bin boundaries—the estimate jumps from one bin to the next.
+The main limitation of bin smoothing is the **discontinuity** at bin boundaries—the estimate jumps abruptly from one bin to the next rather than varying smoothly.
 
 ## Kernel Smoothing
 
@@ -87,11 +79,7 @@ where $K$ is a **kernel function** (typically Gaussian or Epanechnikov) and $h$ 
 
 ### The Kernel Function
 
-Common kernel functions include:
-
-- **Gaussian**: $K(u) = \exp(-u^2/2)$
-- **Epanechnikov**: $K(u) = \frac{3}{4}(1-u^2)$ for $|u| \leq 1$
-- **Uniform**: $K(u) = 1$ for $|u| \leq 1$ (equivalent to bin smoothing)
+The choice of kernel function determines how weights decline with distance. The **Gaussian kernel**, $K(u) = \exp(-u^2/2)$, assigns weight that falls off smoothly according to the normal distribution—observations very far away still receive some weight, but it becomes negligible. The **Epanechnikov kernel**, $K(u) = \frac{3}{4}(1-u^2)$ for $|u| \leq 1$, is parabolic within a fixed window and gives exactly zero weight to observations outside that window. The **Uniform kernel**, $K(u) = 1$ for $|u| \leq 1$, gives equal weight to all observations within the window and zero weight outside, which reduces to bin smoothing. In practice, the choice of kernel matters less than the choice of bandwidth—most kernels produce similar results for a given level of smoothness.
 
 ```{r}
 #| label: fig-kernel-functions
@@ -146,10 +134,7 @@ for (bw in c(0.2, 0.5, 1.0)) {
 }
 ```
 
-The **bandwidth** parameter plays the same role as the number of bins:
-
-- **Small bandwidth**: More local, follows the data closely (risk of overfitting)
-- **Large bandwidth**: More global, smoother curve (risk of over-smoothing)
+The **bandwidth** parameter plays the same role as the number of bins in controlling the bias-variance tradeoff. A **small bandwidth** makes the estimate more local—it follows the data closely but risks overfitting to noise in the training observations. A **large bandwidth** produces a smoother curve by averaging over more observations, but risks over-smoothing and missing genuine features of the underlying relationship.
 
 Kernel smoothing eliminates the discontinuity problem of bin smoothing while retaining its intuitive local-averaging interpretation.
 
@@ -286,11 +271,9 @@ lines(x_sp, data_sp$pred_spline, col = "darkgreen", lwd = 2)
 
 ### B-Splines and Natural Splines
 
-**B-splines** (`bs()`) are a flexible basis for regression splines. You specify either:
-- The degrees of freedom (df), or
-- The number and location of knots
+**B-splines** (`bs()`) are a flexible basis for regression splines. You control their flexibility by specifying either the degrees of freedom (df) or the number and location of knots directly. Higher degrees of freedom allow more complex curves.
 
-**Natural splines** (`ns()`) add the constraint that the function is linear beyond the boundary knots. This prevents the wild behavior that polynomials often exhibit at the edges:
+**Natural splines** (`ns()`) add the constraint that the function is linear beyond the boundary knots. This prevents the wild behavior that polynomials often exhibit at the edges of the data range, where extrapolation can produce unrealistic predictions:
 
 ```{r}
 #| label: fig-natural-spline
@@ -340,10 +323,7 @@ for (df_val in c(3, 6, 10)) {
 
 $$\text{Minimize: } \sum_{i=1}^n (y_i - f(x_i))^2 + \lambda \int f''(x)^2 dx$$
 
-The first term measures fit to the data; the second penalizes curvature. The smoothing parameter $\lambda$ controls the tradeoff:
-
-- $\lambda = 0$: Interpolates all points (maximally wiggly)
-- $\lambda \to \infty$: Straight line (no curvature)
+The first term measures fit to the data; the second penalizes curvature. The smoothing parameter $\lambda$ controls the tradeoff between these objectives. When $\lambda = 0$, there is no curvature penalty, and the spline interpolates through every data point, producing a maximally wiggly curve. As $\lambda$ increases toward infinity, the curvature penalty dominates, forcing the second derivative toward zero everywhere—the result approaches a straight line with no curvature at all.
 
 ```{r}
 #| label: fig-smoothing-spline
@@ -420,15 +400,11 @@ plot(gam_fit, shade = TRUE, main = "Partial Effects")
 | Smoothing splines | Penalized fitting | λ (automatic via CV) | Automatic smoothing |
 | GAM | Additive smooth functions | df per predictor | Multiple non-linear predictors |
 
-::: {.callout-note}
-## Choosing the Right Approach
+### Choosing the Right Approach
 
-- **Regression splines (bs, ns)**: When you want to include splines in a regression model with other predictors
-- **Natural splines**: When extrapolation behavior matters
-- **Smoothing splines**: For exploratory smoothing with automatic tuning
-- **LOESS**: For local, non-parametric smoothing (especially useful for visualization)
-- **GAMs**: When you have multiple predictors with potentially non-linear effects
-:::
+The choice among smoothing methods depends on your analytical goals. **Regression splines** using `bs()` or `ns()` are ideal when you want to include non-linear terms in a regression model alongside other predictors—the spline basis functions become ordinary predictors that can be combined with linear terms, factors, and interactions. **Natural splines** are preferred when extrapolation behavior matters, since they remain linear beyond the data boundaries.
+
+**Smoothing splines** excel at exploratory analysis because they automatically select an appropriate degree of smoothness through cross-validation, freeing you from having to choose knot locations. **LOESS** is particularly useful for visualization, which is why it's the default smoother in ggplot2—it provides smooth, attractive curves with minimal tuning. Finally, **GAMs** are the method of choice when you have multiple predictors that may each have non-linear effects on the outcome.
 
 ## Practical Considerations
 
@@ -508,22 +484,15 @@ Most smoothing methods are designed for interpolation, not extrapolation. Predic
 
 ## Summary
 
-- **Smoothing methods** estimate flexible curves without assuming a parametric form
-- **Bin smoothing** divides data into intervals and computes averages—simple but discontinuous
-- **Kernel smoothing** uses weighted averages for smooth, continuous estimates
-  - Bandwidth controls the bias-variance tradeoff
-  - Cross-validation selects optimal bandwidth
-- **LOESS** fits local polynomial regressions weighted by distance
-  - Span parameter controls smoothness
-  - Default smoother in ggplot2
-- **Regression splines** fit piecewise polynomials with smooth joins at knots
-  - B-splines provide a flexible basis
-  - Natural splines are linear at boundaries
-- **Smoothing splines** place knots at every point and penalize curvature
-  - Smoothing parameter selected automatically by cross-validation
-- **GAMs** extend smoothing to multiple predictors with additive structure
-- All methods face the bias-variance tradeoff: more smoothing reduces variance but increases bias
-- Cross-validation provides objective parameter selection across methods
+This chapter introduced **smoothing methods** for estimating flexible curves without assuming a specific parametric form. These methods let the data reveal its own pattern rather than imposing a predetermined shape.
+
+**Bin smoothing** takes the simplest approach: divide the data into intervals and compute the average within each bin. While intuitive, bin smoothing produces discontinuous estimates that jump at bin boundaries. **Kernel smoothing** improves on this by computing weighted averages, where observations closer to the target point receive more weight. The bandwidth parameter controls the bias-variance tradeoff, and cross-validation provides an objective method for selecting it.
+
+**LOESS** (locally estimated scatterplot smoothing) extends kernel smoothing by fitting local polynomial regressions rather than computing simple weighted averages. The span parameter controls smoothness, and LOESS is the default smoother in ggplot2 because it produces attractive visualizations with minimal tuning.
+
+**Regression splines** take a different approach: they fit piecewise polynomials that join smoothly at points called knots. B-splines provide a flexible basis that can be incorporated into any regression model, while natural splines add the constraint of linearity beyond the data boundaries to prevent erratic extrapolation. **Smoothing splines** place a knot at every data point and control flexibility through a penalty on curvature, with the smoothing parameter typically selected automatically through cross-validation.
+
+**Generalized Additive Models** (GAMs) extend these ideas to multiple predictors, fitting smooth functions of each predictor in an additive framework. All smoothing methods face the fundamental bias-variance tradeoff: more smoothing reduces variance but increases bias. Cross-validation provides a principled way to find the right balance.
 
 ## Additional Resources
 
