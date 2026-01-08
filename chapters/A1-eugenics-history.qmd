@@ -15,7 +15,7 @@ Science does not exist in a vacuum. The questions scientists ask, the data they 
 
 ## Francis Galton: Founder of Eugenics
 
-![Francis Galton (1822-1911), founder of eugenics and pioneer of statistical correlation](../images/week6_Galton.jpeg){#fig-eugenics-galton fig-align="center" width="30%"}
+![Francis Galton (1822-1911), founder of eugenics and pioneer of statistical correlation](../images/appA1/appA1_galton.jpeg){#fig-eugenics-galton fig-align="center" width="30%"}
 
 Francis Galton (1822–1911) was Charles Darwin's half-cousin and a polymath who made genuine contributions to statistics, meteorology, and other fields. He invented correlation, pioneered the use of questionnaires, and conducted early twin studies. He is also the person who coined the term "eugenics" and devoted much of his career to promoting it.
 
@@ -27,7 +27,7 @@ His statistical innovations—correlation, regression to the mean—were develop
 
 Eugenic ideas found fertile ground in the United States. The Eugenics Record Office (ERO) was founded at Cold Spring Harbor in 1910, conducting research aimed at identifying "unfit" individuals who should be prevented from reproducing.
 
-![Eugenics exhibit at a state fair promoting "fitter families" contests](../images/IMAGES2.013.jpeg){#fig-eugenics-fair fig-align="center"}
+![Eugenics exhibit at a state fair promoting "fitter families" contests](../images/appA1/appA1_eugenics_fair.jpeg){#fig-eugenics-fair fig-align="center"}
 
 State fairs featured "fitter family" contests. Educational materials promoted eugenic thinking. Thirty states passed laws allowing forced sterilization of people deemed "unfit"—a category that disproportionately targeted poor people, immigrants, people with disabilities, and people of color.
 
@@ -35,7 +35,7 @@ Between 1907 and 1963, over 64,000 people were forcibly sterilized in the United
 
 ## R.A. Fisher and Eugenics
 
-![R.A. Fisher (1890-1962), pioneering statistician and eugenics advocate](../images/week6_fisher.jpeg){#fig-eugenics-fisher fig-align="center" width="20%"}
+![R.A. Fisher (1890-1962), pioneering statistician and eugenics advocate](../images/appA1/appA1_fisher.jpeg){#fig-eugenics-fisher fig-align="center" width="20%"}
 
 Ronald A. Fisher (1890–1962) is one of the most influential statisticians in history. He developed analysis of variance (ANOVA), the concept of statistical significance, maximum likelihood estimation, and experimental design principles that remain standard today.
 
@@ -47,7 +47,7 @@ Fisher used his statistical methods to analyze human variation in ways meant to 
 
 American eugenics directly influenced Nazi Germany. The Nazi sterilization program, which forcibly sterilized hundreds of thousands of people, was explicitly modeled on American laws, particularly California's.
 
-![Nazi Germany's sterilization program was modeled on American eugenic laws](../images/IMAGES2.016.jpeg){#fig-eugenics-nazi fig-align="center"}
+![Nazi Germany's sterilization program was modeled on American eugenic laws](../images/appA1/appA1_nazi.jpeg){#fig-eugenics-nazi fig-align="center"}
 
 The Holocaust itself was the most extreme expression of eugenic ideology—the belief that human populations could and should be "improved" through preventing certain people from reproducing, taken to its murderous conclusion.
 
@@ -79,4 +79,4 @@ For those interested in exploring this history further:
 - "The Gene: An Intimate History" by Siddhartha Mukherjee  
 - "Control: The Dark History and Troubling Present of Eugenics" by Adam Rutherford
 
-![Book covers for further reading on the history and ethics of eugenics and race science](../images/IMAGES2.017.jpeg){#fig-eugenics-books fig-align="center" width="20%"}
+![Book covers for further reading on the history and ethics of eugenics and race science](../images/appA1/appA1_books.jpeg){#fig-eugenics-books fig-align="center" width="20%"}

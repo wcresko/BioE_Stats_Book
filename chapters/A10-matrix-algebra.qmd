@@ -13,8 +13,8 @@ theme_set(theme_minimal())
 Matrix algebra (linear algebra) is the mathematical foundation for many statistical and machine learning methods. Understanding matrices is essential for:
 
 - Dimensionality reduction techniques like PCA (@sec-dimensionality-reduction)
-- Classification methods (@sec-classification)
-- Regression and regularization (@sec-statistical-learning)
+- Classification methods (@sec-classification-methods)
+- Regression and regularization (@sec-regularization)
 - Working efficiently with large datasets
 
 This appendix introduces the key concepts and R operations you need to work with matrices effectively.

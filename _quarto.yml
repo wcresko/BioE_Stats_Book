@@ -19,63 +19,63 @@ book:
       chapters:
         - chapters/01-introduction.qmd
         - chapters/02-installing-tools.qmd
-        - chapters/02-unix-command-line.qmd
-        - chapters/03-r-rstudio.qmd
-        - chapters/04-markdown-latex.qmd
+        - chapters/03-unix-command-line.qmd
+        - chapters/04-r-rstudio.qmd
+        - chapters/05-markdown-latex.qmd
 
     - part: "Data Exploration"
       chapters:
-        - chapters/07-tidy-data.qmd
-        - chapters/08-data-wrangling.qmd
-        - chapters/09-exploratory-data-analysis.qmd
-        - chapters/06-data-visualization.qmd
+        - chapters/06-tidy-data.qmd
+        - chapters/07-data-wrangling.qmd
+        - chapters/08-exploratory-data-analysis.qmd
+        - chapters/09-data-visualization.qmd
 
     - part: "Probability and Distributions"
       chapters:
-        - chapters/07-probability-foundations.qmd
-        - chapters/08-discrete-distributions.qmd
-        - chapters/09-continuous-distributions.qmd
-        - chapters/10-sampling-estimation.qmd
+        - chapters/10-probability-foundations.qmd
+        - chapters/11-discrete-distributions.qmd
+        - chapters/12-continuous-distributions.qmd
+        - chapters/13-sampling-estimation.qmd
 
     - part: "Statistical Inference"
       chapters:
-        - chapters/11-experimental-design.qmd
-        - chapters/11-hypothesis-testing.qmd
-        - chapters/12-t-tests.qmd
-        - chapters/13-nonparametric-tests.qmd
-        - chapters/14-bootstrapping.qmd
+        - chapters/14-experimental-design.qmd
+        - chapters/15-hypothesis-testing.qmd
+        - chapters/16-t-tests.qmd
+        - chapters/17-nonparametric-tests.qmd
+        - chapters/18-bootstrapping.qmd
 
     - part: "Linear Models"
       chapters:
-        - chapters/30-what-are-models.qmd
-        - chapters/15-correlation.qmd
-        - chapters/16-simple-linear-regression.qmd
-        - chapters/17-residual-analysis.qmd
-        - chapters/18-statistical-power.qmd
-        - chapters/20-multiple-regression.qmd
-        - chapters/19-single-factor-anova.qmd
-        - chapters/20-multifactor-anova.qmd
-        - chapters/21-glm.qmd
+        - chapters/19-what-are-models.qmd
+        - chapters/20-correlation.qmd
+        - chapters/21-simple-linear-regression.qmd
+        - chapters/22-residual-analysis.qmd
+        - chapters/23-statistical-power.qmd
+        - chapters/24-multiple-regression.qmd
+        - chapters/25-single-factor-anova.qmd
+        - chapters/26-multifactor-anova.qmd
+        - chapters/27-glm.qmd
 
     - part: "Statistical Learning"
       chapters:
-        - chapters/35-intro-statistical-learning.qmd
-        - chapters/36-model-validation.qmd
-        - chapters/37-regularization.qmd
-        - chapters/38-smoothing.qmd
-        - chapters/39-classification-methods.qmd
-        - chapters/40-trees-forests.qmd
-        - chapters/41-svm.qmd
-        - chapters/33-clustering.qmd
-        - chapters/23-dimensionality-reduction.qmd
-        - chapters/34-tsne-umap.qmd
-        - chapters/31-bayesian-statistics.qmd
-        - chapters/42-deep-learning.qmd
-        - chapters/24-high-performance-computing.qmd
+        - chapters/28-intro-statistical-learning.qmd
+        - chapters/29-model-validation.qmd
+        - chapters/30-regularization.qmd
+        - chapters/31-smoothing.qmd
+        - chapters/32-classification-methods.qmd
+        - chapters/33-trees-forests.qmd
+        - chapters/34-svm.qmd
+        - chapters/35-clustering.qmd
+        - chapters/36-dimensionality-reduction.qmd
+        - chapters/37-tsne-umap.qmd
+        - chapters/38-bayesian-statistics.qmd
+        - chapters/39-deep-learning.qmd
+        - chapters/40-high-performance-computing.qmd
 
     - part: "Scientific Communication"
       chapters:
-        - chapters/25-presenting-results.qmd
+        - chapters/41-presenting-results.qmd
 
     - part: "Historical Context"
       chapters:
@@ -83,14 +83,14 @@ book:
 
     - part: "Appendices"
       chapters:
-        - chapters/A8-keyboard-shortcuts.qmd
-        - chapters/A6-unix-reference.qmd
-        - chapters/A2-r-reference.qmd
-        - chapters/A9-quarto-reference.qmd
-        - chapters/A7-latex-reference.qmd
-        - chapters/A4-greek-letters.qmd
-        - chapters/A3-probability-distributions.qmd
-        - chapters/A5-sampling-distributions.qmd
+        - chapters/A2-keyboard-shortcuts.qmd
+        - chapters/A3-unix-reference.qmd
+        - chapters/A4-r-reference.qmd
+        - chapters/A5-quarto-reference.qmd
+        - chapters/A6-latex-reference.qmd
+        - chapters/A7-greek-letters.qmd
+        - chapters/A8-probability-distributions.qmd
+        - chapters/A9-sampling-distributions.qmd
         - chapters/A10-matrix-algebra.qmd
 
     - references.qmd
