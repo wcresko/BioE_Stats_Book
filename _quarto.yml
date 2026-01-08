@@ -59,12 +59,18 @@ book:
 
     - part: "Statistical Learning"
       chapters:
-        - chapters/22-statistical-learning.qmd
-        - chapters/31-bayesian-statistics.qmd
-        - chapters/32-classification.qmd
+        - chapters/35-intro-statistical-learning.qmd
+        - chapters/36-model-validation.qmd
+        - chapters/37-regularization.qmd
+        - chapters/38-smoothing.qmd
+        - chapters/39-classification-methods.qmd
+        - chapters/40-trees-forests.qmd
+        - chapters/41-svm.qmd
         - chapters/33-clustering.qmd
         - chapters/23-dimensionality-reduction.qmd
         - chapters/34-tsne-umap.qmd
+        - chapters/31-bayesian-statistics.qmd
+        - chapters/42-deep-learning.qmd
         - chapters/24-high-performance-computing.qmd
 
     - part: "Scientific Communication"
