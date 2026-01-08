@@ -1,0 +1,1934 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.30">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>41&nbsp; Introduction to Deep Learning – Statistics for the Biosciences and Bioengineering</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/A1-eugenics-history.html" rel="next">
+<link href="../chapters/39-bayesian-statistics.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-de070a7b0ab54f8780927367ac907214.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-485d01fc63b59abcd3ee1bf1e8e2748d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/29-intro-statistical-learning.html">Statistical Learning</a></li><li class="breadcrumb-item"><a href="../chapters/40-deep-learning.html"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">Introduction to Deep Learning</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Statistics for the Biosciences and Bioengineering</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Why This Book?</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Core Data Science Tools</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-installing-tools.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Installing Core Tools</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-unix-command-line.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Unix and the Command Line</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-r-rstudio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">R and RStudio</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-markdown-latex.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Markdown and LaTeX</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Data Exploration</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/06-tidy-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Tidy Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/07-data-wrangling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Data Wrangling with dplyr</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/08-exploratory-data-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/09-data-visualization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Data Visualization</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Probability and Distributions</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/10-probability-foundations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Foundations of Probability</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/11-discrete-distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Discrete Probability Distributions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/12-continuous-distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Continuous Probability Distributions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/13-sampling-estimation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Sampling and Parameter Estimation</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Statistical Inference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/14-experimental-design.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Experimental Design Principles</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/15-hypothesis-testing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/16-t-tests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">T-Tests</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/17-nonparametric-tests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Nonparametric Tests</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/18-bootstrapping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Resampling Methods</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/19-presenting-results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Presenting Statistical Results</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Linear Models</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/20-what-are-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">What are Models?</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/21-correlation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Correlation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/22-simple-linear-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Simple Linear Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/23-residual-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Residual Analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/24-statistical-power.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Statistical Power</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/25-multiple-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Multiple Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/26-single-factor-anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Single Factor ANOVA</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/27-multifactor-anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Multi-Factor ANOVA</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/28-glm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Statistical Learning</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/29-intro-statistical-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Introduction to Statistical Learning</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/30-model-validation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Model Validation and the Bias-Variance Tradeoff</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/31-regularization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Regularization Methods</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/32-smoothing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Smoothing and Non-Parametric Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/33-classification-methods.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Classification and Performance Metrics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/34-trees-forests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Decision Trees and Random Forests</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/35-svm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Support Vector Machines</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/36-clustering.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Clustering</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/37-dimensionality-reduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Dimensionality Reduction and Multivariate Methods</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/38-tsne-umap.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Non-Linear Dimensionality Reduction: t-SNE and UMAP</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/39-bayesian-statistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">Bayesian Statistics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/40-deep-learning.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">Introduction to Deep Learning</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A1-eugenics-history.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">The Eugenics History of Statistics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A2-keyboard-shortcuts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Keyboard Shortcuts Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A3-unix-reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">Unix Command Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A4-r-reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">R Command Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A5-quarto-reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">Quarto Markdown Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A6-latex-reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">LaTeX Command Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A7-greek-letters.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title">Greek Letters in Mathematics and Statistics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A8-probability-distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title">Common Probability Distributions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A9-sampling-distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title">Sampling Distributions in Hypothesis Testing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A10-matrix-algebra.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">51</span>&nbsp; <span class="chapter-title">Matrix Algebra Fundamentals</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A11-high-performance-computing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">52</span>&nbsp; <span class="chapter-title">High Performance Computing</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#what-is-deep-learning" id="toc-what-is-deep-learning" class="nav-link active" data-scroll-target="#what-is-deep-learning"><span class="header-section-number">41.1</span> What is Deep Learning?</a></li>
+  <li><a href="#how-deep-learning-differs-from-statistical-learning" id="toc-how-deep-learning-differs-from-statistical-learning" class="nav-link" data-scroll-target="#how-deep-learning-differs-from-statistical-learning"><span class="header-section-number">41.2</span> How Deep Learning Differs from Statistical Learning</a>
+  <ul class="collapse">
+  <li><a href="#feature-engineering-vs.-feature-learning" id="toc-feature-engineering-vs.-feature-learning" class="nav-link" data-scroll-target="#feature-engineering-vs.-feature-learning">Feature Engineering vs.&nbsp;Feature Learning</a></li>
+  <li><a href="#model-complexity-and-data-requirements" id="toc-model-complexity-and-data-requirements" class="nav-link" data-scroll-target="#model-complexity-and-data-requirements">Model Complexity and Data Requirements</a></li>
+  <li><a href="#the-universal-approximation-theorem" id="toc-the-universal-approximation-theorem" class="nav-link" data-scroll-target="#the-universal-approximation-theorem">The Universal Approximation Theorem</a></li>
+  </ul></li>
+  <li><a href="#neural-network-fundamentals" id="toc-neural-network-fundamentals" class="nav-link" data-scroll-target="#neural-network-fundamentals"><span class="header-section-number">41.3</span> Neural Network Fundamentals</a>
+  <ul class="collapse">
+  <li><a href="#the-artificial-neuron" id="toc-the-artificial-neuron" class="nav-link" data-scroll-target="#the-artificial-neuron">The Artificial Neuron</a></li>
+  <li><a href="#activation-functions" id="toc-activation-functions" class="nav-link" data-scroll-target="#activation-functions">Activation Functions</a></li>
+  <li><a href="#layers-and-depth" id="toc-layers-and-depth" class="nav-link" data-scroll-target="#layers-and-depth">Layers and Depth</a></li>
+  <li><a href="#training-neural-networks" id="toc-training-neural-networks" class="nav-link" data-scroll-target="#training-neural-networks">Training Neural Networks</a></li>
+  </ul></li>
+  <li><a href="#major-types-of-deep-learning-architectures" id="toc-major-types-of-deep-learning-architectures" class="nav-link" data-scroll-target="#major-types-of-deep-learning-architectures"><span class="header-section-number">41.4</span> Major Types of Deep Learning Architectures</a>
+  <ul class="collapse">
+  <li><a href="#feedforward-neural-networks-multilayer-perceptrons" id="toc-feedforward-neural-networks-multilayer-perceptrons" class="nav-link" data-scroll-target="#feedforward-neural-networks-multilayer-perceptrons">Feedforward Neural Networks (Multilayer Perceptrons)</a></li>
+  <li><a href="#convolutional-neural-networks-cnns" id="toc-convolutional-neural-networks-cnns" class="nav-link" data-scroll-target="#convolutional-neural-networks-cnns">Convolutional Neural Networks (CNNs)</a></li>
+  <li><a href="#recurrent-neural-networks-rnns-and-lstms" id="toc-recurrent-neural-networks-rnns-and-lstms" class="nav-link" data-scroll-target="#recurrent-neural-networks-rnns-and-lstms">Recurrent Neural Networks (RNNs) and LSTMs</a></li>
+  <li><a href="#transformers-and-attention-mechanisms" id="toc-transformers-and-attention-mechanisms" class="nav-link" data-scroll-target="#transformers-and-attention-mechanisms">Transformers and Attention Mechanisms</a></li>
+  <li><a href="#autoencoders" id="toc-autoencoders" class="nav-link" data-scroll-target="#autoencoders">Autoencoders</a></li>
+  <li><a href="#discriminative-vs.-generative-models" id="toc-discriminative-vs.-generative-models" class="nav-link" data-scroll-target="#discriminative-vs.-generative-models">Discriminative vs.&nbsp;Generative Models</a></li>
+  <li><a href="#generative-adversarial-networks-gans" id="toc-generative-adversarial-networks-gans" class="nav-link" data-scroll-target="#generative-adversarial-networks-gans">Generative Adversarial Networks (GANs)</a></li>
+  </ul></li>
+  <li><a href="#deep-learning-vs.-traditional-methods" id="toc-deep-learning-vs.-traditional-methods" class="nav-link" data-scroll-target="#deep-learning-vs.-traditional-methods"><span class="header-section-number">41.5</span> Deep Learning vs.&nbsp;Traditional Methods</a>
+  <ul class="collapse">
+  <li><a href="#when-to-use-deep-learning" id="toc-when-to-use-deep-learning" class="nav-link" data-scroll-target="#when-to-use-deep-learning">When to Use Deep Learning</a></li>
+  <li><a href="#when-traditional-methods-may-be-better" id="toc-when-traditional-methods-may-be-better" class="nav-link" data-scroll-target="#when-traditional-methods-may-be-better">When Traditional Methods May Be Better</a></li>
+  <li><a href="#a-practical-comparison" id="toc-a-practical-comparison" class="nav-link" data-scroll-target="#a-practical-comparison">A Practical Comparison</a></li>
+  </ul></li>
+  <li><a href="#deep-learning-in-biology-selected-applications" id="toc-deep-learning-in-biology-selected-applications" class="nav-link" data-scroll-target="#deep-learning-in-biology-selected-applications"><span class="header-section-number">41.6</span> Deep Learning in Biology: Selected Applications</a>
+  <ul class="collapse">
+  <li><a href="#alphafold-protein-structure-prediction" id="toc-alphafold-protein-structure-prediction" class="nav-link" data-scroll-target="#alphafold-protein-structure-prediction">AlphaFold: Protein Structure Prediction</a></li>
+  <li><a href="#medical-imaging" id="toc-medical-imaging" class="nav-link" data-scroll-target="#medical-imaging">Medical Imaging</a></li>
+  <li><a href="#genomics-and-sequencing" id="toc-genomics-and-sequencing" class="nav-link" data-scroll-target="#genomics-and-sequencing">Genomics and Sequencing</a></li>
+  <li><a href="#drug-discovery" id="toc-drug-discovery" class="nav-link" data-scroll-target="#drug-discovery">Drug Discovery</a></li>
+  </ul></li>
+  <li><a href="#getting-started-with-deep-learning" id="toc-getting-started-with-deep-learning" class="nav-link" data-scroll-target="#getting-started-with-deep-learning"><span class="header-section-number">41.7</span> Getting Started with Deep Learning</a>
+  <ul class="collapse">
+  <li><a href="#software-frameworks" id="toc-software-frameworks" class="nav-link" data-scroll-target="#software-frameworks">Software Frameworks</a></li>
+  <li><a href="#practical-tips" id="toc-practical-tips" class="nav-link" data-scroll-target="#practical-tips">Practical Tips</a></li>
+  </ul></li>
+  <li><a href="#limitations-and-considerations" id="toc-limitations-and-considerations" class="nav-link" data-scroll-target="#limitations-and-considerations"><span class="header-section-number">41.8</span> Limitations and Considerations</a>
+  <ul class="collapse">
+  <li><a href="#black-box-nature" id="toc-black-box-nature" class="nav-link" data-scroll-target="#black-box-nature">Black Box Nature</a></li>
+  <li><a href="#data-hunger" id="toc-data-hunger" class="nav-link" data-scroll-target="#data-hunger">Data Hunger</a></li>
+  <li><a href="#computational-requirements" id="toc-computational-requirements" class="nav-link" data-scroll-target="#computational-requirements">Computational Requirements</a></li>
+  <li><a href="#reproducibility-challenges" id="toc-reproducibility-challenges" class="nav-link" data-scroll-target="#reproducibility-challenges">Reproducibility Challenges</a></li>
+  </ul></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">41.9</span> Summary</a></li>
+  <li><a href="#additional-resources" id="toc-additional-resources" class="nav-link" data-scroll-target="#additional-resources"><span class="header-section-number">41.10</span> Additional Resources</a>
+  <ul class="collapse">
+  <li><a href="#books" id="toc-books" class="nav-link" data-scroll-target="#books">Books</a></li>
+  <li><a href="#online-courses" id="toc-online-courses" class="nav-link" data-scroll-target="#online-courses">Online Courses</a></li>
+  <li><a href="#biological-applications" id="toc-biological-applications" class="nav-link" data-scroll-target="#biological-applications">Biological Applications</a></li>
+  <li><a href="#software-documentation" id="toc-software-documentation" class="nav-link" data-scroll-target="#software-documentation">Software Documentation</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/29-intro-statistical-learning.html">Statistical Learning</a></li><li class="breadcrumb-item"><a href="../chapters/40-deep-learning.html"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">Introduction to Deep Learning</span></a></li></ol></nav>
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span id="sec-deep-learning" class="quarto-section-identifier"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">Introduction to Deep Learning</span></span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="what-is-deep-learning" class="level2" data-number="41.1">
+<h2 data-number="41.1" class="anchored" data-anchor-id="what-is-deep-learning"><span class="header-section-number">41.1</span> What is Deep Learning?</h2>
+<p><strong>Deep learning</strong> is a subset of machine learning that uses artificial neural networks with multiple layers (hence “deep”) to learn representations of data. While the statistical learning methods covered in previous chapters work well with carefully engineered features, deep learning methods can automatically discover the features needed for classification or regression.</p>
+<p>Deep learning has achieved remarkable success in areas that were previously difficult for computers. Image recognition and computer vision systems now match or exceed human performance on many tasks. Speech recognition and natural language processing have reached the point where we can have conversations with AI assistants. Protein structure prediction, once considered a 50-year-old unsolved problem, was essentially solved by AlphaFold. Game-playing systems like AlphaGo have defeated world champions at games once thought too complex for computers. Drug discovery and molecular property prediction are increasingly augmented by deep learning methods. And medical image analysis systems can detect diseases from scans with expert-level accuracy.</p>
+<p>This chapter provides a conceptual overview of deep learning—how it differs from traditional statistical learning, the major architectures, and when it’s appropriate to use.</p>
+</section>
+<section id="how-deep-learning-differs-from-statistical-learning" class="level2" data-number="41.2">
+<h2 data-number="41.2" class="anchored" data-anchor-id="how-deep-learning-differs-from-statistical-learning"><span class="header-section-number">41.2</span> How Deep Learning Differs from Statistical Learning</h2>
+<section id="feature-engineering-vs.-feature-learning" class="level3">
+<h3 class="anchored" data-anchor-id="feature-engineering-vs.-feature-learning">Feature Engineering vs.&nbsp;Feature Learning</h3>
+<p>Traditional statistical learning requires careful <strong>feature engineering</strong>—domain experts must decide which variables to measure and how to transform them. For example, to classify cell types from microscopy images using traditional methods, you would first extract features like cell area and perimeter, nuclear-to-cytoplasmic ratio, texture measures, and intensity histograms. Only after this feature extraction would you apply a classifier like random forests or SVM.</p>
+<p>Deep learning, by contrast, performs <strong>automatic feature learning</strong>. Given raw data (pixels, sequences, etc.), the network learns to extract relevant features at multiple levels of abstraction. You feed in the raw image, and the network discovers on its own which features are useful for distinguishing cell types.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-feature-learning" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-feature-learning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="40-deep-learning_files/figure-html/fig-feature-learning-1.png" class="img-fluid figure-img" width="864">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-feature-learning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;41.1: Traditional ML requires feature engineering; deep learning learns features automatically from raw data
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="model-complexity-and-data-requirements" class="level3">
+<h3 class="anchored" data-anchor-id="model-complexity-and-data-requirements">Model Complexity and Data Requirements</h3>
+<p>Statistical learning methods typically have interpretable structures and modest data requirements:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 47%">
+<col style="width: 34%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Aspect</th>
+<th style="text-align: left;">Statistical Learning</th>
+<th style="text-align: left;">Deep Learning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Model complexity</strong></td>
+<td style="text-align: left;">Low to moderate</td>
+<td style="text-align: left;">Very high (millions of parameters)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Data required</strong></td>
+<td style="text-align: left;">Hundreds to thousands</td>
+<td style="text-align: left;">Thousands to millions</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Features</strong></td>
+<td style="text-align: left;">Manually engineered</td>
+<td style="text-align: left;">Automatically learned</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Interpretability</strong></td>
+<td style="text-align: left;">Often interpretable</td>
+<td style="text-align: left;">Usually black-box</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Training time</strong></td>
+<td style="text-align: left;">Minutes to hours</td>
+<td style="text-align: left;">Hours to weeks</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Hardware</strong></td>
+<td style="text-align: left;">CPU sufficient</td>
+<td style="text-align: left;">GPU often required</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="the-universal-approximation-theorem" class="level3">
+<h3 class="anchored" data-anchor-id="the-universal-approximation-theorem">The Universal Approximation Theorem</h3>
+<p>Neural networks can, in theory, approximate any continuous function to arbitrary precision. This <strong>universal approximation theorem</strong> explains their flexibility—but doesn’t guarantee they’ll find a good solution in practice or generalize well to new data.</p>
+</section>
+</section>
+<section id="neural-network-fundamentals" class="level2" data-number="41.3">
+<h2 data-number="41.3" class="anchored" data-anchor-id="neural-network-fundamentals"><span class="header-section-number">41.3</span> Neural Network Fundamentals</h2>
+<section id="the-artificial-neuron" class="level3">
+<h3 class="anchored" data-anchor-id="the-artificial-neuron">The Artificial Neuron</h3>
+<p>The basic building block is an <strong>artificial neuron</strong> (or unit), inspired loosely by biological neurons:</p>
+<p><span class="math display">\[z = \sigma\left(\sum_{i=1}^{p} w_i x_i + b\right) = \sigma(w^T x + b)\]</span></p>
+<p>In this expression, <span class="math inline">\(x_i\)</span> are the inputs from the previous layer (or the raw features for the first layer). The <span class="math inline">\(w_i\)</span> are weights—the learned parameters that the network adjusts during training to make better predictions. The term <span class="math inline">\(b\)</span> is a bias, allowing the neuron to shift its activation threshold. Finally, <span class="math inline">\(\sigma\)</span> is an <strong>activation function</strong> that introduces non-linearity, enabling networks to learn complex patterns that couldn’t be captured by linear combinations alone.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-neuron" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-neuron-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="40-deep-learning_files/figure-html/fig-neuron-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-neuron-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;41.2: A single artificial neuron computes a weighted sum of inputs, adds a bias, and applies an activation function
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="activation-functions" class="level3">
+<h3 class="anchored" data-anchor-id="activation-functions">Activation Functions</h3>
+<p>The activation function introduces non-linearity, allowing networks to learn complex patterns:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>))</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>, <span class="at">length.out =</span> <span class="dv">100</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Sigmoid</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, <span class="dv">1</span><span class="sc">/</span>(<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="sc">-</span>x)), <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"blue"</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Sigmoid"</span>, <span class="at">xlab =</span> <span class="st">"x"</span>, <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="fu">sigma</span>(x)))</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">lty =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">"gray"</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Tanh</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, <span class="fu">tanh</span>(x), <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"red"</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Tanh"</span>, <span class="at">xlab =</span> <span class="st">"x"</span>, <span class="at">ylab =</span> <span class="st">"tanh(x)"</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="at">lty =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">"gray"</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># ReLU</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, <span class="fu">pmax</span>(<span class="dv">0</span>, x), <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"darkgreen"</span>,</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"ReLU"</span>, <span class="at">xlab =</span> <span class="st">"x"</span>, <span class="at">ylab =</span> <span class="st">"max(0, x)"</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Softmax (conceptual - for single value)</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, <span class="fu">exp</span>(x)<span class="sc">/</span>(<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(x)), <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"purple"</span>,</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Softmax (1D)"</span>, <span class="at">xlab =</span> <span class="st">"x"</span>, <span class="at">ylab =</span> <span class="st">"exp(x)/(1+exp(x))"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-activations" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-activations-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="40-deep-learning_files/figure-html/fig-activations-1.png" class="img-fluid figure-img" width="864">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-activations-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;41.3: Common activation functions used in neural networks
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>ReLU (Rectified Linear Unit)</strong> is most commonly used in hidden layers: <span class="math display">\[\text{ReLU}(x) = \max(0, x)\]</span></p>
+<p><strong>Sigmoid</strong> and <strong>softmax</strong> are used for output layers in classification problems.</p>
+</section>
+<section id="layers-and-depth" class="level3">
+<h3 class="anchored" data-anchor-id="layers-and-depth">Layers and Depth</h3>
+<p>A neural network consists of three types of layers. The <strong>input layer</strong> receives the raw features—pixels of an image, nucleotides of a DNA sequence, or numerical measurements. <strong>Hidden layers</strong> transform these representations through successive applications of weighted sums and activation functions, with each layer building on the previous layer’s output. Finally, the <strong>output layer</strong> produces predictions—class probabilities for classification or numerical values for regression.</p>
+<p>The “depth” of a network refers to the number of hidden layers. Networks with many hidden layers can learn hierarchical representations—simple features in early layers combine into more complex features in later layers. For an image, early layers might detect edges, middle layers might combine edges into shapes, and later layers might recognize whole objects.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-network-architecture" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-network-architecture-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="40-deep-learning_files/figure-html/fig-network-architecture-1.png" class="img-fluid figure-img" width="864">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-network-architecture-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;41.4: A feedforward neural network with two hidden layers. Information flows from input to output through successive transformations.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="training-neural-networks" class="level3">
+<h3 class="anchored" data-anchor-id="training-neural-networks">Training Neural Networks</h3>
+<p>Neural networks are trained by <strong>backpropagation</strong>, an algorithm that efficiently computes how each weight contributes to the prediction error.</p>
+<p>Training proceeds in cycles. First, the <strong>forward pass</strong> computes predictions by passing inputs through the network layer by layer. Then we <strong>compute the loss</strong>—a measure of how different the predictions are from the true values. The <strong>backward pass</strong> then propagates this error backward through the network, computing gradients that indicate how each weight should change to reduce the error. Finally, we <strong>update the weights</strong>, adjusting each one in the direction that reduces the loss.</p>
+<p>This process repeats for many <strong>epochs</strong> (complete passes through the training data). The weight updates typically use <strong>stochastic gradient descent</strong> or more sophisticated variants like Adam or RMSprop that adapt learning rates during training.</p>
+</section>
+</section>
+<section id="major-types-of-deep-learning-architectures" class="level2" data-number="41.4">
+<h2 data-number="41.4" class="anchored" data-anchor-id="major-types-of-deep-learning-architectures"><span class="header-section-number">41.4</span> Major Types of Deep Learning Architectures</h2>
+<section id="feedforward-neural-networks-multilayer-perceptrons" class="level3">
+<h3 class="anchored" data-anchor-id="feedforward-neural-networks-multilayer-perceptrons">Feedforward Neural Networks (Multilayer Perceptrons)</h3>
+<p>The simplest architecture, where information flows in one direction from input to output, is the <strong>feedforward neural network</strong> (also called a multilayer perceptron). These networks are appropriate for tabular data with numerical features, simple classification and regression problems, and situations where the number of features is fixed. They serve as the foundation for understanding more complex architectures.</p>
+</section>
+<section id="convolutional-neural-networks-cnns" class="level3">
+<h3 class="anchored" data-anchor-id="convolutional-neural-networks-cnns">Convolutional Neural Networks (CNNs)</h3>
+<p><strong>CNNs</strong> are designed for grid-like data, especially images. They use <strong>convolutional layers</strong> that apply learnable filters across the input, capturing local patterns.</p>
+<p>CNNs have several key properties that make them effective for images. <strong>Local connectivity</strong> means each unit connects only to a small region of the input, focusing on local patterns rather than the entire image at once. <strong>Parameter sharing</strong> means the same filter is applied across the entire image, so a pattern detector learned in one location works everywhere. This leads to <strong>translation invariance</strong>—the network can recognize patterns regardless of where they appear in the image.</p>
+<p>CNNs learn hierarchical features automatically. Early layers typically learn to detect edges, textures, and colors. Middle layers combine these into parts, shapes, and patterns. Later layers recognize whole objects and abstract concepts. This hierarchy emerges naturally from training, without being explicitly programmed.</p>
+<p>In biology, CNNs have transformed medical image analysis, from detecting tumors in radiology scans to classifying cell types in microscopy images. They are also used for analyzing protein structure visualizations and other imaging modalities.</p>
+</section>
+<section id="recurrent-neural-networks-rnns-and-lstms" class="level3">
+<h3 class="anchored" data-anchor-id="recurrent-neural-networks-rnns-and-lstms">Recurrent Neural Networks (RNNs) and LSTMs</h3>
+<p><strong>RNNs</strong> are designed for sequential data where order matters. They maintain a “memory” (hidden state) that captures information from previous time steps.</p>
+<p><strong>Long Short-Term Memory (LSTM)</strong> networks are an improved RNN architecture that can capture long-range dependencies without suffering from vanishing gradients—a problem where gradients become too small to propagate through many time steps.</p>
+<p>RNNs and LSTMs are applied to time series analysis such as gene expression changes over time, sequence modeling for DNA and protein sequences, and natural language processing tasks where word order matters.</p>
+</section>
+<section id="transformers-and-attention-mechanisms" class="level3">
+<h3 class="anchored" data-anchor-id="transformers-and-attention-mechanisms">Transformers and Attention Mechanisms</h3>
+<p><strong>Transformers</strong> have revolutionized deep learning, particularly in natural language processing. Instead of processing sequences step-by-step like RNNs, they use <strong>attention mechanisms</strong> to relate all positions simultaneously.</p>
+<p>The key innovation is <strong>self-attention</strong>, which allows the model to weigh the importance of different parts of the input when producing each output. Unlike RNNs, which must process sequences one step at a time, transformers can consider all positions in parallel, making them faster to train and better at capturing long-range relationships.</p>
+<p>Transformers power the large language models like GPT and BERT that have transformed natural language processing. In biology, AlphaFold uses attention mechanisms for protein structure prediction, and transformers are increasingly applied to genomic sequence analysis.</p>
+</section>
+<section id="autoencoders" class="level3">
+<h3 class="anchored" data-anchor-id="autoencoders">Autoencoders</h3>
+<p><strong>Autoencoders</strong> learn compressed representations by training to reconstruct their input through a bottleneck layer. The <strong>encoder</strong> compresses the input to a lower-dimensional representation, and the <strong>decoder</strong> attempts to reconstruct the original input from this compressed representation. By forcing information through a bottleneck, the network must learn the most important features of the data.</p>
+<p>Autoencoders are used for dimensionality reduction (as an alternative to PCA), denoising data by learning to reconstruct clean inputs from corrupted ones, anomaly detection by identifying inputs that are difficult to reconstruct, and generating new samples through <strong>variational autoencoders</strong> that learn probability distributions in the compressed space.</p>
+</section>
+<section id="discriminative-vs.-generative-models" class="level3">
+<h3 class="anchored" data-anchor-id="discriminative-vs.-generative-models">Discriminative vs.&nbsp;Generative Models</h3>
+<p>Before introducing GANs, it’s helpful to understand a fundamental distinction in AI models. Most machine learning methods covered in this book are <strong>discriminative models</strong>—they learn to distinguish between classes by finding decision boundaries in the feature space. Given an input, they output a class label or prediction.</p>
+<p><strong>Generative models</strong>, by contrast, learn the underlying probability distribution of the data itself. Rather than just distinguishing cats from dogs, a generative model learns “what does a cat look like?” This allows them to generate entirely new samples that resemble the training data. <a href="#fig-discriminative-generative" class="quarto-xref">Figure&nbsp;<span>41.5</span></a> illustrates this distinction.</p>
+<div id="fig-discriminative-generative" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-discriminative-generative-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../images/ch39/ch39_discriminative_generative.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-discriminative-generative-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;41.5: Discriminative vs.&nbsp;generative AI models. Discriminative models (left) learn decision boundaries to classify inputs into categories. Generative models (right) learn the probability distribution of each class, enabling them to generate new samples. Most traditional machine learning is discriminative; recent advances in AI (like GPT, DALL-E, and AlphaFold) increasingly leverage generative approaches.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="generative-adversarial-networks-gans" class="level3">
+<h3 class="anchored" data-anchor-id="generative-adversarial-networks-gans">Generative Adversarial Networks (GANs)</h3>
+<p><strong>GANs</strong> consist of two networks trained in competition. The <strong>generator</strong> tries to create realistic fake data, while the <strong>discriminator</strong> tries to distinguish real examples from fake ones. Through this adversarial process—each network trying to beat the other—the generator learns to produce increasingly realistic samples.</p>
+<p>GANs are used for image synthesis, creating photorealistic images of faces, scenes, or objects that don’t exist. In biology, they enable data augmentation by generating synthetic training examples, and they can generate novel drug molecules with desired properties.</p>
+</section>
+</section>
+<section id="deep-learning-vs.-traditional-methods" class="level2" data-number="41.5">
+<h2 data-number="41.5" class="anchored" data-anchor-id="deep-learning-vs.-traditional-methods"><span class="header-section-number">41.5</span> Deep Learning vs.&nbsp;Traditional Methods</h2>
+<section id="when-to-use-deep-learning" class="level3">
+<h3 class="anchored" data-anchor-id="when-to-use-deep-learning">When to Use Deep Learning</h3>
+<p>Deep learning tends to be the best choice when several conditions are met. First, you need <strong>large datasets</strong>—deep learning excels with thousands to millions of samples, where it can learn subtle patterns that simpler methods would miss. Second, deep learning shines with <strong>complex, high-dimensional inputs</strong> like images, DNA sequences, or audio, where the sheer number of raw features makes manual feature engineering impractical.</p>
+<p>Deep learning is also preferred when you have <strong>raw data available</strong> and want to skip the feature engineering step entirely. You need <strong>sufficient computational resources</strong>—GPUs or TPUs are often required for reasonable training times. Deep learning makes sense when <strong>prediction accuracy is paramount</strong> and interpretability is less important. Finally, it works best when <strong>patterns are hierarchical</strong>, with simple features combining into complex ones—exactly the structure these networks are designed to capture.</p>
+</section>
+<section id="when-traditional-methods-may-be-better" class="level3">
+<h3 class="anchored" data-anchor-id="when-traditional-methods-may-be-better">When Traditional Methods May Be Better</h3>
+<p>Traditional statistical learning methods are often better choices in several common situations. With <strong>small datasets</strong>—hundreds of samples or fewer—deep learning is likely to overfit, while methods like random forests and regularized regression can still perform well. For <strong>tabular data</strong> with structured numerical features, traditional methods often match or exceed deep learning performance with less complexity.</p>
+<p>When <strong>interpretability is required</strong>, you need to understand and explain why predictions are made, which is difficult with deep neural networks. In <strong>limited compute environments</strong> with only CPUs, traditional methods are much more practical. If <strong>domain knowledge is available</strong>, you can engineer informative features that may work better than features learned from limited data. When <strong>uncertainty quantification</strong> is needed—confidence intervals, p-values, or well-calibrated probability estimates—statistical methods have better-developed theory. And for <strong>regulatory requirements</strong> that demand auditable, explainable models, traditional methods are often the only acceptable choice.</p>
+</section>
+<section id="a-practical-comparison" class="level3">
+<h3 class="anchored" data-anchor-id="a-practical-comparison">A Practical Comparison</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 41%">
+<col style="width: 41%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Task</th>
+<th style="text-align: left;">Traditional ML</th>
+<th style="text-align: left;">Deep Learning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Predicting disease from 50 biomarkers</td>
+<td style="text-align: left;">Random Forest, SVM</td>
+<td style="text-align: left;">Probably overkill</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Classifying tumors from histopathology images</td>
+<td style="text-align: left;">Feature engineering + classifier</td>
+<td style="text-align: left;">CNN (likely better)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Predicting protein structure</td>
+<td style="text-align: left;">Difficult</td>
+<td style="text-align: left;">AlphaFold revolutionized this</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Analyzing 100-patient clinical trial</td>
+<td style="text-align: left;">Regression, ANOVA</td>
+<td style="text-align: left;">Not enough data</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Detecting arrhythmias from ECG</td>
+<td style="text-align: left;">Feature-based classifiers</td>
+<td style="text-align: left;">CNNs/RNNs work well</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gene expression analysis (RNA-seq)</td>
+<td style="text-align: left;">Depends on sample size</td>
+<td style="text-align: left;">Autoencoders useful for dimensionality reduction</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="deep-learning-in-biology-selected-applications" class="level2" data-number="41.6">
+<h2 data-number="41.6" class="anchored" data-anchor-id="deep-learning-in-biology-selected-applications"><span class="header-section-number">41.6</span> Deep Learning in Biology: Selected Applications</h2>
+<section id="alphafold-protein-structure-prediction" class="level3">
+<h3 class="anchored" data-anchor-id="alphafold-protein-structure-prediction">AlphaFold: Protein Structure Prediction</h3>
+<p>Perhaps the most transformative application of deep learning in biology. AlphaFold2 uses attention mechanisms to predict 3D protein structure from amino acid sequences with unprecedented accuracy, solving a 50-year-old problem.</p>
+</section>
+<section id="medical-imaging" class="level3">
+<h3 class="anchored" data-anchor-id="medical-imaging">Medical Imaging</h3>
+<p>Deep learning has achieved remarkable success in medical imaging. Systems can detect diabetic retinopathy from retinal images, identify skin cancer from dermoscopy images, analyze pathology slides for cancer diagnosis, and segment organs in CT and MRI scans. In many of these applications, deep learning approaches now match or exceed the performance of trained specialists.</p>
+</section>
+<section id="genomics-and-sequencing" class="level3">
+<h3 class="anchored" data-anchor-id="genomics-and-sequencing">Genomics and Sequencing</h3>
+<p>In genomics, deep learning predicts regulatory elements from DNA sequence, calls genetic variants from sequencing data, and predicts gene expression levels from sequence features. For single-cell RNA-seq analysis, autoencoders help with dimensionality reduction and batch correction, while other architectures identify cell types and developmental trajectories.</p>
+</section>
+<section id="drug-discovery" class="level3">
+<h3 class="anchored" data-anchor-id="drug-discovery">Drug Discovery</h3>
+<p>Drug discovery increasingly relies on deep learning for predicting drug-target interactions, generating novel molecular structures with desired properties, predicting drug toxicity and side effects before clinical trials, and virtual screening of large compound libraries to identify promising candidates.</p>
+</section>
+</section>
+<section id="getting-started-with-deep-learning" class="level2" data-number="41.7">
+<h2 data-number="41.7" class="anchored" data-anchor-id="getting-started-with-deep-learning"><span class="header-section-number">41.7</span> Getting Started with Deep Learning</h2>
+<section id="software-frameworks" class="level3">
+<h3 class="anchored" data-anchor-id="software-frameworks">Software Frameworks</h3>
+<p>The most popular frameworks for deep learning are <strong>TensorFlow/Keras</strong>, Google’s framework that is widely used in industry, and <strong>PyTorch</strong>, Facebook’s framework that has become the standard in research. Both have R interfaces—the <code>keras</code> and <code>torch</code> packages—allowing R users to build deep learning models without switching languages.</p>
+</section>
+<section id="practical-tips" class="level3">
+<h3 class="anchored" data-anchor-id="practical-tips">Practical Tips</h3>
+<p>When getting started with deep learning, <strong>begin with established architectures</strong> before creating custom ones. Many problems are well-served by standard architectures like ResNet for images or BERT for text. <strong>Use transfer learning</strong> when possible—pre-trained models that have learned on millions of examples can be fine-tuned on your smaller dataset, dramatically improving performance.</p>
+<p><strong>Monitor for overfitting</strong> by tracking performance on a validation set and using regularization techniques like dropout. <strong>Normalize your inputs</strong>, since neural networks are sensitive to input scale and train poorly on unnormalized data. <strong>Use data augmentation</strong> to artificially expand your training set, especially for image data with limited samples—random rotations, crops, and color adjustments can significantly improve generalization.</p>
+<p><strong>Experiment with learning rates</strong>, as this is often the most critical hyperparameter. Too high and training diverges; too low and training stalls. Finally, <strong>consider computational costs</strong>—GPU training can become expensive for large models, and sometimes the simpler traditional methods are more practical.</p>
+</section>
+</section>
+<section id="limitations-and-considerations" class="level2" data-number="41.8">
+<h2 data-number="41.8" class="anchored" data-anchor-id="limitations-and-considerations"><span class="header-section-number">41.8</span> Limitations and Considerations</h2>
+<section id="black-box-nature" class="level3">
+<h3 class="anchored" data-anchor-id="black-box-nature">Black Box Nature</h3>
+<p>Deep learning models are difficult to interpret. While methods like attention visualization, gradient-based saliency maps, and SHAP values can provide some insight into what the network is focusing on, understanding <em>why</em> a network makes a particular prediction remains challenging. This limits the use of deep learning in settings where explanations are required.</p>
+</section>
+<section id="data-hunger" class="level3">
+<h3 class="anchored" data-anchor-id="data-hunger">Data Hunger</h3>
+<p>Deep learning typically requires large datasets to reach its potential. With small samples, traditional methods often perform better and are less prone to overfitting. The impressive results in image recognition, for example, come from training on millions of labeled images—a luxury not available in most biological applications.</p>
+</section>
+<section id="computational-requirements" class="level3">
+<h3 class="anchored" data-anchor-id="computational-requirements">Computational Requirements</h3>
+<p>Training deep networks requires significant computational resources. GPUs (Graphics Processing Units) are nearly essential for reasonable training times, and for large models, cloud computing or dedicated hardware clusters may be needed. Training also requires large amounts of memory to hold the model parameters and batch data.</p>
+</section>
+<section id="reproducibility-challenges" class="level3">
+<h3 class="anchored" data-anchor-id="reproducibility-challenges">Reproducibility Challenges</h3>
+<p>Neural network training involves random initialization of weights, stochastic optimization that processes data in random order, and hardware-dependent operations that may produce slightly different results on different systems. Making results fully reproducible requires careful attention to random seeds, software versions, and environment configuration—challenges that the field is still working to address.</p>
+</section>
+</section>
+<section id="summary" class="level2" data-number="41.9">
+<h2 data-number="41.9" class="anchored" data-anchor-id="summary"><span class="header-section-number">41.9</span> Summary</h2>
+<p>This chapter provided a conceptual overview of <strong>deep learning</strong>, a powerful approach that uses multi-layer neural networks to automatically learn features from data. Unlike traditional machine learning, which requires careful feature engineering by domain experts, deep learning can work directly with raw data—images, DNA sequences, text, or other complex inputs—discovering relevant features through training.</p>
+<p>The major deep learning architectures serve different purposes. <strong>Feedforward networks</strong> (multilayer perceptrons) are the simplest architecture, suitable for tabular data and general-purpose problems. <strong>Convolutional Neural Networks (CNNs)</strong> are designed for images and spatial data, learning hierarchical features from edges to objects. <strong>Recurrent Neural Networks (RNNs)</strong> and <strong>LSTMs</strong> handle sequential data where order matters, maintaining memory across time steps. <strong>Transformers</strong> use attention mechanisms to relate all positions in a sequence simultaneously and have become the state-of-the-art for many sequence tasks. <strong>Autoencoders</strong> learn compressed representations useful for dimensionality reduction and generation. <strong>Generative Adversarial Networks (GANs)</strong> create realistic synthetic data through an adversarial training process.</p>
+<p>Deep learning excels when you have <strong>large datasets</strong> and <strong>complex, high-dimensional inputs</strong>. Traditional statistical learning methods remain better choices for <strong>small datasets</strong>, situations requiring <strong>interpretability</strong>, and <strong>structured tabular data</strong>. In biology, deep learning has transformed protein structure prediction (AlphaFold), medical imaging, genomics, and drug discovery, but its applicability depends critically on having sufficient data and computational resources. The field continues to evolve rapidly, with new architectures and best practices emerging regularly.</p>
+</section>
+<section id="additional-resources" class="level2" data-number="41.10">
+<h2 data-number="41.10" class="anchored" data-anchor-id="additional-resources"><span class="header-section-number">41.10</span> Additional Resources</h2>
+<section id="books" class="level3">
+<h3 class="anchored" data-anchor-id="books">Books</h3>
+<ul>
+<li>Goodfellow, Bengio, &amp; Courville (2016). <em>Deep Learning</em>. MIT Press. (The definitive textbook)</li>
+<li>Chollet (2021). <em>Deep Learning with Python</em>. Manning. (Practical introduction)</li>
+</ul>
+</section>
+<section id="online-courses" class="level3">
+<h3 class="anchored" data-anchor-id="online-courses">Online Courses</h3>
+<ul>
+<li>fast.ai - Practical deep learning for coders</li>
+<li>deeplearning.ai - Andrew Ng’s courses</li>
+<li>Stanford CS231n - Convolutional Neural Networks for Visual Recognition</li>
+</ul>
+</section>
+<section id="biological-applications" class="level3">
+<h3 class="anchored" data-anchor-id="biological-applications">Biological Applications</h3>
+<ul>
+<li><span class="citation" data-cites="jumper2021alphafold">(<a href="../references.html#ref-jumper2021alphafold" role="doc-biblioref"><strong>jumper2021alphafold?</strong></a>)</span> - AlphaFold paper</li>
+<li>Ching et al.&nbsp;(2018). Opportunities and obstacles for deep learning in biology and medicine</li>
+<li>Eraslan et al.&nbsp;(2019). Deep learning: new computational modelling techniques for genomics</li>
+</ul>
+</section>
+<section id="software-documentation" class="level3">
+<h3 class="anchored" data-anchor-id="software-documentation">Software Documentation</h3>
+<ul>
+<li>TensorFlow: https://www.tensorflow.org</li>
+<li>PyTorch: https://pytorch.org</li>
+<li>Keras R package: https://keras.rstudio.com</li>
+</ul>
+
+
+<!-- -->
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/39-bayesian-statistics.html" class="pagination-link" aria-label="Bayesian Statistics">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">Bayesian Statistics</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/A1-eugenics-history.html" class="pagination-link" aria-label="The Eugenics History of Statistics">
+        <span class="nav-page-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">The Eugenics History of Statistics</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb2" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Introduction to Deep Learning {#sec-deep-learning}</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_minimal</span>())</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fu">## What is Deep Learning?</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>**Deep learning** is a subset of machine learning that uses artificial neural networks with multiple layers (hence "deep") to learn representations of data. While the statistical learning methods covered in previous chapters work well with carefully engineered features, deep learning methods can automatically discover the features needed for classification or regression.</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>Deep learning has achieved remarkable success in areas that were previously difficult for computers. Image recognition and computer vision systems now match or exceed human performance on many tasks. Speech recognition and natural language processing have reached the point where we can have conversations with AI assistants. Protein structure prediction, once considered a 50-year-old unsolved problem, was essentially solved by AlphaFold. Game-playing systems like AlphaGo have defeated world champions at games once thought too complex for computers. Drug discovery and molecular property prediction are increasingly augmented by deep learning methods. And medical image analysis systems can detect diseases from scans with expert-level accuracy.</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>This chapter provides a conceptual overview of deep learning—how it differs from traditional statistical learning, the major architectures, and when it's appropriate to use.</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="fu">## How Deep Learning Differs from Statistical Learning</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="fu">### Feature Engineering vs. Feature Learning</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>Traditional statistical learning requires careful **feature engineering**—domain experts must decide which variables to measure and how to transform them. For example, to classify cell types from microscopy images using traditional methods, you would first extract features like cell area and perimeter, nuclear-to-cytoplasmic ratio, texture measures, and intensity histograms. Only after this feature extraction would you apply a classifier like random forests or SVM.</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>Deep learning, by contrast, performs **automatic feature learning**. Given raw data (pixels, sequences, etc.), the network learns to extract relevant features at multiple levels of abstraction. You feed in the raw image, and the network discovers on its own which features are useful for distinguishing cell types.</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-feature-learning</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Traditional ML requires feature engineering; deep learning learns features automatically from raw data"</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 9</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>))</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Traditional ML</span></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.new</span>()</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.window</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">10</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">10</span>))</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">"Traditional Machine Learning"</span>)</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Data box</span></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="fu">rect</span>(<span class="fl">0.5</span>, <span class="dv">7</span>, <span class="fl">2.5</span>, <span class="dv">9</span>, <span class="at">col =</span> <span class="st">"lightblue"</span>, <span class="at">border =</span> <span class="st">"darkblue"</span>)</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="fl">1.5</span>, <span class="dv">8</span>, <span class="st">"Raw</span><span class="sc">\n</span><span class="st">Data"</span>, <span class="at">cex =</span> <span class="fl">0.8</span>)</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a><span class="co"># Feature engineering (manual)</span></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a><span class="fu">rect</span>(<span class="fl">3.5</span>, <span class="dv">7</span>, <span class="fl">6.5</span>, <span class="dv">9</span>, <span class="at">col =</span> <span class="st">"lightyellow"</span>, <span class="at">border =</span> <span class="st">"orange"</span>)</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="dv">5</span>, <span class="dv">8</span>, <span class="st">"Feature</span><span class="sc">\n</span><span class="st">Engineering</span><span class="sc">\n</span><span class="st">(Manual)"</span>, <span class="at">cex =</span> <span class="fl">0.7</span>)</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a><span class="co"># Model</span></span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a><span class="fu">rect</span>(<span class="fl">7.5</span>, <span class="dv">7</span>, <span class="fl">9.5</span>, <span class="dv">9</span>, <span class="at">col =</span> <span class="st">"lightgreen"</span>, <span class="at">border =</span> <span class="st">"darkgreen"</span>)</span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="fl">8.5</span>, <span class="dv">8</span>, <span class="st">"ML</span><span class="sc">\n</span><span class="st">Model"</span>, <span class="at">cex =</span> <span class="fl">0.8</span>)</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a><span class="co"># Arrows</span></span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a><span class="fu">arrows</span>(<span class="fl">2.5</span>, <span class="dv">8</span>, <span class="fl">3.5</span>, <span class="dv">8</span>, <span class="at">length =</span> <span class="fl">0.1</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a><span class="fu">arrows</span>(<span class="fl">6.5</span>, <span class="dv">8</span>, <span class="fl">7.5</span>, <span class="dv">8</span>, <span class="at">length =</span> <span class="fl">0.1</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a><span class="co"># Expert</span></span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="dv">5</span>, <span class="fl">5.5</span>, <span class="st">"Domain Expert</span><span class="sc">\n</span><span class="st">Required"</span>, <span class="at">cex =</span> <span class="fl">0.9</span>, <span class="at">col =</span> <span class="st">"red"</span>)</span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a><span class="fu">arrows</span>(<span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="at">length =</span> <span class="fl">0.1</span>, <span class="at">lwd =</span> <span class="fl">1.5</span>, <span class="at">col =</span> <span class="st">"red"</span>)</span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a><span class="co"># Deep Learning</span></span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.new</span>()</span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.window</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">10</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">10</span>))</span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">"Deep Learning"</span>)</span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a><span class="co"># Data box</span></span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a><span class="fu">rect</span>(<span class="fl">0.5</span>, <span class="dv">7</span>, <span class="fl">2.5</span>, <span class="dv">9</span>, <span class="at">col =</span> <span class="st">"lightblue"</span>, <span class="at">border =</span> <span class="st">"darkblue"</span>)</span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="fl">1.5</span>, <span class="dv">8</span>, <span class="st">"Raw</span><span class="sc">\n</span><span class="st">Data"</span>, <span class="at">cex =</span> <span class="fl">0.8</span>)</span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a><span class="co"># Neural Network (learns features)</span></span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a><span class="fu">rect</span>(<span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">10</span>, <span class="at">col =</span> <span class="st">"lavender"</span>, <span class="at">border =</span> <span class="st">"purple"</span>)</span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="dv">6</span>, <span class="dv">8</span>, <span class="st">"Neural Network</span><span class="sc">\n</span><span class="st">(Learns Features</span><span class="sc">\n</span><span class="st">Automatically)"</span>, <span class="at">cex =</span> <span class="fl">0.7</span>)</span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a><span class="co"># Arrow</span></span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a><span class="fu">arrows</span>(<span class="fl">2.5</span>, <span class="dv">8</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="at">length =</span> <span class="fl">0.1</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a><span class="co"># Output</span></span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a><span class="fu">rect</span>(<span class="fl">8.5</span>, <span class="dv">7</span>, <span class="fl">9.5</span>, <span class="dv">9</span>, <span class="at">col =</span> <span class="st">"lightgreen"</span>, <span class="at">border =</span> <span class="st">"darkgreen"</span>)</span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="dv">9</span>, <span class="dv">8</span>, <span class="st">"Output"</span>, <span class="at">cex =</span> <span class="fl">0.8</span>)</span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a><span class="fu">arrows</span>(<span class="dv">8</span>, <span class="dv">8</span>, <span class="fl">8.5</span>, <span class="dv">8</span>, <span class="at">length =</span> <span class="fl">0.1</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a><span class="fu">### Model Complexity and Data Requirements</span></span>
+<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a>Statistical learning methods typically have interpretable structures and modest data requirements:</span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Aspect <span class="pp">|</span> Statistical Learning <span class="pp">|</span> Deep Learning <span class="pp">|</span></span>
+<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a><span class="pp">|:-------|:--------------------|:--------------|</span></span>
+<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Model complexity** <span class="pp">|</span> Low to moderate <span class="pp">|</span> Very high (millions of parameters) <span class="pp">|</span></span>
+<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Data required** <span class="pp">|</span> Hundreds to thousands <span class="pp">|</span> Thousands to millions <span class="pp">|</span></span>
+<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Features** <span class="pp">|</span> Manually engineered <span class="pp">|</span> Automatically learned <span class="pp">|</span></span>
+<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Interpretability** <span class="pp">|</span> Often interpretable <span class="pp">|</span> Usually black-box <span class="pp">|</span></span>
+<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Training time** <span class="pp">|</span> Minutes to hours <span class="pp">|</span> Hours to weeks <span class="pp">|</span></span>
+<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Hardware** <span class="pp">|</span> CPU sufficient <span class="pp">|</span> GPU often required <span class="pp">|</span></span>
+<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a><span class="fu">### The Universal Approximation Theorem</span></span>
+<span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a>Neural networks can, in theory, approximate any continuous function to arbitrary precision. This **universal approximation theorem** explains their flexibility—but doesn't guarantee they'll find a good solution in practice or generalize well to new data.</span>
+<span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a><span class="fu">## Neural Network Fundamentals</span></span>
+<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-104"><a href="#cb2-104" aria-hidden="true" tabindex="-1"></a><span class="fu">### The Artificial Neuron</span></span>
+<span id="cb2-105"><a href="#cb2-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-106"><a href="#cb2-106" aria-hidden="true" tabindex="-1"></a>The basic building block is an **artificial neuron** (or unit), inspired loosely by biological neurons:</span>
+<span id="cb2-107"><a href="#cb2-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-108"><a href="#cb2-108" aria-hidden="true" tabindex="-1"></a>$$z = \sigma\left(\sum_{i=1}^{p} w_i x_i + b\right) = \sigma(w^T x + b)$$</span>
+<span id="cb2-109"><a href="#cb2-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-110"><a href="#cb2-110" aria-hidden="true" tabindex="-1"></a>In this expression, $x_i$ are the inputs from the previous layer (or the raw features for the first layer). The $w_i$ are weights—the learned parameters that the network adjusts during training to make better predictions. The term $b$ is a bias, allowing the neuron to shift its activation threshold. Finally, $\sigma$ is an **activation function** that introduces non-linearity, enabling networks to learn complex patterns that couldn't be captured by linear combinations alone.</span>
+<span id="cb2-111"><a href="#cb2-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-114"><a href="#cb2-114" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb2-115"><a href="#cb2-115" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-neuron</span></span>
+<span id="cb2-116"><a href="#cb2-116" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "A single artificial neuron computes a weighted sum of inputs, adds a bias, and applies an activation function"</span></span>
+<span id="cb2-117"><a href="#cb2-117" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 7</span></span>
+<span id="cb2-118"><a href="#cb2-118" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5</span></span>
+<span id="cb2-119"><a href="#cb2-119" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb2-120"><a href="#cb2-120" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.new</span>()</span>
+<span id="cb2-121"><a href="#cb2-121" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.window</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">10</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">8</span>))</span>
+<span id="cb2-122"><a href="#cb2-122" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">"Artificial Neuron"</span>, <span class="at">cex.main =</span> <span class="fl">1.2</span>)</span>
+<span id="cb2-123"><a href="#cb2-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-124"><a href="#cb2-124" aria-hidden="true" tabindex="-1"></a><span class="co"># Input nodes</span></span>
+<span id="cb2-125"><a href="#cb2-125" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) {</span>
+<span id="cb2-126"><a href="#cb2-126" aria-hidden="true" tabindex="-1"></a>  y_pos <span class="ot">&lt;-</span> <span class="dv">7</span> <span class="sc">-</span> (i<span class="dv">-1</span>) <span class="sc">*</span> <span class="dv">2</span></span>
+<span id="cb2-127"><a href="#cb2-127" aria-hidden="true" tabindex="-1"></a>  <span class="fu">points</span>(<span class="dv">1</span>, y_pos, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">cex =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">"steelblue"</span>)</span>
+<span id="cb2-128"><a href="#cb2-128" aria-hidden="true" tabindex="-1"></a>  <span class="fu">text</span>(<span class="fl">0.3</span>, y_pos, <span class="fu">paste0</span>(<span class="st">"x"</span>, i), <span class="at">cex =</span> <span class="fl">1.2</span>)</span>
+<span id="cb2-129"><a href="#cb2-129" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-130"><a href="#cb2-130" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="st">"..."</span>, <span class="at">cex =</span> <span class="fl">1.5</span>)</span>
+<span id="cb2-131"><a href="#cb2-131" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">cex =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">"steelblue"</span>)</span>
+<span id="cb2-132"><a href="#cb2-132" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="fl">0.3</span>, <span class="dv">1</span>, <span class="st">"xp"</span>, <span class="at">cex =</span> <span class="fl">1.2</span>)</span>
+<span id="cb2-133"><a href="#cb2-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-134"><a href="#cb2-134" aria-hidden="true" tabindex="-1"></a><span class="co"># Central neuron</span></span>
+<span id="cb2-135"><a href="#cb2-135" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="dv">5</span>, <span class="dv">4</span>, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">cex =</span> <span class="dv">5</span>, <span class="at">col =</span> <span class="st">"coral"</span>)</span>
+<span id="cb2-136"><a href="#cb2-136" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="dv">5</span>, <span class="dv">4</span>, <span class="fu">expression</span>(Sigma), <span class="at">cex =</span> <span class="fl">1.5</span>)</span>
+<span id="cb2-137"><a href="#cb2-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-138"><a href="#cb2-138" aria-hidden="true" tabindex="-1"></a><span class="co"># Connections with weights</span></span>
+<span id="cb2-139"><a href="#cb2-139" aria-hidden="true" tabindex="-1"></a><span class="fu">arrows</span>(<span class="fl">1.3</span>, <span class="dv">7</span>, <span class="fl">4.5</span>, <span class="fl">4.3</span>, <span class="at">length =</span> <span class="fl">0.1</span>, <span class="at">lwd =</span> <span class="fl">1.5</span>)</span>
+<span id="cb2-140"><a href="#cb2-140" aria-hidden="true" tabindex="-1"></a><span class="fu">arrows</span>(<span class="fl">1.3</span>, <span class="dv">5</span>, <span class="fl">4.5</span>, <span class="fl">4.1</span>, <span class="at">length =</span> <span class="fl">0.1</span>, <span class="at">lwd =</span> <span class="fl">1.5</span>)</span>
+<span id="cb2-141"><a href="#cb2-141" aria-hidden="true" tabindex="-1"></a><span class="fu">arrows</span>(<span class="fl">1.3</span>, <span class="dv">3</span>, <span class="fl">4.5</span>, <span class="fl">3.9</span>, <span class="at">length =</span> <span class="fl">0.1</span>, <span class="at">lwd =</span> <span class="fl">1.5</span>)</span>
+<span id="cb2-142"><a href="#cb2-142" aria-hidden="true" tabindex="-1"></a><span class="fu">arrows</span>(<span class="fl">1.3</span>, <span class="dv">1</span>, <span class="fl">4.5</span>, <span class="fl">3.7</span>, <span class="at">length =</span> <span class="fl">0.1</span>, <span class="at">lwd =</span> <span class="fl">1.5</span>)</span>
+<span id="cb2-143"><a href="#cb2-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-144"><a href="#cb2-144" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="fl">2.5</span>, <span class="dv">6</span>, <span class="fu">expression</span>(w[<span class="dv">1</span>]), <span class="at">cex =</span> <span class="fl">0.9</span>)</span>
+<span id="cb2-145"><a href="#cb2-145" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="fl">2.5</span>, <span class="fl">4.8</span>, <span class="fu">expression</span>(w[<span class="dv">2</span>]), <span class="at">cex =</span> <span class="fl">0.9</span>)</span>
+<span id="cb2-146"><a href="#cb2-146" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="fl">2.5</span>, <span class="fl">3.2</span>, <span class="fu">expression</span>(w[<span class="dv">3</span>]), <span class="at">cex =</span> <span class="fl">0.9</span>)</span>
+<span id="cb2-147"><a href="#cb2-147" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="fl">2.5</span>, <span class="dv">2</span>, <span class="fu">expression</span>(w[p]), <span class="at">cex =</span> <span class="fl">0.9</span>)</span>
+<span id="cb2-148"><a href="#cb2-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-149"><a href="#cb2-149" aria-hidden="true" tabindex="-1"></a><span class="co"># Activation function</span></span>
+<span id="cb2-150"><a href="#cb2-150" aria-hidden="true" tabindex="-1"></a><span class="fu">rect</span>(<span class="fl">6.5</span>, <span class="dv">3</span>, <span class="dv">8</span>, <span class="dv">5</span>, <span class="at">border =</span> <span class="st">"darkgreen"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb2-151"><a href="#cb2-151" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="fl">7.25</span>, <span class="dv">4</span>, <span class="fu">expression</span>(sigma), <span class="at">cex =</span> <span class="fl">1.2</span>)</span>
+<span id="cb2-152"><a href="#cb2-152" aria-hidden="true" tabindex="-1"></a><span class="fu">arrows</span>(<span class="fl">5.5</span>, <span class="dv">4</span>, <span class="fl">6.5</span>, <span class="dv">4</span>, <span class="at">length =</span> <span class="fl">0.1</span>, <span class="at">lwd =</span> <span class="fl">1.5</span>)</span>
+<span id="cb2-153"><a href="#cb2-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-154"><a href="#cb2-154" aria-hidden="true" tabindex="-1"></a><span class="co"># Output</span></span>
+<span id="cb2-155"><a href="#cb2-155" aria-hidden="true" tabindex="-1"></a><span class="fu">arrows</span>(<span class="dv">8</span>, <span class="dv">4</span>, <span class="dv">9</span>, <span class="dv">4</span>, <span class="at">length =</span> <span class="fl">0.1</span>, <span class="at">lwd =</span> <span class="fl">1.5</span>)</span>
+<span id="cb2-156"><a href="#cb2-156" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="fl">9.5</span>, <span class="dv">4</span>, <span class="st">"Output"</span>, <span class="at">cex =</span> <span class="dv">1</span>)</span>
+<span id="cb2-157"><a href="#cb2-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-158"><a href="#cb2-158" aria-hidden="true" tabindex="-1"></a><span class="co"># Bias</span></span>
+<span id="cb2-159"><a href="#cb2-159" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="dv">5</span>, <span class="dv">2</span>, <span class="st">"+b"</span>, <span class="at">cex =</span> <span class="dv">1</span>)</span>
+<span id="cb2-160"><a href="#cb2-160" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb2-161"><a href="#cb2-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-162"><a href="#cb2-162" aria-hidden="true" tabindex="-1"></a><span class="fu">### Activation Functions</span></span>
+<span id="cb2-163"><a href="#cb2-163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-164"><a href="#cb2-164" aria-hidden="true" tabindex="-1"></a>The activation function introduces non-linearity, allowing networks to learn complex patterns:</span>
+<span id="cb2-165"><a href="#cb2-165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-168"><a href="#cb2-168" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb2-169"><a href="#cb2-169" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-activations</span></span>
+<span id="cb2-170"><a href="#cb2-170" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Common activation functions used in neural networks"</span></span>
+<span id="cb2-171"><a href="#cb2-171" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 9</span></span>
+<span id="cb2-172"><a href="#cb2-172" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4</span></span>
+<span id="cb2-173"><a href="#cb2-173" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>))</span>
+<span id="cb2-174"><a href="#cb2-174" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>, <span class="at">length.out =</span> <span class="dv">100</span>)</span>
+<span id="cb2-175"><a href="#cb2-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-176"><a href="#cb2-176" aria-hidden="true" tabindex="-1"></a><span class="co"># Sigmoid</span></span>
+<span id="cb2-177"><a href="#cb2-177" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, <span class="dv">1</span><span class="sc">/</span>(<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="sc">-</span>x)), <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"blue"</span>,</span>
+<span id="cb2-178"><a href="#cb2-178" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Sigmoid"</span>, <span class="at">xlab =</span> <span class="st">"x"</span>, <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="fu">sigma</span>(x)))</span>
+<span id="cb2-179"><a href="#cb2-179" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">lty =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">"gray"</span>)</span>
+<span id="cb2-180"><a href="#cb2-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-181"><a href="#cb2-181" aria-hidden="true" tabindex="-1"></a><span class="co"># Tanh</span></span>
+<span id="cb2-182"><a href="#cb2-182" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, <span class="fu">tanh</span>(x), <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"red"</span>,</span>
+<span id="cb2-183"><a href="#cb2-183" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Tanh"</span>, <span class="at">xlab =</span> <span class="st">"x"</span>, <span class="at">ylab =</span> <span class="st">"tanh(x)"</span>)</span>
+<span id="cb2-184"><a href="#cb2-184" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="at">lty =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">"gray"</span>)</span>
+<span id="cb2-185"><a href="#cb2-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-186"><a href="#cb2-186" aria-hidden="true" tabindex="-1"></a><span class="co"># ReLU</span></span>
+<span id="cb2-187"><a href="#cb2-187" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, <span class="fu">pmax</span>(<span class="dv">0</span>, x), <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"darkgreen"</span>,</span>
+<span id="cb2-188"><a href="#cb2-188" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"ReLU"</span>, <span class="at">xlab =</span> <span class="st">"x"</span>, <span class="at">ylab =</span> <span class="st">"max(0, x)"</span>)</span>
+<span id="cb2-189"><a href="#cb2-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-190"><a href="#cb2-190" aria-hidden="true" tabindex="-1"></a><span class="co"># Softmax (conceptual - for single value)</span></span>
+<span id="cb2-191"><a href="#cb2-191" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, <span class="fu">exp</span>(x)<span class="sc">/</span>(<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(x)), <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"purple"</span>,</span>
+<span id="cb2-192"><a href="#cb2-192" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Softmax (1D)"</span>, <span class="at">xlab =</span> <span class="st">"x"</span>, <span class="at">ylab =</span> <span class="st">"exp(x)/(1+exp(x))"</span>)</span>
+<span id="cb2-193"><a href="#cb2-193" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb2-194"><a href="#cb2-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-195"><a href="#cb2-195" aria-hidden="true" tabindex="-1"></a>**ReLU (Rectified Linear Unit)** is most commonly used in hidden layers:</span>
+<span id="cb2-196"><a href="#cb2-196" aria-hidden="true" tabindex="-1"></a>$$\text{ReLU}(x) = \max(0, x)$$</span>
+<span id="cb2-197"><a href="#cb2-197" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-198"><a href="#cb2-198" aria-hidden="true" tabindex="-1"></a>**Sigmoid** and **softmax** are used for output layers in classification problems.</span>
+<span id="cb2-199"><a href="#cb2-199" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-200"><a href="#cb2-200" aria-hidden="true" tabindex="-1"></a><span class="fu">### Layers and Depth</span></span>
+<span id="cb2-201"><a href="#cb2-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-202"><a href="#cb2-202" aria-hidden="true" tabindex="-1"></a>A neural network consists of three types of layers. The **input layer** receives the raw features—pixels of an image, nucleotides of a DNA sequence, or numerical measurements. **Hidden layers** transform these representations through successive applications of weighted sums and activation functions, with each layer building on the previous layer's output. Finally, the **output layer** produces predictions—class probabilities for classification or numerical values for regression.</span>
+<span id="cb2-203"><a href="#cb2-203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-204"><a href="#cb2-204" aria-hidden="true" tabindex="-1"></a>The "depth" of a network refers to the number of hidden layers. Networks with many hidden layers can learn hierarchical representations—simple features in early layers combine into more complex features in later layers. For an image, early layers might detect edges, middle layers might combine edges into shapes, and later layers might recognize whole objects.</span>
+<span id="cb2-205"><a href="#cb2-205" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-208"><a href="#cb2-208" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb2-209"><a href="#cb2-209" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-network-architecture</span></span>
+<span id="cb2-210"><a href="#cb2-210" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "A feedforward neural network with two hidden layers. Information flows from input to output through successive transformations."</span></span>
+<span id="cb2-211"><a href="#cb2-211" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 9</span></span>
+<span id="cb2-212"><a href="#cb2-212" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5</span></span>
+<span id="cb2-213"><a href="#cb2-213" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb2-214"><a href="#cb2-214" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.new</span>()</span>
+<span id="cb2-215"><a href="#cb2-215" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.window</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">10</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">10</span>))</span>
+<span id="cb2-216"><a href="#cb2-216" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">"Feedforward Neural Network"</span>, <span class="at">cex.main =</span> <span class="fl">1.2</span>)</span>
+<span id="cb2-217"><a href="#cb2-217" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-218"><a href="#cb2-218" aria-hidden="true" tabindex="-1"></a><span class="co"># Layer positions</span></span>
+<span id="cb2-219"><a href="#cb2-219" aria-hidden="true" tabindex="-1"></a>layer_x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">3.5</span>, <span class="dv">6</span>, <span class="fl">8.5</span>)</span>
+<span id="cb2-220"><a href="#cb2-220" aria-hidden="true" tabindex="-1"></a>layer_names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Input</span><span class="sc">\n</span><span class="st">Layer"</span>, <span class="st">"Hidden</span><span class="sc">\n</span><span class="st">Layer 1"</span>, <span class="st">"Hidden</span><span class="sc">\n</span><span class="st">Layer 2"</span>, <span class="st">"Output</span><span class="sc">\n</span><span class="st">Layer"</span>)</span>
+<span id="cb2-221"><a href="#cb2-221" aria-hidden="true" tabindex="-1"></a>layer_sizes <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">2</span>)</span>
+<span id="cb2-222"><a href="#cb2-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-223"><a href="#cb2-223" aria-hidden="true" tabindex="-1"></a><span class="co"># Draw nodes</span></span>
+<span id="cb2-224"><a href="#cb2-224" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (l <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>) {</span>
+<span id="cb2-225"><a href="#cb2-225" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> layer_sizes[l]</span>
+<span id="cb2-226"><a href="#cb2-226" aria-hidden="true" tabindex="-1"></a>  y_positions <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">2</span>, <span class="dv">8</span>, <span class="at">length.out =</span> n)</span>
+<span id="cb2-227"><a href="#cb2-227" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n) {</span>
+<span id="cb2-228"><a href="#cb2-228" aria-hidden="true" tabindex="-1"></a>    col <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"steelblue"</span>, <span class="st">"coral"</span>, <span class="st">"coral"</span>, <span class="st">"lightgreen"</span>)[l]</span>
+<span id="cb2-229"><a href="#cb2-229" aria-hidden="true" tabindex="-1"></a>    <span class="fu">points</span>(layer_x[l], y_positions[i], <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">cex =</span> <span class="fl">2.5</span>, <span class="at">col =</span> col)</span>
+<span id="cb2-230"><a href="#cb2-230" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-231"><a href="#cb2-231" aria-hidden="true" tabindex="-1"></a>  <span class="fu">text</span>(layer_x[l], <span class="fl">0.8</span>, layer_names[l], <span class="at">cex =</span> <span class="fl">0.8</span>)</span>
+<span id="cb2-232"><a href="#cb2-232" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-233"><a href="#cb2-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-234"><a href="#cb2-234" aria-hidden="true" tabindex="-1"></a><span class="co"># Draw connections (simplified - not all shown)</span></span>
+<span id="cb2-235"><a href="#cb2-235" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (l <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) {</span>
+<span id="cb2-236"><a href="#cb2-236" aria-hidden="true" tabindex="-1"></a>  n1 <span class="ot">&lt;-</span> layer_sizes[l]</span>
+<span id="cb2-237"><a href="#cb2-237" aria-hidden="true" tabindex="-1"></a>  n2 <span class="ot">&lt;-</span> layer_sizes[l<span class="sc">+</span><span class="dv">1</span>]</span>
+<span id="cb2-238"><a href="#cb2-238" aria-hidden="true" tabindex="-1"></a>  y1 <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">2</span>, <span class="dv">8</span>, <span class="at">length.out =</span> n1)</span>
+<span id="cb2-239"><a href="#cb2-239" aria-hidden="true" tabindex="-1"></a>  y2 <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">2</span>, <span class="dv">8</span>, <span class="at">length.out =</span> n2)</span>
+<span id="cb2-240"><a href="#cb2-240" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n1) {</span>
+<span id="cb2-241"><a href="#cb2-241" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n2) {</span>
+<span id="cb2-242"><a href="#cb2-242" aria-hidden="true" tabindex="-1"></a>      <span class="fu">segments</span>(layer_x[l] <span class="sc">+</span> <span class="fl">0.15</span>, y1[i], layer_x[l<span class="sc">+</span><span class="dv">1</span>] <span class="sc">-</span> <span class="fl">0.15</span>, y2[j],</span>
+<span id="cb2-243"><a href="#cb2-243" aria-hidden="true" tabindex="-1"></a>               <span class="at">col =</span> <span class="fu">rgb</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="fl">0.15</span>), <span class="at">lwd =</span> <span class="fl">0.5</span>)</span>
+<span id="cb2-244"><a href="#cb2-244" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-245"><a href="#cb2-245" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-246"><a href="#cb2-246" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-247"><a href="#cb2-247" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb2-248"><a href="#cb2-248" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-249"><a href="#cb2-249" aria-hidden="true" tabindex="-1"></a><span class="fu">### Training Neural Networks</span></span>
+<span id="cb2-250"><a href="#cb2-250" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-251"><a href="#cb2-251" aria-hidden="true" tabindex="-1"></a>Neural networks are trained by **backpropagation**, an algorithm that efficiently computes how each weight contributes to the prediction error.</span>
+<span id="cb2-252"><a href="#cb2-252" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-253"><a href="#cb2-253" aria-hidden="true" tabindex="-1"></a>Training proceeds in cycles. First, the **forward pass** computes predictions by passing inputs through the network layer by layer. Then we **compute the loss**—a measure of how different the predictions are from the true values. The **backward pass** then propagates this error backward through the network, computing gradients that indicate how each weight should change to reduce the error. Finally, we **update the weights**, adjusting each one in the direction that reduces the loss.</span>
+<span id="cb2-254"><a href="#cb2-254" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-255"><a href="#cb2-255" aria-hidden="true" tabindex="-1"></a>This process repeats for many **epochs** (complete passes through the training data). The weight updates typically use **stochastic gradient descent** or more sophisticated variants like Adam or RMSprop that adapt learning rates during training.</span>
+<span id="cb2-256"><a href="#cb2-256" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-257"><a href="#cb2-257" aria-hidden="true" tabindex="-1"></a><span class="fu">## Major Types of Deep Learning Architectures</span></span>
+<span id="cb2-258"><a href="#cb2-258" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-259"><a href="#cb2-259" aria-hidden="true" tabindex="-1"></a><span class="fu">### Feedforward Neural Networks (Multilayer Perceptrons)</span></span>
+<span id="cb2-260"><a href="#cb2-260" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-261"><a href="#cb2-261" aria-hidden="true" tabindex="-1"></a>The simplest architecture, where information flows in one direction from input to output, is the **feedforward neural network** (also called a multilayer perceptron). These networks are appropriate for tabular data with numerical features, simple classification and regression problems, and situations where the number of features is fixed. They serve as the foundation for understanding more complex architectures.</span>
+<span id="cb2-262"><a href="#cb2-262" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-263"><a href="#cb2-263" aria-hidden="true" tabindex="-1"></a><span class="fu">### Convolutional Neural Networks (CNNs)</span></span>
+<span id="cb2-264"><a href="#cb2-264" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-265"><a href="#cb2-265" aria-hidden="true" tabindex="-1"></a>**CNNs** are designed for grid-like data, especially images. They use **convolutional layers** that apply learnable filters across the input, capturing local patterns.</span>
+<span id="cb2-266"><a href="#cb2-266" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-267"><a href="#cb2-267" aria-hidden="true" tabindex="-1"></a>CNNs have several key properties that make them effective for images. **Local connectivity** means each unit connects only to a small region of the input, focusing on local patterns rather than the entire image at once. **Parameter sharing** means the same filter is applied across the entire image, so a pattern detector learned in one location works everywhere. This leads to **translation invariance**—the network can recognize patterns regardless of where they appear in the image.</span>
+<span id="cb2-268"><a href="#cb2-268" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-269"><a href="#cb2-269" aria-hidden="true" tabindex="-1"></a>CNNs learn hierarchical features automatically. Early layers typically learn to detect edges, textures, and colors. Middle layers combine these into parts, shapes, and patterns. Later layers recognize whole objects and abstract concepts. This hierarchy emerges naturally from training, without being explicitly programmed.</span>
+<span id="cb2-270"><a href="#cb2-270" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-271"><a href="#cb2-271" aria-hidden="true" tabindex="-1"></a>In biology, CNNs have transformed medical image analysis, from detecting tumors in radiology scans to classifying cell types in microscopy images. They are also used for analyzing protein structure visualizations and other imaging modalities.</span>
+<span id="cb2-272"><a href="#cb2-272" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-273"><a href="#cb2-273" aria-hidden="true" tabindex="-1"></a><span class="fu">### Recurrent Neural Networks (RNNs) and LSTMs</span></span>
+<span id="cb2-274"><a href="#cb2-274" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-275"><a href="#cb2-275" aria-hidden="true" tabindex="-1"></a>**RNNs** are designed for sequential data where order matters. They maintain a "memory" (hidden state) that captures information from previous time steps.</span>
+<span id="cb2-276"><a href="#cb2-276" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-277"><a href="#cb2-277" aria-hidden="true" tabindex="-1"></a>**Long Short-Term Memory (LSTM)** networks are an improved RNN architecture that can capture long-range dependencies without suffering from vanishing gradients—a problem where gradients become too small to propagate through many time steps.</span>
+<span id="cb2-278"><a href="#cb2-278" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-279"><a href="#cb2-279" aria-hidden="true" tabindex="-1"></a>RNNs and LSTMs are applied to time series analysis such as gene expression changes over time, sequence modeling for DNA and protein sequences, and natural language processing tasks where word order matters.</span>
+<span id="cb2-280"><a href="#cb2-280" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-281"><a href="#cb2-281" aria-hidden="true" tabindex="-1"></a><span class="fu">### Transformers and Attention Mechanisms</span></span>
+<span id="cb2-282"><a href="#cb2-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-283"><a href="#cb2-283" aria-hidden="true" tabindex="-1"></a>**Transformers** have revolutionized deep learning, particularly in natural language processing. Instead of processing sequences step-by-step like RNNs, they use **attention mechanisms** to relate all positions simultaneously.</span>
+<span id="cb2-284"><a href="#cb2-284" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-285"><a href="#cb2-285" aria-hidden="true" tabindex="-1"></a>The key innovation is **self-attention**, which allows the model to weigh the importance of different parts of the input when producing each output. Unlike RNNs, which must process sequences one step at a time, transformers can consider all positions in parallel, making them faster to train and better at capturing long-range relationships.</span>
+<span id="cb2-286"><a href="#cb2-286" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-287"><a href="#cb2-287" aria-hidden="true" tabindex="-1"></a>Transformers power the large language models like GPT and BERT that have transformed natural language processing. In biology, AlphaFold uses attention mechanisms for protein structure prediction, and transformers are increasingly applied to genomic sequence analysis.</span>
+<span id="cb2-288"><a href="#cb2-288" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-289"><a href="#cb2-289" aria-hidden="true" tabindex="-1"></a><span class="fu">### Autoencoders</span></span>
+<span id="cb2-290"><a href="#cb2-290" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-291"><a href="#cb2-291" aria-hidden="true" tabindex="-1"></a>**Autoencoders** learn compressed representations by training to reconstruct their input through a bottleneck layer. The **encoder** compresses the input to a lower-dimensional representation, and the **decoder** attempts to reconstruct the original input from this compressed representation. By forcing information through a bottleneck, the network must learn the most important features of the data.</span>
+<span id="cb2-292"><a href="#cb2-292" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-293"><a href="#cb2-293" aria-hidden="true" tabindex="-1"></a>Autoencoders are used for dimensionality reduction (as an alternative to PCA), denoising data by learning to reconstruct clean inputs from corrupted ones, anomaly detection by identifying inputs that are difficult to reconstruct, and generating new samples through **variational autoencoders** that learn probability distributions in the compressed space.</span>
+<span id="cb2-294"><a href="#cb2-294" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-295"><a href="#cb2-295" aria-hidden="true" tabindex="-1"></a><span class="fu">### Discriminative vs. Generative Models</span></span>
+<span id="cb2-296"><a href="#cb2-296" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-297"><a href="#cb2-297" aria-hidden="true" tabindex="-1"></a>Before introducing GANs, it's helpful to understand a fundamental distinction in AI models. Most machine learning methods covered in this book are **discriminative models**—they learn to distinguish between classes by finding decision boundaries in the feature space. Given an input, they output a class label or prediction.</span>
+<span id="cb2-298"><a href="#cb2-298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-299"><a href="#cb2-299" aria-hidden="true" tabindex="-1"></a>**Generative models**, by contrast, learn the underlying probability distribution of the data itself. Rather than just distinguishing cats from dogs, a generative model learns "what does a cat look like?" This allows them to generate entirely new samples that resemble the training data. @fig-discriminative-generative illustrates this distinction.</span>
+<span id="cb2-300"><a href="#cb2-300" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-301"><a href="#cb2-301" aria-hidden="true" tabindex="-1"></a><span class="al">![Discriminative vs. generative AI models. Discriminative models (left) learn decision boundaries to classify inputs into categories. Generative models (right) learn the probability distribution of each class, enabling them to generate new samples. Most traditional machine learning is discriminative; recent advances in AI (like GPT, DALL-E, and AlphaFold) increasingly leverage generative approaches.](../images/ch39/ch39_discriminative_generative.png)</span>{#fig-discriminative-generative fig-align="center" width="85%"}</span>
+<span id="cb2-302"><a href="#cb2-302" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-303"><a href="#cb2-303" aria-hidden="true" tabindex="-1"></a><span class="fu">### Generative Adversarial Networks (GANs)</span></span>
+<span id="cb2-304"><a href="#cb2-304" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-305"><a href="#cb2-305" aria-hidden="true" tabindex="-1"></a>**GANs** consist of two networks trained in competition. The **generator** tries to create realistic fake data, while the **discriminator** tries to distinguish real examples from fake ones. Through this adversarial process—each network trying to beat the other—the generator learns to produce increasingly realistic samples.</span>
+<span id="cb2-306"><a href="#cb2-306" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-307"><a href="#cb2-307" aria-hidden="true" tabindex="-1"></a>GANs are used for image synthesis, creating photorealistic images of faces, scenes, or objects that don't exist. In biology, they enable data augmentation by generating synthetic training examples, and they can generate novel drug molecules with desired properties.</span>
+<span id="cb2-308"><a href="#cb2-308" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-309"><a href="#cb2-309" aria-hidden="true" tabindex="-1"></a><span class="fu">## Deep Learning vs. Traditional Methods</span></span>
+<span id="cb2-310"><a href="#cb2-310" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-311"><a href="#cb2-311" aria-hidden="true" tabindex="-1"></a><span class="fu">### When to Use Deep Learning</span></span>
+<span id="cb2-312"><a href="#cb2-312" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-313"><a href="#cb2-313" aria-hidden="true" tabindex="-1"></a>Deep learning tends to be the best choice when several conditions are met. First, you need **large datasets**—deep learning excels with thousands to millions of samples, where it can learn subtle patterns that simpler methods would miss. Second, deep learning shines with **complex, high-dimensional inputs** like images, DNA sequences, or audio, where the sheer number of raw features makes manual feature engineering impractical.</span>
+<span id="cb2-314"><a href="#cb2-314" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-315"><a href="#cb2-315" aria-hidden="true" tabindex="-1"></a>Deep learning is also preferred when you have **raw data available** and want to skip the feature engineering step entirely. You need **sufficient computational resources**—GPUs or TPUs are often required for reasonable training times. Deep learning makes sense when **prediction accuracy is paramount** and interpretability is less important. Finally, it works best when **patterns are hierarchical**, with simple features combining into complex ones—exactly the structure these networks are designed to capture.</span>
+<span id="cb2-316"><a href="#cb2-316" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-317"><a href="#cb2-317" aria-hidden="true" tabindex="-1"></a><span class="fu">### When Traditional Methods May Be Better</span></span>
+<span id="cb2-318"><a href="#cb2-318" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-319"><a href="#cb2-319" aria-hidden="true" tabindex="-1"></a>Traditional statistical learning methods are often better choices in several common situations. With **small datasets**—hundreds of samples or fewer—deep learning is likely to overfit, while methods like random forests and regularized regression can still perform well. For **tabular data** with structured numerical features, traditional methods often match or exceed deep learning performance with less complexity.</span>
+<span id="cb2-320"><a href="#cb2-320" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-321"><a href="#cb2-321" aria-hidden="true" tabindex="-1"></a>When **interpretability is required**, you need to understand and explain why predictions are made, which is difficult with deep neural networks. In **limited compute environments** with only CPUs, traditional methods are much more practical. If **domain knowledge is available**, you can engineer informative features that may work better than features learned from limited data. When **uncertainty quantification** is needed—confidence intervals, p-values, or well-calibrated probability estimates—statistical methods have better-developed theory. And for **regulatory requirements** that demand auditable, explainable models, traditional methods are often the only acceptable choice.</span>
+<span id="cb2-322"><a href="#cb2-322" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-323"><a href="#cb2-323" aria-hidden="true" tabindex="-1"></a><span class="fu">### A Practical Comparison</span></span>
+<span id="cb2-324"><a href="#cb2-324" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-325"><a href="#cb2-325" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Task <span class="pp">|</span> Traditional ML <span class="pp">|</span> Deep Learning <span class="pp">|</span></span>
+<span id="cb2-326"><a href="#cb2-326" aria-hidden="true" tabindex="-1"></a><span class="pp">|:-----|:--------------|:--------------|</span></span>
+<span id="cb2-327"><a href="#cb2-327" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Predicting disease from 50 biomarkers <span class="pp">|</span> Random Forest, SVM <span class="pp">|</span> Probably overkill <span class="pp">|</span></span>
+<span id="cb2-328"><a href="#cb2-328" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Classifying tumors from histopathology images <span class="pp">|</span> Feature engineering + classifier <span class="pp">|</span> CNN (likely better) <span class="pp">|</span></span>
+<span id="cb2-329"><a href="#cb2-329" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Predicting protein structure <span class="pp">|</span> Difficult <span class="pp">|</span> AlphaFold revolutionized this <span class="pp">|</span></span>
+<span id="cb2-330"><a href="#cb2-330" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Analyzing 100-patient clinical trial <span class="pp">|</span> Regression, ANOVA <span class="pp">|</span> Not enough data <span class="pp">|</span></span>
+<span id="cb2-331"><a href="#cb2-331" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Detecting arrhythmias from ECG <span class="pp">|</span> Feature-based classifiers <span class="pp">|</span> CNNs/RNNs work well <span class="pp">|</span></span>
+<span id="cb2-332"><a href="#cb2-332" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Gene expression analysis (RNA-seq) <span class="pp">|</span> Depends on sample size <span class="pp">|</span> Autoencoders useful for dimensionality reduction <span class="pp">|</span></span>
+<span id="cb2-333"><a href="#cb2-333" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-334"><a href="#cb2-334" aria-hidden="true" tabindex="-1"></a><span class="fu">## Deep Learning in Biology: Selected Applications</span></span>
+<span id="cb2-335"><a href="#cb2-335" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-336"><a href="#cb2-336" aria-hidden="true" tabindex="-1"></a><span class="fu">### AlphaFold: Protein Structure Prediction</span></span>
+<span id="cb2-337"><a href="#cb2-337" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-338"><a href="#cb2-338" aria-hidden="true" tabindex="-1"></a>Perhaps the most transformative application of deep learning in biology. AlphaFold2 uses attention mechanisms to predict 3D protein structure from amino acid sequences with unprecedented accuracy, solving a 50-year-old problem.</span>
+<span id="cb2-339"><a href="#cb2-339" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-340"><a href="#cb2-340" aria-hidden="true" tabindex="-1"></a><span class="fu">### Medical Imaging</span></span>
+<span id="cb2-341"><a href="#cb2-341" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-342"><a href="#cb2-342" aria-hidden="true" tabindex="-1"></a>Deep learning has achieved remarkable success in medical imaging. Systems can detect diabetic retinopathy from retinal images, identify skin cancer from dermoscopy images, analyze pathology slides for cancer diagnosis, and segment organs in CT and MRI scans. In many of these applications, deep learning approaches now match or exceed the performance of trained specialists.</span>
+<span id="cb2-343"><a href="#cb2-343" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-344"><a href="#cb2-344" aria-hidden="true" tabindex="-1"></a><span class="fu">### Genomics and Sequencing</span></span>
+<span id="cb2-345"><a href="#cb2-345" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-346"><a href="#cb2-346" aria-hidden="true" tabindex="-1"></a>In genomics, deep learning predicts regulatory elements from DNA sequence, calls genetic variants from sequencing data, and predicts gene expression levels from sequence features. For single-cell RNA-seq analysis, autoencoders help with dimensionality reduction and batch correction, while other architectures identify cell types and developmental trajectories.</span>
+<span id="cb2-347"><a href="#cb2-347" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-348"><a href="#cb2-348" aria-hidden="true" tabindex="-1"></a><span class="fu">### Drug Discovery</span></span>
+<span id="cb2-349"><a href="#cb2-349" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-350"><a href="#cb2-350" aria-hidden="true" tabindex="-1"></a>Drug discovery increasingly relies on deep learning for predicting drug-target interactions, generating novel molecular structures with desired properties, predicting drug toxicity and side effects before clinical trials, and virtual screening of large compound libraries to identify promising candidates.</span>
+<span id="cb2-351"><a href="#cb2-351" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-352"><a href="#cb2-352" aria-hidden="true" tabindex="-1"></a><span class="fu">## Getting Started with Deep Learning</span></span>
+<span id="cb2-353"><a href="#cb2-353" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-354"><a href="#cb2-354" aria-hidden="true" tabindex="-1"></a><span class="fu">### Software Frameworks</span></span>
+<span id="cb2-355"><a href="#cb2-355" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-356"><a href="#cb2-356" aria-hidden="true" tabindex="-1"></a>The most popular frameworks for deep learning are **TensorFlow/Keras**, Google's framework that is widely used in industry, and **PyTorch**, Facebook's framework that has become the standard in research. Both have R interfaces—the <span class="in">`keras`</span> and <span class="in">`torch`</span> packages—allowing R users to build deep learning models without switching languages.</span>
+<span id="cb2-357"><a href="#cb2-357" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-358"><a href="#cb2-358" aria-hidden="true" tabindex="-1"></a><span class="fu">### Practical Tips</span></span>
+<span id="cb2-359"><a href="#cb2-359" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-360"><a href="#cb2-360" aria-hidden="true" tabindex="-1"></a>When getting started with deep learning, **begin with established architectures** before creating custom ones. Many problems are well-served by standard architectures like ResNet for images or BERT for text. **Use transfer learning** when possible—pre-trained models that have learned on millions of examples can be fine-tuned on your smaller dataset, dramatically improving performance.</span>
+<span id="cb2-361"><a href="#cb2-361" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-362"><a href="#cb2-362" aria-hidden="true" tabindex="-1"></a>**Monitor for overfitting** by tracking performance on a validation set and using regularization techniques like dropout. **Normalize your inputs**, since neural networks are sensitive to input scale and train poorly on unnormalized data. **Use data augmentation** to artificially expand your training set, especially for image data with limited samples—random rotations, crops, and color adjustments can significantly improve generalization.</span>
+<span id="cb2-363"><a href="#cb2-363" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-364"><a href="#cb2-364" aria-hidden="true" tabindex="-1"></a>**Experiment with learning rates**, as this is often the most critical hyperparameter. Too high and training diverges; too low and training stalls. Finally, **consider computational costs**—GPU training can become expensive for large models, and sometimes the simpler traditional methods are more practical.</span>
+<span id="cb2-365"><a href="#cb2-365" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-366"><a href="#cb2-366" aria-hidden="true" tabindex="-1"></a><span class="fu">## Limitations and Considerations</span></span>
+<span id="cb2-367"><a href="#cb2-367" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-368"><a href="#cb2-368" aria-hidden="true" tabindex="-1"></a><span class="fu">### Black Box Nature</span></span>
+<span id="cb2-369"><a href="#cb2-369" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-370"><a href="#cb2-370" aria-hidden="true" tabindex="-1"></a>Deep learning models are difficult to interpret. While methods like attention visualization, gradient-based saliency maps, and SHAP values can provide some insight into what the network is focusing on, understanding *why* a network makes a particular prediction remains challenging. This limits the use of deep learning in settings where explanations are required.</span>
+<span id="cb2-371"><a href="#cb2-371" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-372"><a href="#cb2-372" aria-hidden="true" tabindex="-1"></a><span class="fu">### Data Hunger</span></span>
+<span id="cb2-373"><a href="#cb2-373" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-374"><a href="#cb2-374" aria-hidden="true" tabindex="-1"></a>Deep learning typically requires large datasets to reach its potential. With small samples, traditional methods often perform better and are less prone to overfitting. The impressive results in image recognition, for example, come from training on millions of labeled images—a luxury not available in most biological applications.</span>
+<span id="cb2-375"><a href="#cb2-375" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-376"><a href="#cb2-376" aria-hidden="true" tabindex="-1"></a><span class="fu">### Computational Requirements</span></span>
+<span id="cb2-377"><a href="#cb2-377" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-378"><a href="#cb2-378" aria-hidden="true" tabindex="-1"></a>Training deep networks requires significant computational resources. GPUs (Graphics Processing Units) are nearly essential for reasonable training times, and for large models, cloud computing or dedicated hardware clusters may be needed. Training also requires large amounts of memory to hold the model parameters and batch data.</span>
+<span id="cb2-379"><a href="#cb2-379" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-380"><a href="#cb2-380" aria-hidden="true" tabindex="-1"></a><span class="fu">### Reproducibility Challenges</span></span>
+<span id="cb2-381"><a href="#cb2-381" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-382"><a href="#cb2-382" aria-hidden="true" tabindex="-1"></a>Neural network training involves random initialization of weights, stochastic optimization that processes data in random order, and hardware-dependent operations that may produce slightly different results on different systems. Making results fully reproducible requires careful attention to random seeds, software versions, and environment configuration—challenges that the field is still working to address.</span>
+<span id="cb2-383"><a href="#cb2-383" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-384"><a href="#cb2-384" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
+<span id="cb2-385"><a href="#cb2-385" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-386"><a href="#cb2-386" aria-hidden="true" tabindex="-1"></a>This chapter provided a conceptual overview of **deep learning**, a powerful approach that uses multi-layer neural networks to automatically learn features from data. Unlike traditional machine learning, which requires careful feature engineering by domain experts, deep learning can work directly with raw data—images, DNA sequences, text, or other complex inputs—discovering relevant features through training.</span>
+<span id="cb2-387"><a href="#cb2-387" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-388"><a href="#cb2-388" aria-hidden="true" tabindex="-1"></a>The major deep learning architectures serve different purposes. **Feedforward networks** (multilayer perceptrons) are the simplest architecture, suitable for tabular data and general-purpose problems. **Convolutional Neural Networks (CNNs)** are designed for images and spatial data, learning hierarchical features from edges to objects. **Recurrent Neural Networks (RNNs)** and **LSTMs** handle sequential data where order matters, maintaining memory across time steps. **Transformers** use attention mechanisms to relate all positions in a sequence simultaneously and have become the state-of-the-art for many sequence tasks. **Autoencoders** learn compressed representations useful for dimensionality reduction and generation. **Generative Adversarial Networks (GANs)** create realistic synthetic data through an adversarial training process.</span>
+<span id="cb2-389"><a href="#cb2-389" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-390"><a href="#cb2-390" aria-hidden="true" tabindex="-1"></a>Deep learning excels when you have **large datasets** and **complex, high-dimensional inputs**. Traditional statistical learning methods remain better choices for **small datasets**, situations requiring **interpretability**, and **structured tabular data**. In biology, deep learning has transformed protein structure prediction (AlphaFold), medical imaging, genomics, and drug discovery, but its applicability depends critically on having sufficient data and computational resources. The field continues to evolve rapidly, with new architectures and best practices emerging regularly.</span>
+<span id="cb2-391"><a href="#cb2-391" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-392"><a href="#cb2-392" aria-hidden="true" tabindex="-1"></a><span class="fu">## Additional Resources</span></span>
+<span id="cb2-393"><a href="#cb2-393" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-394"><a href="#cb2-394" aria-hidden="true" tabindex="-1"></a><span class="fu">### Books</span></span>
+<span id="cb2-395"><a href="#cb2-395" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Goodfellow, Bengio, &amp; Courville (2016). *Deep Learning*. MIT Press. (The definitive textbook)</span>
+<span id="cb2-396"><a href="#cb2-396" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Chollet (2021). *Deep Learning with Python*. Manning. (Practical introduction)</span>
+<span id="cb2-397"><a href="#cb2-397" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-398"><a href="#cb2-398" aria-hidden="true" tabindex="-1"></a><span class="fu">### Online Courses</span></span>
+<span id="cb2-399"><a href="#cb2-399" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>fast.ai - Practical deep learning for coders</span>
+<span id="cb2-400"><a href="#cb2-400" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>deeplearning.ai - Andrew Ng's courses</span>
+<span id="cb2-401"><a href="#cb2-401" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Stanford CS231n - Convolutional Neural Networks for Visual Recognition</span>
+<span id="cb2-402"><a href="#cb2-402" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-403"><a href="#cb2-403" aria-hidden="true" tabindex="-1"></a><span class="fu">### Biological Applications</span></span>
+<span id="cb2-404"><a href="#cb2-404" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>@jumper2021alphafold - AlphaFold paper</span>
+<span id="cb2-405"><a href="#cb2-405" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Ching et al. (2018). Opportunities and obstacles for deep learning in biology and medicine</span>
+<span id="cb2-406"><a href="#cb2-406" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Eraslan et al. (2019). Deep learning: new computational modelling techniques for genomics</span>
+<span id="cb2-407"><a href="#cb2-407" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-408"><a href="#cb2-408" aria-hidden="true" tabindex="-1"></a><span class="fu">### Software Documentation</span></span>
+<span id="cb2-409"><a href="#cb2-409" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>TensorFlow: https://www.tensorflow.org</span>
+<span id="cb2-410"><a href="#cb2-410" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>PyTorch: https://pytorch.org</span>
+<span id="cb2-411"><a href="#cb2-411" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Keras R package: https://keras.rstudio.com</span>
+</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Statistics for Biosciences and Bioengineering</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Built with <a href="https://quarto.org/">Quarto</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

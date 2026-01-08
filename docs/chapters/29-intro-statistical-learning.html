@@ -1,0 +1,1657 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.30">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>30&nbsp; Introduction to Statistical Learning – Statistics for the Biosciences and Bioengineering</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/30-model-validation.html" rel="next">
+<link href="../chapters/28-glm.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-de070a7b0ab54f8780927367ac907214.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-485d01fc63b59abcd3ee1bf1e8e2748d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/29-intro-statistical-learning.html">Statistical Learning</a></li><li class="breadcrumb-item"><a href="../chapters/29-intro-statistical-learning.html"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Introduction to Statistical Learning</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Statistics for the Biosciences and Bioengineering</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Why This Book?</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Core Data Science Tools</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-installing-tools.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Installing Core Tools</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-unix-command-line.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Unix and the Command Line</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-r-rstudio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">R and RStudio</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-markdown-latex.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Markdown and LaTeX</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Data Exploration</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/06-tidy-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Tidy Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/07-data-wrangling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Data Wrangling with dplyr</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/08-exploratory-data-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/09-data-visualization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Data Visualization</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Probability and Distributions</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/10-probability-foundations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Foundations of Probability</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/11-discrete-distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Discrete Probability Distributions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/12-continuous-distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Continuous Probability Distributions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/13-sampling-estimation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Sampling and Parameter Estimation</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Statistical Inference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/14-experimental-design.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Experimental Design Principles</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/15-hypothesis-testing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/16-t-tests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">T-Tests</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/17-nonparametric-tests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Nonparametric Tests</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/18-bootstrapping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Resampling Methods</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/19-presenting-results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Presenting Statistical Results</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Linear Models</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/20-what-are-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">What are Models?</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/21-correlation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Correlation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/22-simple-linear-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Simple Linear Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/23-residual-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Residual Analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/24-statistical-power.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Statistical Power</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/25-multiple-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Multiple Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/26-single-factor-anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Single Factor ANOVA</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/27-multifactor-anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Multi-Factor ANOVA</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/28-glm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Statistical Learning</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/29-intro-statistical-learning.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Introduction to Statistical Learning</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/30-model-validation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Model Validation and the Bias-Variance Tradeoff</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/31-regularization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Regularization Methods</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/32-smoothing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Smoothing and Non-Parametric Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/33-classification-methods.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Classification and Performance Metrics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/34-trees-forests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Decision Trees and Random Forests</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/35-svm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Support Vector Machines</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/36-clustering.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Clustering</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/37-dimensionality-reduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Dimensionality Reduction and Multivariate Methods</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/38-tsne-umap.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Non-Linear Dimensionality Reduction: t-SNE and UMAP</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/39-bayesian-statistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">Bayesian Statistics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/40-deep-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">Introduction to Deep Learning</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A1-eugenics-history.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">The Eugenics History of Statistics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A2-keyboard-shortcuts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Keyboard Shortcuts Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A3-unix-reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">Unix Command Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A4-r-reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">R Command Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A5-quarto-reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">Quarto Markdown Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A6-latex-reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">LaTeX Command Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A7-greek-letters.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title">Greek Letters in Mathematics and Statistics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A8-probability-distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title">Common Probability Distributions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A9-sampling-distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title">Sampling Distributions in Hypothesis Testing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A10-matrix-algebra.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">51</span>&nbsp; <span class="chapter-title">Matrix Algebra Fundamentals</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A11-high-performance-computing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">52</span>&nbsp; <span class="chapter-title">High Performance Computing</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#what-is-statistical-learning" id="toc-what-is-statistical-learning" class="nav-link active" data-scroll-target="#what-is-statistical-learning"><span class="header-section-number">30.1</span> What is Statistical Learning?</a></li>
+  <li><a href="#from-inference-to-prediction" id="toc-from-inference-to-prediction" class="nav-link" data-scroll-target="#from-inference-to-prediction"><span class="header-section-number">30.2</span> From Inference to Prediction</a></li>
+  <li><a href="#key-components-of-statistical-learning" id="toc-key-components-of-statistical-learning" class="nav-link" data-scroll-target="#key-components-of-statistical-learning"><span class="header-section-number">30.3</span> Key Components of Statistical Learning</a>
+  <ul class="collapse">
+  <li><a href="#inputs-and-outputs" id="toc-inputs-and-outputs" class="nav-link" data-scroll-target="#inputs-and-outputs">Inputs and Outputs</a></li>
+  <li><a href="#the-learning-task" id="toc-the-learning-task" class="nav-link" data-scroll-target="#the-learning-task">The Learning Task</a></li>
+  <li><a href="#training-and-test-data" id="toc-training-and-test-data" class="nav-link" data-scroll-target="#training-and-test-data">Training and Test Data</a></li>
+  <li><a href="#model-complexity" id="toc-model-complexity" class="nav-link" data-scroll-target="#model-complexity">Model Complexity</a></li>
+  </ul></li>
+  <li><a href="#categories-of-statistical-learning" id="toc-categories-of-statistical-learning" class="nav-link" data-scroll-target="#categories-of-statistical-learning"><span class="header-section-number">30.4</span> Categories of Statistical Learning</a>
+  <ul class="collapse">
+  <li><a href="#supervised-vs.-unsupervised-learning" id="toc-supervised-vs.-unsupervised-learning" class="nav-link" data-scroll-target="#supervised-vs.-unsupervised-learning">Supervised vs.&nbsp;Unsupervised Learning</a></li>
+  <li><a href="#parametric-vs.-non-parametric-methods" id="toc-parametric-vs.-non-parametric-methods" class="nav-link" data-scroll-target="#parametric-vs.-non-parametric-methods">Parametric vs.&nbsp;Non-Parametric Methods</a></li>
+  <li><a href="#flexible-vs.-inflexible-methods" id="toc-flexible-vs.-inflexible-methods" class="nav-link" data-scroll-target="#flexible-vs.-inflexible-methods">Flexible vs.&nbsp;Inflexible Methods</a></li>
+  </ul></li>
+  <li><a href="#overview-of-methods-covered" id="toc-overview-of-methods-covered" class="nav-link" data-scroll-target="#overview-of-methods-covered"><span class="header-section-number">30.5</span> Overview of Methods Covered</a>
+  <ul class="collapse">
+  <li><a href="#model-validation-and-selection" id="toc-model-validation-and-selection" class="nav-link" data-scroll-target="#model-validation-and-selection">Model Validation and Selection</a></li>
+  <li><a href="#regularization" id="toc-regularization" class="nav-link" data-scroll-target="#regularization">Regularization</a></li>
+  <li><a href="#smoothing-methods" id="toc-smoothing-methods" class="nav-link" data-scroll-target="#smoothing-methods">Smoothing Methods</a></li>
+  <li><a href="#classification" id="toc-classification" class="nav-link" data-scroll-target="#classification">Classification</a></li>
+  <li><a href="#tree-based-methods" id="toc-tree-based-methods" class="nav-link" data-scroll-target="#tree-based-methods">Tree-Based Methods</a></li>
+  <li><a href="#support-vector-machines" id="toc-support-vector-machines" class="nav-link" data-scroll-target="#support-vector-machines">Support Vector Machines</a></li>
+  <li><a href="#clustering" id="toc-clustering" class="nav-link" data-scroll-target="#clustering">Clustering</a></li>
+  <li><a href="#dimensionality-reduction" id="toc-dimensionality-reduction" class="nav-link" data-scroll-target="#dimensionality-reduction">Dimensionality Reduction</a></li>
+  <li><a href="#bayesian-approaches" id="toc-bayesian-approaches" class="nav-link" data-scroll-target="#bayesian-approaches">Bayesian Approaches</a></li>
+  <li><a href="#deep-learning" id="toc-deep-learning" class="nav-link" data-scroll-target="#deep-learning">Deep Learning</a></li>
+  </ul></li>
+  <li><a href="#choosing-the-right-method" id="toc-choosing-the-right-method" class="nav-link" data-scroll-target="#choosing-the-right-method"><span class="header-section-number">30.6</span> Choosing the Right Method</a></li>
+  <li><a href="#the-statistical-learning-workflow" id="toc-the-statistical-learning-workflow" class="nav-link" data-scroll-target="#the-statistical-learning-workflow"><span class="header-section-number">30.7</span> The Statistical Learning Workflow</a></li>
+  <li><a href="#statistical-learning-in-biology-and-bioengineering" id="toc-statistical-learning-in-biology-and-bioengineering" class="nav-link" data-scroll-target="#statistical-learning-in-biology-and-bioengineering"><span class="header-section-number">30.8</span> Statistical Learning in Biology and Bioengineering</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">30.9</span> Summary</a></li>
+  <li><a href="#additional-resources" id="toc-additional-resources" class="nav-link" data-scroll-target="#additional-resources"><span class="header-section-number">30.10</span> Additional Resources</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/29-intro-statistical-learning.html">Statistical Learning</a></li><li class="breadcrumb-item"><a href="../chapters/29-intro-statistical-learning.html"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Introduction to Statistical Learning</span></a></li></ol></nav>
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span id="sec-intro-statistical-learning" class="quarto-section-identifier"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Introduction to Statistical Learning</span></span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="what-is-statistical-learning" class="level2" data-number="30.1">
+<h2 data-number="30.1" class="anchored" data-anchor-id="what-is-statistical-learning"><span class="header-section-number">30.1</span> What is Statistical Learning?</h2>
+<p><strong>Statistical learning</strong> refers to a vast set of tools for understanding data. These tools can be classified as <strong>supervised</strong> or <strong>unsupervised</strong>. Broadly speaking, supervised statistical learning involves building a statistical model for predicting, or estimating, an output based on one or more inputs. With unsupervised statistical learning, there are inputs but no supervising output; nevertheless we can learn relationships and structure from such data <span class="citation" data-cites="james2023islr hastie2009elements">(<a href="../references.html#ref-james2023islr" role="doc-biblioref">James et al. 2023</a>; <a href="../references.html#ref-hastie2009elements" role="doc-biblioref">Hastie, Tibshirani, and Friedman 2009</a>)</span>.</p>
+<p>Statistical learning emerged from statistics but has been heavily influenced by fields such as computer science and artificial intelligence. The term <strong>machine learning</strong> is often used interchangeably, though machine learning tends to emphasize prediction and computational efficiency, while statistical learning places more emphasis on interpretability and uncertainty quantification.</p>
+</section>
+<section id="from-inference-to-prediction" class="level2" data-number="30.2">
+<h2 data-number="30.2" class="anchored" data-anchor-id="from-inference-to-prediction"><span class="header-section-number">30.2</span> From Inference to Prediction</h2>
+<p>Traditional statistics emphasizes <strong>inference</strong>—understanding relationships, testing hypotheses, and quantifying uncertainty. Statistical learning shifts focus toward <strong>prediction</strong>—building models that accurately predict outcomes for new data.</p>
+<p>Both approaches use similar mathematical tools, but the goals differ:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 32%">
+<col style="width: 26%">
+<col style="width: 23%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Goal</th>
+<th style="text-align: left;">Questions</th>
+<th style="text-align: left;">Methods</th>
+<th style="text-align: left;">Output</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Inference</strong></td>
+<td style="text-align: left;">Which variables are associated? How strong is the relationship? Is the effect significant?</td>
+<td style="text-align: left;">Linear regression, hypothesis testing, confidence intervals</td>
+<td style="text-align: left;">Understanding, p-values, effect sizes</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Prediction</strong></td>
+<td style="text-align: left;">What will happen for new observations? How can we minimize prediction error?</td>
+<td style="text-align: left;">Cross-validation, regularization, ensemble methods</td>
+<td style="text-align: left;">Predictions, prediction intervals</td>
+</tr>
+</tbody>
+</table>
+<p>In practice, most analyses involve elements of both. A biologist might want to predict disease outcomes (prediction) while also understanding which genes drive the prediction (inference).</p>
+</section>
+<section id="key-components-of-statistical-learning" class="level2" data-number="30.3">
+<h2 data-number="30.3" class="anchored" data-anchor-id="key-components-of-statistical-learning"><span class="header-section-number">30.3</span> Key Components of Statistical Learning</h2>
+<p>Regardless of the specific method, statistical learning problems share common elements:</p>
+<section id="inputs-and-outputs" class="level3">
+<h3 class="anchored" data-anchor-id="inputs-and-outputs">Inputs and Outputs</h3>
+<p>We have data consisting of observations on variables. <strong>Input variables</strong> (also called predictors, features, or independent variables) are denoted <span class="math inline">\(X\)</span>. <strong>Output variables</strong> (also called response or dependent variables) are denoted <span class="math inline">\(Y\)</span>.</p>
+<p>In supervised learning, we observe both inputs and outputs:</p>
+<p><span class="math display">\[\{(x_1, y_1), (x_2, y_2), \ldots, (x_n, y_n)\}\]</span></p>
+<p>In unsupervised learning, we observe only inputs:</p>
+<p><span class="math display">\[\{x_1, x_2, \ldots, x_n\}\]</span></p>
+</section>
+<section id="the-learning-task" class="level3">
+<h3 class="anchored" data-anchor-id="the-learning-task">The Learning Task</h3>
+<p>The goal of supervised learning is to find a function <span class="math inline">\(f\)</span> such that:</p>
+<p><span class="math display">\[Y \approx f(X)\]</span></p>
+<p>This function captures the systematic relationship between inputs and outputs. The quality of <span class="math inline">\(f\)</span> is measured by how well it predicts <span class="math inline">\(Y\)</span> for new observations.</p>
+</section>
+<section id="training-and-test-data" class="level3">
+<h3 class="anchored" data-anchor-id="training-and-test-data">Training and Test Data</h3>
+<p>A fundamental practice in statistical learning is splitting data into two portions. The <strong>training data</strong> is used to build the model—the algorithm learns patterns and estimates parameters from these observations. The <strong>test data</strong> is held out and never seen during training; it serves solely to evaluate how well the model generalizes to new observations.</p>
+<p>This separation is crucial because models can “memorize” training data without learning generalizable patterns—a phenomenon called <strong>overfitting</strong>. A model that perfectly fits the training data but fails on new observations is useless in practice. By evaluating on held-out test data, we obtain an honest estimate of how our model will perform in the real world.</p>
+</section>
+<section id="model-complexity" class="level3">
+<h3 class="anchored" data-anchor-id="model-complexity">Model Complexity</h3>
+<p>Every statistical learning method must navigate the <strong>bias-variance tradeoff</strong>, a fundamental tension that shapes how we build models. Simple models with few parameters may be too rigid to capture the true patterns in data, leading to systematic errors known as high bias. These models underfit—they miss important structure because they lack the flexibility to represent it.</p>
+<p>At the other extreme, complex models with many parameters have the opposite problem. They can capture intricate patterns, but they may also fit the noise specific to the training data rather than the underlying signal. This sensitivity to the particular training sample is called high variance, and it leads to overfitting—excellent performance on training data but poor generalization to new observations.</p>
+<p>The optimal model balances these competing concerns. Too simple and you underfit; too complex and you overfit. This tradeoff is captured by the familiar U-shaped curve of test error versus model complexity: error decreases as we add flexibility to capture true patterns, then increases as the model begins fitting noise.</p>
+</section>
+</section>
+<section id="categories-of-statistical-learning" class="level2" data-number="30.4">
+<h2 data-number="30.4" class="anchored" data-anchor-id="categories-of-statistical-learning"><span class="header-section-number">30.4</span> Categories of Statistical Learning</h2>
+<p>Statistical learning methods fall into several broad categories:</p>
+<section id="supervised-vs.-unsupervised-learning" class="level3">
+<h3 class="anchored" data-anchor-id="supervised-vs.-unsupervised-learning">Supervised vs.&nbsp;Unsupervised Learning</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-learning-categories" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-learning-categories-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="29-intro-statistical-learning_files/figure-html/fig-learning-categories-1.png" class="img-fluid figure-img" width="864">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-learning-categories-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;30.1: Overview of supervised versus unsupervised learning. Supervised learning uses labeled data to predict outcomes; unsupervised learning discovers structure in unlabeled data.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Supervised learning</strong> problems have labeled data—we know the correct output for each observation. The task is to learn a mapping from inputs to outputs that generalizes to new data. Supervised learning takes two main forms depending on the nature of the output variable. When the output is continuous—such as predicting gene expression levels, blood pressure, or reaction rates—we call this <strong>regression</strong>. When the output is categorical—such as predicting disease status, cell type, or treatment response—we call this <strong>classification</strong>.</p>
+<p><strong>Unsupervised learning</strong> problems have no labeled outputs. Instead, we seek to discover patterns, groupings, or structure in the data without guidance about what we’re looking for. <strong>Clustering</strong> methods group similar observations together, revealing natural categories in the data such as patient subtypes or cell populations. <strong>Dimensionality reduction</strong> methods find lower-dimensional representations that capture most of the information, making high-dimensional data easier to visualize and analyze.</p>
+</section>
+<section id="parametric-vs.-non-parametric-methods" class="level3">
+<h3 class="anchored" data-anchor-id="parametric-vs.-non-parametric-methods">Parametric vs.&nbsp;Non-Parametric Methods</h3>
+<p><strong>Parametric methods</strong> assume a specific functional form for <span class="math inline">\(f\)</span>. For example, linear regression assumes <span class="math inline">\(f(X) = \beta_0 + \beta_1 X_1 + \ldots + \beta_p X_p\)</span>—a weighted sum of the predictors. Once we commit to this functional form, the learning problem reduces to estimating a finite number of parameters (the <span class="math inline">\(\beta\)</span> coefficients) from training data.</p>
+<p>This approach has important advantages. Parametric methods are computationally efficient because we only need to estimate a fixed number of parameters regardless of sample size. They produce interpretable models where each coefficient has a clear meaning. And they work well with smaller samples because the strong assumptions reduce what must be learned from data. The disadvantage is that if the true relationship differs substantially from the assumed form, the model will be systematically wrong no matter how much data we collect.</p>
+<p><strong>Non-parametric methods</strong> make no explicit assumptions about the form of <span class="math inline">\(f\)</span>. Instead, they let the data determine the shape of the relationship. Methods like K-nearest neighbors, decision trees, and kernel smoothing estimate <span class="math inline">\(f\)</span> directly without assuming a particular functional form. This flexibility allows non-parametric methods to capture complex, non-linear relationships that would be missed by rigid parametric assumptions. However, this flexibility comes at a cost: non-parametric methods typically require more data to achieve comparable accuracy, are more prone to overfitting, and often produce models that are harder to interpret.</p>
+</section>
+<section id="flexible-vs.-inflexible-methods" class="level3">
+<h3 class="anchored" data-anchor-id="flexible-vs.-inflexible-methods">Flexible vs.&nbsp;Inflexible Methods</h3>
+<p>Statistical learning methods span a spectrum of flexibility:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 23%">
+<col style="width: 35%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Method</th>
+<th style="text-align: left;">Flexibility</th>
+<th style="text-align: left;">Interpretability</th>
+<th style="text-align: left;">Typical Use</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Linear regression</td>
+<td style="text-align: left;">Low</td>
+<td style="text-align: left;">High</td>
+<td style="text-align: left;">When linearity is reasonable</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ridge/Lasso</td>
+<td style="text-align: left;">Low</td>
+<td style="text-align: left;">High</td>
+<td style="text-align: left;">High-dimensional linear problems</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">K-nearest neighbors</td>
+<td style="text-align: left;">Medium-High</td>
+<td style="text-align: left;">Low</td>
+<td style="text-align: left;">Non-linear patterns</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Decision trees</td>
+<td style="text-align: left;">Medium</td>
+<td style="text-align: left;">High</td>
+<td style="text-align: left;">Interpretable non-linear models</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Random forests</td>
+<td style="text-align: left;">High</td>
+<td style="text-align: left;">Medium</td>
+<td style="text-align: left;">General-purpose prediction</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Support vector machines</td>
+<td style="text-align: left;">High</td>
+<td style="text-align: left;">Low</td>
+<td style="text-align: left;">Complex boundaries</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Neural networks</td>
+<td style="text-align: left;">Very high</td>
+<td style="text-align: left;">Very low</td>
+<td style="text-align: left;">Image, text, complex patterns</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="overview-of-methods-covered" class="level2" data-number="30.5">
+<h2 data-number="30.5" class="anchored" data-anchor-id="overview-of-methods-covered"><span class="header-section-number">30.5</span> Overview of Methods Covered</h2>
+<p>This section of the book covers the major categories of statistical learning, building from foundational concepts to increasingly sophisticated methods.</p>
+<section id="model-validation-and-selection" class="level3">
+<h3 class="anchored" data-anchor-id="model-validation-and-selection">Model Validation and Selection</h3>
+<p>Before diving into specific methods, we need tools for evaluating and comparing models. How do we know if a model will perform well on new data? <strong>Cross-validation</strong> provides a principled answer by repeatedly holding out portions of the data to estimate generalization performance. <strong>Loss functions</strong> quantify prediction errors, giving us a concrete measure of model quality. Understanding the <strong>bias-variance tradeoff</strong> guides our choices about model complexity, helping us find the sweet spot between underfitting and overfitting. These concepts, covered in <a href="30-model-validation.html" class="quarto-xref"><span>Chapter 31</span></a>, form the foundation for everything that follows.</p>
+</section>
+<section id="regularization" class="level3">
+<h3 class="anchored" data-anchor-id="regularization">Regularization</h3>
+<p>When we have many predictors relative to our sample size, standard regression can overfit badly. <strong>Regularization</strong> methods address this by adding penalties that shrink coefficients toward zero, reducing variance at the cost of a small increase in bias. <strong>Ridge regression</strong> shrinks all coefficients proportionally, stabilizing estimates when predictors are correlated. <strong>Lasso</strong> goes further by shrinking some coefficients exactly to zero, effectively performing variable selection. <strong>Elastic net</strong> combines both penalties, offering the best of both worlds. These methods, covered in <a href="31-regularization.html" class="quarto-xref"><span>Chapter 32</span></a>, are essential tools for modern high-dimensional data analysis.</p>
+</section>
+<section id="smoothing-methods" class="level3">
+<h3 class="anchored" data-anchor-id="smoothing-methods">Smoothing Methods</h3>
+<p>Many biological relationships are non-linear, yet we want to estimate smooth curves without assuming a specific functional form. <strong>Smoothing methods</strong> accomplish this through local averaging. <strong>Kernel smoothing</strong> estimates each point as a weighted average of nearby observations. <strong>Splines</strong> fit piecewise polynomials that join smoothly at specified knots. <strong>LOESS</strong> combines local polynomial fitting with distance-based weighting. These flexible curve-fitting methods, covered in <a href="32-smoothing.html" class="quarto-xref"><span>Chapter 33</span></a>, reveal patterns that linear models would miss.</p>
+</section>
+<section id="classification" class="level3">
+<h3 class="anchored" data-anchor-id="classification">Classification</h3>
+<p>Many biological problems involve predicting categories rather than continuous values: disease versus healthy, one cell type versus another, responsive versus non-responsive. <strong>K-nearest neighbors</strong> offers a simple, intuitive approach—classify based on the majority vote of similar training cases. Evaluating classifier performance requires tools like <strong>confusion matrices</strong>, which reveal patterns of errors, and <strong>ROC curves</strong>, which show how sensitivity and specificity trade off at different decision thresholds. These classification fundamentals are covered in <a href="33-classification-methods.html" class="quarto-xref"><span>Chapter 34</span></a>.</p>
+</section>
+<section id="tree-based-methods" class="level3">
+<h3 class="anchored" data-anchor-id="tree-based-methods">Tree-Based Methods</h3>
+<p><strong>Decision trees</strong> take a fundamentally different approach to prediction: they partition the predictor space into rectangular regions using a series of yes/no questions. The resulting models are highly interpretable—essentially flowcharts for making predictions. However, individual trees tend to be unstable. <strong>Random forests</strong> address this by averaging many trees, each trained on a bootstrap sample with random feature selection, dramatically improving prediction accuracy while providing measures of <strong>variable importance</strong>. Tree-based methods are covered in <a href="34-trees-forests.html" class="quarto-xref"><span>Chapter 35</span></a>.</p>
+</section>
+<section id="support-vector-machines" class="level3">
+<h3 class="anchored" data-anchor-id="support-vector-machines">Support Vector Machines</h3>
+<p><strong>Support vector machines</strong> find optimal boundaries between classes by maximizing the margin—the distance to the nearest training points. This geometric approach leads to robust classifiers that depend only on a few critical observations called support vectors. The <strong>kernel trick</strong> extends SVMs to non-linear boundaries by implicitly mapping data to higher-dimensional spaces. SVMs can also be adapted for regression through <strong>support vector regression</strong>. These powerful methods are covered in <a href="35-svm.html" class="quarto-xref"><span>Chapter 36</span></a>.</p>
+</section>
+<section id="clustering" class="level3">
+<h3 class="anchored" data-anchor-id="clustering">Clustering</h3>
+<p>Sometimes we want to discover natural groupings in data without predefined labels. <strong>Clustering</strong> methods accomplish this by grouping similar observations together. <strong>Hierarchical clustering</strong> builds a tree of nested groupings, visualized through dendrograms that reveal relationships at multiple scales. <strong>K-means</strong> directly partitions data into a specified number of clusters by iteratively refining cluster centers. <strong>Heatmaps</strong> combine clustering with visual display of high-dimensional data. Clustering methods are covered in <a href="36-clustering.html" class="quarto-xref"><span>Chapter 37</span></a>.</p>
+</section>
+<section id="dimensionality-reduction" class="level3">
+<h3 class="anchored" data-anchor-id="dimensionality-reduction">Dimensionality Reduction</h3>
+<p>Modern biological data often has many more variables than observations—thousands of genes measured on dozens of samples, for instance. <strong>Dimensionality reduction</strong> creates a smaller set of new variables that capture most of the information. <strong>Principal Component Analysis (PCA)</strong> finds linear combinations that maximize variance, often revealing the major axes of variation in complex datasets. For visualization of non-linear structure, <strong>t-SNE</strong> and <strong>UMAP</strong> project high-dimensional data to two dimensions while preserving local neighborhoods. These methods are covered in <a href="37-dimensionality-reduction.html" class="quarto-xref"><span>Chapter 38</span></a> and <a href="38-tsne-umap.html" class="quarto-xref"><span>Chapter 39</span></a>.</p>
+</section>
+<section id="bayesian-approaches" class="level3">
+<h3 class="anchored" data-anchor-id="bayesian-approaches">Bayesian Approaches</h3>
+<p>The Bayesian framework offers a different perspective on statistical inference, treating parameters as random variables with probability distributions rather than fixed unknowns. <strong>Bayes’ theorem</strong> provides a principled way to update beliefs in light of evidence. <strong>Hierarchical models</strong> allow borrowing strength across related observations, producing more stable estimates when individual samples are small. <strong>Credible intervals</strong> offer direct probability statements about parameters—“there is a 95% probability the true value lies in this interval”—which many find more intuitive than frequentist confidence intervals. Bayesian methods are covered in <a href="39-bayesian-statistics.html" class="quarto-xref"><span>Chapter 40</span></a>.</p>
+</section>
+<section id="deep-learning" class="level3">
+<h3 class="anchored" data-anchor-id="deep-learning">Deep Learning</h3>
+<p><strong>Neural networks</strong> with many layers—deep learning—have revolutionized fields like image recognition and natural language processing. Unlike the methods above, deep learning can automatically learn features from raw data rather than requiring hand-crafted predictors. The chapter on deep learning (<a href="40-deep-learning.html" class="quarto-xref"><span>Chapter 41</span></a>) provides a conceptual introduction: how deep learning differs from traditional statistical learning, the major architectures (feedforward, convolutional, and recurrent networks), and guidance on when deep learning is appropriate versus when classical methods suffice.</p>
+</section>
+</section>
+<section id="choosing-the-right-method" class="level2" data-number="30.6">
+<h2 data-number="30.6" class="anchored" data-anchor-id="choosing-the-right-method"><span class="header-section-number">30.6</span> Choosing the Right Method</h2>
+<p>With so many methods available, how do you choose the right one for your problem? The answer depends on several considerations that must be weighed together.</p>
+<p>First, consider your goal. Are you primarily interested in prediction—getting the most accurate forecasts for new observations? Or do you need inference—understanding which variables matter and how they relate to the outcome? Or perhaps you are in an exploratory phase, trying to discover structure and generate hypotheses? Methods that excel at prediction (like random forests) may sacrifice interpretability, while methods optimized for inference (like linear regression) may sacrifice predictive accuracy.</p>
+<p>Second, consider your data characteristics. How many observations do you have? How many predictors? Are variables continuous, categorical, or mixed? Complex methods like neural networks require large samples; simpler methods can work well with limited data. High-dimensional settings where predictors outnumber observations require special techniques like regularization.</p>
+<p>Third, consider interpretability needs. In some contexts—exploratory research, personal curiosity—a black-box prediction is fine. In others—clinical decision-making, regulatory submissions—you must be able to explain why the model makes the predictions it does. Methods like decision trees and linear regression are inherently interpretable; methods like random forests and neural networks are not.</p>
+<p>Finally, consider practical constraints. Some methods scale well to large datasets while others become computationally prohibitive. Some require specialized hardware (GPUs for deep learning), while others run efficiently on any laptop.</p>
+<p>There is no universally best method. The <strong>No Free Lunch theorem</strong> formalizes this intuition: no single algorithm works best for all problems. The best approach is often to try multiple methods and compare their performance using proper validation techniques, letting the data guide your final choice.</p>
+</section>
+<section id="the-statistical-learning-workflow" class="level2" data-number="30.7">
+<h2 data-number="30.7" class="anchored" data-anchor-id="the-statistical-learning-workflow"><span class="header-section-number">30.7</span> The Statistical Learning Workflow</h2>
+<p>A typical statistical learning analysis follows a structured workflow that helps ensure reliable results (<a href="#fig-ml-workflow" class="quarto-xref">Figure&nbsp;<span>30.2</span></a>). The process begins with clearly defining the problem: What are you trying to predict or understand? What would a useful answer look like? This clarity guides all subsequent decisions.</p>
+<div id="fig-ml-workflow" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ml-workflow-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../images/ch28/ch28_ml_workflow.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ml-workflow-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;30.2: The general workflow for machine learning projects. This pipeline—from data collection through deployment—provides a roadmap for statistical learning analyses. Note that the process is often iterative: poor model performance may send you back to feature engineering or data collection.
+</figcaption>
+</figure>
+</div>
+<p>With the problem defined, the next phase is data preparation. Real data is messy—missing values, outliers, inconsistent formatting, variables on incompatible scales. Careful cleaning and transformation are essential before modeling. This is also when you split your data into training and test sets, setting aside the test data for final evaluation.</p>
+<p>Before fitting models, explore the training data thoroughly. Examine distributions, look for outliers, visualize relationships between predictors and outcomes. This exploration often reveals issues that would derail modeling and suggests which methods might work well.</p>
+<p>The modeling phase involves selecting candidate methods appropriate for your problem, fitting them to training data, and tuning hyperparameters using cross-validation. It often makes sense to try several different approaches—perhaps a simple linear model, a random forest, and a regularized regression—to see which performs best.</p>
+<p>Once you have tuned models, evaluate them on the held-out test data. This provides an honest estimate of how well each approach will generalize to new observations. Choose your final model based on this evaluation, considering both performance and interpretability.</p>
+<p>Finally, interpret what the model has learned and deploy it to make predictions on new data. Throughout this process, guard vigilantly against <strong>data leakage</strong>—any way that information from the test set might influence training decisions. Keep the test set locked away until final evaluation; peeking at test performance to guide model selection invalidates your estimates.</p>
+</section>
+<section id="statistical-learning-in-biology-and-bioengineering" class="level2" data-number="30.8">
+<h2 data-number="30.8" class="anchored" data-anchor-id="statistical-learning-in-biology-and-bioengineering"><span class="header-section-number">30.8</span> Statistical Learning in Biology and Bioengineering</h2>
+<p>Statistical learning has transformed biological research across virtually every subdiscipline. In <strong>genomics</strong>, machine learning methods predict gene expression from sequence features, identify regulatory elements that control transcription, and classify disease subtypes from expression profiles. The ability to analyze thousands of genes simultaneously has made these methods essential for modern molecular biology.</p>
+<p>In <strong>proteomics</strong>, statistical learning predicts protein structure and function from amino acid sequences, identifies biomarkers that distinguish disease states, and characterizes protein-protein interactions. The recent triumph of AlphaFold in predicting three-dimensional protein structure represents perhaps the most dramatic success of machine learning in biology.</p>
+<p><strong>Drug discovery</strong> increasingly relies on computational methods to predict drug-target interactions, optimize molecular properties, and identify promising compounds before expensive laboratory testing. These methods accelerate the pipeline from target identification to clinical trials.</p>
+<p><strong>Medical imaging</strong> has been transformed by deep learning, with algorithms that detect tumors in radiographs, classify cell types in histology slides, and segment anatomical structures in MRI scans. In many tasks, these systems now match or exceed human expert performance.</p>
+<p>In <strong>ecology</strong>, statistical learning methods model species distributions from environmental predictors, forecast population dynamics, and identify factors that drive community composition. These tools are essential for conservation planning and understanding responses to environmental change.</p>
+<p>In <strong>bioengineering</strong>, machine learning optimizes bioreactor conditions for protein production, predicts material properties from composition, and designs synthetic biological systems. As biological engineering becomes increasingly data-driven, these methods will only grow in importance.</p>
+<p>The methods in this section provide the foundation for tackling all these problems. As biological data continues to grow in scale and complexity, statistical learning will become even more essential.</p>
+</section>
+<section id="summary" class="level2" data-number="30.9">
+<h2 data-number="30.9" class="anchored" data-anchor-id="summary"><span class="header-section-number">30.9</span> Summary</h2>
+<p>This chapter has introduced the landscape of statistical learning—the broad family of methods for understanding data through modeling. We distinguished <strong>supervised learning</strong>, which predicts outputs from inputs using labeled training data, from <strong>unsupervised learning</strong>, which discovers structure in data without predefined labels.</p>
+<p>Within supervised learning, <strong>parametric methods</strong> assume specific functional forms and estimate a fixed number of parameters, while <strong>non-parametric methods</strong> let the data determine the shape of the relationship. Each approach involves tradeoffs: parametric methods are efficient and interpretable but may be too restrictive; non-parametric methods are flexible but require more data and can be harder to interpret.</p>
+<p>The <strong>bias-variance tradeoff</strong> runs through all of statistical learning. Simple models may underfit, missing important patterns (high bias). Complex models may overfit, fitting noise rather than signal (high variance). Finding the right balance requires <strong>model validation</strong> using held-out data to honestly assess how well our models generalize to new observations.</p>
+<p>Choosing the right method for a particular problem depends on your goals (prediction versus inference), data characteristics (sample size, number of predictors), interpretability needs, and computational constraints. There is no universally best method—the right choice depends on context.</p>
+<p>The following chapters cover specific methods in detail: model validation and cross-validation, regularization methods for high-dimensional problems, smoothing and non-parametric regression, classification and performance evaluation, tree-based methods including random forests, support vector machines, clustering, dimensionality reduction, and Bayesian approaches. A final chapter introduces <strong>deep learning</strong> as a powerful extension of these concepts, discussing when neural networks are appropriate and how they differ from classical statistical learning methods.</p>
+</section>
+<section id="additional-resources" class="level2" data-number="30.10">
+<h2 data-number="30.10" class="anchored" data-anchor-id="additional-resources"><span class="header-section-number">30.10</span> Additional Resources</h2>
+<ul>
+<li><span class="citation" data-cites="james2023islr">James et al. (<a href="../references.html#ref-james2023islr" role="doc-biblioref">2023</a>)</span> - The standard introduction to statistical learning</li>
+<li><span class="citation" data-cites="hastie2009elements">Hastie, Tibshirani, and Friedman (<a href="../references.html#ref-hastie2009elements" role="doc-biblioref">2009</a>)</span> - A comprehensive and more advanced treatment</li>
+<li><span class="citation" data-cites="thulin2025msr">Thulin (<a href="../references.html#ref-thulin2025msr" role="doc-biblioref">2025</a>)</span> - Modern statistical methods with R</li>
+</ul>
+
+
+<!-- -->
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-hastie2009elements" class="csl-entry" role="listitem">
+Hastie, Trevor, Robert Tibshirani, and Jerome Friedman. 2009. <em>The Elements of Statistical Learning: Data Mining, Inference, and Prediction</em>. 2nd ed. New York: Springer.
+</div>
+<div id="ref-james2023islr" class="csl-entry" role="listitem">
+James, Gareth, Daniela Witten, Trevor Hastie, and Robert Tibshirani. 2023. <em>An Introduction to Statistical Learning with Applications in r</em>. 2nd ed. Springer. <a href="https://www.statlearning.com">https://www.statlearning.com</a>.
+</div>
+<div id="ref-thulin2025msr" class="csl-entry" role="listitem">
+Thulin, Måns. 2025. <em>Modern Statistics with r</em>. CRC Press. <a href="https://www.modernstatisticswithr.com">https://www.modernstatisticswithr.com</a>.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/28-glm.html" class="pagination-link" aria-label="Generalized Linear Models">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/30-model-validation.html" class="pagination-link" aria-label="Model Validation and the Bias-Variance Tradeoff">
+        <span class="nav-page-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Model Validation and the Bias-Variance Tradeoff</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Introduction to Statistical Learning {#sec-intro-statistical-learning}</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_minimal</span>())</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">## What is Statistical Learning?</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>**Statistical learning** refers to a vast set of tools for understanding data. These tools can be classified as **supervised** or **unsupervised**. Broadly speaking, supervised statistical learning involves building a statistical model for predicting, or estimating, an output based on one or more inputs. With unsupervised statistical learning, there are inputs but no supervising output; nevertheless we can learn relationships and structure from such data <span class="co">[</span><span class="ot">@james2023islr; @hastie2009elements</span><span class="co">]</span>.</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>Statistical learning emerged from statistics but has been heavily influenced by fields such as computer science and artificial intelligence. The term **machine learning** is often used interchangeably, though machine learning tends to emphasize prediction and computational efficiency, while statistical learning places more emphasis on interpretability and uncertainty quantification.</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">## From Inference to Prediction</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>Traditional statistics emphasizes **inference**—understanding relationships, testing hypotheses, and quantifying uncertainty. Statistical learning shifts focus toward **prediction**—building models that accurately predict outcomes for new data.</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>Both approaches use similar mathematical tools, but the goals differ:</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Goal <span class="pp">|</span> Questions <span class="pp">|</span> Methods <span class="pp">|</span> Output <span class="pp">|</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="pp">|:-----|:----------|:--------|:-------|</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Inference** <span class="pp">|</span> Which variables are associated? How strong is the relationship? Is the effect significant? <span class="pp">|</span> Linear regression, hypothesis testing, confidence intervals <span class="pp">|</span> Understanding, p-values, effect sizes <span class="pp">|</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Prediction** <span class="pp">|</span> What will happen for new observations? How can we minimize prediction error? <span class="pp">|</span> Cross-validation, regularization, ensemble methods <span class="pp">|</span> Predictions, prediction intervals <span class="pp">|</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>In practice, most analyses involve elements of both. A biologist might want to predict disease outcomes (prediction) while also understanding which genes drive the prediction (inference).</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="fu">## Key Components of Statistical Learning</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>Regardless of the specific method, statistical learning problems share common elements:</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="fu">### Inputs and Outputs</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>We have data consisting of observations on variables. **Input variables** (also called predictors, features, or independent variables) are denoted $X$. **Output variables** (also called response or dependent variables) are denoted $Y$.</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>In supervised learning, we observe both inputs and outputs:</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>$$<span class="sc">\{</span>(x_1, y_1), (x_2, y_2), \ldots, (x_n, y_n)<span class="sc">\}</span>$$</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>In unsupervised learning, we observe only inputs:</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>$$<span class="sc">\{</span>x_1, x_2, \ldots, x_n<span class="sc">\}</span>$$</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="fu">### The Learning Task</span></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>The goal of supervised learning is to find a function $f$ such that:</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>$$Y \approx f(X)$$</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>This function captures the systematic relationship between inputs and outputs. The quality of $f$ is measured by how well it predicts $Y$ for new observations.</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a><span class="fu">### Training and Test Data</span></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>A fundamental practice in statistical learning is splitting data into two portions. The **training data** is used to build the model—the algorithm learns patterns and estimates parameters from these observations. The **test data** is held out and never seen during training; it serves solely to evaluate how well the model generalizes to new observations.</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>This separation is crucial because models can "memorize" training data without learning generalizable patterns—a phenomenon called **overfitting**. A model that perfectly fits the training data but fails on new observations is useless in practice. By evaluating on held-out test data, we obtain an honest estimate of how our model will perform in the real world.</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a><span class="fu">### Model Complexity</span></span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>Every statistical learning method must navigate the **bias-variance tradeoff**, a fundamental tension that shapes how we build models. Simple models with few parameters may be too rigid to capture the true patterns in data, leading to systematic errors known as high bias. These models underfit—they miss important structure because they lack the flexibility to represent it.</span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>At the other extreme, complex models with many parameters have the opposite problem. They can capture intricate patterns, but they may also fit the noise specific to the training data rather than the underlying signal. This sensitivity to the particular training sample is called high variance, and it leads to overfitting—excellent performance on training data but poor generalization to new observations.</span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>The optimal model balances these competing concerns. Too simple and you underfit; too complex and you overfit. This tradeoff is captured by the familiar U-shaped curve of test error versus model complexity: error decreases as we add flexibility to capture true patterns, then increases as the model begins fitting noise.</span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a><span class="fu">## Categories of Statistical Learning</span></span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>Statistical learning methods fall into several broad categories:</span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a><span class="fu">### Supervised vs. Unsupervised Learning</span></span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-learning-categories</span></span>
+<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Overview of supervised versus unsupervised learning. Supervised learning uses labeled data to predict outcomes; unsupervised learning discovers structure in unlabeled data."</span></span>
+<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 9</span></span>
+<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4</span></span>
+<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">1</span>))</span>
+<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a><span class="co"># Supervised learning example</span></span>
+<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">50</span>)</span>
+<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> x <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">50</span>, <span class="at">sd =</span> <span class="fl">0.5</span>)</span>
+<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"steelblue"</span>,</span>
+<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Input (X)"</span>, <span class="at">ylab =</span> <span class="st">"Output (Y)"</span>,</span>
+<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Supervised Learning"</span>)</span>
+<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="fu">lm</span>(y <span class="sc">~</span> x), <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="dv">0</span>, <span class="dv">3</span>, <span class="st">"Known outputs"</span>, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">cex =</span> <span class="fl">0.9</span>)</span>
+<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a><span class="co"># Unsupervised learning example</span></span>
+<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rnorm</span>(<span class="dv">25</span>, <span class="sc">-</span><span class="dv">2</span>), <span class="fu">rnorm</span>(<span class="dv">25</span>, <span class="dv">2</span>))</span>
+<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rnorm</span>(<span class="dv">25</span>, <span class="sc">-</span><span class="dv">2</span>), <span class="fu">rnorm</span>(<span class="dv">25</span>, <span class="dv">2</span>))</span>
+<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x1, x2, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"steelblue"</span>, <span class="dv">25</span>), <span class="fu">rep</span>(<span class="st">"coral"</span>, <span class="dv">25</span>)),</span>
+<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Variable 1"</span>, <span class="at">ylab =</span> <span class="st">"Variable 2"</span>,</span>
+<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Unsupervised Learning"</span>)</span>
+<span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="dv">0</span>, <span class="dv">3</span>, <span class="st">"No labels—discover structure"</span>, <span class="at">col =</span> <span class="st">"gray30"</span>, <span class="at">cex =</span> <span class="fl">0.9</span>)</span>
+<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a>**Supervised learning** problems have labeled data—we know the correct output for each observation. The task is to learn a mapping from inputs to outputs that generalizes to new data. Supervised learning takes two main forms depending on the nature of the output variable. When the output is continuous—such as predicting gene expression levels, blood pressure, or reaction rates—we call this **regression**. When the output is categorical—such as predicting disease status, cell type, or treatment response—we call this **classification**.</span>
+<span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a>**Unsupervised learning** problems have no labeled outputs. Instead, we seek to discover patterns, groupings, or structure in the data without guidance about what we're looking for. **Clustering** methods group similar observations together, revealing natural categories in the data such as patient subtypes or cell populations. **Dimensionality reduction** methods find lower-dimensional representations that capture most of the information, making high-dimensional data easier to visualize and analyze.</span>
+<span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a><span class="fu">### Parametric vs. Non-Parametric Methods</span></span>
+<span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a>**Parametric methods** assume a specific functional form for $f$. For example, linear regression assumes $f(X) = \beta_0 + \beta_1 X_1 + \ldots + \beta_p X_p$—a weighted sum of the predictors. Once we commit to this functional form, the learning problem reduces to estimating a finite number of parameters (the $\beta$ coefficients) from training data.</span>
+<span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a>This approach has important advantages. Parametric methods are computationally efficient because we only need to estimate a fixed number of parameters regardless of sample size. They produce interpretable models where each coefficient has a clear meaning. And they work well with smaller samples because the strong assumptions reduce what must be learned from data. The disadvantage is that if the true relationship differs substantially from the assumed form, the model will be systematically wrong no matter how much data we collect.</span>
+<span id="cb1-114"><a href="#cb1-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a>**Non-parametric methods** make no explicit assumptions about the form of $f$. Instead, they let the data determine the shape of the relationship. Methods like K-nearest neighbors, decision trees, and kernel smoothing estimate $f$ directly without assuming a particular functional form. This flexibility allows non-parametric methods to capture complex, non-linear relationships that would be missed by rigid parametric assumptions. However, this flexibility comes at a cost: non-parametric methods typically require more data to achieve comparable accuracy, are more prone to overfitting, and often produce models that are harder to interpret.</span>
+<span id="cb1-116"><a href="#cb1-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-117"><a href="#cb1-117" aria-hidden="true" tabindex="-1"></a><span class="fu">### Flexible vs. Inflexible Methods</span></span>
+<span id="cb1-118"><a href="#cb1-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-119"><a href="#cb1-119" aria-hidden="true" tabindex="-1"></a>Statistical learning methods span a spectrum of flexibility:</span>
+<span id="cb1-120"><a href="#cb1-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-121"><a href="#cb1-121" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Method <span class="pp">|</span> Flexibility <span class="pp">|</span> Interpretability <span class="pp">|</span> Typical Use <span class="pp">|</span></span>
+<span id="cb1-122"><a href="#cb1-122" aria-hidden="true" tabindex="-1"></a><span class="pp">|:-------|:-----------|:-----------------|:------------|</span></span>
+<span id="cb1-123"><a href="#cb1-123" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Linear regression <span class="pp">|</span> Low <span class="pp">|</span> High <span class="pp">|</span> When linearity is reasonable <span class="pp">|</span></span>
+<span id="cb1-124"><a href="#cb1-124" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Ridge/Lasso <span class="pp">|</span> Low <span class="pp">|</span> High <span class="pp">|</span> High-dimensional linear problems <span class="pp">|</span></span>
+<span id="cb1-125"><a href="#cb1-125" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> K-nearest neighbors <span class="pp">|</span> Medium-High <span class="pp">|</span> Low <span class="pp">|</span> Non-linear patterns <span class="pp">|</span></span>
+<span id="cb1-126"><a href="#cb1-126" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Decision trees <span class="pp">|</span> Medium <span class="pp">|</span> High <span class="pp">|</span> Interpretable non-linear models <span class="pp">|</span></span>
+<span id="cb1-127"><a href="#cb1-127" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Random forests <span class="pp">|</span> High <span class="pp">|</span> Medium <span class="pp">|</span> General-purpose prediction <span class="pp">|</span></span>
+<span id="cb1-128"><a href="#cb1-128" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Support vector machines <span class="pp">|</span> High <span class="pp">|</span> Low <span class="pp">|</span> Complex boundaries <span class="pp">|</span></span>
+<span id="cb1-129"><a href="#cb1-129" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Neural networks <span class="pp">|</span> Very high <span class="pp">|</span> Very low <span class="pp">|</span> Image, text, complex patterns <span class="pp">|</span></span>
+<span id="cb1-130"><a href="#cb1-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-131"><a href="#cb1-131" aria-hidden="true" tabindex="-1"></a><span class="fu">## Overview of Methods Covered</span></span>
+<span id="cb1-132"><a href="#cb1-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-133"><a href="#cb1-133" aria-hidden="true" tabindex="-1"></a>This section of the book covers the major categories of statistical learning, building from foundational concepts to increasingly sophisticated methods.</span>
+<span id="cb1-134"><a href="#cb1-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-135"><a href="#cb1-135" aria-hidden="true" tabindex="-1"></a><span class="fu">### Model Validation and Selection</span></span>
+<span id="cb1-136"><a href="#cb1-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-137"><a href="#cb1-137" aria-hidden="true" tabindex="-1"></a>Before diving into specific methods, we need tools for evaluating and comparing models. How do we know if a model will perform well on new data? **Cross-validation** provides a principled answer by repeatedly holding out portions of the data to estimate generalization performance. **Loss functions** quantify prediction errors, giving us a concrete measure of model quality. Understanding the **bias-variance tradeoff** guides our choices about model complexity, helping us find the sweet spot between underfitting and overfitting. These concepts, covered in @sec-model-validation, form the foundation for everything that follows.</span>
+<span id="cb1-138"><a href="#cb1-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-139"><a href="#cb1-139" aria-hidden="true" tabindex="-1"></a><span class="fu">### Regularization</span></span>
+<span id="cb1-140"><a href="#cb1-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-141"><a href="#cb1-141" aria-hidden="true" tabindex="-1"></a>When we have many predictors relative to our sample size, standard regression can overfit badly. **Regularization** methods address this by adding penalties that shrink coefficients toward zero, reducing variance at the cost of a small increase in bias. **Ridge regression** shrinks all coefficients proportionally, stabilizing estimates when predictors are correlated. **Lasso** goes further by shrinking some coefficients exactly to zero, effectively performing variable selection. **Elastic net** combines both penalties, offering the best of both worlds. These methods, covered in @sec-regularization, are essential tools for modern high-dimensional data analysis.</span>
+<span id="cb1-142"><a href="#cb1-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-143"><a href="#cb1-143" aria-hidden="true" tabindex="-1"></a><span class="fu">### Smoothing Methods</span></span>
+<span id="cb1-144"><a href="#cb1-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-145"><a href="#cb1-145" aria-hidden="true" tabindex="-1"></a>Many biological relationships are non-linear, yet we want to estimate smooth curves without assuming a specific functional form. **Smoothing methods** accomplish this through local averaging. **Kernel smoothing** estimates each point as a weighted average of nearby observations. **Splines** fit piecewise polynomials that join smoothly at specified knots. **LOESS** combines local polynomial fitting with distance-based weighting. These flexible curve-fitting methods, covered in @sec-smoothing, reveal patterns that linear models would miss.</span>
+<span id="cb1-146"><a href="#cb1-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-147"><a href="#cb1-147" aria-hidden="true" tabindex="-1"></a><span class="fu">### Classification</span></span>
+<span id="cb1-148"><a href="#cb1-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-149"><a href="#cb1-149" aria-hidden="true" tabindex="-1"></a>Many biological problems involve predicting categories rather than continuous values: disease versus healthy, one cell type versus another, responsive versus non-responsive. **K-nearest neighbors** offers a simple, intuitive approach—classify based on the majority vote of similar training cases. Evaluating classifier performance requires tools like **confusion matrices**, which reveal patterns of errors, and **ROC curves**, which show how sensitivity and specificity trade off at different decision thresholds. These classification fundamentals are covered in @sec-classification-methods.</span>
+<span id="cb1-150"><a href="#cb1-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-151"><a href="#cb1-151" aria-hidden="true" tabindex="-1"></a><span class="fu">### Tree-Based Methods</span></span>
+<span id="cb1-152"><a href="#cb1-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-153"><a href="#cb1-153" aria-hidden="true" tabindex="-1"></a>**Decision trees** take a fundamentally different approach to prediction: they partition the predictor space into rectangular regions using a series of yes/no questions. The resulting models are highly interpretable—essentially flowcharts for making predictions. However, individual trees tend to be unstable. **Random forests** address this by averaging many trees, each trained on a bootstrap sample with random feature selection, dramatically improving prediction accuracy while providing measures of **variable importance**. Tree-based methods are covered in @sec-trees-forests.</span>
+<span id="cb1-154"><a href="#cb1-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-155"><a href="#cb1-155" aria-hidden="true" tabindex="-1"></a><span class="fu">### Support Vector Machines</span></span>
+<span id="cb1-156"><a href="#cb1-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-157"><a href="#cb1-157" aria-hidden="true" tabindex="-1"></a>**Support vector machines** find optimal boundaries between classes by maximizing the margin—the distance to the nearest training points. This geometric approach leads to robust classifiers that depend only on a few critical observations called support vectors. The **kernel trick** extends SVMs to non-linear boundaries by implicitly mapping data to higher-dimensional spaces. SVMs can also be adapted for regression through **support vector regression**. These powerful methods are covered in @sec-svm.</span>
+<span id="cb1-158"><a href="#cb1-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-159"><a href="#cb1-159" aria-hidden="true" tabindex="-1"></a><span class="fu">### Clustering</span></span>
+<span id="cb1-160"><a href="#cb1-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-161"><a href="#cb1-161" aria-hidden="true" tabindex="-1"></a>Sometimes we want to discover natural groupings in data without predefined labels. **Clustering** methods accomplish this by grouping similar observations together. **Hierarchical clustering** builds a tree of nested groupings, visualized through dendrograms that reveal relationships at multiple scales. **K-means** directly partitions data into a specified number of clusters by iteratively refining cluster centers. **Heatmaps** combine clustering with visual display of high-dimensional data. Clustering methods are covered in @sec-clustering.</span>
+<span id="cb1-162"><a href="#cb1-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-163"><a href="#cb1-163" aria-hidden="true" tabindex="-1"></a><span class="fu">### Dimensionality Reduction</span></span>
+<span id="cb1-164"><a href="#cb1-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-165"><a href="#cb1-165" aria-hidden="true" tabindex="-1"></a>Modern biological data often has many more variables than observations—thousands of genes measured on dozens of samples, for instance. **Dimensionality reduction** creates a smaller set of new variables that capture most of the information. **Principal Component Analysis (PCA)** finds linear combinations that maximize variance, often revealing the major axes of variation in complex datasets. For visualization of non-linear structure, **t-SNE** and **UMAP** project high-dimensional data to two dimensions while preserving local neighborhoods. These methods are covered in @sec-dimensionality-reduction and @sec-tsne-umap.</span>
+<span id="cb1-166"><a href="#cb1-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-167"><a href="#cb1-167" aria-hidden="true" tabindex="-1"></a><span class="fu">### Bayesian Approaches</span></span>
+<span id="cb1-168"><a href="#cb1-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-169"><a href="#cb1-169" aria-hidden="true" tabindex="-1"></a>The Bayesian framework offers a different perspective on statistical inference, treating parameters as random variables with probability distributions rather than fixed unknowns. **Bayes' theorem** provides a principled way to update beliefs in light of evidence. **Hierarchical models** allow borrowing strength across related observations, producing more stable estimates when individual samples are small. **Credible intervals** offer direct probability statements about parameters—"there is a 95% probability the true value lies in this interval"—which many find more intuitive than frequentist confidence intervals. Bayesian methods are covered in @sec-bayesian-statistics.</span>
+<span id="cb1-170"><a href="#cb1-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-171"><a href="#cb1-171" aria-hidden="true" tabindex="-1"></a><span class="fu">### Deep Learning</span></span>
+<span id="cb1-172"><a href="#cb1-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-173"><a href="#cb1-173" aria-hidden="true" tabindex="-1"></a>**Neural networks** with many layers—deep learning—have revolutionized fields like image recognition and natural language processing. Unlike the methods above, deep learning can automatically learn features from raw data rather than requiring hand-crafted predictors. The chapter on deep learning (@sec-deep-learning) provides a conceptual introduction: how deep learning differs from traditional statistical learning, the major architectures (feedforward, convolutional, and recurrent networks), and guidance on when deep learning is appropriate versus when classical methods suffice.</span>
+<span id="cb1-174"><a href="#cb1-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-175"><a href="#cb1-175" aria-hidden="true" tabindex="-1"></a><span class="fu">## Choosing the Right Method</span></span>
+<span id="cb1-176"><a href="#cb1-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-177"><a href="#cb1-177" aria-hidden="true" tabindex="-1"></a>With so many methods available, how do you choose the right one for your problem? The answer depends on several considerations that must be weighed together.</span>
+<span id="cb1-178"><a href="#cb1-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-179"><a href="#cb1-179" aria-hidden="true" tabindex="-1"></a>First, consider your goal. Are you primarily interested in prediction—getting the most accurate forecasts for new observations? Or do you need inference—understanding which variables matter and how they relate to the outcome? Or perhaps you are in an exploratory phase, trying to discover structure and generate hypotheses? Methods that excel at prediction (like random forests) may sacrifice interpretability, while methods optimized for inference (like linear regression) may sacrifice predictive accuracy.</span>
+<span id="cb1-180"><a href="#cb1-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-181"><a href="#cb1-181" aria-hidden="true" tabindex="-1"></a>Second, consider your data characteristics. How many observations do you have? How many predictors? Are variables continuous, categorical, or mixed? Complex methods like neural networks require large samples; simpler methods can work well with limited data. High-dimensional settings where predictors outnumber observations require special techniques like regularization.</span>
+<span id="cb1-182"><a href="#cb1-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-183"><a href="#cb1-183" aria-hidden="true" tabindex="-1"></a>Third, consider interpretability needs. In some contexts—exploratory research, personal curiosity—a black-box prediction is fine. In others—clinical decision-making, regulatory submissions—you must be able to explain why the model makes the predictions it does. Methods like decision trees and linear regression are inherently interpretable; methods like random forests and neural networks are not.</span>
+<span id="cb1-184"><a href="#cb1-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-185"><a href="#cb1-185" aria-hidden="true" tabindex="-1"></a>Finally, consider practical constraints. Some methods scale well to large datasets while others become computationally prohibitive. Some require specialized hardware (GPUs for deep learning), while others run efficiently on any laptop.</span>
+<span id="cb1-186"><a href="#cb1-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-187"><a href="#cb1-187" aria-hidden="true" tabindex="-1"></a>There is no universally best method. The **No Free Lunch theorem** formalizes this intuition: no single algorithm works best for all problems. The best approach is often to try multiple methods and compare their performance using proper validation techniques, letting the data guide your final choice.</span>
+<span id="cb1-188"><a href="#cb1-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-189"><a href="#cb1-189" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Statistical Learning Workflow</span></span>
+<span id="cb1-190"><a href="#cb1-190" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-191"><a href="#cb1-191" aria-hidden="true" tabindex="-1"></a>A typical statistical learning analysis follows a structured workflow that helps ensure reliable results (@fig-ml-workflow). The process begins with clearly defining the problem: What are you trying to predict or understand? What would a useful answer look like? This clarity guides all subsequent decisions.</span>
+<span id="cb1-192"><a href="#cb1-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-193"><a href="#cb1-193" aria-hidden="true" tabindex="-1"></a><span class="al">![The general workflow for machine learning projects. This pipeline—from data collection through deployment—provides a roadmap for statistical learning analyses. Note that the process is often iterative: poor model performance may send you back to feature engineering or data collection.](../images/ch28/ch28_ml_workflow.png)</span>{#fig-ml-workflow fig-align="center" width="85%"}</span>
+<span id="cb1-194"><a href="#cb1-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-195"><a href="#cb1-195" aria-hidden="true" tabindex="-1"></a>With the problem defined, the next phase is data preparation. Real data is messy—missing values, outliers, inconsistent formatting, variables on incompatible scales. Careful cleaning and transformation are essential before modeling. This is also when you split your data into training and test sets, setting aside the test data for final evaluation.</span>
+<span id="cb1-196"><a href="#cb1-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-197"><a href="#cb1-197" aria-hidden="true" tabindex="-1"></a>Before fitting models, explore the training data thoroughly. Examine distributions, look for outliers, visualize relationships between predictors and outcomes. This exploration often reveals issues that would derail modeling and suggests which methods might work well.</span>
+<span id="cb1-198"><a href="#cb1-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-199"><a href="#cb1-199" aria-hidden="true" tabindex="-1"></a>The modeling phase involves selecting candidate methods appropriate for your problem, fitting them to training data, and tuning hyperparameters using cross-validation. It often makes sense to try several different approaches—perhaps a simple linear model, a random forest, and a regularized regression—to see which performs best.</span>
+<span id="cb1-200"><a href="#cb1-200" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-201"><a href="#cb1-201" aria-hidden="true" tabindex="-1"></a>Once you have tuned models, evaluate them on the held-out test data. This provides an honest estimate of how well each approach will generalize to new observations. Choose your final model based on this evaluation, considering both performance and interpretability.</span>
+<span id="cb1-202"><a href="#cb1-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-203"><a href="#cb1-203" aria-hidden="true" tabindex="-1"></a>Finally, interpret what the model has learned and deploy it to make predictions on new data. Throughout this process, guard vigilantly against **data leakage**—any way that information from the test set might influence training decisions. Keep the test set locked away until final evaluation; peeking at test performance to guide model selection invalidates your estimates.</span>
+<span id="cb1-204"><a href="#cb1-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-205"><a href="#cb1-205" aria-hidden="true" tabindex="-1"></a><span class="fu">## Statistical Learning in Biology and Bioengineering</span></span>
+<span id="cb1-206"><a href="#cb1-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-207"><a href="#cb1-207" aria-hidden="true" tabindex="-1"></a>Statistical learning has transformed biological research across virtually every subdiscipline. In **genomics**, machine learning methods predict gene expression from sequence features, identify regulatory elements that control transcription, and classify disease subtypes from expression profiles. The ability to analyze thousands of genes simultaneously has made these methods essential for modern molecular biology.</span>
+<span id="cb1-208"><a href="#cb1-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-209"><a href="#cb1-209" aria-hidden="true" tabindex="-1"></a>In **proteomics**, statistical learning predicts protein structure and function from amino acid sequences, identifies biomarkers that distinguish disease states, and characterizes protein-protein interactions. The recent triumph of AlphaFold in predicting three-dimensional protein structure represents perhaps the most dramatic success of machine learning in biology.</span>
+<span id="cb1-210"><a href="#cb1-210" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-211"><a href="#cb1-211" aria-hidden="true" tabindex="-1"></a>**Drug discovery** increasingly relies on computational methods to predict drug-target interactions, optimize molecular properties, and identify promising compounds before expensive laboratory testing. These methods accelerate the pipeline from target identification to clinical trials.</span>
+<span id="cb1-212"><a href="#cb1-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-213"><a href="#cb1-213" aria-hidden="true" tabindex="-1"></a>**Medical imaging** has been transformed by deep learning, with algorithms that detect tumors in radiographs, classify cell types in histology slides, and segment anatomical structures in MRI scans. In many tasks, these systems now match or exceed human expert performance.</span>
+<span id="cb1-214"><a href="#cb1-214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-215"><a href="#cb1-215" aria-hidden="true" tabindex="-1"></a>In **ecology**, statistical learning methods model species distributions from environmental predictors, forecast population dynamics, and identify factors that drive community composition. These tools are essential for conservation planning and understanding responses to environmental change.</span>
+<span id="cb1-216"><a href="#cb1-216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-217"><a href="#cb1-217" aria-hidden="true" tabindex="-1"></a>In **bioengineering**, machine learning optimizes bioreactor conditions for protein production, predicts material properties from composition, and designs synthetic biological systems. As biological engineering becomes increasingly data-driven, these methods will only grow in importance.</span>
+<span id="cb1-218"><a href="#cb1-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-219"><a href="#cb1-219" aria-hidden="true" tabindex="-1"></a>The methods in this section provide the foundation for tackling all these problems. As biological data continues to grow in scale and complexity, statistical learning will become even more essential.</span>
+<span id="cb1-220"><a href="#cb1-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-221"><a href="#cb1-221" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
+<span id="cb1-222"><a href="#cb1-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-223"><a href="#cb1-223" aria-hidden="true" tabindex="-1"></a>This chapter has introduced the landscape of statistical learning—the broad family of methods for understanding data through modeling. We distinguished **supervised learning**, which predicts outputs from inputs using labeled training data, from **unsupervised learning**, which discovers structure in data without predefined labels.</span>
+<span id="cb1-224"><a href="#cb1-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-225"><a href="#cb1-225" aria-hidden="true" tabindex="-1"></a>Within supervised learning, **parametric methods** assume specific functional forms and estimate a fixed number of parameters, while **non-parametric methods** let the data determine the shape of the relationship. Each approach involves tradeoffs: parametric methods are efficient and interpretable but may be too restrictive; non-parametric methods are flexible but require more data and can be harder to interpret.</span>
+<span id="cb1-226"><a href="#cb1-226" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-227"><a href="#cb1-227" aria-hidden="true" tabindex="-1"></a>The **bias-variance tradeoff** runs through all of statistical learning. Simple models may underfit, missing important patterns (high bias). Complex models may overfit, fitting noise rather than signal (high variance). Finding the right balance requires **model validation** using held-out data to honestly assess how well our models generalize to new observations.</span>
+<span id="cb1-228"><a href="#cb1-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-229"><a href="#cb1-229" aria-hidden="true" tabindex="-1"></a>Choosing the right method for a particular problem depends on your goals (prediction versus inference), data characteristics (sample size, number of predictors), interpretability needs, and computational constraints. There is no universally best method—the right choice depends on context.</span>
+<span id="cb1-230"><a href="#cb1-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-231"><a href="#cb1-231" aria-hidden="true" tabindex="-1"></a>The following chapters cover specific methods in detail: model validation and cross-validation, regularization methods for high-dimensional problems, smoothing and non-parametric regression, classification and performance evaluation, tree-based methods including random forests, support vector machines, clustering, dimensionality reduction, and Bayesian approaches. A final chapter introduces **deep learning** as a powerful extension of these concepts, discussing when neural networks are appropriate and how they differ from classical statistical learning methods.</span>
+<span id="cb1-232"><a href="#cb1-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-233"><a href="#cb1-233" aria-hidden="true" tabindex="-1"></a><span class="fu">## Additional Resources</span></span>
+<span id="cb1-234"><a href="#cb1-234" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-235"><a href="#cb1-235" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>@james2023islr - The standard introduction to statistical learning</span>
+<span id="cb1-236"><a href="#cb1-236" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>@hastie2009elements - A comprehensive and more advanced treatment</span>
+<span id="cb1-237"><a href="#cb1-237" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>@thulin2025msr - Modern statistical methods with R</span>
+</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Statistics for Biosciences and Bioengineering</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Built with <a href="https://quarto.org/">Quarto</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
