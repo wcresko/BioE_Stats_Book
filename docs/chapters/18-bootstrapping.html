@@ -1,0 +1,2206 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.30">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>19&nbsp; Resampling Methods – Statistics for the Biosciences and Bioengineering</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/19-what-are-models.html" rel="next">
+<link href="../chapters/17-nonparametric-tests.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-de070a7b0ab54f8780927367ac907214.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-485d01fc63b59abcd3ee1bf1e8e2748d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/14-experimental-design.html">Statistical Inference</a></li><li class="breadcrumb-item"><a href="../chapters/18-bootstrapping.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Resampling Methods</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Statistics for the Biosciences and Bioengineering</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Why This Book?</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Core Data Science Tools</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-installing-tools.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Installing Core Tools</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-unix-command-line.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Unix and the Command Line</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-r-rstudio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">R and RStudio</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-markdown-latex.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Markdown and LaTeX</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Data Exploration</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/06-tidy-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Tidy Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/07-data-wrangling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Data Wrangling with dplyr</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/08-exploratory-data-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/09-data-visualization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Data Visualization</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Probability and Distributions</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/10-probability-foundations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Foundations of Probability</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/11-discrete-distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Discrete Probability Distributions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/12-continuous-distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Continuous Probability Distributions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/13-sampling-estimation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Sampling and Parameter Estimation</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Statistical Inference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/14-experimental-design.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Experimental Design Principles</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/15-hypothesis-testing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/16-t-tests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">T-Tests</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/17-nonparametric-tests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Nonparametric Tests</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/18-bootstrapping.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Resampling Methods</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Linear Models</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/19-what-are-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">What are Models?</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/20-correlation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Correlation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/21-simple-linear-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Simple Linear Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/22-residual-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Residual Analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/23-statistical-power.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Statistical Power</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/24-multiple-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Multiple Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/25-single-factor-anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Single Factor ANOVA</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/26-multifactor-anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Multi-Factor ANOVA</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/27-glm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Statistical Learning</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/28-intro-statistical-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Introduction to Statistical Learning</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/29-model-validation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Model Validation and the Bias-Variance Tradeoff</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/30-regularization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Regularization Methods</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/31-smoothing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Smoothing and Non-Parametric Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/32-classification-methods.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Classification and Performance Metrics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/33-trees-forests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Decision Trees and Random Forests</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/34-svm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Support Vector Machines</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/35-clustering.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Clustering</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/36-dimensionality-reduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Dimensionality Reduction and Multivariate Methods</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/37-tsne-umap.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Non-Linear Dimensionality Reduction: t-SNE and UMAP</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/38-bayesian-statistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Bayesian Statistics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/39-deep-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">Introduction to Deep Learning</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/40-high-performance-computing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">High Performance Computing</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Scientific Communication</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/41-presenting-results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">Presenting Statistical Results</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Historical Context</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A1-eugenics-history.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">The Eugenics History of Statistics</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A2-keyboard-shortcuts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">Keyboard Shortcuts Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A3-unix-reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">Unix Command Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A4-r-reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">R Command Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A5-quarto-reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">Quarto Markdown Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A6-latex-reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title">LaTeX Command Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A7-greek-letters.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title">Greek Letters in Mathematics and Statistics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A8-probability-distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title">Common Probability Distributions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A9-sampling-distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">51</span>&nbsp; <span class="chapter-title">Sampling Distributions in Hypothesis Testing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A10-matrix-algebra.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">52</span>&nbsp; <span class="chapter-title">Matrix Algebra Fundamentals</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#the-bootstrap-idea" id="toc-the-bootstrap-idea" class="nav-link active" data-scroll-target="#the-bootstrap-idea"><span class="header-section-number">19.1</span> The Bootstrap Idea</a></li>
+  <li><a href="#why-the-bootstrap-works" id="toc-why-the-bootstrap-works" class="nav-link" data-scroll-target="#why-the-bootstrap-works"><span class="header-section-number">19.2</span> Why the Bootstrap Works</a></li>
+  <li><a href="#bootstrap-procedure" id="toc-bootstrap-procedure" class="nav-link" data-scroll-target="#bootstrap-procedure"><span class="header-section-number">19.3</span> Bootstrap Procedure</a></li>
+  <li><a href="#advantages-of-the-bootstrap" id="toc-advantages-of-the-bootstrap" class="nav-link" data-scroll-target="#advantages-of-the-bootstrap"><span class="header-section-number">19.4</span> Advantages of the Bootstrap</a></li>
+  <li><a href="#when-the-bootstrap-fails" id="toc-when-the-bootstrap-fails" class="nav-link" data-scroll-target="#when-the-bootstrap-fails"><span class="header-section-number">19.5</span> When the Bootstrap Fails</a></li>
+  <li><a href="#bootstrap-confidence-intervals" id="toc-bootstrap-confidence-intervals" class="nav-link" data-scroll-target="#bootstrap-confidence-intervals"><span class="header-section-number">19.6</span> Bootstrap Confidence Intervals</a></li>
+  <li><a href="#practical-recommendations" id="toc-practical-recommendations" class="nav-link" data-scroll-target="#practical-recommendations"><span class="header-section-number">19.7</span> Practical Recommendations</a></li>
+  <li><a href="#permutation-tests" id="toc-permutation-tests" class="nav-link" data-scroll-target="#permutation-tests"><span class="header-section-number">19.8</span> Permutation Tests</a>
+  <ul class="collapse">
+  <li><a href="#the-permutation-idea" id="toc-the-permutation-idea" class="nav-link" data-scroll-target="#the-permutation-idea">The Permutation Idea</a></li>
+  <li><a href="#calculating-the-p-value" id="toc-calculating-the-p-value" class="nav-link" data-scroll-target="#calculating-the-p-value">Calculating the P-Value</a></li>
+  <li><a href="#permutation-test-for-correlation" id="toc-permutation-test-for-correlation" class="nav-link" data-scroll-target="#permutation-test-for-correlation">Permutation Test for Correlation</a></li>
+  <li><a href="#bootstrap-vs-permutation" id="toc-bootstrap-vs-permutation" class="nav-link" data-scroll-target="#bootstrap-vs-permutation">Bootstrap vs Permutation</a></li>
+  <li><a href="#permutation-test-for-paired-data" id="toc-permutation-test-for-paired-data" class="nav-link" data-scroll-target="#permutation-test-for-paired-data">Permutation Test for Paired Data</a></li>
+  <li><a href="#when-permutation-tests-excel" id="toc-when-permutation-tests-excel" class="nav-link" data-scroll-target="#when-permutation-tests-excel">When Permutation Tests Excel</a></li>
+  <li><a href="#implementation-with-coin-package" id="toc-implementation-with-coin-package" class="nav-link" data-scroll-target="#implementation-with-coin-package">Implementation with coin Package</a></li>
+  </ul></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">19.9</span> Summary</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">19.10</span> Exercises</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/14-experimental-design.html">Statistical Inference</a></li><li class="breadcrumb-item"><a href="../chapters/18-bootstrapping.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Resampling Methods</span></a></li></ol></nav>
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span id="sec-bootstrapping" class="quarto-section-identifier"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Resampling Methods</span></span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="the-bootstrap-idea" class="level2" data-number="19.1">
+<h2 data-number="19.1" class="anchored" data-anchor-id="the-bootstrap-idea"><span class="header-section-number">19.1</span> The Bootstrap Idea</h2>
+<p>For the sample mean, we have elegant formulas for standard errors and confidence intervals derived from probability theory. But what about other statistics—the median, a correlation coefficient, the ratio of two means? For many estimators, no convenient formula exists.</p>
+<p>The bootstrap <span class="citation" data-cites="efron1979bootstrap">(<a href="../references.html#ref-efron1979bootstrap" role="doc-biblioref">Efron 1979</a>)</span>, invented by Bradley Efron in 1979, provides a general solution. The key insight is that we can learn about the sampling distribution of a statistic by resampling from our data. If our sample is representative of the population, then samples drawn from our sample (with replacement) mimic what we would get from repeated sampling from the population.</p>
+<div id="fig-bootstrap-resampling" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-bootstrap-resampling-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../images/ch18/ch18_bootstrap_resampling.jpeg" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bootstrap-resampling-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;19.1: Bootstrap resampling procedure showing how multiple samples are drawn with replacement from the original data
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="why-the-bootstrap-works" class="level2" data-number="19.2">
+<h2 data-number="19.2" class="anchored" data-anchor-id="why-the-bootstrap-works"><span class="header-section-number">19.2</span> Why the Bootstrap Works</h2>
+<p>The bootstrap treats the observed sample as if it were the population. By drawing many samples with replacement from this “population,” we create a distribution of the statistic of interest. This bootstrap distribution approximates the true sampling distribution.</p>
+<p>The bootstrap standard error is the standard deviation of the bootstrap distribution. Bootstrap confidence intervals can be constructed from the percentiles of the bootstrap distribution—the 2.5th and 97.5th percentiles give an approximate 95% confidence interval.</p>
+</section>
+<section id="bootstrap-procedure" class="level2" data-number="19.3">
+<h2 data-number="19.3" class="anchored" data-anchor-id="bootstrap-procedure"><span class="header-section-number">19.3</span> Bootstrap Procedure</h2>
+<p>The basic algorithm is straightforward:</p>
+<ol type="1">
+<li>Draw a random sample of size n from your data with replacement (the bootstrap sample)</li>
+<li>Calculate the statistic of interest from this bootstrap sample</li>
+<li>Repeat steps 1 and 2 many times (1000 or more)</li>
+<li>Use the distribution of bootstrap statistics to estimate standard error or confidence intervals</li>
+</ol>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Bootstrap example: estimating standard error of median</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>original_data <span class="ot">&lt;-</span> <span class="fu">rexp</span>(<span class="dv">50</span>, <span class="at">rate =</span> <span class="fl">0.1</span>)  <span class="co"># Skewed distribution</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Observed median</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>observed_median <span class="ot">&lt;-</span> <span class="fu">median</span>(original_data)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Bootstrap</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>n_boot <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>boot_medians <span class="ot">&lt;-</span> <span class="fu">replicate</span>(n_boot, {</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  boot_sample <span class="ot">&lt;-</span> <span class="fu">sample</span>(original_data, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">median</span>(boot_sample)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Bootstrap standard error</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>boot_se <span class="ot">&lt;-</span> <span class="fu">sd</span>(boot_medians)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Bootstrap confidence interval (percentile method)</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>boot_ci <span class="ot">&lt;-</span> <span class="fu">quantile</span>(boot_medians, <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Observed median:"</span>, <span class="fu">round</span>(observed_median, <span class="dv">2</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Observed median: 6.59 </code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Bootstrap SE:"</span>, <span class="fu">round</span>(boot_se, <span class="dv">2</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Bootstrap SE: 1.46 </code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"95% CI:"</span>, <span class="fu">round</span>(boot_ci, <span class="dv">2</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>95% CI: 4.39 11.92 </code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(boot_medians, <span class="at">breaks =</span> <span class="dv">30</span>, <span class="at">main =</span> <span class="st">"Bootstrap Distribution of Median"</span>,</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Median"</span>, <span class="at">col =</span> <span class="st">"lightblue"</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> observed_median, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> boot_ci, <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-bootstrap-dist" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-bootstrap-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="18-bootstrapping_files/figure-html/fig-bootstrap-dist-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bootstrap-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;19.2: Bootstrap distribution of the median from 1000 resamples, showing the estimated sampling distribution with 95% confidence intervals
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="advantages-of-the-bootstrap" class="level2" data-number="19.4">
+<h2 data-number="19.4" class="anchored" data-anchor-id="advantages-of-the-bootstrap"><span class="header-section-number">19.4</span> Advantages of the Bootstrap</h2>
+<p>The bootstrap is remarkably versatile. It can be applied to almost any statistic—means, medians, correlations, regression coefficients, eigenvalues, and more. It works when no formula for standard errors exists. It is nonparametric, making no assumptions about the underlying distribution. It handles complex sampling designs and calculations that would be intractable analytically.</p>
+<p>The bootstrap is widely used for assessing confidence in phylogenetic trees, where the complexity of tree-building algorithms makes analytical approaches impractical. In machine learning, bootstrap aggregating (bagging) improves prediction accuracy by combining models trained on bootstrap samples.</p>
+</section>
+<section id="when-the-bootstrap-fails" class="level2" data-number="19.5">
+<h2 data-number="19.5" class="anchored" data-anchor-id="when-the-bootstrap-fails"><span class="header-section-number">19.5</span> When the Bootstrap Fails</h2>
+<p>The bootstrap is not a magic solution to all problems. It requires that the original sample be representative of the population—a biased sample produces biased bootstrap estimates. It can struggle with very small samples where the original data may not adequately represent the population.</p>
+<p>Certain statistics, like the maximum of a sample, are poorly estimated by the bootstrap because the bootstrap distribution is bounded by the observed data. The bootstrap also assumes that observations are independent; for dependent data (like time series), specialized bootstrap methods are needed.</p>
+</section>
+<section id="bootstrap-confidence-intervals" class="level2" data-number="19.6">
+<h2 data-number="19.6" class="anchored" data-anchor-id="bootstrap-confidence-intervals"><span class="header-section-number">19.6</span> Bootstrap Confidence Intervals</h2>
+<p>Several methods exist for constructing bootstrap confidence intervals. The <strong>percentile method</strong> uses the quantiles of the bootstrap distribution directly. The <strong>basic bootstrap</strong> method reflects the bootstrap distribution around the observed estimate. The <strong>BCa (bias-corrected and accelerated)</strong> method adjusts for bias and skewness in the bootstrap distribution.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Different bootstrap CI methods</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Define statistic function</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>median_fun <span class="ot">&lt;-</span> <span class="cf">function</span>(data, indices) {</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">median</span>(data[indices])</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Run bootstrap</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>boot_result <span class="ot">&lt;-</span> <span class="fu">boot</span>(original_data, median_fun, <span class="at">R =</span> <span class="dv">1000</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Different CI methods</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="fu">boot.ci</span>(boot_result, <span class="at">type =</span> <span class="fu">c</span>(<span class="st">"perc"</span>, <span class="st">"basic"</span>, <span class="st">"bca"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
+Based on 1000 bootstrap replicates
+
+CALL : 
+boot.ci(boot.out = boot_result, type = c("perc", "basic", "bca"))
+
+Intervals : 
+Level      Basic              Percentile            BCa          
+95%   ( 1.256,  8.841 )   ( 4.331, 11.916 )   ( 4.244, 11.582 )  
+Calculations and Intervals on Original Scale</code></pre>
+</div>
+</div>
+<p>The BCa method is generally preferred when computationally feasible, as it provides better coverage in many situations.</p>
+</section>
+<section id="practical-recommendations" class="level2" data-number="19.7">
+<h2 data-number="19.7" class="anchored" data-anchor-id="practical-recommendations"><span class="header-section-number">19.7</span> Practical Recommendations</h2>
+<p>For most applications, 1000 bootstrap replications provide adequate precision for standard errors. For confidence intervals, especially when using the BCa method, 10,000 replications may be preferable. Always set a random seed for reproducibility.</p>
+<p>Remember that the bootstrap estimates sampling variability—it cannot fix problems with biased samples or invalid measurements. Use it as a tool for understanding uncertainty, not as a cure for poor data quality.</p>
+</section>
+<section id="permutation-tests" class="level2" data-number="19.8">
+<h2 data-number="19.8" class="anchored" data-anchor-id="permutation-tests"><span class="header-section-number">19.8</span> Permutation Tests</h2>
+<p>While the bootstrap estimates sampling variability by resampling <strong>with replacement</strong>, <strong>permutation tests</strong> (also called <strong>randomization tests</strong>) address a different question: they test the null hypothesis by resampling <strong>without replacement</strong>. Permutation tests are among the oldest statistical tests, predating many parametric methods.</p>
+<section id="the-permutation-idea" class="level3">
+<h3 class="anchored" data-anchor-id="the-permutation-idea">The Permutation Idea</h3>
+<p>A permutation test asks: “If there were truly no difference between groups, how likely would we be to see a difference as large as the one we observed?”</p>
+<p>Under the null hypothesis of no group difference, group labels are arbitrary—the data could have been assigned to either group. A permutation test generates the null distribution by repeatedly shuffling group labels and recalculating the test statistic. The p-value is the proportion of permuted statistics as extreme as the observed statistic.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example: Two-sample permutation test</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate two groups with different means</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>group_A <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">15</span>, <span class="at">mean =</span> <span class="dv">10</span>, <span class="at">sd =</span> <span class="dv">2</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>group_B <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">15</span>, <span class="at">mean =</span> <span class="dv">12</span>, <span class="at">sd =</span> <span class="dv">2</span>)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Observed difference in means</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>observed_diff <span class="ot">&lt;-</span> <span class="fu">mean</span>(group_B) <span class="sc">-</span> <span class="fu">mean</span>(group_A)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Observed difference:"</span>, <span class="fu">round</span>(observed_diff, <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Observed difference: 0.337 </code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Combined data for permutation</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>combined <span class="ot">&lt;-</span> <span class="fu">c</span>(group_A, group_B)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>n_A <span class="ot">&lt;-</span> <span class="fu">length</span>(group_A)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>n_B <span class="ot">&lt;-</span> <span class="fu">length</span>(group_B)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>n_total <span class="ot">&lt;-</span> n_A <span class="sc">+</span> n_B</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Permutation test</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>n_perm <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>perm_diffs <span class="ot">&lt;-</span> <span class="fu">replicate</span>(n_perm, {</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  shuffled <span class="ot">&lt;-</span> <span class="fu">sample</span>(combined)  <span class="co"># Shuffle without replacement</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(shuffled[(n_A <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">:</span>n_total]) <span class="sc">-</span> <span class="fu">mean</span>(shuffled[<span class="dv">1</span><span class="sc">:</span>n_A])</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the permutation distribution</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(perm_diffs, <span class="at">breaks =</span> <span class="dv">50</span>, <span class="at">col =</span> <span class="st">"lightblue"</span>,</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Permutation Distribution of Mean Difference"</span>,</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Difference in Means"</span>)</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> observed_diff, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="sc">-</span>observed_diff, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="fu">c</span>(<span class="st">"Observed"</span>, <span class="st">"Mirror (for two-tailed)"</span>),</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">lwd =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-permutation-concept" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-permutation-concept-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="18-bootstrapping_files/figure-html/fig-permutation-concept-1.png" class="img-fluid figure-img" width="768">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-permutation-concept-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;19.3: Permutation test concept: if group labels don’t matter, shuffling them should produce similar results
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="calculating-the-p-value" class="level3">
+<h3 class="anchored" data-anchor-id="calculating-the-p-value">Calculating the P-Value</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Two-tailed p-value: proportion of permuted differences as extreme as observed</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>p_value <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">abs</span>(perm_diffs) <span class="sc">&gt;=</span> <span class="fu">abs</span>(observed_diff))</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Permutation p-value:"</span>, p_value, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Permutation p-value: 0.6947 </code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare to t-test</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>t_test <span class="ot">&lt;-</span> <span class="fu">t.test</span>(group_B, group_A)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"t-test p-value:"</span>, <span class="fu">round</span>(t_test<span class="sc">$</span>p.value, <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>t-test p-value: 0.704 </code></pre>
+</div>
+</div>
+<p>The permutation p-value and parametric p-value are often similar when parametric assumptions are met. The permutation test is exact—it gives the correct p-value regardless of the underlying distribution.</p>
+</section>
+<section id="permutation-test-for-correlation" class="level3">
+<h3 class="anchored" data-anchor-id="permutation-test-for-correlation">Permutation Test for Correlation</h3>
+<p>Permutation tests work for any test statistic. Here’s an example testing whether a correlation is significantly different from zero:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Test correlation significance</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">25</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fl">0.5</span> <span class="sc">*</span> x <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">25</span>, <span class="at">sd =</span> <span class="fl">0.8</span>)  <span class="co"># True correlation exists</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Observed correlation</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>observed_cor <span class="ot">&lt;-</span> <span class="fu">cor</span>(x, y)</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Observed correlation:"</span>, <span class="fu">round</span>(observed_cor, <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Observed correlation: 0.653 </code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Permutation test: shuffle one variable to break association</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>n_perm <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>perm_cors <span class="ot">&lt;-</span> <span class="fu">replicate</span>(n_perm, {</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cor</span>(x, <span class="fu">sample</span>(y))  <span class="co"># Shuffle y, keeping x fixed</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Permutation p-value</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>p_value_cor <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">abs</span>(perm_cors) <span class="sc">&gt;=</span> <span class="fu">abs</span>(observed_cor))</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Permutation p-value:"</span>, p_value_cor, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Permutation p-value: 1e-04 </code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(perm_cors, <span class="at">breaks =</span> <span class="dv">50</span>, <span class="at">col =</span> <span class="st">"lightblue"</span>,</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Permutation Distribution of Correlation"</span>,</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Correlation Coefficient"</span>)</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> observed_cor, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="sc">-</span>observed_cor, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-permutation-correlation" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-permutation-correlation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="18-bootstrapping_files/figure-html/fig-permutation-correlation-1.png" class="img-fluid figure-img" width="768">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-permutation-correlation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;19.4: Permutation test for correlation: null distribution generated by breaking the X-Y pairing
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="bootstrap-vs-permutation" class="level3">
+<h3 class="anchored" data-anchor-id="bootstrap-vs-permutation">Bootstrap vs Permutation</h3>
+<p>The bootstrap and permutation tests answer different questions:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 28%">
+<col style="width: 47%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Feature</th>
+<th style="text-align: left;">Bootstrap</th>
+<th style="text-align: left;">Permutation Test</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Question</strong></td>
+<td style="text-align: left;">What is the sampling variability of my estimate?</td>
+<td style="text-align: left;">Is the observed effect real or due to chance?</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Resampling</strong></td>
+<td style="text-align: left;">With replacement</td>
+<td style="text-align: left;">Without replacement</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Output</strong></td>
+<td style="text-align: left;">Confidence intervals, standard errors</td>
+<td style="text-align: left;">P-value</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Null hypothesis</strong></td>
+<td style="text-align: left;">None assumed</td>
+<td style="text-align: left;">Tests specific null (e.g., no group difference)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Assumptions</strong></td>
+<td style="text-align: left;">Sample is representative</td>
+<td style="text-align: left;">Observations are exchangeable under null</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Use bootstrap when:</strong> - You want confidence intervals for any statistic - No convenient formula for standard error exists - You need to assess uncertainty</p>
+<p><strong>Use permutation tests when:</strong> - You want to test a null hypothesis - Parametric assumptions may be violated - You want an exact test without distributional assumptions</p>
+</section>
+<section id="permutation-test-for-paired-data" class="level3">
+<h3 class="anchored" data-anchor-id="permutation-test-for-paired-data">Permutation Test for Paired Data</h3>
+<p>For paired designs (like before/after measurements), permute the sign of differences rather than shuffling between groups:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Paired permutation test</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">456</span>)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>before <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">20</span>, <span class="at">mean =</span> <span class="dv">100</span>, <span class="at">sd =</span> <span class="dv">15</span>)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>after <span class="ot">&lt;-</span> before <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">20</span>, <span class="at">mean =</span> <span class="dv">5</span>, <span class="at">sd =</span> <span class="dv">8</span>)  <span class="co"># Treatment adds ~5 units</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Observed mean difference</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>differences <span class="ot">&lt;-</span> after <span class="sc">-</span> before</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>observed_mean_diff <span class="ot">&lt;-</span> <span class="fu">mean</span>(differences)</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Observed mean difference:"</span>, <span class="fu">round</span>(observed_mean_diff, <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Observed mean difference: 3.076 </code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Permutation: randomly flip signs of differences</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>n_perm <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>perm_means <span class="ot">&lt;-</span> <span class="fu">replicate</span>(n_perm, {</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  signs <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="fu">length</span>(differences), <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(differences <span class="sc">*</span> signs)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="co"># P-value</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>p_value_paired <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">abs</span>(perm_means) <span class="sc">&gt;=</span> <span class="fu">abs</span>(observed_mean_diff))</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Permutation p-value:"</span>, p_value_paired, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Permutation p-value: 0.0954 </code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare to paired t-test</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>paired_t <span class="ot">&lt;-</span> <span class="fu">t.test</span>(after, before, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Paired t-test p-value:"</span>, <span class="fu">round</span>(paired_t<span class="sc">$</span>p.value, <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Paired t-test p-value: 0.0915 </code></pre>
+</div>
+</div>
+</section>
+<section id="when-permutation-tests-excel" class="level3">
+<h3 class="anchored" data-anchor-id="when-permutation-tests-excel">When Permutation Tests Excel</h3>
+<p>Permutation tests are particularly valuable when:</p>
+<ol type="1">
+<li><strong>Sample sizes are small</strong>: Parametric tests may not be reliable</li>
+<li><strong>Distributions are non-normal</strong>: Especially with skewed or heavy-tailed data</li>
+<li><strong>Data are ranks or ordinal</strong>: No parametric distribution applies</li>
+<li><strong>Complex test statistics</strong>: Custom statistics without known distributions</li>
+<li><strong>You want exact inference</strong>: No approximation error from asymptotic theory</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Practical Considerations
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Number of permutations</strong>: 10,000 is often sufficient; for publishable results, 100,000 gives more precision</li>
+<li><strong>Computation</strong>: Permutation tests can be slow for large datasets; consider parallel computing</li>
+<li><strong>Small samples</strong>: With very small samples, the number of unique permutations is limited</li>
+<li><strong>Exact vs.&nbsp;Monte Carlo</strong>: For small samples, you can enumerate all permutations exactly; for larger samples, random sampling (Monte Carlo) approximates the permutation distribution</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="implementation-with-coin-package" class="level3">
+<h3 class="anchored" data-anchor-id="implementation-with-coin-package">Implementation with coin Package</h3>
+<p>The <code>coin</code> package provides efficient, well-tested permutation tests:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(coin)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Two-sample permutation test</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>test_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">value =</span> <span class="fu">c</span>(group_A, group_B),</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">group =</span> <span class="fu">factor</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>), <span class="fu">c</span>(<span class="fu">length</span>(group_A), <span class="fu">length</span>(group_B))))</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Exact permutation test (or Monte Carlo approximation for larger samples)</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="fu">oneway_test</span>(value <span class="sc">~</span> group, <span class="at">data =</span> test_data, <span class="at">distribution =</span> <span class="st">"approximate"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Approximative Two-Sample Fisher-Pitman Permutation Test
+
+data:  value by group (A, B)
+Z = -0.38996, p-value = 0.6972
+alternative hypothesis: true mu is not equal to 0</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="summary" class="level2" data-number="19.9">
+<h2 data-number="19.9" class="anchored" data-anchor-id="summary"><span class="header-section-number">19.9</span> Summary</h2>
+<p>Resampling methods provide powerful, flexible tools for statistical inference:</p>
+<ul>
+<li><strong>Bootstrap</strong> estimates sampling variability by resampling with replacement from observed data</li>
+<li><strong>Permutation tests</strong> test null hypotheses by resampling without replacement to generate null distributions</li>
+<li>Both methods make minimal distributional assumptions</li>
+<li>Bootstrap excels at constructing confidence intervals; permutation tests excel at hypothesis testing</li>
+<li>Use 1,000+ replications for bootstrap standard errors; 10,000+ for confidence intervals and p-values</li>
+<li>These methods complement rather than replace traditional parametric approaches</li>
+</ul>
+</section>
+<section id="exercises" class="level2" data-number="19.10">
+<h2 data-number="19.10" class="anchored" data-anchor-id="exercises"><span class="header-section-number">19.10</span> Exercises</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise B.1: Bootstrap Standard Errors
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You measure the half-life of a radioactive isotope in 15 independent experiments:</p>
+<pre><code>half_lives &lt;- c(5.2, 5.8, 5.1, 6.2, 5.9, 5.4, 6.1, 5.7, 5.3, 6.0, 5.5, 5.9, 5.6, 6.3, 5.4)</code></pre>
+<ol type="a">
+<li>Calculate the mean and median half-life</li>
+<li>Use the bootstrap (with 5000 replications) to estimate the standard error of the mean</li>
+<li>Use the bootstrap to estimate the standard error of the median</li>
+<li>Compare the bootstrap SE of the mean to the analytical formula SE = s/√n</li>
+<li>Create histograms of the bootstrap distributions for both the mean and median</li>
+<li>Which statistic (mean or median) has greater sampling variability for these data?</li>
+</ol>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise B.2: Bootstrap Confidence Intervals
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You measure reaction times (in milliseconds) for a cognitive task:</p>
+<pre><code>reaction_times &lt;- c(234, 245, 267, 289, 256, 298, 312, 245, 278, 301, 267, 289, 234, 256, 278)</code></pre>
+<ol type="a">
+<li>Calculate 95% confidence intervals for the median using three methods:
+<ul>
+<li>Percentile method (manual calculation)</li>
+<li>Using the <code>boot</code> package with percentile, basic, and BCa methods</li>
+</ul></li>
+<li>Compare the widths and endpoints of these different confidence intervals</li>
+<li>Which method would you prefer for this dataset and why?</li>
+<li>Bootstrap the 90th percentile and construct a 95% CI for it</li>
+</ol>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(boot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise B.3: Bootstrap for Correlation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You have measurements of two physiological variables:</p>
+<pre><code>x &lt;- c(12.3, 14.5, 11.8, 15.2, 13.1, 14.8, 12.9, 15.5, 13.6, 14.1)
+y &lt;- c(98, 105, 95, 110, 101, 107, 99, 112, 103, 106)</code></pre>
+<ol type="a">
+<li>Calculate Pearson’s correlation coefficient</li>
+<li>Calculate the 95% CI for the correlation using the traditional Fisher z-transformation method (<code>cor.test()</code>)</li>
+<li>Use the bootstrap (10000 replications) to construct a 95% CI for the correlation</li>
+<li>Compare the two confidence intervals—are they similar?</li>
+<li>Create a scatterplot with the data and report the correlation with its bootstrap CI</li>
+</ol>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise B.4: Permutation Test vs.&nbsp;t-test
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You compare growth rates of bacteria cultured in two different media:</p>
+<pre><code>medium_A &lt;- c(0.42, 0.38, 0.45, 0.41, 0.39, 0.44, 0.40, 0.43)
+medium_B &lt;- c(0.51, 0.48, 0.55, 0.49, 0.52, 0.47, 0.54, 0.50)</code></pre>
+<ol type="a">
+<li>Visualize the two groups with boxplots</li>
+<li>Perform a two-sample t-test</li>
+<li>Implement a permutation test with 10,000 permutations to test for a difference in means</li>
+<li>Compare the p-values from the t-test and permutation test</li>
+<li>Calculate the effect size (Cohen’s d)</li>
+<li>Createhistogram of the permutation distribution with the observed difference marked</li>
+</ol>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise B.5: Paired Permutation Test
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You measure expression levels of a gene before and after heat stress in 10 plant samples:</p>
+<pre><code>before_stress &lt;- c(125, 142, 138, 151, 129, 145, 133, 148, 136, 141)
+after_stress &lt;- c(189, 207, 195, 218, 182, 203, 191, 214, 198, 206)</code></pre>
+<ol type="a">
+<li>Calculate the paired differences and perform a paired t-test</li>
+<li>Implement a paired permutation test by randomly flipping the signs of differences (10,000 permutations)</li>
+<li>Compare the p-values from both methods</li>
+<li>Use the bootstrap to construct a 95% CI for the mean difference</li>
+<li>Visualize the paired data with a before-after plot (connecting lines between paired points)</li>
+</ol>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise B.6: Bootstrap vs.&nbsp;Permutation—Understanding the Difference
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Consider the following dataset:</p>
+<pre><code>group1 &lt;- c(23, 25, 28, 31, 27, 29, 26, 30)
+group2 &lt;- c(35, 38, 33, 40, 36, 37, 34, 39)</code></pre>
+<ol type="a">
+<li>Use the bootstrap (sampling with replacement from each group separately) to construct 95% CIs for the mean of group1 and the mean of group2</li>
+<li>Use a permutation test to test whether the two groups have different means</li>
+<li>Explain in your own words:
+<ul>
+<li>What question does the bootstrap answer?</li>
+<li>What question does the permutation test answer?</li>
+<li>Why do we resample WITH replacement for bootstrap but WITHOUT replacement for permutation tests?</li>
+</ul></li>
+<li>Create visualizations demonstrating both the bootstrap distribution (for one of the means) and the permutation distribution (for the difference in means)</li>
+</ol>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+</div>
+
+
+<!-- -->
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-efron1979bootstrap" class="csl-entry" role="listitem">
+Efron, Bradley. 1979. <span>“Bootstrap Methods: Another Look at the Jackknife.”</span> <em>The Annals of Statistics</em> 7 (1): 1–26.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/17-nonparametric-tests.html" class="pagination-link" aria-label="Nonparametric Tests">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Nonparametric Tests</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/19-what-are-models.html" class="pagination-link" aria-label="What are Models?">
+        <span class="nav-page-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">What are Models?</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb42" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Resampling Methods {#sec-bootstrapping}</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_minimal</span>())</span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Bootstrap Idea</span></span>
+<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a>For the sample mean, we have elegant formulas for standard errors and confidence intervals derived from probability theory. But what about other statistics—the median, a correlation coefficient, the ratio of two means? For many estimators, no convenient formula exists.</span>
+<span id="cb42-15"><a href="#cb42-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-16"><a href="#cb42-16" aria-hidden="true" tabindex="-1"></a>The bootstrap <span class="co">[</span><span class="ot">@efron1979bootstrap</span><span class="co">]</span>, invented by Bradley Efron in 1979, provides a general solution. The key insight is that we can learn about the sampling distribution of a statistic by resampling from our data. If our sample is representative of the population, then samples drawn from our sample (with replacement) mimic what we would get from repeated sampling from the population.</span>
+<span id="cb42-17"><a href="#cb42-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-18"><a href="#cb42-18" aria-hidden="true" tabindex="-1"></a><span class="al">![Bootstrap resampling procedure showing how multiple samples are drawn with replacement from the original data](../images/ch18/ch18_bootstrap_resampling.jpeg)</span>{#fig-bootstrap-resampling fig-align="center"}</span>
+<span id="cb42-19"><a href="#cb42-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-20"><a href="#cb42-20" aria-hidden="true" tabindex="-1"></a><span class="fu">## Why the Bootstrap Works</span></span>
+<span id="cb42-21"><a href="#cb42-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-22"><a href="#cb42-22" aria-hidden="true" tabindex="-1"></a>The bootstrap treats the observed sample as if it were the population. By drawing many samples with replacement from this "population," we create a distribution of the statistic of interest. This bootstrap distribution approximates the true sampling distribution.</span>
+<span id="cb42-23"><a href="#cb42-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-24"><a href="#cb42-24" aria-hidden="true" tabindex="-1"></a>The bootstrap standard error is the standard deviation of the bootstrap distribution. Bootstrap confidence intervals can be constructed from the percentiles of the bootstrap distribution—the 2.5th and 97.5th percentiles give an approximate 95% confidence interval.</span>
+<span id="cb42-25"><a href="#cb42-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-26"><a href="#cb42-26" aria-hidden="true" tabindex="-1"></a><span class="fu">## Bootstrap Procedure</span></span>
+<span id="cb42-27"><a href="#cb42-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-28"><a href="#cb42-28" aria-hidden="true" tabindex="-1"></a>The basic algorithm is straightforward:</span>
+<span id="cb42-29"><a href="#cb42-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-30"><a href="#cb42-30" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Draw a random sample of size n from your data with replacement (the bootstrap sample)</span>
+<span id="cb42-31"><a href="#cb42-31" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Calculate the statistic of interest from this bootstrap sample</span>
+<span id="cb42-32"><a href="#cb42-32" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Repeat steps 1 and 2 many times (1000 or more)</span>
+<span id="cb42-33"><a href="#cb42-33" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Use the distribution of bootstrap statistics to estimate standard error or confidence intervals</span>
+<span id="cb42-34"><a href="#cb42-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-37"><a href="#cb42-37" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb42-38"><a href="#cb42-38" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-bootstrap-dist</span></span>
+<span id="cb42-39"><a href="#cb42-39" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Bootstrap distribution of the median from 1000 resamples, showing the estimated sampling distribution with 95% confidence intervals"</span></span>
+<span id="cb42-40"><a href="#cb42-40" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 7</span></span>
+<span id="cb42-41"><a href="#cb42-41" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5</span></span>
+<span id="cb42-42"><a href="#cb42-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Bootstrap example: estimating standard error of median</span></span>
+<span id="cb42-43"><a href="#cb42-43" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb42-44"><a href="#cb42-44" aria-hidden="true" tabindex="-1"></a>original_data <span class="ot">&lt;-</span> <span class="fu">rexp</span>(<span class="dv">50</span>, <span class="at">rate =</span> <span class="fl">0.1</span>)  <span class="co"># Skewed distribution</span></span>
+<span id="cb42-45"><a href="#cb42-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-46"><a href="#cb42-46" aria-hidden="true" tabindex="-1"></a><span class="co"># Observed median</span></span>
+<span id="cb42-47"><a href="#cb42-47" aria-hidden="true" tabindex="-1"></a>observed_median <span class="ot">&lt;-</span> <span class="fu">median</span>(original_data)</span>
+<span id="cb42-48"><a href="#cb42-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-49"><a href="#cb42-49" aria-hidden="true" tabindex="-1"></a><span class="co"># Bootstrap</span></span>
+<span id="cb42-50"><a href="#cb42-50" aria-hidden="true" tabindex="-1"></a>n_boot <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb42-51"><a href="#cb42-51" aria-hidden="true" tabindex="-1"></a>boot_medians <span class="ot">&lt;-</span> <span class="fu">replicate</span>(n_boot, {</span>
+<span id="cb42-52"><a href="#cb42-52" aria-hidden="true" tabindex="-1"></a>  boot_sample <span class="ot">&lt;-</span> <span class="fu">sample</span>(original_data, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb42-53"><a href="#cb42-53" aria-hidden="true" tabindex="-1"></a>  <span class="fu">median</span>(boot_sample)</span>
+<span id="cb42-54"><a href="#cb42-54" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb42-55"><a href="#cb42-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-56"><a href="#cb42-56" aria-hidden="true" tabindex="-1"></a><span class="co"># Bootstrap standard error</span></span>
+<span id="cb42-57"><a href="#cb42-57" aria-hidden="true" tabindex="-1"></a>boot_se <span class="ot">&lt;-</span> <span class="fu">sd</span>(boot_medians)</span>
+<span id="cb42-58"><a href="#cb42-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-59"><a href="#cb42-59" aria-hidden="true" tabindex="-1"></a><span class="co"># Bootstrap confidence interval (percentile method)</span></span>
+<span id="cb42-60"><a href="#cb42-60" aria-hidden="true" tabindex="-1"></a>boot_ci <span class="ot">&lt;-</span> <span class="fu">quantile</span>(boot_medians, <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</span>
+<span id="cb42-61"><a href="#cb42-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-62"><a href="#cb42-62" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Observed median:"</span>, <span class="fu">round</span>(observed_median, <span class="dv">2</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb42-63"><a href="#cb42-63" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Bootstrap SE:"</span>, <span class="fu">round</span>(boot_se, <span class="dv">2</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb42-64"><a href="#cb42-64" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"95% CI:"</span>, <span class="fu">round</span>(boot_ci, <span class="dv">2</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb42-65"><a href="#cb42-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-66"><a href="#cb42-66" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(boot_medians, <span class="at">breaks =</span> <span class="dv">30</span>, <span class="at">main =</span> <span class="st">"Bootstrap Distribution of Median"</span>,</span>
+<span id="cb42-67"><a href="#cb42-67" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Median"</span>, <span class="at">col =</span> <span class="st">"lightblue"</span>)</span>
+<span id="cb42-68"><a href="#cb42-68" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> observed_median, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb42-69"><a href="#cb42-69" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> boot_ci, <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb42-70"><a href="#cb42-70" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-71"><a href="#cb42-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-72"><a href="#cb42-72" aria-hidden="true" tabindex="-1"></a><span class="fu">## Advantages of the Bootstrap</span></span>
+<span id="cb42-73"><a href="#cb42-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-74"><a href="#cb42-74" aria-hidden="true" tabindex="-1"></a>The bootstrap is remarkably versatile. It can be applied to almost any statistic—means, medians, correlations, regression coefficients, eigenvalues, and more. It works when no formula for standard errors exists. It is nonparametric, making no assumptions about the underlying distribution. It handles complex sampling designs and calculations that would be intractable analytically.</span>
+<span id="cb42-75"><a href="#cb42-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-76"><a href="#cb42-76" aria-hidden="true" tabindex="-1"></a>The bootstrap is widely used for assessing confidence in phylogenetic trees, where the complexity of tree-building algorithms makes analytical approaches impractical. In machine learning, bootstrap aggregating (bagging) improves prediction accuracy by combining models trained on bootstrap samples.</span>
+<span id="cb42-77"><a href="#cb42-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-78"><a href="#cb42-78" aria-hidden="true" tabindex="-1"></a><span class="fu">## When the Bootstrap Fails</span></span>
+<span id="cb42-79"><a href="#cb42-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-80"><a href="#cb42-80" aria-hidden="true" tabindex="-1"></a>The bootstrap is not a magic solution to all problems. It requires that the original sample be representative of the population—a biased sample produces biased bootstrap estimates. It can struggle with very small samples where the original data may not adequately represent the population.</span>
+<span id="cb42-81"><a href="#cb42-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-82"><a href="#cb42-82" aria-hidden="true" tabindex="-1"></a>Certain statistics, like the maximum of a sample, are poorly estimated by the bootstrap because the bootstrap distribution is bounded by the observed data. The bootstrap also assumes that observations are independent; for dependent data (like time series), specialized bootstrap methods are needed.</span>
+<span id="cb42-83"><a href="#cb42-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-84"><a href="#cb42-84" aria-hidden="true" tabindex="-1"></a><span class="fu">## Bootstrap Confidence Intervals</span></span>
+<span id="cb42-85"><a href="#cb42-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-86"><a href="#cb42-86" aria-hidden="true" tabindex="-1"></a>Several methods exist for constructing bootstrap confidence intervals. The **percentile method** uses the quantiles of the bootstrap distribution directly. The **basic bootstrap** method reflects the bootstrap distribution around the observed estimate. The **BCa (bias-corrected and accelerated)** method adjusts for bias and skewness in the bootstrap distribution.</span>
+<span id="cb42-87"><a href="#cb42-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-90"><a href="#cb42-90" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb42-91"><a href="#cb42-91" aria-hidden="true" tabindex="-1"></a><span class="co"># Different bootstrap CI methods</span></span>
+<span id="cb42-92"><a href="#cb42-92" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
+<span id="cb42-93"><a href="#cb42-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-94"><a href="#cb42-94" aria-hidden="true" tabindex="-1"></a><span class="co"># Define statistic function</span></span>
+<span id="cb42-95"><a href="#cb42-95" aria-hidden="true" tabindex="-1"></a>median_fun <span class="ot">&lt;-</span> <span class="cf">function</span>(data, indices) {</span>
+<span id="cb42-96"><a href="#cb42-96" aria-hidden="true" tabindex="-1"></a>  <span class="fu">median</span>(data[indices])</span>
+<span id="cb42-97"><a href="#cb42-97" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb42-98"><a href="#cb42-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-99"><a href="#cb42-99" aria-hidden="true" tabindex="-1"></a><span class="co"># Run bootstrap</span></span>
+<span id="cb42-100"><a href="#cb42-100" aria-hidden="true" tabindex="-1"></a>boot_result <span class="ot">&lt;-</span> <span class="fu">boot</span>(original_data, median_fun, <span class="at">R =</span> <span class="dv">1000</span>)</span>
+<span id="cb42-101"><a href="#cb42-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-102"><a href="#cb42-102" aria-hidden="true" tabindex="-1"></a><span class="co"># Different CI methods</span></span>
+<span id="cb42-103"><a href="#cb42-103" aria-hidden="true" tabindex="-1"></a><span class="fu">boot.ci</span>(boot_result, <span class="at">type =</span> <span class="fu">c</span>(<span class="st">"perc"</span>, <span class="st">"basic"</span>, <span class="st">"bca"</span>))</span>
+<span id="cb42-104"><a href="#cb42-104" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-105"><a href="#cb42-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-106"><a href="#cb42-106" aria-hidden="true" tabindex="-1"></a>The BCa method is generally preferred when computationally feasible, as it provides better coverage in many situations.</span>
+<span id="cb42-107"><a href="#cb42-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-108"><a href="#cb42-108" aria-hidden="true" tabindex="-1"></a><span class="fu">## Practical Recommendations</span></span>
+<span id="cb42-109"><a href="#cb42-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-110"><a href="#cb42-110" aria-hidden="true" tabindex="-1"></a>For most applications, 1000 bootstrap replications provide adequate precision for standard errors. For confidence intervals, especially when using the BCa method, 10,000 replications may be preferable. Always set a random seed for reproducibility.</span>
+<span id="cb42-111"><a href="#cb42-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-112"><a href="#cb42-112" aria-hidden="true" tabindex="-1"></a>Remember that the bootstrap estimates sampling variability—it cannot fix problems with biased samples or invalid measurements. Use it as a tool for understanding uncertainty, not as a cure for poor data quality.</span>
+<span id="cb42-113"><a href="#cb42-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-114"><a href="#cb42-114" aria-hidden="true" tabindex="-1"></a><span class="fu">## Permutation Tests</span></span>
+<span id="cb42-115"><a href="#cb42-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-116"><a href="#cb42-116" aria-hidden="true" tabindex="-1"></a>While the bootstrap estimates sampling variability by resampling **with replacement**, **permutation tests** (also called **randomization tests**) address a different question: they test the null hypothesis by resampling **without replacement**. Permutation tests are among the oldest statistical tests, predating many parametric methods.</span>
+<span id="cb42-117"><a href="#cb42-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-118"><a href="#cb42-118" aria-hidden="true" tabindex="-1"></a><span class="fu">### The Permutation Idea</span></span>
+<span id="cb42-119"><a href="#cb42-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-120"><a href="#cb42-120" aria-hidden="true" tabindex="-1"></a>A permutation test asks: "If there were truly no difference between groups, how likely would we be to see a difference as large as the one we observed?"</span>
+<span id="cb42-121"><a href="#cb42-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-122"><a href="#cb42-122" aria-hidden="true" tabindex="-1"></a>Under the null hypothesis of no group difference, group labels are arbitrary—the data could have been assigned to either group. A permutation test generates the null distribution by repeatedly shuffling group labels and recalculating the test statistic. The p-value is the proportion of permuted statistics as extreme as the observed statistic.</span>
+<span id="cb42-123"><a href="#cb42-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-126"><a href="#cb42-126" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb42-127"><a href="#cb42-127" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-permutation-concept</span></span>
+<span id="cb42-128"><a href="#cb42-128" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Permutation test concept: if group labels don't matter, shuffling them should produce similar results"</span></span>
+<span id="cb42-129"><a href="#cb42-129" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 8</span></span>
+<span id="cb42-130"><a href="#cb42-130" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5</span></span>
+<span id="cb42-131"><a href="#cb42-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-132"><a href="#cb42-132" aria-hidden="true" tabindex="-1"></a><span class="co"># Example: Two-sample permutation test</span></span>
+<span id="cb42-133"><a href="#cb42-133" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb42-134"><a href="#cb42-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-135"><a href="#cb42-135" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate two groups with different means</span></span>
+<span id="cb42-136"><a href="#cb42-136" aria-hidden="true" tabindex="-1"></a>group_A <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">15</span>, <span class="at">mean =</span> <span class="dv">10</span>, <span class="at">sd =</span> <span class="dv">2</span>)</span>
+<span id="cb42-137"><a href="#cb42-137" aria-hidden="true" tabindex="-1"></a>group_B <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">15</span>, <span class="at">mean =</span> <span class="dv">12</span>, <span class="at">sd =</span> <span class="dv">2</span>)</span>
+<span id="cb42-138"><a href="#cb42-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-139"><a href="#cb42-139" aria-hidden="true" tabindex="-1"></a><span class="co"># Observed difference in means</span></span>
+<span id="cb42-140"><a href="#cb42-140" aria-hidden="true" tabindex="-1"></a>observed_diff <span class="ot">&lt;-</span> <span class="fu">mean</span>(group_B) <span class="sc">-</span> <span class="fu">mean</span>(group_A)</span>
+<span id="cb42-141"><a href="#cb42-141" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Observed difference:"</span>, <span class="fu">round</span>(observed_diff, <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb42-142"><a href="#cb42-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-143"><a href="#cb42-143" aria-hidden="true" tabindex="-1"></a><span class="co"># Combined data for permutation</span></span>
+<span id="cb42-144"><a href="#cb42-144" aria-hidden="true" tabindex="-1"></a>combined <span class="ot">&lt;-</span> <span class="fu">c</span>(group_A, group_B)</span>
+<span id="cb42-145"><a href="#cb42-145" aria-hidden="true" tabindex="-1"></a>n_A <span class="ot">&lt;-</span> <span class="fu">length</span>(group_A)</span>
+<span id="cb42-146"><a href="#cb42-146" aria-hidden="true" tabindex="-1"></a>n_B <span class="ot">&lt;-</span> <span class="fu">length</span>(group_B)</span>
+<span id="cb42-147"><a href="#cb42-147" aria-hidden="true" tabindex="-1"></a>n_total <span class="ot">&lt;-</span> n_A <span class="sc">+</span> n_B</span>
+<span id="cb42-148"><a href="#cb42-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-149"><a href="#cb42-149" aria-hidden="true" tabindex="-1"></a><span class="co"># Permutation test</span></span>
+<span id="cb42-150"><a href="#cb42-150" aria-hidden="true" tabindex="-1"></a>n_perm <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb42-151"><a href="#cb42-151" aria-hidden="true" tabindex="-1"></a>perm_diffs <span class="ot">&lt;-</span> <span class="fu">replicate</span>(n_perm, {</span>
+<span id="cb42-152"><a href="#cb42-152" aria-hidden="true" tabindex="-1"></a>  shuffled <span class="ot">&lt;-</span> <span class="fu">sample</span>(combined)  <span class="co"># Shuffle without replacement</span></span>
+<span id="cb42-153"><a href="#cb42-153" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(shuffled[(n_A <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">:</span>n_total]) <span class="sc">-</span> <span class="fu">mean</span>(shuffled[<span class="dv">1</span><span class="sc">:</span>n_A])</span>
+<span id="cb42-154"><a href="#cb42-154" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb42-155"><a href="#cb42-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-156"><a href="#cb42-156" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the permutation distribution</span></span>
+<span id="cb42-157"><a href="#cb42-157" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(perm_diffs, <span class="at">breaks =</span> <span class="dv">50</span>, <span class="at">col =</span> <span class="st">"lightblue"</span>,</span>
+<span id="cb42-158"><a href="#cb42-158" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Permutation Distribution of Mean Difference"</span>,</span>
+<span id="cb42-159"><a href="#cb42-159" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Difference in Means"</span>)</span>
+<span id="cb42-160"><a href="#cb42-160" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> observed_diff, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb42-161"><a href="#cb42-161" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="sc">-</span>observed_diff, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb42-162"><a href="#cb42-162" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="fu">c</span>(<span class="st">"Observed"</span>, <span class="st">"Mirror (for two-tailed)"</span>),</span>
+<span id="cb42-163"><a href="#cb42-163" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb42-164"><a href="#cb42-164" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-165"><a href="#cb42-165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-166"><a href="#cb42-166" aria-hidden="true" tabindex="-1"></a><span class="fu">### Calculating the P-Value</span></span>
+<span id="cb42-167"><a href="#cb42-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-170"><a href="#cb42-170" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb42-171"><a href="#cb42-171" aria-hidden="true" tabindex="-1"></a><span class="co"># Two-tailed p-value: proportion of permuted differences as extreme as observed</span></span>
+<span id="cb42-172"><a href="#cb42-172" aria-hidden="true" tabindex="-1"></a>p_value <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">abs</span>(perm_diffs) <span class="sc">&gt;=</span> <span class="fu">abs</span>(observed_diff))</span>
+<span id="cb42-173"><a href="#cb42-173" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Permutation p-value:"</span>, p_value, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb42-174"><a href="#cb42-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-175"><a href="#cb42-175" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare to t-test</span></span>
+<span id="cb42-176"><a href="#cb42-176" aria-hidden="true" tabindex="-1"></a>t_test <span class="ot">&lt;-</span> <span class="fu">t.test</span>(group_B, group_A)</span>
+<span id="cb42-177"><a href="#cb42-177" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"t-test p-value:"</span>, <span class="fu">round</span>(t_test<span class="sc">$</span>p.value, <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb42-178"><a href="#cb42-178" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-179"><a href="#cb42-179" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-180"><a href="#cb42-180" aria-hidden="true" tabindex="-1"></a>The permutation p-value and parametric p-value are often similar when parametric assumptions are met. The permutation test is exact—it gives the correct p-value regardless of the underlying distribution.</span>
+<span id="cb42-181"><a href="#cb42-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-182"><a href="#cb42-182" aria-hidden="true" tabindex="-1"></a><span class="fu">### Permutation Test for Correlation</span></span>
+<span id="cb42-183"><a href="#cb42-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-184"><a href="#cb42-184" aria-hidden="true" tabindex="-1"></a>Permutation tests work for any test statistic. Here's an example testing whether a correlation is significantly different from zero:</span>
+<span id="cb42-185"><a href="#cb42-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-188"><a href="#cb42-188" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb42-189"><a href="#cb42-189" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-permutation-correlation</span></span>
+<span id="cb42-190"><a href="#cb42-190" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Permutation test for correlation: null distribution generated by breaking the X-Y pairing"</span></span>
+<span id="cb42-191"><a href="#cb42-191" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 8</span></span>
+<span id="cb42-192"><a href="#cb42-192" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5</span></span>
+<span id="cb42-193"><a href="#cb42-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-194"><a href="#cb42-194" aria-hidden="true" tabindex="-1"></a><span class="co"># Test correlation significance</span></span>
+<span id="cb42-195"><a href="#cb42-195" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb42-196"><a href="#cb42-196" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">25</span>)</span>
+<span id="cb42-197"><a href="#cb42-197" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fl">0.5</span> <span class="sc">*</span> x <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">25</span>, <span class="at">sd =</span> <span class="fl">0.8</span>)  <span class="co"># True correlation exists</span></span>
+<span id="cb42-198"><a href="#cb42-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-199"><a href="#cb42-199" aria-hidden="true" tabindex="-1"></a><span class="co"># Observed correlation</span></span>
+<span id="cb42-200"><a href="#cb42-200" aria-hidden="true" tabindex="-1"></a>observed_cor <span class="ot">&lt;-</span> <span class="fu">cor</span>(x, y)</span>
+<span id="cb42-201"><a href="#cb42-201" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Observed correlation:"</span>, <span class="fu">round</span>(observed_cor, <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb42-202"><a href="#cb42-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-203"><a href="#cb42-203" aria-hidden="true" tabindex="-1"></a><span class="co"># Permutation test: shuffle one variable to break association</span></span>
+<span id="cb42-204"><a href="#cb42-204" aria-hidden="true" tabindex="-1"></a>n_perm <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb42-205"><a href="#cb42-205" aria-hidden="true" tabindex="-1"></a>perm_cors <span class="ot">&lt;-</span> <span class="fu">replicate</span>(n_perm, {</span>
+<span id="cb42-206"><a href="#cb42-206" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cor</span>(x, <span class="fu">sample</span>(y))  <span class="co"># Shuffle y, keeping x fixed</span></span>
+<span id="cb42-207"><a href="#cb42-207" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb42-208"><a href="#cb42-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-209"><a href="#cb42-209" aria-hidden="true" tabindex="-1"></a><span class="co"># Permutation p-value</span></span>
+<span id="cb42-210"><a href="#cb42-210" aria-hidden="true" tabindex="-1"></a>p_value_cor <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">abs</span>(perm_cors) <span class="sc">&gt;=</span> <span class="fu">abs</span>(observed_cor))</span>
+<span id="cb42-211"><a href="#cb42-211" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Permutation p-value:"</span>, p_value_cor, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb42-212"><a href="#cb42-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-213"><a href="#cb42-213" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize</span></span>
+<span id="cb42-214"><a href="#cb42-214" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(perm_cors, <span class="at">breaks =</span> <span class="dv">50</span>, <span class="at">col =</span> <span class="st">"lightblue"</span>,</span>
+<span id="cb42-215"><a href="#cb42-215" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Permutation Distribution of Correlation"</span>,</span>
+<span id="cb42-216"><a href="#cb42-216" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Correlation Coefficient"</span>)</span>
+<span id="cb42-217"><a href="#cb42-217" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> observed_cor, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb42-218"><a href="#cb42-218" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="sc">-</span>observed_cor, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb42-219"><a href="#cb42-219" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-220"><a href="#cb42-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-221"><a href="#cb42-221" aria-hidden="true" tabindex="-1"></a><span class="fu">### Bootstrap vs Permutation</span></span>
+<span id="cb42-222"><a href="#cb42-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-223"><a href="#cb42-223" aria-hidden="true" tabindex="-1"></a>The bootstrap and permutation tests answer different questions:</span>
+<span id="cb42-224"><a href="#cb42-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-225"><a href="#cb42-225" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Feature <span class="pp">|</span> Bootstrap <span class="pp">|</span> Permutation Test <span class="pp">|</span></span>
+<span id="cb42-226"><a href="#cb42-226" aria-hidden="true" tabindex="-1"></a><span class="pp">|:--------|:----------|:-----------------|</span></span>
+<span id="cb42-227"><a href="#cb42-227" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Question** <span class="pp">|</span> What is the sampling variability of my estimate? <span class="pp">|</span> Is the observed effect real or due to chance? <span class="pp">|</span></span>
+<span id="cb42-228"><a href="#cb42-228" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Resampling** <span class="pp">|</span> With replacement <span class="pp">|</span> Without replacement <span class="pp">|</span></span>
+<span id="cb42-229"><a href="#cb42-229" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Output** <span class="pp">|</span> Confidence intervals, standard errors <span class="pp">|</span> P-value <span class="pp">|</span></span>
+<span id="cb42-230"><a href="#cb42-230" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Null hypothesis** <span class="pp">|</span> None assumed <span class="pp">|</span> Tests specific null (e.g., no group difference) <span class="pp">|</span></span>
+<span id="cb42-231"><a href="#cb42-231" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Assumptions** <span class="pp">|</span> Sample is representative <span class="pp">|</span> Observations are exchangeable under null <span class="pp">|</span></span>
+<span id="cb42-232"><a href="#cb42-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-233"><a href="#cb42-233" aria-hidden="true" tabindex="-1"></a>**Use bootstrap when:**</span>
+<span id="cb42-234"><a href="#cb42-234" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>You want confidence intervals for any statistic</span>
+<span id="cb42-235"><a href="#cb42-235" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>No convenient formula for standard error exists</span>
+<span id="cb42-236"><a href="#cb42-236" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>You need to assess uncertainty</span>
+<span id="cb42-237"><a href="#cb42-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-238"><a href="#cb42-238" aria-hidden="true" tabindex="-1"></a>**Use permutation tests when:**</span>
+<span id="cb42-239"><a href="#cb42-239" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>You want to test a null hypothesis</span>
+<span id="cb42-240"><a href="#cb42-240" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Parametric assumptions may be violated</span>
+<span id="cb42-241"><a href="#cb42-241" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>You want an exact test without distributional assumptions</span>
+<span id="cb42-242"><a href="#cb42-242" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-243"><a href="#cb42-243" aria-hidden="true" tabindex="-1"></a><span class="fu">### Permutation Test for Paired Data</span></span>
+<span id="cb42-244"><a href="#cb42-244" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-245"><a href="#cb42-245" aria-hidden="true" tabindex="-1"></a>For paired designs (like before/after measurements), permute the sign of differences rather than shuffling between groups:</span>
+<span id="cb42-246"><a href="#cb42-246" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-249"><a href="#cb42-249" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb42-250"><a href="#cb42-250" aria-hidden="true" tabindex="-1"></a><span class="co"># Paired permutation test</span></span>
+<span id="cb42-251"><a href="#cb42-251" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">456</span>)</span>
+<span id="cb42-252"><a href="#cb42-252" aria-hidden="true" tabindex="-1"></a>before <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">20</span>, <span class="at">mean =</span> <span class="dv">100</span>, <span class="at">sd =</span> <span class="dv">15</span>)</span>
+<span id="cb42-253"><a href="#cb42-253" aria-hidden="true" tabindex="-1"></a>after <span class="ot">&lt;-</span> before <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">20</span>, <span class="at">mean =</span> <span class="dv">5</span>, <span class="at">sd =</span> <span class="dv">8</span>)  <span class="co"># Treatment adds ~5 units</span></span>
+<span id="cb42-254"><a href="#cb42-254" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-255"><a href="#cb42-255" aria-hidden="true" tabindex="-1"></a><span class="co"># Observed mean difference</span></span>
+<span id="cb42-256"><a href="#cb42-256" aria-hidden="true" tabindex="-1"></a>differences <span class="ot">&lt;-</span> after <span class="sc">-</span> before</span>
+<span id="cb42-257"><a href="#cb42-257" aria-hidden="true" tabindex="-1"></a>observed_mean_diff <span class="ot">&lt;-</span> <span class="fu">mean</span>(differences)</span>
+<span id="cb42-258"><a href="#cb42-258" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Observed mean difference:"</span>, <span class="fu">round</span>(observed_mean_diff, <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb42-259"><a href="#cb42-259" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-260"><a href="#cb42-260" aria-hidden="true" tabindex="-1"></a><span class="co"># Permutation: randomly flip signs of differences</span></span>
+<span id="cb42-261"><a href="#cb42-261" aria-hidden="true" tabindex="-1"></a>n_perm <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb42-262"><a href="#cb42-262" aria-hidden="true" tabindex="-1"></a>perm_means <span class="ot">&lt;-</span> <span class="fu">replicate</span>(n_perm, {</span>
+<span id="cb42-263"><a href="#cb42-263" aria-hidden="true" tabindex="-1"></a>  signs <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="fu">length</span>(differences), <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb42-264"><a href="#cb42-264" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(differences <span class="sc">*</span> signs)</span>
+<span id="cb42-265"><a href="#cb42-265" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb42-266"><a href="#cb42-266" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-267"><a href="#cb42-267" aria-hidden="true" tabindex="-1"></a><span class="co"># P-value</span></span>
+<span id="cb42-268"><a href="#cb42-268" aria-hidden="true" tabindex="-1"></a>p_value_paired <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">abs</span>(perm_means) <span class="sc">&gt;=</span> <span class="fu">abs</span>(observed_mean_diff))</span>
+<span id="cb42-269"><a href="#cb42-269" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Permutation p-value:"</span>, p_value_paired, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb42-270"><a href="#cb42-270" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-271"><a href="#cb42-271" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare to paired t-test</span></span>
+<span id="cb42-272"><a href="#cb42-272" aria-hidden="true" tabindex="-1"></a>paired_t <span class="ot">&lt;-</span> <span class="fu">t.test</span>(after, before, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb42-273"><a href="#cb42-273" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Paired t-test p-value:"</span>, <span class="fu">round</span>(paired_t<span class="sc">$</span>p.value, <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb42-274"><a href="#cb42-274" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-275"><a href="#cb42-275" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-276"><a href="#cb42-276" aria-hidden="true" tabindex="-1"></a><span class="fu">### When Permutation Tests Excel</span></span>
+<span id="cb42-277"><a href="#cb42-277" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-278"><a href="#cb42-278" aria-hidden="true" tabindex="-1"></a>Permutation tests are particularly valuable when:</span>
+<span id="cb42-279"><a href="#cb42-279" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-280"><a href="#cb42-280" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Sample sizes are small**: Parametric tests may not be reliable</span>
+<span id="cb42-281"><a href="#cb42-281" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Distributions are non-normal**: Especially with skewed or heavy-tailed data</span>
+<span id="cb42-282"><a href="#cb42-282" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Data are ranks or ordinal**: No parametric distribution applies</span>
+<span id="cb42-283"><a href="#cb42-283" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Complex test statistics**: Custom statistics without known distributions</span>
+<span id="cb42-284"><a href="#cb42-284" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>**You want exact inference**: No approximation error from asymptotic theory</span>
+<span id="cb42-285"><a href="#cb42-285" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-286"><a href="#cb42-286" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb42-287"><a href="#cb42-287" aria-hidden="true" tabindex="-1"></a><span class="fu">## Practical Considerations</span></span>
+<span id="cb42-288"><a href="#cb42-288" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-289"><a href="#cb42-289" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Number of permutations**: 10,000 is often sufficient; for publishable results, 100,000 gives more precision</span>
+<span id="cb42-290"><a href="#cb42-290" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Computation**: Permutation tests can be slow for large datasets; consider parallel computing</span>
+<span id="cb42-291"><a href="#cb42-291" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Small samples**: With very small samples, the number of unique permutations is limited</span>
+<span id="cb42-292"><a href="#cb42-292" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Exact vs. Monte Carlo**: For small samples, you can enumerate all permutations exactly; for larger samples, random sampling (Monte Carlo) approximates the permutation distribution</span>
+<span id="cb42-293"><a href="#cb42-293" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb42-294"><a href="#cb42-294" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-295"><a href="#cb42-295" aria-hidden="true" tabindex="-1"></a><span class="fu">### Implementation with coin Package</span></span>
+<span id="cb42-296"><a href="#cb42-296" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-297"><a href="#cb42-297" aria-hidden="true" tabindex="-1"></a>The <span class="in">`coin`</span> package provides efficient, well-tested permutation tests:</span>
+<span id="cb42-298"><a href="#cb42-298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-301"><a href="#cb42-301" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb42-302"><a href="#cb42-302" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(coin)</span>
+<span id="cb42-303"><a href="#cb42-303" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-304"><a href="#cb42-304" aria-hidden="true" tabindex="-1"></a><span class="co"># Two-sample permutation test</span></span>
+<span id="cb42-305"><a href="#cb42-305" aria-hidden="true" tabindex="-1"></a>test_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb42-306"><a href="#cb42-306" aria-hidden="true" tabindex="-1"></a>  <span class="at">value =</span> <span class="fu">c</span>(group_A, group_B),</span>
+<span id="cb42-307"><a href="#cb42-307" aria-hidden="true" tabindex="-1"></a>  <span class="at">group =</span> <span class="fu">factor</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>), <span class="fu">c</span>(<span class="fu">length</span>(group_A), <span class="fu">length</span>(group_B))))</span>
+<span id="cb42-308"><a href="#cb42-308" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb42-309"><a href="#cb42-309" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-310"><a href="#cb42-310" aria-hidden="true" tabindex="-1"></a><span class="co"># Exact permutation test (or Monte Carlo approximation for larger samples)</span></span>
+<span id="cb42-311"><a href="#cb42-311" aria-hidden="true" tabindex="-1"></a><span class="fu">oneway_test</span>(value <span class="sc">~</span> group, <span class="at">data =</span> test_data, <span class="at">distribution =</span> <span class="st">"approximate"</span>)</span>
+<span id="cb42-312"><a href="#cb42-312" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-313"><a href="#cb42-313" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-314"><a href="#cb42-314" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
+<span id="cb42-315"><a href="#cb42-315" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-316"><a href="#cb42-316" aria-hidden="true" tabindex="-1"></a>Resampling methods provide powerful, flexible tools for statistical inference:</span>
+<span id="cb42-317"><a href="#cb42-317" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-318"><a href="#cb42-318" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Bootstrap** estimates sampling variability by resampling with replacement from observed data</span>
+<span id="cb42-319"><a href="#cb42-319" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Permutation tests** test null hypotheses by resampling without replacement to generate null distributions</span>
+<span id="cb42-320"><a href="#cb42-320" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Both methods make minimal distributional assumptions</span>
+<span id="cb42-321"><a href="#cb42-321" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Bootstrap excels at constructing confidence intervals; permutation tests excel at hypothesis testing</span>
+<span id="cb42-322"><a href="#cb42-322" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use 1,000+ replications for bootstrap standard errors; 10,000+ for confidence intervals and p-values</span>
+<span id="cb42-323"><a href="#cb42-323" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>These methods complement rather than replace traditional parametric approaches</span>
+<span id="cb42-324"><a href="#cb42-324" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-325"><a href="#cb42-325" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercises</span></span>
+<span id="cb42-326"><a href="#cb42-326" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-327"><a href="#cb42-327" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb42-328"><a href="#cb42-328" aria-hidden="true" tabindex="-1"></a><span class="fu">### Exercise B.1: Bootstrap Standard Errors</span></span>
+<span id="cb42-329"><a href="#cb42-329" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-330"><a href="#cb42-330" aria-hidden="true" tabindex="-1"></a>You measure the half-life of a radioactive isotope in 15 independent experiments:</span>
+<span id="cb42-331"><a href="#cb42-331" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-332"><a href="#cb42-332" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-333"><a href="#cb42-333" aria-hidden="true" tabindex="-1"></a><span class="in">half_lives &lt;- c(5.2, 5.8, 5.1, 6.2, 5.9, 5.4, 6.1, 5.7, 5.3, 6.0, 5.5, 5.9, 5.6, 6.3, 5.4)</span></span>
+<span id="cb42-334"><a href="#cb42-334" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-335"><a href="#cb42-335" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-336"><a href="#cb42-336" aria-hidden="true" tabindex="-1"></a>a) Calculate the mean and median half-life</span>
+<span id="cb42-337"><a href="#cb42-337" aria-hidden="true" tabindex="-1"></a>b) Use the bootstrap (with 5000 replications) to estimate the standard error of the mean</span>
+<span id="cb42-338"><a href="#cb42-338" aria-hidden="true" tabindex="-1"></a>c) Use the bootstrap to estimate the standard error of the median</span>
+<span id="cb42-339"><a href="#cb42-339" aria-hidden="true" tabindex="-1"></a>d) Compare the bootstrap SE of the mean to the analytical formula SE = s/√n</span>
+<span id="cb42-340"><a href="#cb42-340" aria-hidden="true" tabindex="-1"></a>e) Create histograms of the bootstrap distributions for both the mean and median</span>
+<span id="cb42-341"><a href="#cb42-341" aria-hidden="true" tabindex="-1"></a>f) Which statistic (mean or median) has greater sampling variability for these data?</span>
+<span id="cb42-342"><a href="#cb42-342" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-345"><a href="#cb42-345" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb42-346"><a href="#cb42-346" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb42-347"><a href="#cb42-347" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span>
+<span id="cb42-348"><a href="#cb42-348" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-349"><a href="#cb42-349" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb42-350"><a href="#cb42-350" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-351"><a href="#cb42-351" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb42-352"><a href="#cb42-352" aria-hidden="true" tabindex="-1"></a><span class="fu">### Exercise B.2: Bootstrap Confidence Intervals</span></span>
+<span id="cb42-353"><a href="#cb42-353" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-354"><a href="#cb42-354" aria-hidden="true" tabindex="-1"></a>You measure reaction times (in milliseconds) for a cognitive task:</span>
+<span id="cb42-355"><a href="#cb42-355" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-356"><a href="#cb42-356" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-357"><a href="#cb42-357" aria-hidden="true" tabindex="-1"></a><span class="in">reaction_times &lt;- c(234, 245, 267, 289, 256, 298, 312, 245, 278, 301, 267, 289, 234, 256, 278)</span></span>
+<span id="cb42-358"><a href="#cb42-358" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-359"><a href="#cb42-359" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-360"><a href="#cb42-360" aria-hidden="true" tabindex="-1"></a>a) Calculate 95% confidence intervals for the median using three methods:</span>
+<span id="cb42-361"><a href="#cb42-361" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Percentile method (manual calculation)</span>
+<span id="cb42-362"><a href="#cb42-362" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Using the <span class="in">`boot`</span> package with percentile, basic, and BCa methods</span>
+<span id="cb42-363"><a href="#cb42-363" aria-hidden="true" tabindex="-1"></a>b) Compare the widths and endpoints of these different confidence intervals</span>
+<span id="cb42-364"><a href="#cb42-364" aria-hidden="true" tabindex="-1"></a>c) Which method would you prefer for this dataset and why?</span>
+<span id="cb42-365"><a href="#cb42-365" aria-hidden="true" tabindex="-1"></a>d) Bootstrap the 90th percentile and construct a 95% CI for it</span>
+<span id="cb42-366"><a href="#cb42-366" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-369"><a href="#cb42-369" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb42-370"><a href="#cb42-370" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb42-371"><a href="#cb42-371" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span>
+<span id="cb42-372"><a href="#cb42-372" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
+<span id="cb42-373"><a href="#cb42-373" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-374"><a href="#cb42-374" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb42-375"><a href="#cb42-375" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-376"><a href="#cb42-376" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb42-377"><a href="#cb42-377" aria-hidden="true" tabindex="-1"></a><span class="fu">### Exercise B.3: Bootstrap for Correlation</span></span>
+<span id="cb42-378"><a href="#cb42-378" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-379"><a href="#cb42-379" aria-hidden="true" tabindex="-1"></a>You have measurements of two physiological variables:</span>
+<span id="cb42-380"><a href="#cb42-380" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-381"><a href="#cb42-381" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-382"><a href="#cb42-382" aria-hidden="true" tabindex="-1"></a><span class="in">x &lt;- c(12.3, 14.5, 11.8, 15.2, 13.1, 14.8, 12.9, 15.5, 13.6, 14.1)</span></span>
+<span id="cb42-383"><a href="#cb42-383" aria-hidden="true" tabindex="-1"></a><span class="in">y &lt;- c(98, 105, 95, 110, 101, 107, 99, 112, 103, 106)</span></span>
+<span id="cb42-384"><a href="#cb42-384" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-385"><a href="#cb42-385" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-386"><a href="#cb42-386" aria-hidden="true" tabindex="-1"></a>a) Calculate Pearson's correlation coefficient</span>
+<span id="cb42-387"><a href="#cb42-387" aria-hidden="true" tabindex="-1"></a>b) Calculate the 95% CI for the correlation using the traditional Fisher z-transformation method (<span class="in">`cor.test()`</span>)</span>
+<span id="cb42-388"><a href="#cb42-388" aria-hidden="true" tabindex="-1"></a>c) Use the bootstrap (10000 replications) to construct a 95% CI for the correlation</span>
+<span id="cb42-389"><a href="#cb42-389" aria-hidden="true" tabindex="-1"></a>d) Compare the two confidence intervals—are they similar?</span>
+<span id="cb42-390"><a href="#cb42-390" aria-hidden="true" tabindex="-1"></a>e) Create a scatterplot with the data and report the correlation with its bootstrap CI</span>
+<span id="cb42-391"><a href="#cb42-391" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-394"><a href="#cb42-394" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb42-395"><a href="#cb42-395" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb42-396"><a href="#cb42-396" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span>
+<span id="cb42-397"><a href="#cb42-397" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-398"><a href="#cb42-398" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb42-399"><a href="#cb42-399" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-400"><a href="#cb42-400" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb42-401"><a href="#cb42-401" aria-hidden="true" tabindex="-1"></a><span class="fu">### Exercise B.4: Permutation Test vs. t-test</span></span>
+<span id="cb42-402"><a href="#cb42-402" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-403"><a href="#cb42-403" aria-hidden="true" tabindex="-1"></a>You compare growth rates of bacteria cultured in two different media:</span>
+<span id="cb42-404"><a href="#cb42-404" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-405"><a href="#cb42-405" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-406"><a href="#cb42-406" aria-hidden="true" tabindex="-1"></a><span class="in">medium_A &lt;- c(0.42, 0.38, 0.45, 0.41, 0.39, 0.44, 0.40, 0.43)</span></span>
+<span id="cb42-407"><a href="#cb42-407" aria-hidden="true" tabindex="-1"></a><span class="in">medium_B &lt;- c(0.51, 0.48, 0.55, 0.49, 0.52, 0.47, 0.54, 0.50)</span></span>
+<span id="cb42-408"><a href="#cb42-408" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-409"><a href="#cb42-409" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-410"><a href="#cb42-410" aria-hidden="true" tabindex="-1"></a>a) Visualize the two groups with boxplots</span>
+<span id="cb42-411"><a href="#cb42-411" aria-hidden="true" tabindex="-1"></a>b) Perform a two-sample t-test</span>
+<span id="cb42-412"><a href="#cb42-412" aria-hidden="true" tabindex="-1"></a>c) Implement a permutation test with 10,000 permutations to test for a difference in means</span>
+<span id="cb42-413"><a href="#cb42-413" aria-hidden="true" tabindex="-1"></a>d) Compare the p-values from the t-test and permutation test</span>
+<span id="cb42-414"><a href="#cb42-414" aria-hidden="true" tabindex="-1"></a>e) Calculate the effect size (Cohen's d)</span>
+<span id="cb42-415"><a href="#cb42-415" aria-hidden="true" tabindex="-1"></a>f) Createhistogram of the permutation distribution with the observed difference marked</span>
+<span id="cb42-416"><a href="#cb42-416" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-419"><a href="#cb42-419" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb42-420"><a href="#cb42-420" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb42-421"><a href="#cb42-421" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span>
+<span id="cb42-422"><a href="#cb42-422" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-423"><a href="#cb42-423" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb42-424"><a href="#cb42-424" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-425"><a href="#cb42-425" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb42-426"><a href="#cb42-426" aria-hidden="true" tabindex="-1"></a><span class="fu">### Exercise B.5: Paired Permutation Test</span></span>
+<span id="cb42-427"><a href="#cb42-427" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-428"><a href="#cb42-428" aria-hidden="true" tabindex="-1"></a>You measure expression levels of a gene before and after heat stress in 10 plant samples:</span>
+<span id="cb42-429"><a href="#cb42-429" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-430"><a href="#cb42-430" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-431"><a href="#cb42-431" aria-hidden="true" tabindex="-1"></a><span class="in">before_stress &lt;- c(125, 142, 138, 151, 129, 145, 133, 148, 136, 141)</span></span>
+<span id="cb42-432"><a href="#cb42-432" aria-hidden="true" tabindex="-1"></a><span class="in">after_stress &lt;- c(189, 207, 195, 218, 182, 203, 191, 214, 198, 206)</span></span>
+<span id="cb42-433"><a href="#cb42-433" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-434"><a href="#cb42-434" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-435"><a href="#cb42-435" aria-hidden="true" tabindex="-1"></a>a) Calculate the paired differences and perform a paired t-test</span>
+<span id="cb42-436"><a href="#cb42-436" aria-hidden="true" tabindex="-1"></a>b) Implement a paired permutation test by randomly flipping the signs of differences (10,000 permutations)</span>
+<span id="cb42-437"><a href="#cb42-437" aria-hidden="true" tabindex="-1"></a>c) Compare the p-values from both methods</span>
+<span id="cb42-438"><a href="#cb42-438" aria-hidden="true" tabindex="-1"></a>d) Use the bootstrap to construct a 95% CI for the mean difference</span>
+<span id="cb42-439"><a href="#cb42-439" aria-hidden="true" tabindex="-1"></a>e) Visualize the paired data with a before-after plot (connecting lines between paired points)</span>
+<span id="cb42-440"><a href="#cb42-440" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-443"><a href="#cb42-443" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb42-444"><a href="#cb42-444" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb42-445"><a href="#cb42-445" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span>
+<span id="cb42-446"><a href="#cb42-446" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-447"><a href="#cb42-447" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb42-448"><a href="#cb42-448" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-449"><a href="#cb42-449" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb42-450"><a href="#cb42-450" aria-hidden="true" tabindex="-1"></a><span class="fu">### Exercise B.6: Bootstrap vs. Permutation—Understanding the Difference</span></span>
+<span id="cb42-451"><a href="#cb42-451" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-452"><a href="#cb42-452" aria-hidden="true" tabindex="-1"></a>Consider the following dataset:</span>
+<span id="cb42-453"><a href="#cb42-453" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-454"><a href="#cb42-454" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-455"><a href="#cb42-455" aria-hidden="true" tabindex="-1"></a><span class="in">group1 &lt;- c(23, 25, 28, 31, 27, 29, 26, 30)</span></span>
+<span id="cb42-456"><a href="#cb42-456" aria-hidden="true" tabindex="-1"></a><span class="in">group2 &lt;- c(35, 38, 33, 40, 36, 37, 34, 39)</span></span>
+<span id="cb42-457"><a href="#cb42-457" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-458"><a href="#cb42-458" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-459"><a href="#cb42-459" aria-hidden="true" tabindex="-1"></a>a) Use the bootstrap (sampling with replacement from each group separately) to construct 95% CIs for the mean of group1 and the mean of group2</span>
+<span id="cb42-460"><a href="#cb42-460" aria-hidden="true" tabindex="-1"></a>b) Use a permutation test to test whether the two groups have different means</span>
+<span id="cb42-461"><a href="#cb42-461" aria-hidden="true" tabindex="-1"></a>c) Explain in your own words:</span>
+<span id="cb42-462"><a href="#cb42-462" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>What question does the bootstrap answer?</span>
+<span id="cb42-463"><a href="#cb42-463" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>What question does the permutation test answer?</span>
+<span id="cb42-464"><a href="#cb42-464" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Why do we resample WITH replacement for bootstrap but WITHOUT replacement for permutation tests?</span>
+<span id="cb42-465"><a href="#cb42-465" aria-hidden="true" tabindex="-1"></a>d) Create visualizations demonstrating both the bootstrap distribution (for one of the means) and the permutation distribution (for the difference in means)</span>
+<span id="cb42-466"><a href="#cb42-466" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-469"><a href="#cb42-469" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb42-470"><a href="#cb42-470" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb42-471"><a href="#cb42-471" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span>
+<span id="cb42-472"><a href="#cb42-472" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-473"><a href="#cb42-473" aria-hidden="true" tabindex="-1"></a>:::</span>
+</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Statistics for Biosciences and Bioengineering</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Built with <a href="https://quarto.org/">Quarto</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
