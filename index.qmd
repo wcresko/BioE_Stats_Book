@@ -1,6 +1,6 @@
 # {.unnumbered}
 
-This books is meant to accompany the graduate statistics courses I teach at the University of Oregon, including *Statistics for Bioengineering*. This book provides the foundational skills needed for a successful scientific career in bioengineering and biosciences, combining rigorous statistical theory with practical computational implementation in R. I've written this book to 
+This books is meant to accompany the graduate statistics courses I teach at the University of Oregon, including *Statistics for Bioengineering*. This book provides the foundational skills needed for a successful scientific career in bioengineering and biosciences, combining rigorous statistical theory with practical computational implementation in R.
 
 ## Why This Book?
 
