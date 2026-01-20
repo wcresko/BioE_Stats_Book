@@ -3,6 +3,30 @@
 .RData
 .Ruserdata
 
+# macOS metadata files
+.DS_Store
+**/.DS_Store
+
+# Windows metadata files
+Thumbs.db
+desktop.ini
+
+# Editor/IDE files
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Jupyter notebook checkpoints
+.ipynb_checkpoints/
+**/.ipynb_checkpoints/
+
+# Python cache (if using Python with Quarto)
+__pycache__/
+*.pyc
+*.pyo
+
 /.quarto/
 
 # Quarto freeze directory (contains cached computation results)
